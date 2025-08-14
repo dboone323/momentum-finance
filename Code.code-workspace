@@ -20,8 +20,8 @@
     "settings": {
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-            "source.fixAll": true,
-            "source.organizeImports": true
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit"
         },
         "files.associations": {
             "*.swift": "swift",
@@ -55,7 +55,9 @@
                 "label": "Run Master Automation",
                 "type": "shell",
                 "command": "./Tools/Automation/master_automation.sh",
-                "args": ["all"],
+                "args": [
+                    "all"
+                ],
                 "group": "build",
                 "presentation": {
                     "echo": true,
@@ -68,15 +70,41 @@
                 "label": "List Projects",
                 "type": "shell",
                 "command": "./Tools/Automation/master_automation.sh",
-                "args": ["list"],
+                "args": [
+                    "list"
+                ],
                 "group": "build"
             },
             {
                 "label": "Architecture Status",
                 "type": "shell",
                 "command": "./Tools/Automation/master_automation.sh",
-                "args": ["status"],
+                "args": [
+                    "status"
+                ],
                 "group": "build"
+            }
+        ]
+    },
+    "launch": {
+        "configurations": [
+            {
+                "type": "swift",
+                "request": "launch",
+                "args": [],
+                "cwd": "${workspaceFolder:🏗️ Projects}/MomentumFinance",
+                "name": "Debug MomentumFinance (🏗️ Projects/MomentumFinance)",
+                "program": "${workspaceFolder:🏗️ Projects}/MomentumFinance/.build/debug/MomentumFinance",
+                "preLaunchTask": "swift: Build Debug MomentumFinance (🏗️ Projects/MomentumFinance)"
+            },
+            {
+                "type": "swift",
+                "request": "launch",
+                "args": [],
+                "cwd": "${workspaceFolder:🏗️ Projects}/MomentumFinance",
+                "name": "Release MomentumFinance (🏗️ Projects/MomentumFinance)",
+                "program": "${workspaceFolder:🏗️ Projects}/MomentumFinance/.build/release/MomentumFinance",
+                "preLaunchTask": "swift: Build Release MomentumFinance (🏗️ Projects/MomentumFinance)"
             }
         ]
     }
