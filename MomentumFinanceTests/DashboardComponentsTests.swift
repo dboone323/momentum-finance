@@ -1,0 +1,101 @@
+import XCTest
+@testable import MomentumFinance
+
+class DashboardComponentsTests: XCTestCase {
+    var subscriptions: [Subscription]!
+    var accounts: [FinancialAccount]!
+    var budgets: [Budget]!
+
+    override func setUp() {
+        super.setUp()
+        
+        // Initialize test data
+        let subscription1 = Subscription(name: "Monthly Subscription", amount: 50.0)
+        let subscription2 = Subscription(name: "Yearly Subscription", amount: 100.0)
+        let subscription3 = Subscription(name: "Biannual Subscription", amount: 75.0)
+        
+        let account1 = FinancialAccount(name: "Checking Account", accountType: .checking, balance: 1000.0)
+        let account2 = FinancialAccount(name: "Savings Account", accountType: .savings, balance: 500.0)
+        
+        let budget1 = Budget(name: "Monthly Budget", limitAmount: 300.0)
+        let budget2 = Budget(name: "Annual Budget", limitAmount: 600.0)
+        
+        subscriptions = [subscription1, subscription2, subscription3]
+        accounts = [account1, account2]
+        budgets = [budget1, budget2]
+    }
+
+    override func tearDown() {
+        super.tearDown()
+    }
+    
+    // Test DashboardSubscriptionsSection
+    func testDashboardSubscriptionsSection() {
+        let view = DashboardSubscriptionsSection(
+            subscriptions: subscriptions,
+            onSubscriptionTapped: { subscription in },
+            onViewAllTapped: {},
+            onAddTapped: {}
+        )
+        
+        // GIVEN
+        let expectedTexts = ["Subscriptions", "View All", "Monthly Subscription", "Yearly Subscription", "Biannual Subscription"]
+        var actualTexts = [String]()
+        
+        // WHEN
+        view.subviews.forEach { subview in
+            if let label = subview as? UILabel {
+                actualTexts.append(label.text ?? "")
+            }
+        }
+        
+        // THEN
+        XCTAssertEqual(actualTexts, expectedTexts)
+    }
+
+    // Test DashboardAccountsSummary
+    func testDashboardAccountsSummary() {
+        let view = DashboardAccountsSummary(
+            accounts: accounts,
+            onAccountTap: { _ in },
+            onViewAllTap: {}
+        )
+        
+        // GIVEN
+        let expectedTexts = ["Accounts", "View All", "Checking Account", "Savings Account"]
+        var actualTexts = [String]()
+        
+        // WHEN
+        view.subviews.forEach { subview in
+            if let label = subview as? UILabel {
+                actualTexts.append(label.text ?? "")
+            }
+        }
+        
+        // THEN
+        XCTAssertEqual(actualTexts, expectedTexts)
+    }
+
+    // Test DashboardBudgetProgress
+    func testDashboardBudgetProgress() {
+        let view = DashboardBudgetProgress(
+            budgets: budgets,
+            onBudgetTap: { _ in },
+            onViewAllTap: {}
+        )
+        
+        // GIVEN
+        let expectedTexts = ["Budgets", "View All", "Monthly Budget", "Annual Budget"]
+        var actualTexts = [String]()
+        
+        // WHEN
+        view.subviews.forEach { subview in
+            if let label = subview as? UILabel {
+                actualTexts.append(label.text ?? "")
+            }
+        }
+        
+        // THEN
+        XCTAssertEqual(actualTexts, expectedTexts)
+    }
+}

@@ -1,0 +1,58 @@
+import XCTest
+@testable import MomentumFinance
+
+class EnhancedBudgetDetailViewTests: XCTestCase {
+    var sut: EnhancedBudgetDetailView!
+
+    override func setUp() {
+        super.setUp()
+        let budget = Budget(id: "123", name: "Test Budget")
+        let transaction1 = FinancialTransaction(amount: -100, date: Date(), category: ExpenseCategory(name: "Groceries"))
+        let transaction2 = FinancialTransaction(amount: 50, date: Date(), category: ExpenseCategory(name: "Transportation"))
+        let categories = [ExpenseCategory(name: "Groceries"), ExpenseCategory(name: "Transportation")]
+
+        modelContext.insert(budget)
+        modelContext.insert(transaction1)
+        modelContext.insert(transaction2)
+
+        sut = EnhancedBudgetDetailView(budgetId: budget.id)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        // Clean up any remaining data
+    }
+
+    func testBudgetNameDisplay() {
+        XCTAssertEqual(sut.name, "Test Budget")
+    }
+
+    func testTimeFramePicker() {
+        XCTAssertEqual(sut.selectedTimeFrame.rawValue, "This Month")
+    }
+
+    func testEditButtonToggle() {
+        XCTAssertTrue(sut.isEditing)
+        sut.isEditing.toggle()
+        XCTAssertFalse(sut.isEditing)
+    }
+
+    func testExportAsPDF() {
+        // Implement PDF export logic
+    }
+
+    func testPrintBudget() {
+        // Implement print logic
+    }
+
+    func testDeleteConfirmation() {
+        XCTAssertTrue(sut.showingDeleteConfirmation)
+        sut.showingDeleteConfirmation.toggle()
+        XCTAssertFalse(sut.showingDeleteConfirmation)
+    }
+
+    func testDetailViewWithTransactions() {
+        let expectedTransactionNames = ["Groceries", "Transportation"]
+        XCTAssertEqual(sut.relatedTransactions.map { $0.name }, expectedTransactionNames)
+    }
+}

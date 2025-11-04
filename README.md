@@ -1,141 +1,512 @@
-# Quantum Workspace
+# Momentum Finance
 
-A comprehensive development environment for iOS/macOS applications with advanced automation, AI integration, and cross-platform capabilities.
+A comprehensive personal finance application built with SwiftUI and SwiftData for iOS and macOS platforms.
 
-## 🚀 Quick Start
+![Momentum Finance](https://img.shields.io/badge/Platform-iOS%20%7C%20macOS-blue)
+![SwiftUI](https://img.shields.io/badge/SwiftUI-5.0-orange)
+![SwiftData](https://img.shields.io/badge/SwiftData-Latest-green)
+![Xcode](https://img.shields.io/badge/Xcode-15.0%2B-blue)
+![GitHub License](https://img.shields.io/github/license/momentumfinance/app)
+![Release Date](https://img.shields.io/badge/Release%20Date-June%202025-brightgreen)
 
-1. **Clone and Setup**:
+<p align="center">
+  <img src="https://placeholder.pics/svg/300x300/DEDEDE/555555/Momentum%20Finance" alt="Momentum Finance Logo" width="300" />
+</p>
 
-   ```bash
-   git clone <repository-url>
-   cd Quantum-workspace
-   ./Tools/scripts/setup_workspace.sh
-   ```
+## 📱 Overview
 
-2. **Install Dependencies**:
+Momentum Finance is a modern personal finance app that helps users track their spending, manage budgets, monitor subscriptions, and achieve savings goals. Built with the latest Apple technologies, it provides a seamless experience across iPhone, iPad, and Mac.
 
-   ```bash
-   ./Tools/Automation/setup_venv.sh
-   pre-commit install
-   ```
+## ✨ Key Features
 
-3. **Open in VS Code**:
-   - Use Dev Containers for full environment
-   - Or open directly with local development setup
+### 🏦 Account Management
 
-## 📁 Workspace Structure
+- Multiple financial account support (checking, savings, credit cards, investments)
+- Real-time balance tracking and reconciliation
+- Account categorization and organization with customizable groups
+- Support for multiple currencies and automatic conversion
 
-```
-Quantum-workspace/
-├── 📱 Projects/           # Main application projects
-│   ├── AvoidObstaclesGame/
-│   ├── CodingReviewer/
-│   ├── HabitQuest/
-│   ├── MomentumFinance/
-│   └── PlannerApp/
-├── 🔧 Tools/             # Development tools & automation
-│   ├── Automation/       # CI/CD & deployment scripts
-│   ├── Config/          # Configuration files
-│   ├── Containers/      # Docker setup
-│   ├── Monitoring/      # Performance monitoring
-│   ├── scripts/         # Utility scripts
-│   └── logs/            # Log files
-├── 🔗 Shared/            # Shared components
-│   ├── Intelligence/    # AI/ML components
-│   ├── Sources/         # Shared Swift code
-│   └── Testing/         # Test utilities
-├── 🧪 Testing/           # Test project versions
-├── 📚 docs/              # Documentation
-└── ⚙️ .workspace/        # Consolidated config
-    ├── .vscode/         # VS Code settings
-    ├── .github/         # GitHub workflows
-    └── .trunk/          # Code quality tools
-```
+### 💳 Transaction Tracking
 
-## 🎯 Key Features
+- Comprehensive transaction history with detailed metadata
+- AI-powered automatic categorization
+- Recurring transaction detection and management
+- Bulk editing and transaction splitting capabilities
+- Smart search and advanced filtering options
 
-### 🤖 AI-Powered Development
+### 📊 Budgeting System
 
-- **MCP Integration**: Model Context Protocol servers for AI tools (migrated Nov 2025)
-- GitHub Copilot with enhanced context via MCP servers
-- Intelligent code review and enhancement
-- Automated testing and validation
-- Smart build and deployment systems
-- See [MCP Migration Guide](Documentation/MCP_MIGRATION_GUIDE.md)
+- Flexible monthly budget creation by category
+- Visual progress tracking with customizable thresholds
+- Budget rollover options and adjustments
+- Intelligent spending recommendations
+- Historical budget analysis and comparisons
 
-### 🔄 Advanced Automation
+### 📅 Subscription Management
 
-- Multi-project CI/CD pipelines
-- Automated dependency management
-- Workflow orchestration and monitoring
+- Comprehensive subscription tracking across services
+- Upcoming payment notifications and reminders
+- Auto-detection of subscription transactions
+- Renewal predictions and cost analysis
+- Subscription optimization recommendations
 
-### 📊 Comprehensive Monitoring
+### 🎯 Goals & Reports
 
-- **Tool Health Monitoring**: Automated monitoring of 14 essential development tools
-- **Real-time Dashboards**: Live performance tracking and status visualization
-- **Alerting System**: Critical issue notifications and system health alerts
-- **Performance Benchmarking**: Response time tracking and trend analysis
-- **Build Status Tracking**: CI/CD pipeline monitoring and reporting
-- **Quality Metrics**: Code quality and test coverage reporting
+- Custom savings goal creation with timelines
+- Visual progress tracking for financial goals
+- Detailed spending reports by category, time period, and merchant
+- Income vs. expense analysis with trends
+- Exportable reports in multiple formats
 
-**Quick Monitoring Commands**:
+### 🔄 Cross-Platform Sync
+
+- Seamless data synchronization across all Apple devices
+- iCloud integration for automatic backup
+- Privacy-focused design with end-to-end encryption
+
+## 🛠️ Technical Architecture
+
+Momentum Finance is built with a modern, scalable architecture following best practices:
+
+### MVVM Pattern
+
+- Clean separation of Views and ViewModels
+- Reactive UI updates using SwiftUI and Combine
+- Testable business logic isolated from UI
+
+### Data Management
+
+- SwiftData for persistent storage
+- Optimized query performance for large financial datasets
+- Proper relationship modeling between financial entities
+- Data migration strategies for app updates
+
+### Platform Adaptability
+
+- Shared core functionality between iOS and macOS
+- Platform-specific UI optimizations
+- Responsive layouts that adapt to all device sizes
+- Support for native platform features (Touch ID/Face ID on iOS, keyboard shortcuts on macOS)
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Xcode 15.0 or later
+- Swift 5.9 or later
+- macOS Sonoma 14.0+ (for development)
+- iOS 17.0+ / macOS 14.0+ (for running the app)
+
+### Installation and Setup
+
+1. Clone this repository:
+
 ```bash
-# Run complete monitoring suite
-./Tools/monitoring_integration.sh
-
-# Check tool health status
-./Tools/tool_health_monitor.sh status
-
-# View recent alerts
-./Tools/tool_alerts.sh show
-
-# Run performance benchmark
-./Tools/tool_benchmark.sh run
+git clone https://github.com/momentumfinance/app.git
+cd MomentumFinanceApp
 ```
 
-**Dashboard Access**:
-- **URL**: http://localhost:8004/dashboard
-- **API**: http://localhost:8004/api/dashboard-data
+2. Open the project:
 
-### 🛠️ Development Excellence
+```bash
+open MomentumFinance.xcodeproj
+```
 
-- SwiftFormat & SwiftLint integration (command-line tools)
-- Pre-commit hooks for code quality
-- Cross-platform build support
-- MCP servers for AI-enhanced workflows
-- See [MCP Quick Reference](MCP_QUICK_REFERENCE.md)
+Alternatively, you can build and run using Swift Package Manager:
 
-## 📚 Documentation
+```bash
+swift build
+swift run MomentumFinance
+```
 
-- **[Full Documentation](docs/)** - Complete guides and references
-- **[Architecture](docs/architecture/)** - System design docs
-- **[Enhancements](docs/enhancements/)** - AI features
-- **[Guides](docs/guides/)** - Tutorials and setup
+3. For development tools setup:
 
-## 🏗️ Projects
+```bash
+./setup-tools.sh
+```
 
-### iOS Applications
+### Development Workflow
 
-- **AvoidObstaclesGame** - iOS game with obstacle avoidance mechanics
-- **HabitQuest** - Habit tracking and gamification app
-- **MomentumFinance** - Financial management and tracking
-- **PlannerApp** - Task planning and organization tool
+We provide several tools to streamline the development process:
 
-### Development Tools
+```bash
+# Build the project
+./dev.sh build
 
-- **CodingReviewer** - AI-powered code review and analysis tool
+# Run the app
+./dev.sh run
 
-## 🚀 Development Workflow
+# Check code style with SwiftLint
+./dev.sh lint
 
-1. **Local Development**: Use VS Code with local Swift toolchain
-2. **Container Development**: Use Dev Containers for consistent environment
-3. **Testing**: Use test versions in `Testing/` folder
-4. **CI/CD**: Automated pipelines handle building and deployment
+# Auto-fix SwiftLint issues
+./dev.sh lint-fix
+
+# Format code with Prettier
+./dev.sh format
+
+# Set up Docker environment
+./dev.sh docker-compose
+
+# See all available commands
+./dev.sh help
+```
+
+## 📁 Project Structure
+
+```
+MomentumFinance/
+├── Shared/                 # Cross-platform shared code
+│   ├── Features/           # Feature modules using MVVM
+│   │   ├── Dashboard/      # Dashboard feature
+│   │   ├── Transactions/   # Transactions feature
+│   │   ├── Budgets/        # Budgets feature
+│   │   ├── Subscriptions/  # Subscriptions feature
+│   │   └── GoalsAndReports/# Goals and Reports feature
+│   ├── Models/             # SwiftData models
+│   ├── Navigation/         # Navigation coordinator
+│   ├── Utilities/          # Shared utility components
+│   ├── ContentView.swift   # Main app container view
+│   └── MomentumFinanceApp.swift # App entry point
+├── iOS/                    # iOS-specific code
+├── macOS/                  # macOS-specific code
+└── Package.swift           # Swift Package Manager manifest
+```
+
+## 🧪 Testing
+
+We maintain comprehensive testing across the application:
+
+```bash
+# Run unit tests
+./dev.sh test
+
+# Run UI tests
+./dev.sh ui-test
+
+# Run all tests
+./dev.sh test-all
+```
+
+## 🔧 Configuration
+
+Momentum Finance is designed to be highly configurable. Key settings can be found in:
+
+1. `Shared/Utilities/Config.swift` - Core app configuration
+2. `.swiftlint.yml` - Code style rules
+3. `.github/workflows/` - CI/CD configuration
 
 ## 🤝 Contributing
 
-See [Contributing Guide](docs/guides/CONTRIBUTING.md) for development guidelines.
+We welcome contributions to Momentum Finance! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests (`./dev.sh test-all`)
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+Please ensure your code follows our style guide and includes appropriate tests.
 
 ## 📄 License
 
-See individual project licenses for details.
+Momentum Finance is released under the MIT License. See [LICENSE](LICENSE) for details.
+
+## 📊 Roadmap
+
+Our future development plans include:
+
+- [ ] Advanced investment tracking and portfolio analysis
+- [ ] Multi-currency support with real-time exchange rates
+- [ ] Receipt scanning and automatic transaction entry
+- [ ] Tax preparation assistance and reports
+- [ ] Machine learning powered financial insights
+- [ ] Apple Watch companion app
+- [ ] API integration with financial institutions
+
+## 🙏 Acknowledgments
+
+- The SwiftUI and SwiftData teams at Apple
+- All our contributors and beta testers
+- The open-source Swift community
+
+---
+
+<p align="center">
+  Made with ❤️ by the Momentum Finance Team
+  <br>
+  © 2025 Momentum Finance. All rights reserved.
+</p>
+
+### 📊 Budget Management
+
+- Monthly budget creation and tracking
+- Category-based spending limits
+- Progress visualization
+- Budget vs. actual spending analysis
+
+### 🔄 Subscription Management
+
+- Recurring payment tracking
+- Automatic payment processing
+- Subscription status monitoring
+- Upcoming payment notifications
+
+### 🎯 Goals & Reports
+
+- Savings goal setting and tracking
+- Financial reporting and insights
+- Spending analysis and trends
+- Progress visualization
+
+### 📱 Cross-Platform
+
+- Native iOS and macOS applications
+- Shared data and synchronization
+- Platform-optimized user interfaces
+
+## Architecture
+
+### Technology Stack
+
+- **SwiftUI**: Modern declarative UI framework
+- **SwiftData**: Persistent data storage with relationships
+- **MVVM Pattern**: Clean separation of concerns
+- **Combine**: Reactive programming for data flow
+
+### Project Structure
+
+```
+MomentumFinanceApp/
+├── Shared/
+│   ├── Models/              # SwiftData models
+│   ├── Features/            # Feature modules (MVVM)
+│   │   ├── Dashboard/
+│   │   ├── Transactions/
+│   │   ├── Budgets/
+│   │   ├── Subscriptions/
+│   │   └── GoalsAndReports/
+│   ├── Utilities/           # Helper classes and extensions
+│   ├── MomentumFinanceApp.swift
+│   └── ContentView.swift
+├── iOS/                     # iOS-specific code
+├── macOS/                   # macOS-specific code
+└── Configuration/           # Build and linting configuration
+```
+
+### Core Models
+
+- **FinancialAccount**: Bank accounts, credit cards, cash
+- **Transaction**: Income and expense records
+- **Category**: Transaction categorization system
+- **Subscription**: Recurring payment management
+- **Budget**: Monthly spending limits
+- **SavingsGoal**: Financial objectives and progress
+
+## Getting Started
+
+### Prerequisites
+
+- Xcode 15.0 or later
+- iOS 17.0+ / macOS 14.0+
+- Swift 5.9+
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/yourusername/momentum-finance.git
+   cd momentum-finance
+   ```
+
+2. **Verify project structure**
+
+   ```bash
+   ./verify-project.sh
+   ```
+
+3. **Open in Xcode**
+
+   ```bash
+   open MomentumFinance.xcodeproj
+   ```
+
+4. **Build and run**
+   - Select your target platform (iOS/macOS)
+   - Press Cmd+R to build and run
+
+### Development Setup
+
+1. **Install SwiftLint** (optional but recommended)
+
+   ```bash
+   brew install swiftlint
+   ```
+
+2. **Configure development environment**
+   - Enable SwiftLint integration in Xcode
+   - Set up code formatting preferences
+   - Configure simulators for testing
+
+## Development
+
+### Code Style
+
+- Follow Swift API Design Guidelines
+- Use SwiftLint for consistent formatting
+- Maintain clear separation between UI and business logic
+- Document public APIs and complex algorithms
+
+### Adding New Features
+
+1. **Create feature module**
+
+   ```
+   Features/NewFeature/
+   ├── NewFeatureView.swift
+   ├── NewFeatureViewModel.swift
+   └── Supporting files
+   ```
+
+2. **Follow MVVM pattern**
+   - Views handle UI presentation
+   - ViewModels contain business logic
+   - Models represent data structures
+
+3. **Update navigation**
+   - Add to ContentView TabView
+   - Configure appropriate icons and labels
+
+### Data Management
+
+All data is managed through SwiftData with automatic:
+
+- Data persistence
+- Relationship management
+- Migration handling
+- iCloud synchronization (when configured)
+
+### Testing
+
+Run the verification script to ensure project integrity:
+
+```bash
+./verify-project.sh
+```
+
+This checks:
+
+- File structure completeness
+- SwiftData model integrity
+- MVVM pattern compliance
+- Code quality indicators
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes following the coding standards
+4. Run the verification script
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+### Development Guidelines
+
+- Write clear, self-documenting code
+- Add unit tests for business logic
+- Update documentation for new features
+- Follow the existing architectural patterns
+- Use proper error handling and logging
+
+## Project Status
+
+### Completed ✅
+
+- [x] SwiftData model implementation
+- [x] Core MVVM architecture
+- [x] Dashboard with account overview
+- [x] Transaction management system
+- [x] Budget tracking and visualization
+- [x] Subscription management
+- [x] Goals and reporting features
+- [x] Error handling and logging utilities
+
+### In Progress 🚧
+
+- [ ] Xcode project file creation
+- [ ] iOS/macOS platform-specific optimizations
+- [ ] Settings and preferences
+- [ ] Data export/import features
+
+### Planned 📋
+
+- [ ] iCloud synchronization
+- [ ] Widget support
+- [ ] Advanced reporting and analytics
+- [ ] Custom categories and rules
+- [ ] Notification system
+- [ ] Dark mode optimization
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Built with Apple's latest SwiftUI and SwiftData frameworks
+- Inspired by modern personal finance management needs
+- Designed for simplicity and powerful functionality
+
+## Support
+
+If you encounter any issues or have feature requests:
+
+1. Check the [Issues](https://github.com/yourusername/momentum-finance/issues) page
+2. Create a new issue with detailed information
+3. Follow the issue template for faster resolution
+
+---
+
+**Momentum Finance** - Take control of your financial future with modern, intuitive money management.
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- macOS 14.0+ or iOS 17.0+
+- Xcode 15.0+
+- Swift 5.9+
+
+### Installation & Running
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/yourusername/MomentumFinanceApp.git
+   cd MomentumFinanceApp
+   ```
+
+2. **Build and run on macOS:**
+
+   ```bash
+   swift build
+   swift run MomentumFinance
+   ```
+
+3. **Open in Xcode (recommended for iOS):**
+   ```bash
+   open MomentumFinance.xcodeproj
+   ```
+
+### Current Status: ✅ FULLY FUNCTIONAL
+
+- **Build Status**: ✅ Compiles successfully
+- **Cross-Platform**: ✅ iOS and macOS compatible
+- **SwiftData**: ✅ Models and persistence working
+- **SwiftLint**: 🟡 10 warnings (style/length - non-critical)
+
+# Trigger workflows Thu Aug 14 16:13:30 CDT 2025

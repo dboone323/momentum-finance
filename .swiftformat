@@ -1,8 +1,8 @@
-# SwiftFormat Configuration for Quantum Workspace
+# SwiftFormat Configuration for Unified Code Architecture
 # https://github.com/nicklockwood/SwiftFormat
 
 # File options
---exclude .build,Package.swift,node_modules,.swiftpm,Tools,Tools/Automation,Tools/Automation/agents/backups,**/backups,**/Tests,Projects/QuantumChemistry,Projects/MomentumFinance
+--exclude .build,Package.swift
 
 # Format options
 --indent 4
@@ -29,7 +29,7 @@
 --enable blankLinesBetweenScopes
 --enable consecutiveSpaces
 --enable duplicateImports
---enable sortImports
+--enable sortedImports
 --enable unusedArguments
 --enable void
 --enable trailingCommas
@@ -43,4 +43,4 @@
 --disable wrapEnumCases
 
 # Swift version
---swiftversion 5.7
+--swiftversion 6.0

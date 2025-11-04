@@ -1,0 +1,72 @@
+import XCTest
+@testable import MomentumFinance
+
+class DependenciesTests: XCTestCase {
+    var dependencies: Dependencies!
+
+    override func setUp() {
+        super.setUp()
+        dependencies = Dependencies.default
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        dependencies = nil
+    }
+
+    // Test the default initializer
+    func testDefaultInitialization() {
+        let expectedPerformanceManager = PerformanceManager.shared
+        let expectedLogger = Logger.shared
+
+        XCTAssertEqual(dependencies.performanceManager, expectedPerformanceManager)
+        XCTAssertEqual(dependencies.logger, expectedLogger)
+    }
+
+    // Test the log method with different levels
+    func testLogMethodWithDifferentLevels() {
+        let message = "Test Log Message"
+        let level = LogLevel.info
+
+        dependencies.log(message, level: level)
+
+        // Assert that the log message is printed to the console
+        XCTAssertEqual(dependencies.logger.outputHandler.mockCalls.count, 1)
+        XCTAssertEqual(dependencies.logger.outputHandler.mockCalls[0].message, "[\(dependencies.logger.isoFormatter.string(from: Date()))] [INFO] \(message)")
+    }
+
+    // Test the setOutputHandler method
+    func testSetOutputHandler() {
+        let mockHandler = MockLogger()
+        dependencies.setOutputHandler(mockHandler.log)
+
+        dependencies.log("Test Log Message")
+
+        XCTAssertEqual(mockHandler.outputHandler.mockCalls.count, 1)
+        XCTAssertEqual(mockHandler.outputHandler.mockCalls[0].message, "[\(dependencies.logger.isoFormatter.string(from: Date()))] [INFO] Test Log Message")
+    }
+
+    // Test the resetOutputHandler method
+    func testResetOutputHandler() {
+        let mockHandler = MockLogger()
+        dependencies.setOutputHandler(mockHandler.log)
+
+        dependencies.log("Test Log Message")
+
+        dependencies.resetOutputHandler()
+
+        XCTAssertEqual(dependencies.logger.outputHandler.mockCalls.count, 0)
+    }
+}
+
+class MockLogger: Logger {
+    var mockCalls: [String] = []
+
+    override func log(_ message: String, level: LogLevel) {
+        self.mockCalls.append(message)
+    }
+
+    override func setOutputHandler(_ handler: @escaping @Sendable (String) -> Void) {
+        fatalError("MockLogger does not support setting an output handler")
+    }
+}

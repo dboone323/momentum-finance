@@ -1,212 +1,416 @@
-# Copilot Instructions for Quantum-workspace
+<!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
 
-## Repository Overview
+# Momentum Finance - SwiftUI Personal Finance App
 
-This is a **Unified Code Architecture** workspace containing multiple Swift projects consolidated for maximum code reuse and automation efficiency. The repository contains 5 projects with ~400+ Swift files, extensive automation tooling, and AI-powered self-healing workflows.
+This is a comprehensive personal finance application built with SwiftUI and SwiftData for iOS and macOS platforms. Part of the larger Quantum Workspace ecosystem with shared patterns and automation.
 
-**Key Projects:**
+## Architecture Guidelines
 
-- **CodingReviewer**: 132 Swift files - Code review application (macOS)
-- **PlannerApp**: 57 Swift files - Planning and organization app with CloudKit integration (macOS, iOS)
-- **AvoidObstaclesGame**: 8 Swift files - SpriteKit-based game (iOS)
-- **MomentumFinance**: Finance tracking app (macOS, iOS)
-- **HabitQuest**: Habit tracking application (iOS)
+### MVVM Pattern Implementation
 
-**Languages & Frameworks:** Swift (primary), SwiftUI, UIKit, SpriteKit, CloudKit, Python (automation), Shell scripts, Local Ollama CI/CD
+```swift
+// Standard ViewModel structure
+@MainActor
+@Observable
+final class TransactionsViewModel {
+    private var modelContext: ModelContext?
 
-## Build Instructions & Dependencies
+    func setModelContext(_ context: ModelContext) {
+        self.modelContext = context
+    }
 
-### Required Tools
+    // Business logic methods
+    func filterTransactions(_ transactions: [FinancialTransaction], by type: TransactionType?)
+    -> [FinancialTransaction] {
+        guard let type else { return transactions }
+        return transactions.filter { $0.transactionType == type }
+    }
+}
+```
 
-**CRITICAL**: The following tools are expected but may not be installed in all environments:
+### SwiftData Model Patterns
+
+```swift
+@Model
+final class FinancialTransaction {
+    var title: String
+    var amount: Double
+    var date: Date
+    var transactionType: TransactionType
+
+    // Relationships
+    var category: ExpenseCategory?
+    var account: FinancialAccount?
+
+    init(title: String, amount: Double, date: Date, transactionType: TransactionType) {
+        // Standard initialization
+    }
+}
+```
+
+### Feature Module Organization
+
+```
+Shared/Features/Transactions/
+├── TransactionsView.swift          # Main view
+├── TransactionsViewModel.swift     # Business logic
+├── TransactionRowView.swift        # Row component
+├── AddTransactionView.swift        # Add transaction form
+└── TransactionDetailView.swift     # Detail view
+```
+
+## Development Workflows
+
+### Universal Development Script
 
 ```bash
-# Check tool availability first
-brew install swiftlint swiftformat
-# Or install via other package managers as needed
+# Build project (auto-detects Swift/XCode/Node/Python)
+./dev.sh build
+
+# Run comprehensive checks (lint + test + build)
+./dev.sh check
+
+# Format code with SwiftFormat
+./dev.sh format
+
+# Run tests
+./dev.sh test
 ```
 
 ### Master Automation System
 
-The repository uses a centralized automation controller at `Tools/Automation/master_automation.sh`:
-
 ```bash
-# ALWAYS start with status check to verify environment
-./Tools/Automation/master_automation.sh status
-
-# List all available projects
-./Tools/Automation/master_automation.sh list
+# From workspace root - run automation for all projects
+./Tools/Automation/master_automation.sh all
 
 # Run automation for specific project
-./Tools/Automation/master_automation.sh run CodingReviewer
+./Tools/Automation/master_automation.sh run MomentumFinance
 
-# Run automation for all projects (CAUTION: time-intensive)
-./Tools/Automation/master_automation.sh all
+# Format code across all projects
+./Tools/Automation/master_automation.sh format
 ```
 
-**⚠️ Common Issues:**
+## Code Conventions & Patterns
 
-- If SwiftLint/SwiftFormat are missing, install them before running automation
-- The `status` command shows which tools are available vs missing
-- Automation may fail if run on non-macOS systems (Xcode dependency)
-- Some commands require 2-5 minutes to complete
+### Commit Message Standards
 
-### Individual Project Builds
-
-Each project has its own Xcode project file:
-
-- `Projects/CodingReviewer/CodingReviewer.xcodeproj` (macOS)
-- `Projects/AvoidObstaclesGame/AvoidObstaclesGame.xcodeproj` (iOS)
-- `Projects/PlannerApp/PlannerApp.xcodeproj` (macOS, iOS)
-- `Projects/MomentumFinance/` (macOS, iOS) - _Project structure TBD_
-- `Projects/HabitQuest/` (iOS) - _Project structure TBD_
-
-**Build Process:**
-
-1. Open individual `.xcodeproj` files in Xcode on macOS
-2. Each project includes its own SwiftLint configuration (`.swiftlint.yml`)
-3. SwiftFormat rules are defined in root `.swiftformat` file
-4. Quality gates defined in `quality-config.yaml` with coverage targets (70-85%)
-
-### Testing
+**Conventional Commits (enforced via commitlint):**
 
 ```bash
-# Individual project test scripts exist, example:
-./Projects/AvoidObstaclesGame/test_game.sh
+# Valid formats
+feat: add new transaction filtering feature
+fix: resolve crash in budget calculation
+docs: update API documentation
+refactor: simplify view model logic
+test: add unit tests for expense categorization
 
-# Integration tests via automation
-./Tools/Automation/run_integration_tests.sh
+# Invalid (will be rejected)
+"fixed bug"
+"updated code"
+"changes"
 ```
 
-## Project Architecture & Layout
-
-### Directory Structure
-
-```
-/
-├── Projects/                   # Individual applications
-│   ├── CodingReviewer/        # Main code review app (132 Swift files) - macOS
-│   ├── AvoidObstaclesGame/    # Game project (8 Swift files) - iOS
-│   ├── PlannerApp/            # Planning app (57 Swift files) - macOS, iOS
-│   ├── MomentumFinance/       # Finance app - macOS, iOS
-│   └── HabitQuest/            # Habit tracking app - iOS
-├── Shared/                    # Reusable components across projects
-│   ├── SharedArchitecture.swift  # BaseViewModel protocol & MVVM patterns
-│   ├── Testing/               # Shared testing utilities
-│   └── Utilities/             # Helper functions and extensions
-├── Tools/                     # Development tools and automation
-│   └── Automation/            # Master automation system (600+ files)
-├── .github/workflows/         # CI/CD pipelines
-├── Documentation/             # Extensive project documentation
-└── Configuration files:
-    ├── .swiftformat           # Code formatting rules
-    ├── quality-config.yaml    # Quality gates and metrics
-    └── cspell.json           # Spell checking configuration
-```
-
-### Code Architecture Principles
-
-**CRITICAL RULES** (from ARCHITECTURE.md):
-
-1. **Data models NEVER import SwiftUI** - keeps them in `SharedTypes/` folder
-2. **Avoid Codable in complex data models** - causes circular dependencies
-3. **Use synchronous operations with background queues** - not async/await everywhere
-4. **Specific naming over generic** - avoid "Dashboard", "Manager" names
-5. **Sendable for thread safety** - prefer over complex async patterns
-
-**Shared Architecture Pattern:**
+### Naming Conventions
 
 ```swift
-// All projects follow this BaseViewModel pattern
+// View extensions
+extension Features.Transactions {
+    struct TransactionsView: View { /* ... */ }
+}
+
+// Observable ViewModels
 @MainActor
-protocol BaseViewModel: ObservableObject {
-    associatedtype State
-    associatedtype Action
-    var state: State { get set }
-    var isLoading: Bool { get set }
-    func handle(_ action: Action)
+@Observable
+final class TransactionsViewModel { /* ... */ }
+
+// SwiftData Models
+@Model
+final class FinancialTransaction { /* ... */ }
+```
+
+### Error Handling Patterns
+
+```swift
+func performAsyncOperation() async throws -> Result {
+    do {
+        let result = try await networkService.fetchData()
+        return result
+    } catch {
+        Logger.logError(error, context: "Data fetching failed")
+        throw error
+    }
 }
 ```
 
-## CI/CD & Validation
+## AI Integration Patterns
 
-### GitHub Workflows
+### Financial Intelligence Engine
 
-1. **pr-validation.yml**: Basic sanity checks for all PRs
-2. **validate-and-lint-pr.yml**: Validates automation scripts, runs ShellCheck
-3. **quantum-agent-self-heal.yml**: AI-powered self-healing system
+```swift
+@MainActor
+class AdvancedFinancialIntelligence: ObservableObject {
+    @Published var insights: [FinancialInsight] = []
+    @Published var predictions: [FinancialPrediction] = []
 
-### Quality Gates (quality-config.yaml)
+    func analyzeFinancialData() async {
+        async let spendingAnalysis = analyzeSpendingPatterns()
+        async let budgetAnalysis = analyzeBudgetPerformance()
+        async let investmentAnalysis = analyzeInvestmentPortfolio()
 
-- **Code Coverage**: 70% minimum, 85% target
-- **Build Performance**: Max 120 seconds
-- **Test Performance**: Max 30 seconds
-- **File Limits**: Max 500 lines per file, 1000KB file size
-- **Complexity**: Max 10 cyclomatic, 15 cognitive complexity
-
-### Pre-commit Validation Steps
-
-```bash
-# Validate automation scripts
-bash -n Tools/Automation/master_automation.sh
-
-# Run deployment validation
-bash Tools/Automation/deploy_workflows_all_projects.sh --validate
-
-# Format code (if tools available)
-swiftformat . --config .swiftformat
-
-# Lint code
-swiftlint --strict
+        let results = await [spendingAnalysis, budgetAnalysis, investmentAnalysis]
+        await processAnalysisResults(results)
+    }
+}
 ```
 
-## Common Pitfalls & Solutions
+## Testing Patterns
 
-### Environment Issues
+### Unit Test Structure
 
-- **Problem**: "SwiftLint/SwiftFormat not found"  
-  **Solution**: Install via `brew install swiftlint swiftformat` or skip formatting
-- **Problem**: Automation scripts fail on Linux/Windows  
-  **Solution**: Many scripts expect macOS/Xcode - check `status` command first
+```swift
+class TransactionsViewModelTests: XCTestCase {
+    var viewModel: TransactionsViewModel!
+    var mockContext: ModelContext!
 
-- **Problem**: Build timeouts  
-  **Solution**: Some operations take 2-5 minutes - increase timeout limits
+    override func setUp() {
+        mockContext = createMockModelContext()
+        viewModel = TransactionsViewModel()
+        viewModel.setModelContext(mockContext)
+    }
 
-### Architecture Issues
+    func testTransactionFiltering() async {
+        // Given
+        let transactions = createMockTransactions()
 
-- **Problem**: SwiftUI import errors in data models  
-  **Solution**: Keep pure data models in `SharedTypes/`, UI extensions in `Extensions/`
-- **Problem**: Circular dependency errors  
-  **Solution**: Avoid `Codable` in complex nested types, use separate DTOs
+        // When
+        let filtered = viewModel.filterTransactions(transactions, by: .income)
 
-- **Problem**: Concurrency crashes  
-  **Solution**: Use `Sendable` types and background queues with MainActor updates
+        // Then
+        XCTAssertTrue(filtered.allSatisfy { $0.transactionType == .income })
+    }
+}
+```
 
-## Development Workflow
+## Data Flow Patterns
 
-### Making Changes
+### SwiftData Context Management
 
-1. **Always check automation status first**: `./Tools/Automation/master_automation.sh status`
-2. **Use VSCode workspace**: Open `Code.code-workspace` for unified development
-3. **Follow architecture principles**: No SwiftUI in data models, specific naming
-4. **Test incrementally**: Use project-specific automation before full builds
-5. **Validate before commit**: Run validation scripts in `.github/workflows/`
+```swift
+struct RootView: View {
+    @Environment(\.modelContext) private var modelContext
 
-### File Locations for Common Tasks
+    var body: some View {
+        ContentView()
+            .environment(\.modelContext, modelContext)
+            .onAppear {
+                viewModel.setModelContext(modelContext)
+            }
+    }
+}
+```
 
-- **Add shared UI components**: `Shared/` directory
-- **Project-specific code**: `Projects/{ProjectName}/`
-- **Automation enhancements**: `Tools/Automation/`
-- **Workflow modifications**: `.github/workflows/`
-- **Documentation updates**: `Documentation/`
+### Observable State Management
 
-### Performance Considerations
+```swift
+@MainActor
+@Observable
+final class DashboardViewModel {
+    @Published var accounts: [Account] = []
+    @Published var transactions: [Transaction] = []
+    @Published var isLoading = false
+    @Published var error: Error?
 
-- Full automation can take 5-10 minutes across all projects
-- Individual project automation typically completes in 1-2 minutes
-- Quality gate validation adds 30-60 seconds to build time
-- SwiftLint with `--strict` flag may have higher failure rates
+    func refreshData() async {
+        isLoading = true
+        defer { isLoading = false }
+
+        do {
+            accounts = try await dataService.fetchAccounts()
+            transactions = try await dataService.fetchTransactions()
+        } catch {
+            self.error = error
+        }
+    }
+}
+```
+
+## UI/UX Patterns
+
+### SwiftUI Navigation
+
+```swift
+struct ContentView: View {
+    @State private var selectedTab = 0
+
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            DashboardView()
+                .tabItem { Label("Dashboard", systemImage: "chart.bar.fill") }
+                .tag(0)
+
+            TransactionsView()
+                .tabItem { Label("Transactions", systemImage: "creditcard.fill") }
+                .tag(1)
+        }
+    }
+}
+```
+
+### Responsive Layout Patterns
+
+```swift
+struct AdaptiveGrid<Content: View>: View {
+    let content: () -> Content
+
+    var body: some View {
+        GeometryReader { geometry in
+            #if os(iOS)
+            LazyVGrid(columns: adaptiveColumns(for: geometry.size.width)) {
+                content()
+            }
+            #elseif os(macOS)
+            LazyHGrid(rows: adaptiveRows(for: geometry.size.height)) {
+                content()
+            }
+            #endif
+        }
+    }
+
+    private func adaptiveColumns(for width: CGFloat) -> [GridItem] {
+        let count = max(1, Int(width / 300))
+        return Array(repeating: GridItem(.flexible()), count: count)
+    }
+}
+```
+
+## Performance Optimization Patterns
+
+### Lazy Loading
+
+```swift
+struct TransactionListView: View {
+    @State private var transactions: [Transaction] = []
+    @State private var loadedPages = 0
+    private let pageSize = 50
+
+    var body: some View {
+        List {
+            ForEach(transactions) { transaction in
+                TransactionRowView(transaction: transaction)
+                    .onAppear {
+                        if transaction == transactions.last {
+                            loadMoreTransactions()
+                        }
+                    }
+            }
+        }
+        .onAppear { loadInitialTransactions() }
+    }
+
+    private func loadMoreTransactions() {
+        Task {
+            let nextPage = await dataManager.loadTransactions(
+                page: loadedPages + 1,
+                size: pageSize
+            )
+            await MainActor.run {
+                transactions.append(contentsOf: nextPage)
+                loadedPages += 1
+            }
+        }
+    }
+}
+```
+
+## Key Project Patterns
+
+### Financial Calculation Methods
+
+```swift
+extension TransactionsViewModel {
+    func spendingByCategory(_ transactions: [FinancialTransaction]) -> [String: Double] {
+        var spending: [String: Double] = [:]
+        for transaction in transactions where transaction.transactionType == .expense {
+            let categoryName = transaction.category?.name ?? "Uncategorized"
+            spending[categoryName, default: 0] += transaction.amount
+        }
+        return spending
+    }
+
+    func totalIncome(_ transactions: [FinancialTransaction], for period: DateInterval? = nil) -> Double {
+        let filtered = period.map { transactions.filter { $0.contains($1) } } ?? transactions
+        return filtered.filter { $0.transactionType == .income }.reduce(0) { $0 + $1.amount }
+    }
+}
+```
+
+### Cross-Platform Adaptations
+
+```swift
+struct AdaptiveTransactionView: View {
+    var body: some View {
+        #if os(iOS)
+        iOSTransactionView()
+        #elseif os(macOS)
+        macOSTransactionView()
+        #endif
+    }
+}
+```
+
+## Quality Assurance
+
+### Pre-commit Hooks
+
+```yaml
+repos:
+  - repo: https://github.com/realm/SwiftLint
+    rev: 0.54.0
+    hooks:
+      - id: swiftlint
+        args: [--strict]
+
+  - repo: https://github.com/nicklockwood/SwiftFormat
+    rev: 0.52.0
+    hooks:
+      - id: swiftformat
+```
+
+### CI Pipeline
+
+```yaml
+name: CI
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with: { xcode-version: '15.0' }
+      - name: Run Tests
+        run: xcodebuild test -project MomentumFinance.xcodeproj -scheme MomentumFinance
+      - name: Run SwiftLint
+        run: swiftlint
+```
+
+## Best Practices Summary
+
+1. **Always use MVVM pattern** with Observable ViewModels
+2. **Follow SwiftData conventions** for data persistence and relationships
+3. **Implement proper error handling** with Logger integration
+4. **Use platform-specific adaptations** with conditional compilation
+5. **Follow commit message conventions** (feat:, fix:, docs:, etc.)
+6. **Run quality checks** before committing (`./dev.sh check`)
+7. **Document complex financial logic** with comprehensive comments
+8. **Use SwiftUI best practices** for responsive layouts
+9. **Implement proper testing** for business logic
+10. **Follow the established file organization** patterns in Shared/Features/
 
 ---
 
-**Trust these instructions first** - only search/explore if information is incomplete or found to be incorrect. The automation system is complex but well-documented; follow the established patterns rather than creating new approaches.
+_Momentum Finance AI Guidelines - Updated: September 15, 2025_
+_Framework: SwiftUI 5.0, SwiftData, iOS 17+/macOS 14+_
+_Architecture: MVVM, Modular Design, Cross-Platform_
