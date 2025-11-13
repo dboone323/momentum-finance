@@ -1,7 +1,7 @@
-        #!/usr/bin/env bash
-        # Auto-injected health & reliability shim
+#!/usr/bin/env bash
+# Auto-injected health & reliability shim
 
-        DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Prefer shared helpers when available
 if [[ -f "$DIR/shared_functions.sh" ]]; then
   # shellcheck disable=SC1091

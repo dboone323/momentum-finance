@@ -30,11 +30,10 @@ echo "Opening simulator..."
 open -a Simulator
 
 echo "Building and running in simulator..."
-xcodebuild -scheme MomentumFinance -destination "platform=iOS Simulator,id=$DEVICE_ID" -quiet build
-if [ $? -eq 0 ]; then
+if xcodebuild -scheme MomentumFinance -destination "platform=iOS Simulator,id=$DEVICE_ID" -quiet build; then
   echo -e "${GREEN}✅ Build successful!${NC}"
-  xcrun simctl install $DEVICE_ID ./DerivedData/Build/Products/Debug-iphonesimulator/MomentumFinance.app
-  xcrun simctl launch $DEVICE_ID com.momentumfinance.MomentumFinance
+  xcrun simctl install "$DEVICE_ID" ./DerivedData/Build/Products/Debug-iphonesimulator/MomentumFinance.app
+  xcrun simctl launch "$DEVICE_ID" com.momentumfinance.MomentumFinance
   echo -e "${GREEN}✨ App launched in simulator!${NC}"
 else
   echo -e "${RED}❌ Build failed${NC}"
