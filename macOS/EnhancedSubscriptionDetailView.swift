@@ -822,8 +822,10 @@ import SwiftUI
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
 
+                                    let lowerBound = (self.subscription.amount * 0.9).formatted(.currency(code: self.subscription.currencyCode))
+                                    let upperBound = (self.subscription.amount * 1.1).formatted(.currency(code: self.subscription.currencyCode))
                                     Text(
-                                        "\((self.subscription.amount * 0.9).formatted(.currency(code: self.subscription.currencyCode))) - \((self.subscription.amount * 1.1).formatted(.currency(code: self.subscription.currencyCode)))"
+                                        "\(lowerBound) - \(upperBound)"
                                     )
                                     .font(.body)
                                 }

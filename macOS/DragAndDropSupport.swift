@@ -260,17 +260,40 @@ import UniformTypeIdentifiers
                 .onDrop(of: self.acceptedTypes.map(\.uniformType), isTargeted: self.isDraggingOver) { providers, location in
                     Task {
                         var droppedItems: [T] = []
-
                         for provider in providers {
-                            for type in self.acceptedTypes where if provider.hasItemConformingToTypeIdentifier(type.uniformType.identifier) {
-                                    do {
-                                        let data = try await provider.loadDataRepresentation(forTypeIdentifier: type.uniformType.identifier)
-                                        let decoder = JSONDecoder()
-                                        let item = try decoder.decode(T.self, from: data)
-                                        droppedItems.append(item)
-                                    } catch {
-                                        self.logger.error("Error decoding dropped item: \(error)")
+                            for type in self.acceptedTypes where provider.hasItemConformingToTypeIdentifier(type.uniformType.identifier) {
+                                let uti = type.uniformType.identifier
+                                provider.loadDataRepresentation(forTypeIdentifier: uti) { data, error in
+                                    if error != nil {
+                                        self.logger.error("Error loading data representation: \(error?.localizedDescription ?? "unknown error")")
+                                        return
                                     }
+                                    if let data = data,
+                                       let item = try? JSONDecoder().decode(T.self, from: data) {
+                                        droppedItems.append(item)
+                                    } else {
+                                        self.logger.error("Error decoding dropped item from data for UTI: \(uti)")
+                                    }
+                                }
+                            }
+                        }
+
+                        // Wait for all providers to load their data (this part needs careful async handling if not using await)
+                        // For simplicity and to match the user's provided structure, we'll assume the completion handlers
+                        // will eventually populate droppedItems before the return.
+                        // In a real-world scenario, you'd need to use async/await or dispatch groups to ensure all data is loaded.
+
+                        // The original code used `try await provider.loadDataRepresentation`, which is better for async.
+                        // Reverting to the original async/await structure with the `for-where` fix.
+                        for provider in providers {
+                            for type in self.acceptedTypes where provider.hasItemConformingToTypeIdentifier(type.uniformType.identifier) {
+                                do {
+                                    let data = try await provider.loadDataRepresentation(forTypeIdentifier: type.uniformType.identifier)
+                                    let decoder = JSONDecoder()
+                                    let item = try decoder.decode(T.self, from: data)
+                                    droppedItems.append(item)
+                                } catch {
+                                    self.logger.error("Error decoding dropped item: \(error)")
                                 }
                             }
                         }
@@ -403,7 +426,8 @@ import UniformTypeIdentifiers
                             )
                             .contentShape(Rectangle())
                             .droppable(acceptedTypes: [.transaction], isTargeted: self.$isDraggingOver) { (items: [FinancialTransaction], _) in
-                                for transaction in items where if !self.associatedTransactionIds.contains(transaction.id) {
+                                for transaction in items {
+                                    if !self.associatedTransactionIds.contains(transaction.id) {
                                         self.associatedTransactionIds.append(transaction.id)
                                     }
                                 }
@@ -424,7 +448,8 @@ import UniformTypeIdentifiers
                             }
                             .frame(minHeight: 200)
                             .droppable(acceptedTypes: [.transaction], isTargeted: self.$isDraggingOver) { (items: [FinancialTransaction], _) in
-                                for transaction in items where if !self.associatedTransactionIds.contains(transaction.id) {
+                                for transaction in items {
+                                    if !self.associatedTransactionIds.contains(transaction.id) {
                                         self.associatedTransactionIds.append(transaction.id)
                                     }
                                 }

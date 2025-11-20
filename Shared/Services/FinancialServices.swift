@@ -278,7 +278,8 @@ public final class SwiftDataFinancialMLService: Sendable {
             var anomalies: [TransactionAnomaly] = []
 
             // Simple anomaly detection based on amount thresholds
-            for transaction in transactions where if transaction.amount > 1000 { // High amount threshold
+            for transaction in transactions {
+                if transaction.amount > 1000 { // High amount threshold
                     anomalies.append(TransactionAnomaly(
                         transaction: transaction,
                         type: .unusuallyHighAmount,

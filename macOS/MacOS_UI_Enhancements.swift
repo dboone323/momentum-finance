@@ -1022,7 +1022,8 @@ import SwiftUI
                             .font(.headline)
 
                         Text(
-                            "This report provides insights into your \(self.getReportDescription()). Use this information to make informed financial decisions and track your progress toward your financial goals."
+                            "This report provides insights into your \(self.getReportDescription()). " +
+                            "Use this information to make informed financial decisions and track your progress toward your financial goals."
                         )
                         .padding()
                         .background(Color(.windowBackgroundColor).opacity(0.3))

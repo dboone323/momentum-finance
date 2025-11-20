@@ -424,7 +424,8 @@ public struct BudgetNotificationScheduler {
         let overspendFormatted = overspend.formatted(.currency(code: "USD"))
 
         return
-            "Based on your current spending, you may overspend your \(categoryName) budget by \(overspendFormatted) in \(daysRemaining) days. Predicted total: \(predictedFormatted) of \(limitFormatted)."
+            "Based on your current spending, you may overspend your \(categoryName) budget by " +
+            "\(overspendFormatted) in \(daysRemaining) days. Predicted total: \(predictedFormatted) of \(limitFormatted)."
     }
 
     /// Creates a spending spike alert message

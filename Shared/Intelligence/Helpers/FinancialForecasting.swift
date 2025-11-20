@@ -124,6 +124,12 @@ func fi_generateFinancialForecasts(transactions: [FinancialTransaction], account
 
 // MARK: - Forecasting helpers
 
+struct TrendForecast {
+    let trendDirection: String
+    let trendPercentage: Double
+    let nextForecast: Double?
+}
+
 func fi_projectedBalances(
     startingBalance: Double, monthlyChange: Double, months: Int, calendar: Calendar
 ) -> [(String, Double)] {
@@ -155,8 +161,8 @@ func fi_monthlyNetCashFlow(_ transactions: [FinancialTransaction], monthsAgo: In
     return monthlyNetCashFlow.sorted { $0.key < $1.key }.map { ($0.key, $0.value) }
 }
 
-func fi_trendAndForecast(values: [Double]) -> (trendDirection: String, trendPercentage: Double, nextForecast: Double?) {
-    guard values.count >= 2 else { return ("stable", 0, nil) }
+func fi_trendAndForecast(values: [Double]) -> TrendForecast {
+    guard values.count >= 2 else { return TrendForecast(trendDirection: "stable", trendPercentage: 0, nextForecast: nil) }
 
     let latest = values.last ?? 0
     let previous = values[values.count - 2]
@@ -176,5 +182,5 @@ func fi_trendAndForecast(values: [Double]) -> (trendDirection: String, trendPerc
     let avgDelta = deltas.reduce(0, +) / Double(deltas.count)
     let next = (values.last ?? 0) + avgDelta
 
-    return (trendDirection, trendPercentage, next)
+    return TrendForecast(trendDirection: trendDirection, trendPercentage: trendPercentage, nextForecast: next)
 }

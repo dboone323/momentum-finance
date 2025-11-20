@@ -326,7 +326,13 @@ extension Features.GoalsAndReports {
         let budgets: [Budget]
         let transactions: [FinancialTransaction]
 
-        private var budgetPerformance: [(Budget, Double, Double)] {
+        struct BudgetPerformanceData {
+            let budget: Budget
+            let spent: Double
+            let budgeted: Double
+        }
+
+        private var budgetPerformance: [BudgetPerformanceData] {
             self.budgets.map { budget in
                 let spent =
                     self.transactions
@@ -334,7 +340,7 @@ extension Features.GoalsAndReports {
                             $0.category?.name == budget.category?.name && $0.transactionType == .expense
                         }
                         .reduce(0) { $0 + $1.amount }
-                return (budget, spent, budget.limitAmount)
+                return BudgetPerformanceData(budget: budget, spent: spent, budgeted: budget.limitAmount)
             }
         }
 
@@ -351,9 +357,9 @@ extension Features.GoalsAndReports {
                         .frame(maxWidth: .infinity, alignment: .center)
                 } else {
                     VStack(spacing: 12) {
-                        ForEach(self.budgetPerformance, id: \.0.id) { budget, spent, budgeted in
+                        ForEach(self.budgetPerformance, id: \.budget.id) { data in
                             VStack(alignment: .leading, spacing: 8) {
-                                Text(budget.category?.name ?? "Unknown")
+                                Text(data.budget.category?.name ?? "Unknown")
                                     .font(.subheadline)
                                     .fontWeight(.medium)
 
@@ -365,10 +371,10 @@ extension Features.GoalsAndReports {
                                             .cornerRadius(4)
 
                                         Rectangle()
-                                            .fill(spent > budgeted ? Color.red : Color.green)
+                                            .fill(data.spent > data.budgeted ? Color.red : Color.green)
                                             .frame(
                                                 width: min(
-                                                    geometry.size.width * (spent / budgeted),
+                                                    geometry.size.width * (data.spent / data.budgeted),
                                                     geometry.size.width
                                                 ), height: 8
                                             )
@@ -378,11 +384,11 @@ extension Features.GoalsAndReports {
                                 .frame(height: 8)
 
                                 HStack {
-                                    Text("Spent: \(spent.formatted(.currency(code: "USD")))")
+                                    Text("Spent: \(data.spent.formatted(.currency(code: "USD")))")
                                         .font(.caption)
                                         .foregroundColor(.secondary)
                                     Spacer()
-                                    Text("Budget: \(budgeted.formatted(.currency(code: "USD")))")
+                                    Text("Budget: \(data.budgeted.formatted(.currency(code: "USD")))")
                                         .font(.caption)
                                         .foregroundColor(.secondary)
                                 }

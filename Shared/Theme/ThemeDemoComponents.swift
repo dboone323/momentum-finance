@@ -80,7 +80,7 @@ public struct ThemeFinancialSummaryCard: View {
 
 /// Accounts list for the demo view
 public struct ThemeAccountsList: View {
-    let accounts: [(String, String, Double)]
+    let accounts: [AccountData]
     let theme: ColorTheme
 
     var body: some View {
@@ -89,19 +89,19 @@ public struct ThemeAccountsList: View {
                 .font(.headline)
                 .foregroundStyle(self.theme.primaryText)
 
-            ForEach(self.accounts, id: \.0) { account in
+            ForEach(self.accounts, id: \.name) { account in
                 HStack {
-                    Image(systemName: account.1)
+                    Image(systemName: account.iconName)
                         .frame(width: 32, height: 32)
                         .foregroundStyle(self.theme.accentPrimary)
                         .background(self.theme.secondaryBackground)
                         .clipShape(Circle())
 
                     VStack(alignment: .leading) {
-                        Text(account.0)
+                        Text(account.name)
                             .font(.subheadline)
                             .foregroundStyle(self.theme.primaryText)
-                        Text("$\(String(format: "%.2f", account.2))")
+                        Text("$\(String(format: "%.2f", account.balance))")
                             .font(.caption)
                             .foregroundStyle(self.theme.secondaryText)
                     }
@@ -120,7 +120,7 @@ public struct ThemeAccountsList: View {
 
 /// Budget progress section for the demo view
 public struct ThemeBudgetProgress: View {
-    let budgets: [(String, Double, Double)]
+    let budgets: [BudgetData]
     let theme: ColorTheme
 
     var body: some View {
@@ -129,19 +129,19 @@ public struct ThemeBudgetProgress: View {
                 .font(.headline)
                 .foregroundStyle(self.theme.primaryText)
 
-            ForEach(self.budgets, id: \.0) { budget in
+            ForEach(self.budgets, id: \.name) { budget in
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
-                        Text(budget.0)
+                        Text(budget.name)
                             .font(.subheadline)
                             .foregroundStyle(self.theme.primaryText)
                         Spacer()
-                        Text("$\(String(format: "%.0f", budget.1)) / $\(String(format: "%.0f", budget.2))")
+                        Text("$\(String(format: "%.0f", budget.spent)) / $\(String(format: "%.0f", budget.total))")
                             .font(.caption)
                             .foregroundStyle(self.theme.secondaryText)
                     }
 
-                    let progress = budget.2 > 0 ? budget.1 / budget.2 : 0
+                    let progress = budget.total > 0 ? budget.spent / budget.total : 0
                     let color: Color = progress > 1.0 ? self.theme.expense : self.theme.budgetUnder
 
                     GeometryReader { geometry in

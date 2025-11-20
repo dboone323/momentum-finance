@@ -741,14 +741,20 @@ import SwiftUI
         private struct SpendingBreakdownChart: View {
             let transactions: [FinancialTransaction]
 
+            struct CategoryData {
+                let name: String
+                let amount: Double
+                let color: Color
+            }
+
             // This would normally calculate categories from actual transactions
-            private var categories: [(name: String, amount: Double, color: Color)] {
+            private var categories: [CategoryData] {
                 [
-                    ("Groceries", 450.00, .green),
-                    ("Dining", 320.50, .blue),
-                    ("Entertainment", 150.25, .purple),
-                    ("Shopping", 280.75, .orange),
-                    ("Utilities", 190.30, .red)
+                    CategoryData(name: "Groceries", amount: 450.00, color: .green),
+                    CategoryData(name: "Dining", amount: 320.50, color: .blue),
+                    CategoryData(name: "Entertainment", amount: 150.25, color: .purple),
+                    CategoryData(name: "Shopping", amount: 280.75, color: .orange),
+                    CategoryData(name: "Utilities", amount: 190.30, color: .red)
                 ]
             }
 
@@ -849,7 +855,7 @@ import SwiftUI
             }
 
             struct PieChartView: View {
-                let categories: [(name: String, amount: Double, color: Color)]
+                let categories: [CategoryData]
 
                 var body: some View {
                     let total = self.categories.reduce(0) { $0 + $1.amount }
