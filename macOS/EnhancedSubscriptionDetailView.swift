@@ -735,21 +735,9 @@ import SwiftUI
                 }
             }
 
-            private struct BulletPoint: View {
-                let text: String
 
-                var body: some View {
-                    HStack(alignment: .top, spacing: 8) {
-                        Image(systemName: "circle.fill")
-                            .font(.system(size: 6))
-                            .padding(.top, 6)
 
-                        Text(self.text)
-                    }
-                }
-            }
 
-            private struct CancellationAssistantView: View {
                 let subscription: Subscription?
                 @Environment(\.dismiss) private var dismiss
 
@@ -861,7 +849,7 @@ import SwiftUI
                 }
             }
 
-            private struct AlternativesView: View {
+
                 let subscription: Subscription?
                 @Environment(\.dismiss) private var dismiss
 
@@ -980,49 +968,11 @@ import SwiftUI
                 }
             }
 
-            private struct Feature: View {
-                let text: String
-                let isIncluded: Bool
 
-                var body: some View {
-                    HStack {
-                        Image(systemName: self.isIncluded ? "checkmark.circle.fill" : "xmark.circle")
-                            .foregroundStyle(self.isIncluded ? .green : .secondary)
-
-                        Text(self.text)
-                    }
-                }
-            }
 
             // MARK: - Supporting Models
 
-            private struct SubscriptionEditModel {
-                var name: String
-                var provider: String
-                var amount: Double
-                var billingCycle: String
-                var startDate: Date?
-                var nextPaymentDate: Date?
-                var notes: String
-                var currencyCode: String
-                var category: String?
-                var paymentMethod: String?
-                var autoRenews: Bool
 
-                init(from subscription: Subscription) {
-                    self.name = subscription.name
-                    self.provider = subscription.provider
-                    self.amount = subscription.amount
-                    self.billingCycle = subscription.billingCycle
-                    self.startDate = subscription.startDate
-                    self.nextPaymentDate = subscription.nextPaymentDate
-                    self.notes = subscription.notes
-                    self.currencyCode = subscription.currencyCode
-                    self.category = subscription.category
-                    self.paymentMethod = subscription.paymentMethod
-                    self.autoRenews = subscription.autoRenews
-                }
-            }
 
             // MARK: - Helper Methods
 
