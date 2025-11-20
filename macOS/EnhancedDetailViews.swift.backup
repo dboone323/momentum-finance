@@ -673,9 +673,23 @@ import SwiftUI
 
             // MARK: - Supporting Views
 
+            private struct DetailField: View {
+                let label: String
+                let value: String
 
+                var body: some View {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(self.label)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
 
+                        Text(self.value)
+                            .font(.body)
+                    }
+                }
+            }
 
+            private struct CategoryTag: View {
                 let category: ExpenseCategory
 
                 var body: some View {
@@ -700,7 +714,7 @@ import SwiftUI
                 }
             }
 
-
+            private struct AttachmentThumbnail: View {
                 let attachment: String
                 var showDeleteButton: Bool = false
 
@@ -735,7 +749,7 @@ import SwiftUI
                 }
             }
 
-
+            private struct BudgetImpactView: View {
                 let category: ExpenseCategory
                 let transactionAmount: Double
 
@@ -806,7 +820,7 @@ import SwiftUI
                 }
             }
 
-
+            private struct CategorySpendingChart: View {
                 let category: ExpenseCategory
 
                 // Sample data - would be real data in actual implementation
@@ -873,7 +887,7 @@ import SwiftUI
                 }
             }
 
-
+            private struct MerchantSpendingChart: View {
                 let merchantName: String
 
                 // Sample data - would be real data in actual implementation
@@ -909,7 +923,7 @@ import SwiftUI
                 }
             }
 
-
+            private struct ExportOptionsView: View {
                 let transaction: FinancialTransaction
                 @Environment(\.dismiss) private var dismiss
 
@@ -949,7 +963,7 @@ import SwiftUI
                 }
             }
 
-
+            private struct RelatedTransactionsView: View {
                 let transaction: FinancialTransaction
                 @Environment(\.dismiss) private var dismiss
 
@@ -985,7 +999,8 @@ import SwiftUI
                     }
                     .frame(width: 500, height: 400)
                 }
-```
+            }
+
             // MARK: - Supporting Models
 
             private struct TransactionEditModel {
