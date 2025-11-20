@@ -10,7 +10,7 @@ import SwiftUI
 #if DEBUG
     @available(iOS, deprecated: 9999)
     @MainActor
-    struct DebugColorThemeStub: View {
+    struct DebugColorThemeStub {
         static let shared = DebugColorThemeStub()
         var background: Color { Color.gray.opacity(0.1) }
         var secondaryBackground: Color { Color.gray.opacity(0.05) }

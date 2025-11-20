@@ -5,435 +5,542 @@
 //  Extracted components from EnhancedSubscriptionDetailView for SwiftLint compliance
 //
 
+import Charts
+import Shared
+import SwiftData
 import SwiftUI
 
-#if canImport(AppKit)
-import AppKit
-#endif
+#if os(macOS)
 
-// MARK: - Subscription Categories
+    // MARK: - Shared Subscription Components
 
-/// Category options for subscriptions
-enum SubscriptionCategory: String, CaseIterable, Identifiable {
-    case entertainment = "Entertainment"
-    case productivity = "Productivity"
-    case health = "Health & Fitness"
-    case utilities = "Utilities"
-    case education = "Education"
-    case other = "Other"
+    struct SubscriptionLogo: View {
+        let provider: String
 
-    var id: String { self.rawValue }
-
-    var icon: String {
-        switch self {
-        case .entertainment: return "tv.fill"
-        case .productivity: return "briefcase.fill"
-        case .health: return "heart.fill"
-        case .utilities: return "wrench.fill"
-        case .education: return "book.fill"
-        case .other: return "folder.fill"
-        }
-    }
-
-    var color: Color {
-        switch self {
-        case .entertainment: return .purple
-        case .productivity: return .blue
-        case .health: return .red
-        case .utilities: return .green
-        case .education: return .orange
-        case .other: return .gray
-        }
-    }
-}
-
-// MARK: - Payment Methods
-
-/// Payment method options
-struct PaymentMethod: Identifiable, Hashable {
-    let id = UUID()
-    let name: String
-    let icon: String
-    let lastFour: String?
-
-    static let creditCard = PaymentMethod(name: "Credit Card", icon: "creditcard.fill", lastFour: "4242")
-    static let  debitCard = PaymentMethod(name: "Debit Card", icon: "creditcard.fill", lastFour: "1234")
-    static let paypal = PaymentMethod(name: "PayPal", icon: "dollarsign.circle.fill", lastFour: nil)
-    static let applePay = PaymentMethod(name: "Apple Pay", icon: "applelogo", lastFour: nil)
-
-    static let allMethods = [creditCard, debitCard, paypal, applePay]
-}
-
-// MARK: - Billing Cycles
-
-/// Billing cycle options
-struct BillingCycle: Identifiable, Hashable {
-    let id = UUID()
-    let name: String
-    let days: Int
-
-    static let weekly = BillingCycle(name: "Weekly", days: 7)
-    static let biweekly = BillingCycle(name: "Bi-Weekly", days: 14)
-    static let monthly = BillingCycle(name: "Monthly", days: 30)
-    static let quarterly = BillingCycle(name: "Quarterly", days: 90)
-    static let yearly = BillingCycle(name: "Yearly", days: 365)
-
-    static let allCycles = [weekly, biweekly, monthly, quarterly, yearly]
-}
-
-// MARK: - Subscription Status Views
-
-/// Status badge view
-struct SubscriptionStatusBadge: View {
-    let isActive: Bool
-
-    var body: some View {
-        HStack(spacing: 4) {
-            Circle()
-                .fill(isActive ? Color.green : Color.red)
-                .frame(width: 8, height: 8)
-            Text(isActive ? "Active" : "Inactive")
-                .font(.caption)
-                .fontWeight(.medium)
-        }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 6)
-        .background(
-            Capsule()
-                .fill((isActive ? Color.green : Color.red).opacity(0.1))
-        )
-    }
-}
-
-/// Cost breakdown view
-struct CostBreakdownView: View {
-    let amount: Double
-    let cycle: String
-
-    private var monthlyEquivalent: Double {
-        switch cycle.lowercased() {
-        case "weekly": return amount * 4.33
-        case "bi-weekly": return amount * 2.17
-        case "monthly": return amount
-        case "quarterly": return amount / 3
-        case "yearly": return amount / 12
-        default: return amount
-        }
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Cost Breakdown")
-                .font(.headline)
-
-            HStack {
-                Text("\(cycle) Cost:")
-                    .foregroundStyle(.secondary)
-                Spacer()
-                Text("$\(amount, specifier: "%.2f")")
-                    .fontWeight(.semibold)
-            }
-
-            if cycle.lowercased() != "monthly" {
-                HStack {
-                    Text("Monthly Equivalent:")
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                    Text("$\(monthlyEquivalent, specifier: "%.2f")")
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.blue)
-                }
-            }
-
-            Divider()
-
-            HStack {
-                Text("Annual Cost:")
-                    .foregroundStyle(.secondary)
-                Spacer()
-                Text("$\(monthlyEquivalent * 12, specifier: "%.2f")")
-                    .font(.title3)
-                    .fontWeight(.bold)
+        // Map common providers to system images
+        private var iconName: String {
+            switch provider.lowercased() {
+            case "netflix": "play.tv"
+            case "spotify": "music.note"
+            case "apple": "apple.logo"
+            case "disney": "play.tv.fill"
+            case "amazon": "cart"
+            case "youtube": "play.rectangle"
+            default: "creditcard"
             }
         }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.gray.opacity(0.1))
-        )
-    }
-}
-
-/// Next billing date view
-struct NextBillingView: View {
-    let nextBillingDate: Date
-
-    private var daysUntilBilling: Int {
-        Calendar.current.dateComponents([.day], from: Date(), to: nextBillingDate).day ?? 0
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Next Billing")
-                .font(.headline)
-
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(nextBillingDate, style: .date)
-                        .font(.title3)
-                        .fontWeight(.semibold)
-
-                    Text("\(daysUntilBilling) days away")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-
-                Spacer()
-
-                Image(systemName: "calendar.badge.clock")
-                    .font(.largeTitle)
-                    .foregroundStyle(.blue)
-            }
-        }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.blue.opacity(0.1))
-        )
-    }
-}
-
-/// Payment history row
-struct PaymentHistoryRow: View {
-    let date: Date
-    let amount: Double
-    let status: PaymentStatus
-
-    enum PaymentStatus {
-        case successful, pending, failed
-
-        var icon: String {
-            switch self {
-            case .successful: return "checkmark.circle.fill"
-            case .pending: return "clock.fill"
-            case .failed: return "xmark.circle.fill"
-            }
-        }
-
-        var color: Color {
-            switch self {
-            case .successful: return .green
-            case .pending: return .orange
-            case .failed: return .red
-            }
-        }
-    }
-
-    var body: some View {
-        HStack {
-            Image(systemName: status.icon)
-                .foregroundStyle(status.color)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(date, style: .date)
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-
-                Text("$\(amount, specifier: "%.2f")")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-
-            Spacer()
-
-            Text(String(describing: status))
-                .font(.caption)
-                .foregroundStyle(status.color)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
-                .background(
-                    Capsule()
-                        .fill(status.color.opacity(0.1))
-                )
-        }
-        .padding(.vertical, 8)
-    }
-}
-
-/// Notes editor view
-struct NotesEditorView: View {
-    @Binding var notes: String
-    @FocusState private var isFocused: Bool
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Notes")
-                .font(.headline)
-
-            #if canImport(AppKit)
-            TextEditor(text: $notes)
-                .frame(minHeight: 100)
-                .padding(8)
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-                .focused($isFocused)
-            #else
-            TextEditor(text: $notes)
-                .frame(minHeight: 100)
-                .padding(8)
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-            #endif
-        }
-    }
-}
-
-/// Auto-renewal toggle view
-struct AutoRenewalToggle: View {
-    @Binding var isEnabled: Bool
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Auto-Renewal")
-                        .font(.headline)
-
-                    Text("Automatically renew this subscription")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-
-                Spacer()
-
-                Toggle("", isOn: $isEnabled)
-                    .labelsHidden()
-            }
-
-            if !isEnabled {
-                Text("Your subscription will be cancelled at the end of the current billing period")
-                    .font(.caption)
-                    .foregroundStyle(.orange)
-                    .padding(.top, 4)
-            }
-        }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.gray.opacity(0.1))
-        )
-    }
-}
-
-/// Subscription insights view
-struct SubscriptionInsightsView: View {
-    let totalPaid: Double
-    let averageMonthly: Double
-    let startDate: Date
-
-    private var monthsActive: Int {
-        Calendar.current.dateComponents([.month], from: startDate, to: Date()).month ?? 0
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Insights")
-                .font(.headline)
-
-            HStack(spacing: 20) {
-                InsightCard(
-                    title: "Total Paid",
-                    value: "$\(totalPaid, specifier: "%.2f")",
-                    icon: "dollarsign.circle.fill",
-                    color: .green
-                )
-
-                InsightCard(
-                    title: "Avg/Month",
-                    value: "$\(averageMonthly, specifier: "%.2f")",
-                    icon: "chart.line.uptrend.xyaxis",
-                    color: .blue
-                )
-
-                InsightCard(
-                    title: "Active For",
-                    value: "\(monthsActive) mo",
-                    icon: "calendar",
-                    color: .purple
-                )
-            }
-        }
-    }
-
-    private struct InsightCard: View {
-        let title: String
-        let value: String
-        let icon: String
-        let color: Color
 
         var body: some View {
-            VStack(spacing: 8) {
-                Image(systemName: icon)
-                    .font(.title2)
-                    .foregroundStyle(color)
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.blue.opacity(0.1))
 
-                Text(value)
-                    .font(.headline)
-                    .fontWeight(.bold)
+                Image(systemName: iconName)
+                    .font(.system(size: 22))
+                    .foregroundColor(.blue)
+            }
+        }
+    }
 
-                Text(title)
+    struct SubscriptionDetailField: View {
+        let label: String
+        let value: String
+
+        var body: some View {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(self.label)
                     .font(.caption)
                     .foregroundStyle(.secondary)
+
+                Text(self.value)
+                    .font(.body)
             }
-            .frame(maxWidth: .infinity)
-            .padding()
+        }
+    }
+
+    struct SubscriptionStatusBadge: View {
+        let isActive: Bool
+        let autoRenews: Bool
+
+        var body: some View {
+            HStack(spacing: 6) {
+                Circle()
+                    .fill(self.isActive ? .green : .red)
+                    .frame(width: 8, height: 8)
+
+                Text(self.isActive ? (self.autoRenews ? "Active" : "Expiring") : "Inactive")
+                    .font(.caption)
+                    .fontWeight(.medium)
+            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
             .background(
+                (self.isActive ? (self.autoRenews ? Color.green : Color.orange) : Color.red)
+                    .opacity(0.1)
+            )
+            .cornerRadius(12)
+            .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(color.opacity(0.1))
+                    .stroke(
+                        (self.isActive ? (self.autoRenews ? Color.green : Color.orange) : Color.red)
+                            .opacity(0.3),
+                        lineWidth: 1
+                    )
             )
         }
     }
-}
 
-/// Cancellation confirmation view
-struct CancellationConfirmationView: View {
-    @Binding var isPresented: Bool
-    let subscriptionName: String
-    let onConfirm: () -> Void
+    struct PaymentHistoryChart: View {
+        let subscription: Subscription
 
-    var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "exclamationmark.triangle.fill")
-                .font(.system(size: 50))
-                .foregroundStyle(.orange)
-
-            Text("Cancel Subscription?")
-                .font(.title2)
-                .fontWeight(.bold)
-
-            Text("Are you sure you want to cancel '\(subscriptionName)'? This action cannot be undone.")
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.secondary)
-                .padding(.horizontal)
-
-            HStack(spacing: 12) {
-                Button("Keep Subscription") {
-                    isPresented = false
-                }
-                .buttonStyle(.bordered)
-                .controlSize(.large)
-
-                Button("Cancel Subscription") {
-                    onConfirm()
-                    isPresented = false
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.red)
-                .controlSize(.large)
-            }
-            .padding(.top)
+        // Sample data - would be real data in actual implementation
+        func generateSampleData() -> [(month: String, amount: Double)] {
+            [
+                (month: "Jun", amount: self.subscription.amount),
+                (month: "Jul", amount: self.subscription.amount),
+                (month: "Aug", amount: self.subscription.amount),
+                (month: "Sep", amount: self.subscription.amount),
+                (month: "Oct", amount: self.subscription.amount),
+                (month: "Nov", amount: self.subscription.amount)
+            ]
         }
-        .padding(30)
-        .frame(width: 400)
+
+        var body: some View {
+            VStack(alignment: .leading, spacing: 8) {
+                Chart {
+                    ForEach(self.generateSampleData(), id: \.month) { item in
+                        BarMark(
+                            x: .value("Month", item.month),
+                            y: .value("Amount", item.amount)
+                        )
+                        .foregroundStyle(Color.blue.gradient)
+                    }
+
+                    RuleMark(y: .value("Average", self.subscription.amount))
+                        .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 5]))
+                        .annotation(position: .top, alignment: .trailing) {
+                            Text("Monthly: \(self.subscription.amount.formatted(.currency(code: self.subscription.currencyCode)))")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                }
+            }
+        }
     }
-}
+
+    struct BulletPoint: View {
+        let text: String
+
+        var body: some View {
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "circle.fill")
+                    .font(.system(size: 6))
+                    .padding(.top, 6)
+
+                Text(self.text)
+            }
+        }
+    }
+
+    struct ValueAssessmentView: View {
+        let subscription: Subscription
+
+        // Sample usage data - in a real app, this would be tracked
+        @State private var usageRating: Double = 0.7 // 0-1 scale
+
+        // Calculate cost per use
+        private var costPerUse: Double {
+            // Assuming monthly billing and usage 5 times per month
+            self.subscription.amount / 5.0
+        }
+
+        private var valueAssessment: String {
+            if self.usageRating > 0.8 {
+                "Excellent Value"
+            } else if self.usageRating > 0.5 {
+                "Good Value"
+            } else if self.usageRating > 0.3 {
+                "Fair Value"
+            } else {
+                "Poor Value"
+            }
+        }
+
+        private var valueColor: Color {
+            if self.usageRating > 0.8 {
+                .green
+            } else if self.usageRating > 0.5 {
+                .blue
+            } else if self.usageRating > 0.3 {
+                .orange
+            } else {
+                .red
+            }
+        }
+
+        var body: some View {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Value Assessment")
+                    .font(.headline)
+
+                HStack {
+                    VStack(alignment: .center, spacing: 8) {
+                        ZStack {
+                            Circle()
+                                .stroke(Color.gray.opacity(0.3), lineWidth: 10)
+                                .frame(width: 100, height: 100)
+
+                            Circle()
+                                .trim(from: 0, to: self.usageRating)
+                                .stroke(self.valueColor, lineWidth: 10)
+                                .frame(width: 100, height: 100)
+                                .rotationEffect(.degrees(-90))
+
+                            VStack {
+                                Text(self.valueAssessment)
+                                    .font(.headline)
+                                    .foregroundStyle(self.valueColor)
+
+                                Text("\(Int(self.usageRating * 100))%")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+
+                        Text("Usage Rating")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.trailing, 20)
+
+                    Divider()
+                        .padding(.horizontal, 10)
+
+                    VStack(alignment: .leading, spacing: 16) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Monthly Cost")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+
+                            Text(self.subscription.amount.formatted(.currency(code: self.subscription.currencyCode)))
+                                .font(.title2)
+                        }
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Estimated Cost Per Use")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+
+                            Text(self.costPerUse.formatted(.currency(code: self.subscription.currencyCode)))
+                                .font(.title3)
+                        }
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Similar Subscriptions Average")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+
+                            let lowerBound = (self.subscription.amount * 0.9).formatted(.currency(code: self.subscription.currencyCode))
+                            let upperBound = (self.subscription.amount * 1.1).formatted(.currency(code: self.subscription.currencyCode))
+                            Text(
+                                "\(lowerBound) - \(upperBound)"
+                            )
+                            .font(.body)
+                        }
+                    }
+                }
+
+                Divider()
+                    .padding(.vertical, 4)
+
+                // Value improvement suggestions
+                Text("Value Improvement Suggestions")
+                    .font(.subheadline)
+                    .bold()
+
+                VStack(alignment: .leading, spacing: 6) {
+                    BulletPoint(text: "Consider switching to annual billing to save 16%")
+                    BulletPoint(text: "3 similar services found with lower monthly costs")
+                    BulletPoint(text: "Usage has decreased by 30% in the last 2 months")
+                }
+            }
+            .padding()
+            .background(Color(.windowBackgroundColor).opacity(0.3))
+            .cornerRadius(8)
+        }
+    }
+
+    struct SubscriptionCancellationAssistantView: View {
+        let subscription: Subscription?
+        @Environment(\.dismiss) private var dismiss
+
+        var body: some View {
+            VStack(spacing: 20) {
+                Text("Subscription Cancellation Assistant")
+                    .font(.title2)
+                    .padding(.top)
+
+                Text("Let us help you cancel your \(self.subscription?.name ?? "subscription")")
+                    .font(.headline)
+
+                VStack(alignment: .leading, spacing: 20) {
+                    HStack(spacing: 16) {
+                        Image(systemName: "1.circle.fill")
+                            .font(.title)
+                            .foregroundStyle(.blue)
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Visit the provider's website")
+                                .font(.headline)
+
+                            if let provider = subscription?.provider {
+                                Button("\(provider) Account Page") {
+                                    // Open the website
+                                }
+                                .buttonStyle(.bordered)
+                            }
+                        }
+                    }
+
+                    HStack(spacing: 16) {
+                        Image(systemName: "2.circle.fill")
+                            .font(.title)
+                            .foregroundStyle(.blue)
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Navigate to account settings")
+                                .font(.headline)
+
+                            Text("Look for 'Subscription', 'Membership', or 'Billing' section")
+                                .font(.body)
+                        }
+                    }
+
+                    HStack(spacing: 16) {
+                        Image(systemName: "3.circle.fill")
+                            .font(.title)
+                            .foregroundStyle(.blue)
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Find cancellation option")
+                                .font(.headline)
+
+                            Text("Look for 'Cancel', 'End subscription', or 'Manage plan'")
+                                .font(.body)
+                        }
+                    }
+
+                    HStack(spacing: 16) {
+                        Image(systemName: "4.circle.fill")
+                            .font(.title)
+                            .foregroundStyle(.blue)
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Confirm cancellation")
+                                .font(.headline)
+
+                            Text("Complete any final steps and get confirmation email")
+                                .font(.body)
+                        }
+                    }
+                }
+                .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                Divider()
+
+                Text("Need to contact customer support?")
+                    .font(.headline)
+
+                if let provider = subscription?.provider {
+                    HStack(spacing: 20) {
+                        Button("Call \(provider)") {
+                            // Call action
+                        }
+                        .buttonStyle(.bordered)
+
+                        Button("Email Support") {
+                            // Email action
+                        }
+                        .buttonStyle(.bordered)
+
+                        Button("Live Chat") {
+                            // Chat action
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
+
+                Spacer()
+
+                Button("Close").accessibilityLabel("Button").accessibilityLabel("Button") {
+                    self.dismiss()
+                }
+                .keyboardShortcut(.escape, modifiers: [])
+            }
+            .padding()
+        }
+    }
+
+    struct Feature: View {
+        let text: String
+        let isIncluded: Bool
+
+        var body: some View {
+            HStack {
+                Image(systemName: self.isIncluded ? "checkmark.circle.fill" : "xmark.circle")
+                    .foregroundStyle(self.isIncluded ? .green : .secondary)
+
+                Text(self.text)
+            }
+        }
+    }
+
+    struct SubscriptionAlternativesView: View {
+        let subscription: Subscription?
+        @Environment(\.dismiss) private var dismiss
+
+        // Sample alternatives data
+        let alternatives = [
+            (name: "CompetitorA", price: 7.99, features: ["HD Streaming", "2 devices", "Limited library"]),
+            (name: "CompetitorB", price: 9.99, features: ["4K Streaming", "4 devices", "Full library", "Downloads"]),
+            (
+                name: "CompetitorC",
+                price: 12.99,
+                features: ["4K Streaming", "Unlimited devices", "Full library", "Downloads", "Live TV"]
+            )
+        ]
+
+        var body: some View {
+            VStack(spacing: 20) {
+                Text("Alternative Services")
+                    .font(.title2)
+                    .padding(.top)
+
+                Text("Compare alternatives to \(self.subscription?.name ?? "this service")")
+                    .font(.headline)
+
+                HStack(alignment: .top, spacing: 0) {
+                    // Current subscription column
+                    VStack(spacing: 0) {
+                        Text("Your Subscription")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue.opacity(0.1))
+
+                        Divider()
+
+                        Text(self.subscription?.name ?? "Current")
+                            .font(.title3)
+                            .padding()
+
+                        Divider()
+
+                        Text(self.subscription?.amount.formatted(.currency(code: self.subscription?.currencyCode ?? "USD")) ?? "$0.00")
+                            .font(.title3)
+                            .bold()
+                            .padding()
+
+                        Divider()
+
+                        VStack(alignment: .leading, spacing: 12) {
+                            Feature(text: "Basic Feature", isIncluded: true)
+                            Feature(text: "Premium Feature", isIncluded: true)
+                            Feature(text: "Advanced Feature", isIncluded: false)
+                            Feature(text: "Extra Feature", isIncluded: false)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue.opacity(0.05))
+                    .cornerRadius(8)
+
+                    // Alternatives columns
+                    ForEach(self.alternatives, id: \.name) { alternative in
+                        VStack(spacing: 0) {
+                            Text("Alternative")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.secondary.opacity(0.1))
+
+                            Divider()
+
+                            Text(alternative.name)
+                                .font(.title3)
+                                .padding()
+
+                            Divider()
+
+                            Text(alternative.price.formatted(.currency(code: "USD")))
+                                .font(.title3)
+                                .bold()
+                                .padding()
+
+                            Divider()
+
+                            VStack(alignment: .leading, spacing: 12) {
+                                ForEach(alternative.features, id: \.self) { feature in
+                                    Feature(text: feature, isIncluded: true)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding()
+
+                            Spacer()
+
+                            Button("Visit Website").accessibilityLabel("Button").accessibilityLabel("Button") {
+                                // Open website
+                            }
+                            .buttonStyle(.bordered)
+                            .padding(.bottom)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .background(Color.secondary.opacity(0.05))
+                        .cornerRadius(8)
+                    }
+                }
+
+                Button("Close").accessibilityLabel("Button").accessibilityLabel("Button") {
+                    self.dismiss()
+                }
+                .keyboardShortcut(.escape, modifiers: [])
+                .padding(.top)
+            }
+            .padding()
+        }
+    }
+
+    struct SubscriptionEditModel {
+        var name: String
+        var provider: String
+        var amount: Double
+        var billingCycle: String
+        var startDate: Date?
+        var nextPaymentDate: Date?
+        var notes: String
+        var currencyCode: String
+        var category: String?
+        var paymentMethod: String?
+        var autoRenews: Bool
+
+        init(from subscription: Subscription) {
+            self.name = subscription.name
+            self.provider = subscription.provider
+            self.amount = subscription.amount
+            self.billingCycle = subscription.billingCycle
+            self.startDate = subscription.startDate
+            self.nextPaymentDate = subscription.nextPaymentDate
+            self.notes = subscription.notes
+            self.currencyCode = subscription.currencyCode
+            self.category = subscription.category
+            self.paymentMethod = subscription.paymentMethod
+            self.autoRenews = subscription.autoRenews
+        }
+    }
+
+#endif
