@@ -147,24 +147,24 @@ public struct AddTransactionView: View {
             }
             .padding()
             #if os(iOS)
-                .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.inline)
             #endif
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancel") {
-                            self.dismiss()
-                        }
-                        .accessibilityLabel("Cancel")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        self.dismiss()
                     }
-
-                    ToolbarItem(placement: .primaryAction) {
-                        Button("Save") {
-                            self.dismiss()
-                        }
-                        .fontWeight(.semibold)
-                        .accessibilityLabel("Save")
-                    }
+                    .accessibilityLabel("Cancel")
                 }
+
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Save") {
+                        self.dismiss()
+                    }
+                    .fontWeight(.semibold)
+                    .accessibilityLabel("Save")
+                }
+            }
         }
     }
 
@@ -319,7 +319,7 @@ public struct SearchAndFilterSection: View {
     }
 
     private func filterChip(_ title: String, _ isSelected: Bool, _ filter: TransactionFilter)
-        -> some View {
+    -> some View {
         Button(action: {
             self.selectedFilter = filter
         }, label: {

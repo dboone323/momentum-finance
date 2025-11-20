@@ -47,6 +47,16 @@ import SwiftUI
                 }.sorted { $0.date > $1.date }
             }
 
+            enum Timespan: String, CaseIterable, Identifiable {
+                case threeMonths = "3 Months"
+                case sixMonths = "6 Months"
+                case oneYear = "1 Year"
+                case twoYears = "2 Years"
+                case allTime = "All Time"
+
+                var id: String { rawValue }
+            }
+
             var body: some View {
                 VStack(spacing: 0) {
                     // Top toolbar with actions
@@ -606,8 +616,115 @@ import SwiftUI
                 }
             }
 
-            // MARK: - Supporting Views (now using shared components)
+            private struct DetailField: View {
+                let label: String
+                let value: String
 
+                var body: some View {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(self.label)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+
+                        Text(self.value)
+                            .font(.body)
+                    }
+                }
+            }
+
+            private struct SubscriptionLogo: View {
+                let provider: String
+
+                // Map common providers to system images
+                private var iconName: String {
+                    switch self.provider.lowercased() {
+                    case "netflix": "play.tv"
+                    case "spotify": "music.note"
+                    case "apple": "apple.logo"
+                    case "disney": "play.tv.fill"
+                    case "amazon": "cart"
+                    case "youtube": "play.rectangle"
+                    default: "creditcard"
+                    }
+                }
+
+                var body: some View {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.blue.opacity(0.1))
+
+                        Image(systemName: self.iconName)
+                            .font(.system(size: 22))
+                            .foregroundColor(.blue)
+                    }
+                }
+            }
+
+            private struct PaymentStatusBadge: View {
+                let status: String
+
+                private var color: Color {
+                    switch self.status.lowercased() {
+                    case "active": .green
+                    case "inactive": .red
+                    case "paused": .orange
+                    default: .gray
+                    }
+                }
+
+                var body: some View {
+                    Text(self.status)
+                        .font(.caption)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(self.color.opacity(0.1))
+                        .foregroundColor(self.color)
+                        .cornerRadius(4)
+                }
+            }
+
+            private struct SubscriptionCostChart: View {
+                let subscription: Subscription
+                let timespan: Timespan
+
+                // Sample data - would be real data in actual implementation
+                /// <#Description#>
+                /// - Returns: <#description#>
+                func generateSampleData() -> [(month: String, amount: Double)] {
+                    [
+                        (month: "Jun", amount: self.subscription.amount),
+                        (month: "Jul", amount: self.subscription.amount),
+                        (month: "Aug", amount: self.subscription.amount),
+                        (month: "Sep", amount: self.subscription.amount),
+                        (month: "Oct", amount: self.subscription.amount),
+                        (month: "Nov", amount: self.subscription.amount)
+                    ]
+                }
+
+                var body: some View {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Chart {
+                            ForEach(self.generateSampleData(), id: \.month) { item in
+                                BarMark(
+                                    x: .value("Month", item.month),
+                                    y: .value("Amount", item.amount)
+                                )
+                                .foregroundStyle(Color.blue.gradient)
+                            }
+
+                            RuleMark(y: .value("Average", self.subscription.amount))
+                                .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 5]))
+                                .annotation(position: .top, alignment: .trailing) {
+                                    Text("Monthly: \(self.subscription.amount.formatted(.currency(code: self.subscription.currencyCode)))")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                        }
+                    }
+                }
+            }
+
+            private struct ValueAssessmentView: View {
                 let subscription: Subscription
 
                 // Sample usage data - in a real app, this would be tracked

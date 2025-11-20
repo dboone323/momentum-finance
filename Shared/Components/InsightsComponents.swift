@@ -219,16 +219,16 @@ public struct InsightDetailView: View {
             }
             .navigationTitle("Insight Details")
             #if os(iOS)
-                .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.inline)
             #endif
-                .toolbar {
-                    ToolbarItem(placement: .primaryAction) {
-                        Button("Done") {
-                            self.dismiss()
-                        }
-                        .accessibilityLabel("Done")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Done") {
+                        self.dismiss()
                     }
+                    .accessibilityLabel("Done")
                 }
+            }
         }
     }
 

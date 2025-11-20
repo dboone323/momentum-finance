@@ -12,12 +12,12 @@ import SwiftUI
 /// Individual budget row showing category and progress
 struct BudgetRow: View {
     let budget: Budget
-    
+
     var progress: Double {
         guard budget.limitAmount > 0 else { return 0 }
         return min(budget.spentAmount / budget.limitAmount, 1.0)
     }
-    
+
     var progressColor: Color {
         if progress >= 1.0 {
             return .red
@@ -27,23 +27,23 @@ struct BudgetRow: View {
             return .green
         }
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(budget.category?.name ?? "Uncategorized")
                     .font(.headline)
-                
+
                 Spacer()
-                
+
                 Text("$\(budget.spentAmount, specifier: "%.2f") / $\(budget.limitAmount, specifier: "%.2f")")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
-            
+
             ProgressView(value: progress)
                 .tint(progressColor)
-            
+
             Text("\(Int(progress * 100))% used")
                 .font(.caption)
                 .foregroundStyle(progressColor)
