@@ -33,7 +33,7 @@ public struct FileSelectionComponent: View {
             Button(action: {
                 self.showingFilePicker = true
                 self.onFileSelected()
-            }) {
+            }, label: {
                 VStack(spacing: 12) {
                     Image(systemName: "doc.badge.plus")
                         .font(.system(size: 32))
@@ -45,7 +45,7 @@ public struct FileSelectionComponent: View {
                 .background(Color.blue.opacity(0.1))
                 .foregroundColor(.blue)
                 .cornerRadius(12)
-            }
+            })
         }
         .padding()
     }
@@ -84,7 +84,7 @@ public struct ImportButtonComponent: View {
     public let action: () -> Void
 
     public var body: some View {
-        Button(action: self.action) {
+        Button(action: self.action, label: {
             HStack {
                 if self.isImporting {
                     ProgressView()
@@ -97,7 +97,7 @@ public struct ImportButtonComponent: View {
             .background(self.isImporting ? Color.gray : Color.blue)
             .foregroundColor(.white)
             .cornerRadius(12)
-        }
+        })
         .disabled(self.isImporting)
         .accessibilityLabel("Import Data")
     }

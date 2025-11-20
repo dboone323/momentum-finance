@@ -19,25 +19,25 @@ public struct AboutSection: View {
 
             Button(action: {
                 // Handle privacy policy
-            }) {
+            }, label: {
                 HStack {
                     Text("Privacy Policy")
                     Spacer()
                     Image(systemName: "chevron.right")
                         .foregroundColor(.secondary)
                 }
-            }
+            })
 
             Button(action: {
                 // Handle terms of service
-            }) {
+            }, label: {
                 HStack {
                     Text("Terms of Service")
                     Spacer()
                     Image(systemName: "chevron.right")
                         .foregroundColor(.secondary)
                 }
-            }
+            })
         }
     }
 }

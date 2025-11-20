@@ -1,24 +1,10 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SearchHeaderComponentTests: XCTestCase {
     var sut: SearchHeaderComponent!
     var searchTextBinding: Binding<String>!
     var selectedFilterBinding: Binding<SearchFilter>!
-
-    override func setUp() {
-        super.setUp()
-        searchTextBinding = .init(wrappedValue: "")
-        selectedFilterBinding = .init(wrappedValue: .all)
-        sut = SearchHeaderComponent(searchText: searchTextBinding, selectedFilter: selectedFilterBinding)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        searchTextBinding = nil
-        selectedFilterBinding = nil
-        sut = nil
-    }
 
     // Test Case 1: Initial State
     func testInitialState() {
@@ -29,7 +15,7 @@ class SearchHeaderComponentTests: XCTestCase {
     // Test Case 2: Search Text Field
     func testSearchTextField() {
         let textField = sut.body.findFirst(ofType: TextField.self)!
-        
+
         XCTAssertEqual(textField.text, searchTextBinding.wrappedValue)
         XCTAssertEqual(textField.accessibilityLabel, "Text Field")
         XCTAssertEqual(textField.textFieldStyle, .plain)
@@ -39,7 +25,7 @@ class SearchHeaderComponentTests: XCTestCase {
     // Test Case 3: Filter Picker
     func testFilterPicker() {
         let filterPicker = sut.body.findFirst(ofType: Picker.self)!
-        
+
         XCTAssertEqual(filterPicker.selection, selectedFilterBinding.wrappedValue)
         XCTAssertEqual(filterPicker.pickerStyle, .segmented)
     }
@@ -48,7 +34,7 @@ class SearchHeaderComponentTests: XCTestCase {
     func testSearchTextFieldChange() {
         searchTextBinding.wrappedValue = "Test"
         XCTAssertEqual(searchTextBinding.wrappedValue, "Test")
-        
+
         let textField = sut.body.findFirst(ofType: TextField.self)!
         XCTAssertEqual(textField.text, searchTextBinding.wrappedValue)
     }
@@ -57,7 +43,7 @@ class SearchHeaderComponentTests: XCTestCase {
     func testFilterPickerChange() {
         selectedFilterBinding.wrappedValue = .crypto
         XCTAssertEqual(selectedFilterBinding.wrappedValue, .crypto)
-        
+
         let filterPicker = sut.body.findFirst(ofType: Picker.self)!
         XCTAssertEqual(filterPicker.selection, selectedFilterBinding.wrappedValue)
     }
@@ -66,7 +52,7 @@ class SearchHeaderComponentTests: XCTestCase {
     func testClearSearchTextField() {
         searchTextBinding.wrappedValue = "Test"
         sut.searchText = ""
-        
+
         let textField = sut.body.findFirst(ofType: TextField.self)!
         XCTAssertEqual(textField.text, "")
     }

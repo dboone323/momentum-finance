@@ -1,37 +1,20 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DashboardSubscriptionsSectionTests: XCTestCase {
     var subscriptions: [Subscription]!
     var onSubscriptionTapped: (Subscription) -> Void!
     var onViewAllTapped: () -> Void!
     var onAddTapped: () -> Void!
-
     override func setUp() {
         super.setUp()
-        // Initialize test data
-        let subscription1 = Subscription(
-            name: "Netflix", amount: 15.99, billingCycle: .monthly,
-            nextDueDate: Date().addingTimeInterval(86400 * 3)
-        )
-        let subscription2 = Subscription(
-            name: "Spotify", amount: 9.99, billingCycle: .monthly,
-            nextDueDate: Date().addingTimeInterval(86400 * 7)
-        )
-
-        subscriptions = [subscription1, subscription2]
+        subscriptions = [
+            Subscription(name: "Service1", amount: 9.99, billingCycle: .monthly, nextDueDate: Date().addingTimeInterval(86400 * 3)),
+            Subscription(name: "Service2", amount: 14.99, billingCycle: .monthly, nextDueDate: Date().addingTimeInterval(86400 * 7))
+        ]
         onSubscriptionTapped = { _ in }
         onViewAllTapped = {}
         onAddTapped = {}
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up test data
-        subscriptions = []
-        onSubscriptionTapped = nil
-        onViewAllTapped = nil
-        onAddTapped = nil
     }
 
     // Test case for the body of DashboardSubscriptionsSection
@@ -79,7 +62,7 @@ class DashboardSubscriptionsSectionTests: XCTestCase {
     // Test case for the categoryColor method
     func testCategoryColor() {
         let colors = [.blue, .green, .orange, .purple, .pink, .red]
-        for index in 0..<colors.count {
+        for index in 0 ..< colors.count {
             let color = DashboardSubscriptionsSection.categoryColor(for: index)
             XCTAssertEqual(color, colors[index])
         }

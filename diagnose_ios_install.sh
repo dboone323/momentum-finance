@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck shell=ksh
 
 echo "=== iOS App Installation Diagnostic ==="
 echo

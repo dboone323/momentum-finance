@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class EntityManagerTests: XCTestCase {
     var modelContext: ModelContext!
@@ -112,7 +112,7 @@ class EntityManagerTests: XCTestCase {
         let expectedCount = 50
 
         // WHEN
-        for _ in 1...expectedCount {
+        for _ in 1 ... expectedCount {
             let object = getPooledObject()
             XCTAssertNil(object)
         }
@@ -120,7 +120,7 @@ class EntityManagerTests: XCTestCase {
         // THEN
         XCTAssertEqual(objectPool.count, expectedCount)
 
-        for _ in 1...expectedCount {
+        for _ in 1 ... expectedCount {
             let object = getPooledObject()
             XCTAssertNotNil(object)
         }

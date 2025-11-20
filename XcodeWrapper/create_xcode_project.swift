@@ -1,4 +1,5 @@
 #!/usr/bin/swift
+// swiftlint:disable line_length file_length
 
 import Foundation
 
@@ -45,14 +46,14 @@ let projectContent = """
 			isa = PBXGroup;
 			children = (
 				6B1A2B2A2C0D1E8F00123456 /* MomentumFinance */,
-				6B1A2B292C0D1E8F00123456 /* Products */,
+				6B1A2B292C0D1E8F00123456 /* Products */
 			);
 			sourceTree = "<group>";
 		};
 		6B1A2B292C0D1E8F00123456 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6B1A2B282C0D1E8F00123456 /* MomentumFinance.app */,
+				6B1A2B282C0D1E8F00123456 /* MomentumFinance.app */
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,7 +64,7 @@ let projectContent = """
 				6B1A2B2B2C0D1E8F00123456 /* MomentumFinanceApp.swift */,
 				6B1A2B2D2C0D1E8F00123456 /* ContentView.swift */,
 				6B1A2B2F2C0D1E9000123456 /* Assets.xcassets */,
-				6B1A2B312C0D1E9000123456 /* Preview Content */,
+				6B1A2B312C0D1E9000123456 /* Preview Content */
 			);
 			path = MomentumFinance;
 			sourceTree = "<group>";
@@ -71,7 +72,7 @@ let projectContent = """
 		6B1A2B312C0D1E9000123456 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				6B1A2B322C0D1E9000123456 /* Preview Assets.xcassets */,
+				6B1A2B322C0D1E9000123456 /* Preview Assets.xcassets */
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -85,7 +86,7 @@ let projectContent = """
 			buildPhases = (
 				6B1A2B242C0D1E8F00123456 /* Sources */,
 				6B1A2B252C0D1E8F00123456 /* Frameworks */,
-				6B1A2B262C0D1E8F00123456 /* Resources */,
+				6B1A2B262C0D1E8F00123456 /* Resources */
 			);
 			buildRules = (
 			);
@@ -117,14 +118,14 @@ let projectContent = """
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
+				Base
 			);
 			mainGroup = 6B1A2B1F2C0D1E8F00123456;
 			productRefGroup = 6B1A2B292C0D1E8F00123456 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6B1A2B272C0D1E8F00123456 /* MomentumFinance */,
+				6B1A2B272C0D1E8F00123456 /* MomentumFinance */
 			);
 		};
 /* End PBXProject section */
@@ -135,7 +136,7 @@ let projectContent = """
 			buildActionMask = 2147483647;
 			files = (
 				6B1A2B332C0D1E9000123456 /* Preview Assets.xcassets in Resources */,
-				6B1A2B302C0D1E9000123456 /* Assets.xcassets in Resources */,
+				6B1A2B302C0D1E9000123456 /* Assets.xcassets in Resources */
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +148,7 @@ let projectContent = """
 			buildActionMask = 2147483647;
 			files = (
 				6B1A2B2E2C0D1E8F00123456 /* ContentView.swift in Sources */,
-				6B1A2B2C2C0D1E8F00123456 /* MomentumFinanceApp.swift in Sources */,
+				6B1A2B2C2C0D1E8F00123456 /* MomentumFinanceApp.swift in Sources */
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +199,7 @@ let projectContent = """
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
-					"$(inherited)",
+					"$(inherited)"
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -291,7 +292,7 @@ let projectContent = """
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/Frameworks",
+					"@executable_path/Frameworks"
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.momentumfinance.MomentumFinance;
@@ -323,7 +324,7 @@ let projectContent = """
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/Frameworks",
+					"@executable_path/Frameworks"
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.momentumfinance.MomentumFinance;
@@ -344,7 +345,7 @@ let projectContent = """
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6B1A2B342C0D1E9000123456 /* Debug */,
-				6B1A2B352C0D1E9000123456 /* Release */,
+				6B1A2B352C0D1E9000123456 /* Release */
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -353,7 +354,7 @@ let projectContent = """
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6B1A2B362C0D1E9000123456 /* Debug */,
-				6B1A2B372C0D1E9000123456 /* Release */,
+				6B1A2B372C0D1E9000123456 /* Release */
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -361,3 +362,6 @@ let projectContent = """
 /* End XCConfigurationList section */
 }
 """
+// swiftlint:enable line_length file_length
+
+// Auto-added closing brace to fix unexpected EOF

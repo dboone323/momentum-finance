@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DashboardWelcomeHeaderTests: XCTestCase {
     var viewModel: Features.Dashboard.DashboardWelcomeHeader!
-
-    override func setUp() {
-        super.setUp()
-        viewModel = Features.Dashboard.DashboardWelcomeHeader(greeting: "Morning", wellnessPercentage: 85, totalBalance: 10000.0, monthlyIncome: 2000.0, monthlyExpenses: 1500.0)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        viewModel = nil
-    }
 
     // Test the greeting property
     func testGreetingProperty() {
@@ -62,9 +52,9 @@ class DashboardWelcomeHeaderTests: XCTestCase {
                 Menu {
                     Button(action: {
                         // Refresh action
-                    }) {
+                    }, label: {
                         Label("Refresh", systemImage: "arrow.clockwise")
-                    }
+                    })
                 } label: {
                     Image(systemName: "ellipsis.circle")
                         .font(.title3)

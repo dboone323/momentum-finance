@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DependenciesTests: XCTestCase {
     var dependencies: Dependencies!
-
-    override func setUp() {
-        super.setUp()
-        dependencies = Dependencies.default
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        dependencies = nil
-    }
 
     // Test the default initializer
     func testDefaultInitialization() {

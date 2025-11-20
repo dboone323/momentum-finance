@@ -1,21 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class InsightsWidgetTests: XCTestCase {
     var insightsService: FinancialIntelligenceService!
     var modelContext: ModelContext!
-
-    override func setUp() {
-        super.setUp()
-        insightsService = FinancialIntelligenceService.shared
-        modelContext = ModelContext(inMemoryOnly: true)
-    }
-
-    override func tearDown() {
-        insightsService = nil
-        modelContext = nil
-        super.tearDown()
-    }
 
     // Test that the InsightsWidget displays the correct header and buttons
     func testInsightsWidgetDisplay() {

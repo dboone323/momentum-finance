@@ -6,12 +6,11 @@ Enforces quality standards and gates before deployment
 
 import json
 import logging
-import os
 import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, Tuple
 
 # Setup logging
 logging.basicConfig(

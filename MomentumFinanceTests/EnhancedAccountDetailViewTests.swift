@@ -1,23 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class EnhancedAccountDetailViewTests: XCTestCase {
     var enhancedAccountDetailView: EnhancedAccountDetailView!
-
-    override func setUp() {
-        super.setUp()
-        let accountId = "12345"
-        let modelContext = ModelContext.shared
-        let accounts = FinancialAccount.all(from: modelContext)
-        let transactions = FinancialTransaction.all(from: modelContext)
-
-        enhancedAccountDetailView = EnhancedAccountDetailView(accountId: accountId, modelContext: modelContext, accounts: accounts, transactions: transactions)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        enhancedAccountDetailView = nil
-    }
 
     // Test the account detail view's top toolbar actions
     func testToolbarActions() {
@@ -66,3 +51,5 @@ class EnhancedAccountDetailViewTests: XCTestCase {
         XCTAssertEqual(enhancedAccountDetailView.filteredTransactions.count, 1)
         XCTAssertEqual(enhancedAccountDetailView.filteredTransactions[0].amount, 100)
     }
+
+}

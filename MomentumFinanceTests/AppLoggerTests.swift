@@ -1,6 +1,6 @@
-import XCTest
-import OSLog
 @testable import MomentumFinance
+import OSLog
+import XCTest
 
 @MainActor
 final class AppLoggerTests: XCTestCase {
@@ -178,7 +178,7 @@ final class AppLoggerTests: XCTestCase {
 
     func testConcurrentLogging() async {
         await withTaskGroup(of: Void.self) { group in
-            for i in 0..<100 {
+            for i in 0 ..< 100 {
                 group.addTask { @MainActor in
                     self.logger.log("Concurrent log \(i)", level: .info, category: .general)
                 }
@@ -256,7 +256,7 @@ final class AppLoggerTests: XCTestCase {
 
     func testLoggingPerformance() {
         measure {
-            for i in 0..<1000 {
+            for i in 0 ..< 1000 {
                 logger.log("Performance test \(i)", level: .info, category: .performance)
             }
         }
@@ -264,7 +264,7 @@ final class AppLoggerTests: XCTestCase {
 
     func testDebugMethodPerformance() {
         measure {
-            for i in 0..<1000 {
+            for i in 0 ..< 1000 {
                 logger.debug("Debug performance \(i)")
             }
         }

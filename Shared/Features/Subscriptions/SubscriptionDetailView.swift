@@ -72,7 +72,7 @@ extension Features.Subscriptions {
                                     set: { newValue in
                                         subscription.isActive = newValue
                                         try? self.modelContext.save()
-                                    },
+                                    }
                                 )
                             )
                             .padding(.top, 8)
@@ -106,13 +106,13 @@ extension Features.Subscriptions {
                                 value: subscription.nextDueDate.formatted(
                                     date: .long, time: .omitted
                                 ),
-                                highlight: self.isPaymentDueSoon(subscription),
+                                highlight: self.isPaymentDueSoon(subscription)
                             )
 
                             SubscriptionDetailRow(
                                 title: "Payment Status",
                                 value: self.paymentStatusText(subscription),
-                                highlight: self.isPaymentOverdue(subscription),
+                                highlight: self.isPaymentOverdue(subscription)
                             )
 
                             if let notes = subscription.notes, !notes.isEmpty {
@@ -131,7 +131,7 @@ extension Features.Subscriptions {
                         .background(
                             RoundedRectangle(cornerRadius: 12)
                                 .fill(self.platformBackgroundColor)
-                                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2),
+                                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                         )
 
                         // Payment History (Placeholder)
@@ -175,8 +175,7 @@ extension Features.Subscriptions {
                                     .padding(.vertical, 4)
 
                                     if relatedTransactions.firstIndex(of: transaction)
-                                        != relatedTransactions.prefix(5).count - 1
-                                    {
+                                        != relatedTransactions.prefix(5).count - 1 {
                                         Divider()
                                     }
                                 }
@@ -186,7 +185,7 @@ extension Features.Subscriptions {
                         .background(
                             RoundedRectangle(cornerRadius: 12)
                                 .fill(self.platformBackgroundColor)
-                                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2),
+                                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                         )
 
                         // Action Button
@@ -201,7 +200,7 @@ extension Features.Subscriptions {
                                     .padding()
                                     .background(
                                         RoundedRectangle(cornerRadius: 10)
-                                            .fill(Color.blue),
+                                            .fill(Color.blue)
                                     )
                                     .foregroundColor(.white)
                             }
@@ -229,7 +228,7 @@ extension Features.Subscriptions {
                     ContentUnavailableView(
                         "Subscription Not Found",
                         systemImage: "creditcard.slash",
-                        description: Text("The requested subscription could not be found"),
+                        description: Text("The requested subscription could not be found")
                     )
                 }
             }
@@ -268,8 +267,7 @@ extension Features.Subscriptions {
         }
 
         private func getRelatedTransactions(for subscription: Subscription)
-            -> [FinancialTransaction]
-        {
+            -> [FinancialTransaction] {
             // In a real implementation, we would filter transactions specifically related to this subscription
             // For example, by matching notes field or subscription ID field
             self.transactions

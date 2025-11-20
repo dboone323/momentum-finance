@@ -1,19 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class FinancialForecastingTests: XCTestCase {
 
     // MARK: - Test setup
-
-    override func setUp() {
-        super.setUp()
-        // Set up any necessary data for testing
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources after each test
-    }
 
     // MARK: - Income Forecasting Tests
 
@@ -104,3 +94,5 @@ class FinancialForecastingTests: XCTestCase {
         XCTAssertEqual(insights[0].visualizationType, VisualizationType.lineChart)
         XCTAssertEqual(insights[0].data.count, 2)
     }
+
+}

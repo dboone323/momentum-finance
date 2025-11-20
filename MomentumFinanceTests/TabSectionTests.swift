@@ -1,18 +1,10 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class TabSectionTests: XCTestCase {
     // Test setup method to ensure all dependencies are properly initialized
-    override func setUp() {
-        super.setUp()
-        // Initialize any required dependencies here
-    }
 
     // Test teardown method to clean up after each test
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources used in the tests
-    }
 
     // Test case for title property of AppTabSection enum
     func testTitleProperty() {

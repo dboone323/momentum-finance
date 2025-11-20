@@ -28,13 +28,13 @@ public struct TransactionEmptyStateView: View {
             .foregroundColor(.secondary)
             .multilineTextAlignment(.center)
             if self.searchText.isEmpty {
-                Button(action: self.onAddTransaction) {
+                Button(action: self.onAddTransaction, label: {
                     Label("Add Transaction", systemImage: "plus")
                         .padding()
                         .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(8)
-                }
+                })
                 .accessibilityLabel("Add Transaction")
             }
         }
@@ -272,9 +272,9 @@ public struct SearchAndFilterSection: View {
                     "Text Field"
                 ).textFieldStyle(.plain)
                 if !self.searchText.isEmpty {
-                    Button(action: { self.searchText = "" }) {
+                    Button(action: { self.searchText = "" }, label: {
                         Image(systemName: "xmark.circle.fill").foregroundColor(.secondary)
-                    }.accessibilityLabel("Clear Search")
+                    }).accessibilityLabel("Clear Search")
                 }
             }
             .padding(12)
@@ -327,10 +327,10 @@ private struct FilterButton: View {
     let isSelected: Bool
     let action: () -> Void
     var body: some View {
-        Button(action: self.action) {
+        Button(action: self.action, label: {
             Text(self.title).font(.subheadline).padding(.horizontal, 12).padding(.vertical, 6)
                 .background(self.isSelected ? Color.blue : platformSecondaryGrayColor())
                 .foregroundColor(self.isSelected ? .white : .primary).cornerRadius(16)
-        }.accessibilityLabel(self.title)
+        }).accessibilityLabel(self.title)
     }
 }

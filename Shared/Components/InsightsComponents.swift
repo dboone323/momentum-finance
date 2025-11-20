@@ -140,7 +140,7 @@ public struct FilterChip: View {
     let action: () -> Void
 
     public var body: some View {
-        Button(action: self.action) {
+        Button(action: self.action, label: {
             Text(self.title)
                 .font(.caption)
                 .fontWeight(.medium)
@@ -149,7 +149,7 @@ public struct FilterChip: View {
                 .background(self.isSelected ? Color.blue : Color.gray.opacity(0.2))
                 .foregroundColor(self.isSelected ? .white : .primary)
                 .cornerRadius(16)
-        }
+        })
         .accessibilityLabel("Filter by \(self.title)")
     }
 

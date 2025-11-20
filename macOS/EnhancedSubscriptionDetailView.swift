@@ -76,9 +76,9 @@ import SwiftUI
                         }
                         .frame(width: 150)
 
-                        Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }) {
+                        Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }, label: {
                             Text(self.isEditing ? "Done" : "Edit")
-                        }
+                        })
                         .keyboardShortcut("e", modifiers: .command)
 
                         Menu {
@@ -151,7 +151,7 @@ import SwiftUI
                             "Subscription Not Found",
                             systemImage: "exclamationmark.triangle",
                             description: Text("The subscription you're looking for could not be found.")
-                        ),
+                        )
                     )
                 }
 
@@ -393,7 +393,7 @@ import SwiftUI
                             }
                         }
                         .frame(width: 350)
-                    },
+                    }
                 )
             }
 
@@ -412,7 +412,7 @@ import SwiftUI
 
                             TextField("Subscription name", text: Binding(
                                 get: { self.editedSubscription?.name ?? subscription.name },
-                                set: { self.editedSubscription?.name = $0 },
+                                set: { self.editedSubscription?.name = $0 }
                             ))
                             .textFieldStyle(.roundedBorder)
                         }
@@ -424,7 +424,7 @@ import SwiftUI
 
                             TextField("Service provider", text: Binding(
                                 get: { self.editedSubscription?.provider ?? subscription.provider },
-                                set: { self.editedSubscription?.provider = $0 },
+                                set: { self.editedSubscription?.provider = $0 }
                             ))
                             .textFieldStyle(.roundedBorder)
                         }
@@ -437,14 +437,14 @@ import SwiftUI
                             HStack {
                                 TextField("Amount", value: Binding(
                                     get: { self.editedSubscription?.amount ?? subscription.amount },
-                                    set: { self.editedSubscription?.amount = $0 },
+                                    set: { self.editedSubscription?.amount = $0 }
                                 ), format: .currency(code: subscription.currencyCode))
                                     .textFieldStyle(.roundedBorder)
                                     .frame(width: 150)
 
                                 Picker("Currency", selection: Binding(
                                     get: { self.editedSubscription?.currencyCode ?? subscription.currencyCode },
-                                    set: { self.editedSubscription?.currencyCode = $0 },
+                                    set: { self.editedSubscription?.currencyCode = $0 }
                                 )) {
                                     Text("USD").tag("USD")
                                     Text("EUR").tag("EUR")
@@ -461,7 +461,7 @@ import SwiftUI
 
                             Picker("Billing Cycle", selection: Binding(
                                 get: { self.editedSubscription?.billingCycle ?? subscription.billingCycle },
-                                set: { self.editedSubscription?.billingCycle = $0 },
+                                set: { self.editedSubscription?.billingCycle = $0 }
                             )) {
                                 Text("Monthly").tag("monthly")
                                 Text("Quarterly").tag("quarterly")
@@ -479,7 +479,7 @@ import SwiftUI
 
                             DatePicker("Start Date", selection: Binding(
                                 get: { self.editedSubscription?.startDate ?? subscription.startDate ?? Date() },
-                                set: { self.editedSubscription?.startDate = $0 },
+                                set: { self.editedSubscription?.startDate = $0 }
                             ), displayedComponents: .date)
                                 .labelsHidden()
                         }
@@ -490,7 +490,7 @@ import SwiftUI
 
                             DatePicker("Next Payment", selection: Binding(
                                 get: { self.editedSubscription?.nextPaymentDate ?? subscription.nextPaymentDate ?? Date() },
-                                set: { self.editedSubscription?.nextPaymentDate = $0 },
+                                set: { self.editedSubscription?.nextPaymentDate = $0 }
                             ), displayedComponents: .date)
                                 .labelsHidden()
                         }
@@ -502,7 +502,7 @@ import SwiftUI
 
                             Picker("Payment Method", selection: Binding(
                                 get: { self.editedSubscription?.paymentMethod ?? subscription.paymentMethod ?? "" },
-                                set: { self.editedSubscription?.paymentMethod = $0 },
+                                set: { self.editedSubscription?.paymentMethod = $0 }
                             )) {
                                 Text("None").tag("")
                                 Text("Credit Card").tag("Credit Card")
@@ -519,7 +519,7 @@ import SwiftUI
 
                             Picker("Category", selection: Binding(
                                 get: { self.editedSubscription?.category ?? subscription.category ?? "" },
-                                set: { self.editedSubscription?.category = $0 },
+                                set: { self.editedSubscription?.category = $0 }
                             )) {
                                 Text("None").tag("")
                                 Text("Entertainment").tag("Entertainment")
@@ -537,7 +537,7 @@ import SwiftUI
 
                             Toggle("This subscription auto-renews", isOn: Binding(
                                 get: { self.editedSubscription?.autoRenews ?? subscription.autoRenews },
-                                set: { self.editedSubscription?.autoRenews = $0 },
+                                set: { self.editedSubscription?.autoRenews = $0 }
                             ))
                         }
                     }
@@ -548,7 +548,7 @@ import SwiftUI
 
                     TextEditor(text: Binding(
                         get: { self.editedSubscription?.notes ?? subscription.notes },
-                        set: { self.editedSubscription?.notes = $0 },
+                        set: { self.editedSubscription?.notes = $0 }
                     ))
                     .font(.body)
                     .frame(minHeight: 100)
@@ -697,7 +697,7 @@ import SwiftUI
                         (month: "Aug", amount: self.subscription.amount),
                         (month: "Sep", amount: self.subscription.amount),
                         (month: "Oct", amount: self.subscription.amount),
-                        (month: "Nov", amount: self.subscription.amount),
+                        (month: "Nov", amount: self.subscription.amount)
                     ]
                 }
 
@@ -707,7 +707,7 @@ import SwiftUI
                             ForEach(self.generateSampleData(), id: \.month) { item in
                                 BarMark(
                                     x: .value("Month", item.month),
-                                    y: .value("Amount", item.amount),
+                                    y: .value("Amount", item.amount)
                                 )
                                 .foregroundStyle(Color.blue.gradient)
                             }
@@ -988,7 +988,7 @@ import SwiftUI
                         name: "CompetitorC",
                         price: 12.99,
                         features: ["4K Streaming", "Unlimited devices", "Full library", "Downloads", "Live TV"]
-                    ),
+                    )
                 ]
 
                 var body: some View {
@@ -1256,7 +1256,7 @@ import SwiftUI
                     amount: -subscription.amount,
                     date: nextDate,
                     notes: "Automatic payment for subscription",
-                    isReconciled: true,
+                    isReconciled: true
                 )
 
                 transaction.subscriptionId = subscription.id

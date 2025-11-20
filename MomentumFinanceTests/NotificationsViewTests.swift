@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class NotificationsViewTests: XCTestCase {
     var notificationsView: NotificationsView!
-
-    override func setUp() {
-        super.setUp()
-        notificationsView = NotificationsView()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        notificationsView = nil
-    }
 
     // MARK: - Test LoadNotifications()
 
@@ -70,8 +60,8 @@ class NotificationsViewTests: XCTestCase {
     func testNotificationRow() {
         // GIVEN: A scheduled notification and a tap action
         let mockNotification = ScheduledNotification(title: "Alert 1", body: "Your budget is low!", date: Date(), identifier: "alert1")
-        let onTap = { () -> Void in }
-        let onDismiss = { () -> Void in }
+        let onTap = { () in }
+        let onDismiss = { () in }
 
         // WHEN: The NotificationRow view is created
         let notificationRow = NotificationRow(notification: mockNotification, onTap: onTap, onDismiss: onDismiss)

@@ -1,21 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class GlobalSearchViewTests: XCTestCase {
     var sut: GlobalSearchView!
     var mockModelContext: MockModelContext!
-
-    override func setUp() {
-        super.setUp()
-        mockModelContext = MockModelContext()
-        sut = GlobalSearchView(modelContext: mockModelContext)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        sut = nil
-        mockModelContext = nil
-    }
 
     // GIVEN a search query, WHEN the view is displayed, THEN the search bar should be visible
     func testSearchBarIsVisibleWhenViewIsDisplayed() {
@@ -103,3 +91,5 @@ class GlobalSearchViewTests: XCTestCase {
         }
         self.waitForExpectations(timeout: 2.0)
     }
+
+}

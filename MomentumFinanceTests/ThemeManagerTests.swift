@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 @MainActor
 final class ThemeManagerTests: XCTestCase {
@@ -177,7 +177,7 @@ final class ThemeManagerTests: XCTestCase {
 
     func testConcurrentAccess() async {
         await withTaskGroup(of: Void.self) { group in
-            for _ in 0..<10 {
+            for _ in 0 ..< 10 {
                 group.addTask { @MainActor in
                     _ = self.themeManager.currentThemeMode
                 }

@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck shell=ksh
 
 # Simple iOS launcher for MomentumFinance
 # Uses the currently booted simulator or boots iPhone 16 iOS 18.1
@@ -18,7 +19,7 @@ echo -e "${BLUE}📱 MomentumFinance iOS Simple Launcher${NC}"
 echo "======================================"
 
 # Set working directory
-cd "$(dirname "$0")"
+cd "$(dirname "$0")" || exit
 
 # Use the iPhone 16 iOS 18.1 that we know exists and is booted
 DEVICE_ID="891E4B4F-9FEA-494A-8DD0-DA1C058B5253"

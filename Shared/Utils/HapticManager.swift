@@ -282,8 +282,7 @@ extension View {
         /// <#Description#>
         /// - Returns: <#description#>
         func hapticFeedback(_ style: UIImpactFeedbackGenerator.FeedbackStyle, trigger: Bool)
-            -> some View
-        {
+            -> some View {
             modifier(HapticFeedbackModifier(style: style, trigger: trigger))
         }
     #else

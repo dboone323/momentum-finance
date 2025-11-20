@@ -17,7 +17,7 @@ public struct FileSelectionComponent: View {
             Button(action: {
                 self.showingFilePicker = true
                 self.onSelectFile()
-            }) {
+            }, label: {
                 HStack {
                     Image(systemName: "folder")
                     Text("Choose File")
@@ -26,7 +26,7 @@ public struct FileSelectionComponent: View {
                 .background(Color.blue.opacity(0.1))
                 .foregroundColor(.blue)
                 .cornerRadius(8)
-            }
+            })
         }
         .padding()
         .background(Color.gray.opacity(0.1))

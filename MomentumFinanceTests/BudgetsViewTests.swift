@@ -1,29 +1,10 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class BudgetsViewTests: XCTestCase {
     var sut: BudgetsView!
     var modelContext: ModelContext!
     var viewModel: BudgetsViewModel!
-
-    override func setUp() {
-        super.setUp()
-        // Initialize the model context with a test data set
-        let testData = [
-            Budget(id: UUID(), name: "Rent", amount: 1000, timeframe: .thisMonth),
-            Budget(id: UUID(), name: "Groceries", amount: 200, timeframe: .lastMonth)
-        ]
-        modelContext.insert(testData)
-
-        // Initialize the view model with the test data
-        viewModel = BudgetsViewModel(modelContext: modelContext)
-        sut = BudgetsView(viewModel: viewModel)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources used during testing
-    }
 
     // Test that the empty state view is displayed when there are no budgets
     func testEmptyStateView() {

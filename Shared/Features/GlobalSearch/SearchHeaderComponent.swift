@@ -26,10 +26,10 @@ public struct SearchHeaderComponent: View {
                     Button(action: {
                         self.searchText = ""
                         self.onSearchChanged?()
-                    }) {
+                    }, label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundColor(.secondary)
-                    }
+                    })
                 }
             }
             .padding()

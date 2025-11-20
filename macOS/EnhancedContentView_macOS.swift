@@ -7,7 +7,7 @@ import SwiftUI
 
 #if os(macOS)
     // macOS-specific content view implementation using NavigationSplitView
-    struct ContentView_macOS: View {
+    struct ContentViewMacOS: View {
         @State private var navigationCoordinator = NavigationCoordinator.shared
         @State private var selectedSidebarItem: SidebarItem? = .dashboard
         @State private var selectedListItem: ListableItem?
@@ -174,7 +174,7 @@ import SwiftUI
     }
 
     // macOS-specific UI components and helpers
-    enum macOSSpecificViews {
+    struct MacOSSpecificViews {
         /// macOS window configuration
         static func configureWindow() {
             // Configure macOS-specific window settings

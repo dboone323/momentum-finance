@@ -20,13 +20,13 @@ public enum AnimatedButtonComponent {
         let label: String
 
         public var body: some View {
-            Button(action: self.action) {
+            Button(action: self.action, label: {
                 Text(self.label)
                     .padding()
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(8)
-            }
+            })
             .accessibilityLabel("Button")
         }
 
@@ -97,7 +97,7 @@ public enum FloatingActionButtonComponent {
         let icon: String
 
         public var body: some View {
-            Button(action: self.action) {
+            Button(action: self.action, label: {
                 Image(systemName: self.icon)
                     .font(.title2)
                     .foregroundColor(.white)
@@ -105,7 +105,7 @@ public enum FloatingActionButtonComponent {
                     .background(Color.blue)
                     .clipShape(Circle())
                     .shadow(radius: 4)
-            }
+            })
             .accessibilityLabel("Button")
         }
 

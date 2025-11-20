@@ -1,21 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class InsightsViewTests: XCTestCase {
     var intelligenceService: FinancialIntelligenceService!
     var modelContext: ModelContext!
-
-    override func setUp() {
-        super.setUp()
-        intelligenceService = FinancialIntelligenceService.shared
-        modelContext = ModelContext(inMemory: true)
-        IntelligenceService.shared.modelContext = &modelContext
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        IntelligenceService.shared.modelContext = nil
-    }
 
     // Test that the InsightsView displays insights when data is available
     func testInsightsDisplayWhenDataAvailable() async throws {

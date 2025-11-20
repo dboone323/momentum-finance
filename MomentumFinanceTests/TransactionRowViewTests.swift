@@ -1,32 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class TransactionRowViewTests: XCTestCase {
     var transaction: FinancialTransaction!
     var viewModel: Features.Transactions.TransactionRowViewModel!
-
-    override func setUp() {
-        super.setUp()
-        
-        // Create a sample financial transaction for testing
-        let sampleDate = Date(timeIntervalSince1970: 1633072800)
-        let sampleAmount = FinancialCurrency(amount: 100.50, currencyCode: "USD")
-        let sampleCategory = Category(name: "Groceries", color: .green)
-        
-        transaction = FinancialTransaction(
-            id: UUID(),
-            title: "Grocery Purchase",
-            amount: sampleAmount,
-            category: sampleCategory,
-            date: sampleDate
-        )
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        
-        // Clean up any resources created during the test
-    }
 
     func testTransactionRowView() {
         // GIVEN a FinancialTransaction instance and a TransactionRowViewModel

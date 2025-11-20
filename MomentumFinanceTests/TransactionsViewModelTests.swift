@@ -1,22 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class TransactionsViewModelTests: XCTestCase {
     var viewModel: TransactionsViewModel!
     var mockModelContext: MockModelContext!
-
-    override func setUp() {
-        super.setUp()
-        mockModelContext = MockModelContext()
-        viewModel = TransactionsViewModel()
-        viewModel.setModelContext(mockModelContext)
-    }
-
-    override func tearDown() {
-        mockModelContext = nil
-        viewModel = nil
-        super.tearDown()
-    }
 
     // Test setModelContext method
     func testSetModelContext() {
@@ -119,3 +106,5 @@ class TransactionsViewModelTests: XCTestCase {
         let currentMonth = viewModel.currentMonthTransactions(transactions)
         XCTAssertEqual(currentMonth.count, 2)
     }
+
+}

@@ -281,9 +281,9 @@ import SwiftUI
                         }
                         .toolbar {
                             ToolbarItem {
-                                Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }) {
+                                Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }, label: {
                                     Text(self.isEditing ? "Done" : "Edit")
-                                }
+                                })
                             }
 
                             ToolbarItem {
@@ -513,9 +513,9 @@ import SwiftUI
                         }
                         .toolbar {
                             ToolbarItem {
-                                Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }) {
+                                Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }, label: {
                                     Text(self.isEditing ? "Done" : "Edit")
-                                }
+                                })
                             }
                         }
                     } else {
@@ -981,9 +981,9 @@ import SwiftUI
                         }
                         .toolbar {
                             ToolbarItem {
-                                Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }) {
+                                Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }, label: {
                                     Text(self.isEditing ? "Done" : "Edit")
-                                }
+                                })
                             }
 
                             ToolbarItem {
@@ -1170,7 +1170,7 @@ import SwiftUI
     }
 
     // macOS-specific content view implementation using NavigationSplitView
-    struct ContentView_macOS: View {
+    struct ContentViewMacOS: View {
         @State private var navigationCoordinator = NavigationCoordinator.shared
         @State private var selectedSidebarItem: SidebarItem? = .dashboard
         @State private var selectedListItem: ListableItem?
@@ -1281,7 +1281,7 @@ import SwiftUI
             .navigationSplitViewStyle(.balanced)
             .frame(minWidth: 1000, minHeight: 700)
             .onAppear {
-                macOSSpecificViews.configureWindow()
+                MacOSSpecificViews.configureWindow()
             }
         }
 
@@ -1298,7 +1298,7 @@ import SwiftUI
     }
 
     // macOS-specific UI components and helpers
-    enum macOSSpecificViews {
+    enum MacOSSpecificViews {
         /// macOS window configuration
         static func configureWindow() {
             // Configure macOS-specific window settings

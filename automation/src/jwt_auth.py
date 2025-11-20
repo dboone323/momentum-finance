@@ -40,7 +40,7 @@ class JWTAuthManager:
                     import secrets
 
                     self.secret_key = secrets.token_hex(32)
-            except:
+            except Exception:
                 # Final fallback
                 import secrets
 

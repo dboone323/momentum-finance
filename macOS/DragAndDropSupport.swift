@@ -6,8 +6,8 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 #if os(macOS)
-    /// Implements drag and drop functionality for the macOS version of Momentum Finance
-    /// This enhances desktop productivity by allowing users to drag items between lists and views
+    // Implements drag and drop functionality for the macOS version of Momentum Finance
+    // This enhances desktop productivity by allowing users to drag items between lists and views
 
     // MARK: - Draggable Item Protocol
 
@@ -222,7 +222,7 @@ import UniformTypeIdentifiers
                         UTType.financeTransaction,
                         UTType.financeBudget,
                         UTType.financeSubscription,
-                        UTType.financeGoal,
+                        UTType.financeGoal
                     ],
                     isTargeted: nil
                 ) { _, _ in
@@ -243,7 +243,7 @@ import UniformTypeIdentifiers
         private var isDraggingOver: Binding<Bool> {
             self.isTargeted ?? Binding<Bool>(
                 get: { self.isDraggingOverInternal },
-                set: { self.isDraggingOverInternal = $0 },
+                set: { self.isDraggingOverInternal = $0 }
             )
         }
 
@@ -262,8 +262,7 @@ import UniformTypeIdentifiers
                         var droppedItems: [T] = []
 
                         for provider in providers {
-                            for type in self.acceptedTypes {
-                                if provider.hasItemConformingToTypeIdentifier(type.uniformType.identifier) {
+                            for type in self.acceptedTypes where if provider.hasItemConformingToTypeIdentifier(type.uniformType.identifier) {
                                     do {
                                         let data = try await provider.loadDataRepresentation(forTypeIdentifier: type.uniformType.identifier)
                                         let decoder = JSONDecoder()
@@ -400,12 +399,11 @@ import UniformTypeIdentifiers
                                 RoundedRectangle(cornerRadius: 8)
                                     .strokeBorder(style: StrokeStyle(lineWidth: 2, dash: [5]))
                                     .foregroundColor(self.isDraggingOver ? .accentColor : .secondary)
-                                    .animation(.easeInOut, value: self.isDraggingOver),
+                                    .animation(.easeInOut, value: self.isDraggingOver)
                             )
                             .contentShape(Rectangle())
                             .droppable(acceptedTypes: [.transaction], isTargeted: self.$isDraggingOver) { (items: [FinancialTransaction], _) in
-                                for transaction in items {
-                                    if !self.associatedTransactionIds.contains(transaction.id) {
+                                for transaction in items where if !self.associatedTransactionIds.contains(transaction.id) {
                                         self.associatedTransactionIds.append(transaction.id)
                                     }
                                 }
@@ -426,8 +424,7 @@ import UniformTypeIdentifiers
                             }
                             .frame(minHeight: 200)
                             .droppable(acceptedTypes: [.transaction], isTargeted: self.$isDraggingOver) { (items: [FinancialTransaction], _) in
-                                for transaction in items {
-                                    if !self.associatedTransactionIds.contains(transaction.id) {
+                                for transaction in items where if !self.associatedTransactionIds.contains(transaction.id) {
                                         self.associatedTransactionIds.append(transaction.id)
                                     }
                                 }

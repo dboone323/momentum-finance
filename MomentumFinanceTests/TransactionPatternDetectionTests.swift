@@ -1,24 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class TransactionPatternDetectionTests: XCTestCase {
     var transactions: [FinancialTransaction]!
-
-    override func setUp() {
-        super.setUp()
-        transactions = [
-            FinancialTransaction(title: "Monthly Rent", amount: -1000, date: Date()),
-            FinancialTransaction(title: "Groceries", amount: -500, date: Date().addingTimeInterval(7 * 24 * 60 * 60)),
-            FinancialTransaction(title: "Car Payment", amount: -300, date: Date().addingTimeInterval(14 * 24 * 60 * 60)),
-            FinancialTransaction(title: "Monthly Rent", amount: -1000, date: Date().addingTimeInterval(21 * 24 * 60 * 60)),
-            FinancialTransaction(title: "Groceries", amount: -500, date: Date().addingTimeInterval(28 * 24 * 60 * 60)),
-        ]
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        transactions = nil
-    }
 
     // MARK: - findRecurringTransactions
 
@@ -47,7 +31,7 @@ class TransactionPatternDetectionTests: XCTestCase {
         let transactionsWithoutPattern = [
             FinancialTransaction(title: "Car Payment", amount: -300, date: Date().addingTimeInterval(24 * 60 * 60)),
             FinancialTransaction(title: "Monthly Rent", amount: -1000, date: Date()),
-            FinancialTransaction(title: "Groceries", amount: -500, date: Date().addingTimeInterval(7 * 24 * 60 * 60)),
+            FinancialTransaction(title: "Groceries", amount: -500, date: Date().addingTimeInterval(7 * 24 * 60 * 60))
         ]
         let recurringTransactions = fi_findRecurringTransactions(transactionsWithoutPattern)
         XCTAssertEqual(recurringTransactions.count, 0)
@@ -66,7 +50,7 @@ class TransactionPatternDetectionTests: XCTestCase {
         let transactionsWithoutShortTimePeriod = [
             FinancialTransaction(title: "Car Payment", amount: -300, date: Date().addingTimeInterval(24 * 60 * 60)),
             FinancialTransaction(title: "Monthly Rent", amount: -1000, date: Date()),
-            FinancialTransaction(title: "Groceries", amount: -500, date: Date().addingTimeInterval(7 * 24 * 60 * 60)),
+            FinancialTransaction(title: "Groceries", amount: -500, date: Date().addingTimeInterval(7 * 24 * 60 * 60))
         ]
         let duplicateSuspects = fi_findPotentialDuplicates(transactionsWithoutShortTimePeriod)
         XCTAssertEqual(duplicateSuspects.count, 0)

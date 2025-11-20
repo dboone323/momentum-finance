@@ -49,7 +49,7 @@ extension Features.GoalsAndReports {
                     // Enhanced Header Section
                     HeaderSection(
                         selectedTab: self.$selectedTab,
-                        showingAddGoal: self.$showingAddGoal,
+                        showingAddGoal: self.$showingAddGoal
                     )
 
                     // Content with Animation
@@ -57,14 +57,14 @@ extension Features.GoalsAndReports {
                         SavingsGoalsTab(
                             goals: self.savingsGoals,
                             showingAddGoal: self.$showingAddGoal,
-                            selectedGoal: self.$selectedGoal,
+                            selectedGoal: self.$selectedGoal
                         )
                         .tag(0)
 
                         ReportsTab(
                             transactions: self.transactions,
                             budgets: self.budgets,
-                            categories: self.categories,
+                            categories: self.categories
                         )
                         .tag(1)
                     }
@@ -163,7 +163,7 @@ extension Features.GoalsAndReports {
                                     Image(systemName: "plus.circle.fill")
                                         .font(.title2)
                                         .foregroundColor(.blue)
-                                },
+                                }
                             )
                         }
                     }
@@ -206,26 +206,26 @@ extension Features.GoalsAndReports {
                                                 isSelected
                                                     ? LinearGradient(
                                                         gradient: Gradient(colors: [
-                                                            .blue, .blue.opacity(0.8),
+                                                            .blue, .blue.opacity(0.8)
                                                         ]),
                                                         startPoint: .leading,
-                                                        endPoint: .trailing,
+                                                        endPoint: .trailing
                                                     )
                                                     : LinearGradient(
                                                         gradient: Gradient(colors: [Color.clear]),
                                                         startPoint: .leading,
-                                                        endPoint: .trailing,
-                                                    ),
-                                            ),
+                                                        endPoint: .trailing
+                                                    )
+                                            )
                                     )
-                                },
+                                }
                             )
                         }
                         .padding(4)
                         .background(
                             RoundedRectangle(cornerRadius: 14)
                                 .fill(self.secondaryBackgroundColor)
-                                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1),
+                                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
                         )
                     }
                 }
@@ -233,11 +233,11 @@ extension Features.GoalsAndReports {
                 .background(
                     LinearGradient(
                         gradient: Gradient(colors: [
-                            self.backgroundColor, self.secondaryBackgroundColor,
+                            self.backgroundColor, self.secondaryBackgroundColor
                         ]),
                         startPoint: .top,
-                        endPoint: .bottom,
-                    ),
+                        endPoint: .bottom
+                    )
                 )
             }
         }
@@ -299,7 +299,7 @@ extension Features.GoalsAndReports {
                 Features.GoalsAndReports.EnhancedReportsSection(
                     transactions: self.transactions,
                     budgets: self.budgets,
-                    categories: self.categories,
+                    categories: self.categories
                 )
             }
         }
@@ -311,6 +311,6 @@ extension Features.GoalsAndReports {
 #Preview {
     Features.GoalsAndReports.GoalsAndReportsView()
         .modelContainer(for: [
-            SavingsGoal.self, FinancialTransaction.self, Budget.self, ExpenseCategory.self,
+            SavingsGoal.self, FinancialTransaction.self, Budget.self, ExpenseCategory.self
         ])
 }

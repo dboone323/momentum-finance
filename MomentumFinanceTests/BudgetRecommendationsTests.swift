@@ -1,19 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class BudgetRecommendationsTests: XCTestCase {
     var budgetRecommendations: BudgetRecommendations!
-    
-    override func setUp() {
-        super.setUp()
-        budgetRecommendations = BudgetRecommendations()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-        budgetRecommendations = nil
-    }
-    
+
     // Test case for fi_findBudgetRecommendations with real data
     func testFindBudgetRecommendationsWithRealData() {
         let transactions: [FinancialTransaction] = [
@@ -21,17 +11,17 @@ class BudgetRecommendationsTests: XCTestCase {
             FinancialTransaction(amount: 200, date: Date(), category: Category(name: "Entertainment")),
             FinancialTransaction(amount: -50, date: Date(), category: Category(name: "Clothing"))
         ]
-        
+
         let budgets: [Budget] = [
             Budget(limitAmount: 300, category: Category(name: "Groceries")),
             Budget(limitAmount: 400, category: Category(name: "Entertainment")),
             Budget(limitAmount: 250, category: Category(name: "Clothing"))
         ]
-        
+
         let insights = budgetRecommendations.fi_findBudgetRecommendations(transactions: transactions, budgets: budgets)
-        
+
         XCTAssertEqual(insights.count, 1)
-        
+
         let insight = insights.first!
         XCTAssertEqual(insight.title, "Budget Recommendation: Groceries")
         XCTAssertEqual(insight.description, "Based on your average spending of $200.00, consider setting a budget of $310.00 for Groceries.")
@@ -42,7 +32,7 @@ class BudgetRecommendationsTests: XCTestCase {
         XCTAssertEqual(insight.relatedCategoryId, "Groceries")
         XCTAssertEqual(insight.relatedBudgetId, nil)
         XCTAssertEqual(insight.visualizationType, nil)
-        
+
         let data = insight.data
         XCTAssertEqual(data.count, 2)
         XCTAssertEqual(data[0].key, "Average Spending")
@@ -50,7 +40,7 @@ class BudgetRecommendationsTests: XCTestCase {
         XCTAssertEqual(data[1].key, "Recommended Budget")
         XCTAssertEqual(data[1].value, 310.00)
     }
-    
+
     // Test case for fi_findBudgetRecommendations with no budget set
     func testFindBudgetRecommendationsWithNoBudgetSet() {
         let transactions: [FinancialTransaction] = [
@@ -58,17 +48,17 @@ class BudgetRecommendationsTests: XCTestCase {
             FinancialTransaction(amount: 200, date: Date(), category: Category(name: "Entertainment")),
             FinancialTransaction(amount: -50, date: Date(), category: Category(name: "Clothing"))
         ]
-        
+
         let budgets: [Budget] = [
             Budget(limitAmount: 300, category: Category(name: "Groceries")),
             Budget(limitAmount: 400, category: Category(name: "Entertainment")),
             Budget(limitAmount: 250, category: Category(name: "Clothing"))
         ]
-        
+
         let insights = budgetRecommendations.fi_findBudgetRecommendations(transactions: transactions, budgets: budgets)
-        
+
         XCTAssertEqual(insights.count, 1)
-        
+
         let insight = insights.first!
         XCTAssertEqual(insight.title, "Budget Recommendation: Groceries")
         XCTAssertEqual(insight.description, "Based on your average spending of $200.00, consider setting a budget of $310.00 for Groceries.")
@@ -79,7 +69,7 @@ class BudgetRecommendationsTests: XCTestCase {
         XCTAssertEqual(insight.relatedCategoryId, "Groceries")
         XCTAssertEqual(insight.relatedBudgetId, nil)
         XCTAssertEqual(insight.visualizationType, nil)
-        
+
         let data = insight.data
         XCTAssertEqual(data.count, 2)
         XCTAssertEqual(data[0].key, "Average Spending")
@@ -87,3 +77,5 @@ class BudgetRecommendationsTests: XCTestCase {
         XCTAssertEqual(data[1].key, "Recommended Budget")
         XCTAssertEqual(data[1].value, 310.00)
     }
+
+}

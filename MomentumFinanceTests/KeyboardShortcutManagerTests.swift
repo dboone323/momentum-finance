@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class KeyboardShortcutManagerTests: XCTestCase {
     var keyboardShortcutManager: KeyboardShortcutManager!
-
-    override func setUp() {
-        super.setUp()
-        keyboardShortcutManager = KeyboardShortcutManager.shared
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        keyboardShortcutManager = nil
-    }
 
     // Test the registerGlobalShortcuts method
     func testRegisterGlobalShortcuts() {
@@ -129,3 +119,5 @@ class KeyboardShortcutManagerTests: XCTestCase {
         XCTAssertEqual(shortcut.key, "s")
         XCTAssertEqual(shortcut.modifiers, [.command, .shift])
     }
+
+}

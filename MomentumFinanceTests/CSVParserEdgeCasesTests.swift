@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinanceCore
+import XCTest
 
 final class CSVParserEdgeCasesTests: XCTestCase {
     func testMalformedRowExtraCommas() {

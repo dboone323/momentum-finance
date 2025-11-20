@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class NavigationCoordinatorTests: XCTestCase {
     var coordinator: NavigationCoordinator!
-
-    override func setUp() {
-        super.setUp()
-        coordinator = NavigationCoordinator.shared
-    }
-
-    override func tearDown() {
-        coordinator = nil
-        super.tearDown()
-    }
 
     // MARK: - Core Navigation State Tests
 
@@ -122,3 +112,5 @@ class NavigationCoordinatorTests: XCTestCase {
         // THEN requiresAuthentication should be false
         XCTAssertFalse(coordinator.requiresAuthentication, "requiresAuthentication should be false after setting it.")
     }
+
+}

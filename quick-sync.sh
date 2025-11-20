@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck shell=ksh
 
 # Momentum Finance - Quick Sync Script
 # Fast sync without prompts - just pull latest changes

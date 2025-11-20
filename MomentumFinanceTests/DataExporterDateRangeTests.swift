@@ -9,7 +9,7 @@ final class DataExporterDateRangeTests: XCTestCase {
 
     override func setUp() async throws {
         let schema = Schema([
-            FinancialTransaction.self, FinancialAccount.self, ExpenseCategory.self,
+            FinancialTransaction.self, FinancialAccount.self, ExpenseCategory.self
         ])
         self.container = try ModelContainer(
             for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true)

@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class MacOSNavigationTypesTests: XCTestCase {
     // Test SidebarItem enum
@@ -171,3 +171,5 @@ class MacOSNavigationTypesTests: XCTestCase {
             XCTAssertEqual(item, ListItemType(rawValue: "Transaction") ?? .unknown)
         }
     }
+
+}

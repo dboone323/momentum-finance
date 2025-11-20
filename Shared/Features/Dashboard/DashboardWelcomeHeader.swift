@@ -27,9 +27,9 @@ extension Features.Dashboard {
                     Menu {
                         Button(action: {
                             // Refresh action
-                        }) {
+                        }, label: {
                             Label("Refresh", systemImage: "arrow.clockwise")
-                        }
+                        })
                     } label: {
                         Image(systemName: "ellipsis.circle")
                             .font(.title3)

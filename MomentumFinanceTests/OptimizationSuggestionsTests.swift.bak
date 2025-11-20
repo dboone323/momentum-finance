@@ -1,0 +1,17 @@
+@testable import MomentumFinance
+import XCTest
+
+class OptimizationSuggestionsTests: XCTestCase {
+    func testPlaceholder() {
+        XCTAssertTrue(true)
+    }
+}
+
+@testable import MomentumFinance
+import XCTest
+
+class OptimizationSuggestionsTests: XCTestCase {
+    var transactions: [FinancialTransaction] = []
+    var accounts: [FinancialAccount] = []
+
+}

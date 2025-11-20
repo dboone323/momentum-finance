@@ -1,0 +1,76 @@
+@testable import MomentumFinance
+import XCTest
+
+class TransactionFilterTests: XCTestCase {
+    // Test setup method
+    override func setUp() {
+        super.setUp()
+        // Initialize any necessary objects or configurations here
+    }
+
+    // Test teardown method
+    override func tearDown() {
+        super.tearDown()
+        // Clean up any resources used during testing
+    }
+
+    // Test case for TransactionFilter.all
+    func testAllTransactionFilter() {
+        // GIVEN: A TransactionFilter instance with all value
+        let filter = TransactionFilter.all
+
+        // WHEN: We call the displayName property
+        let displayName = filter.displayName
+
+        // THEN: The displayName should be "All"
+        XCTAssertEqual(displayName, "All")
+    }
+
+    // Test case for TransactionFilter.income
+    func testIncomeTransactionFilter() {
+        // GIVEN: A TransactionFilter instance with income value
+        let filter = TransactionFilter.income
+
+        // WHEN: We call the displayName property
+        let displayName = filter.displayName
+
+        // THEN: The displayName should be "Income"
+        XCTAssertEqual(displayName, "Income")
+    }
+
+    // Test case for TransactionFilter.expense
+    func testExpenseTransactionFilter() {
+        // GIVEN: A TransactionFilter instance with expense value
+        let filter = TransactionFilter.expense
+
+        // WHEN: We call the displayName property
+        let displayName = filter.displayName
+
+        // THEN: The displayName should be "Expenses"
+        XCTAssertEqual(displayName, "Expenses")
+    }
+
+    // Test case for TransactionFilter.transfer
+    func testTransferTransactionFilter() {
+        // GIVEN: A TransactionFilter instance with transfer value
+        let filter = TransactionFilter.transfer
+
+        // WHEN: We call the displayName property
+        let displayName = filter.displayName
+
+        // THEN: The displayName should be "Transfers"
+        XCTAssertEqual(displayName, "Transfers")
+    }
+
+    // Test case for TransactionFilter.id
+    func testIdTransactionFilter() {
+        // GIVEN: A TransactionFilter instance with all value
+        let filter = TransactionFilter.all
+
+        // WHEN: We call the id property
+        let id = filter.id
+
+        // THEN: The id should be "all"
+        XCTAssertEqual(id, "all")
+    }
+}

@@ -1,8 +1,7 @@
 import Foundation
 
 func fi_computeMonthlySpendingByCategory(transactions: [FinancialTransaction]) -> [String: [Date:
-        Double]]
-{
+        Double]] {
     let calendar = Calendar.current
     var monthlySpendingByCategory: [String: [Date: Double]] = [:]
 
@@ -150,7 +149,7 @@ func fi_checkBudgetExceeded(
         visualizationType: .progressBar,
         data: [
             ("Budget", budget.limitAmount), ("Spent", totalSpent),
-            ("Overspent", overspent),
+            ("Overspent", overspent)
         ]
     )
 }
@@ -198,7 +197,7 @@ func fi_checkBudgetAtRisk(context: BudgetAnalysisContext) -> FinancialInsight? {
         visualizationType: .progressBar,
         data: [
             ("Budget", context.budget.limitAmount), ("Spent", context.totalSpent),
-            ("Projected", projectedTotal),
+            ("Projected", projectedTotal)
         ]
     )
 }
@@ -223,14 +222,13 @@ func fi_checkBudgetUnderutilized(
         visualizationType: .progressBar,
         data: [
             ("Budget", budget.limitAmount), ("Spent", totalSpent),
-            ("Remaining", budget.limitAmount - totalSpent),
+            ("Remaining", budget.limitAmount - totalSpent)
         ]
     )
 }
 
 func fi_analyzeBudgets(transactions: [FinancialTransaction], budgets: [Budget])
-    -> [FinancialInsight]
-{
+    -> [FinancialInsight] {
     var insights: [FinancialInsight] = []
     let calendar = Calendar.current
     let currentMonth = calendar.component(.month, from: Date())
@@ -293,8 +291,7 @@ func fi_analyzeBudgets(transactions: [FinancialTransaction], budgets: [Budget])
 @MainActor
 extension FinancialIntelligenceService {
     private func findRecurringTransactionInsights(from transactions: [FinancialTransaction])
-        -> [FinancialInsight]
-    {
+        -> [FinancialInsight] {
         let recurringTransactions = fi_findRecurringTransactions(transactions)
         guard !recurringTransactions.isEmpty else { return [] }
 

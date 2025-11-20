@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck shell=ksh
 
 # Script to add standard file headers to Swift files
 # Copyright © 2025 Momentum Finance. All rights reserved.

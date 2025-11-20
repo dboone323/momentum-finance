@@ -21,10 +21,10 @@ public struct FileSelectionComponent: View {
             Text("Select CSV File").font(.headline)
             Text("Choose a CSV file containing your financial data").font(.subheadline)
                 .foregroundColor(.secondary).multilineTextAlignment(.center)
-            Button(action: { self.showingFilePicker = true }) {
+            Button(action: { self.showingFilePicker = true }, label: {
                 Label("Choose File", systemImage: "folder").padding().background(Color.blue)
                     .foregroundColor(.white).cornerRadius(8)
-            }
+            })
             .accessibilityLabel("Choose File")
         }
         .padding()
@@ -55,13 +55,13 @@ public struct ImportButtonComponent: View {
     }
 
     public var body: some View {
-        Button(action: self.action) {
+        Button(action: self.action, label: {
             if self.isImporting {
                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white))
             } else {
                 Label("Import Data", systemImage: "square.and.arrow.down")
             }
-        }
+        })
         .accessibilityLabel(self.isImporting ? "Importing" : "Import Data")
         .padding()
         .background(self.isImporting ? Color.gray : Color.blue)

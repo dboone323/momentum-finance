@@ -1,19 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class InsightsFilterBarTests: XCTestCase {
     var filterPriority: InsightPriority?
     var filterType: InsightType?
-
-    override func setUp() {
-        super.setUp()
-        // Initialize your test data here if needed
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources here if needed
-    }
 
     // Test the priority picker
     func testPriorityPicker() {

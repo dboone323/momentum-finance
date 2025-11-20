@@ -99,7 +99,7 @@ public struct NotificationsView: View {
                     FilterButton(
                         filter: filter,
                         isSelected: self.selectedFilter == filter,
-                        count: self.getNotificationCount(for: filter),
+                        count: self.getNotificationCount(for: filter)
                     ) {
                         self.selectedFilter = filter
                     }
@@ -124,7 +124,7 @@ public struct NotificationsView: View {
                         },
                         onDismiss: {
                             self.dismissNotification(notification)
-                        },
+                        }
                     )
                 }
             }
@@ -218,7 +218,7 @@ public struct NotificationsView: View {
 
         // Remove from system
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [
-            notification.id,
+            notification.id
         ])
     }
 
@@ -278,10 +278,10 @@ public struct FilterButton: View {
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
             .background(
-                self.isSelected ? Color.blue : Color.gray.opacity(0.2),
+                self.isSelected ? Color.blue : Color.gray.opacity(0.2)
             )
             .foregroundColor(
-                self.isSelected ? .white : .primary,
+                self.isSelected ? .white : .primary
             )
             .cornerRadius(20)
         }

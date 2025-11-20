@@ -1,22 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SearchAndFilterSectionTests: XCTestCase {
     var viewModel: Features.Transactions.SearchAndFilterSection!
-
-    override func setUp() {
-        super.setUp()
-        viewModel = Features.Transactions.SearchAndFilterSection(
-            searchText: .init(),
-            selectedFilter: .all,
-            showingSearch: .init()
-        )
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        viewModel = nil
-    }
 
     // GIVEN: The view is presented with default values
     func testViewIsPresentedWithDefaultValues() {

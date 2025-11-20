@@ -1,17 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class AnomalyDetectionTests: XCTestCase {
     var service: FinancialIntelligenceService!
-
-    override func setUp() {
-        super.setUp()
-        service = FinancialIntelligenceService()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
 
     // Test for fi_detectCategoryOutliers
     func testFiDetectCategoryOutliers() {
@@ -41,7 +32,7 @@ class AnomalyDetectionTests: XCTestCase {
         let insights = service.fi_detectCategoryOutliers(transactions)
 
         XCTAssertEqual(insights.count, expectedInsights.count)
-        for i in 0..<insights.count {
+        for i in 0 ..< insights.count {
             XCTAssertEqual(insights[i].title, expectedInsights[i].title)
             XCTAssertEqual(insights[i].description, expectedInsights[i].description)
             XCTAssertEqual(insights[i].priority, expectedInsights[i].priority)
@@ -79,7 +70,7 @@ class AnomalyDetectionTests: XCTestCase {
         let insights = service.fi_detectRecentFrequencyAnomalies(transactions)
 
         XCTAssertEqual(insights.count, expectedInsights.count)
-        for i in 0..<insights.count {
+        for i in 0 ..< insights.count {
             XCTAssertEqual(insights[i].title, expectedInsights[i].title)
             XCTAssertEqual(insights[i].description, expectedInsights[i].description)
             XCTAssertEqual(insights[i].priority, expectedInsights[i].priority)
@@ -89,3 +80,5 @@ class AnomalyDetectionTests: XCTestCase {
             XCTAssertEqual(insights[i].data.count, expectedInsights[i].data.count)
         }
     }
+
+}

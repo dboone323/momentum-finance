@@ -109,8 +109,7 @@ public enum DataParser {
     }
 
     public static func parseTransactionType(_ string: String, fallbackAmount amount: Double)
-        -> TransactionType
-    {
+        -> TransactionType {
         let normalized = string.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         switch normalized {
         case "income", "credit", "deposit":

@@ -44,6 +44,5 @@ public struct NavigationContext {
     }
 }
 
-/// Search result type for navigation
 // SearchResult is defined in Navigation/Components/NavigationTypes.swift to keep a single canonical definition
 // Please see Components/NavigationTypes.swift for the canonical SearchResult and SearchResultType definitions used by GlobalSearch.

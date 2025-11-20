@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class FinancialMLModelsTests: XCTestCase {
     var financialMLModels: FinancialMLModels!
-
-    override func setUp() {
-        super.setUp()
-        financialMLModels = FinancialMLModels.shared
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        financialMLModels = nil
-    }
 
     // Test case for analyzeSpendingPatterns
     func testAnalyzeSpendingPatterns() {
@@ -29,7 +19,7 @@ class FinancialMLModelsTests: XCTestCase {
             "mediumTransactionCount": 1,
             "largeTransactionCount": 1,
             "averageTransactionSize": 90.0,
-            "transactionFrequency": 4.0, // per day
+            "transactionFrequency": 4.0
         ]
 
         let result = financialMLModels.analyzeSpendingPatterns(transactions: transactions)

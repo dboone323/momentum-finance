@@ -13,21 +13,21 @@ do {
         Subscription.self,
         Budget.self,
         ExpenseCategory.self,
-        SavingsGoal.self,
+        SavingsGoal.self
     ])
 
     print("Schema created successfully")
 
     let modelConfiguration = ModelConfiguration(
         schema: schema,
-        isStoredInMemoryOnly: true, // Use in-memory for testing
+        isStoredInMemoryOnly: true // Use in-memory for testing
     )
 
     print("ModelConfiguration created successfully")
 
     let container = try ModelContainer(
         for: schema,
-        configurations: [modelConfiguration],
+        configurations: [modelConfiguration]
     )
 
     print("ModelContainer created successfully!")

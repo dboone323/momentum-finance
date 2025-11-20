@@ -4,7 +4,7 @@ set -e
 # Advanced test to verify SwiftData models compile together properly
 echo "🔍 Testing MomentumFinance App SwiftData Models..."
 
-cd /Users/danielstevens/Desktop/MomentumFinaceApp
+cd /Users/danielstevens/Desktop/MomentumFinaceApp || exit
 
 # Compile all model files together to resolve circular dependencies
 echo "📊 Compiling all SwiftData models together..."

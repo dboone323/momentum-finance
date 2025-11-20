@@ -1,18 +1,10 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class FinancialInsightModelsTests: XCTestCase {
     // Test setup
-    override func setUp() {
-        super.setUp()
-        // Initialize any necessary objects or data for testing
-    }
 
     // Test teardown
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources used during testing
-    }
 
     // Test FinancialInsightType enumeration
     func testFinancialInsightTypeEnumeration() {

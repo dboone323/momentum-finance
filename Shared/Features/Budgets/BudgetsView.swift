@@ -69,9 +69,9 @@ extension Features.Budgets {
                             }
                             .accessibilityLabel("Search Budgets")
 
-                            Button(action: { self.showingAddBudget = true }) {
+                            Button(action: { self.showingAddBudget = true }, label: {
                                 Image(systemName: "plus")
-                            }
+                            })
                             .accessibilityLabel("Add Budget")
                         }
                     }
@@ -262,7 +262,7 @@ extension Features.Budgets {
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .fill(self.backgroundColorForPlatform())
-                    .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2),
+                    .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
             )
         }
 
@@ -357,7 +357,7 @@ extension Features.Budgets {
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .fill(self.backgroundColorForPlatform())
-                    .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1),
+                    .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
             )
         }
 

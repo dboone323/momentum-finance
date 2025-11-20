@@ -1,22 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class CategoryTransactionsViewTests: XCTestCase {
     var viewModel: Features.Transactions.CategoryTransactionsViewModel!
     var mockModelContext: MockModelContext!
-
-    override func setUp() {
-        super.setUp()
-        mockModelContext = MockModelContext()
-        viewModel = Features.Transactions.CategoryTransactionsViewModel(modelContext: mockModelContext)
-        viewModel.categoryId = UUID(uuidString: "12345678-90ab-cdef-1234-567890abcdef")!
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        mockModelContext = nil
-        viewModel = nil
-    }
 
     // Test that the view displays a category header with icon and stats
     func testCategoryHeaderDisplay() {
@@ -52,3 +39,5 @@ class CategoryTransactionsViewTests: XCTestCase {
         XCTAssertEqual(viewModel.category?.name, expectedName)
         XCTAssertEqual(viewModel.totalAmount, expectedTotalAmount)
     }
+
+}

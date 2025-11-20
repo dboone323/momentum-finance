@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class InsightsLoadingViewTests: XCTestCase {
     var insightsLoadingView: InsightsLoadingView!
-
-    override func setUp() {
-        super.setUp()
-        insightsLoadingView = InsightsLoadingView()
-    }
-
-    override func tearDown() {
-        insightsLoadingView = nil
-        super.tearDown()
-    }
 
     // Test the isAnimating property
     func testIsAnimatingProperty() {

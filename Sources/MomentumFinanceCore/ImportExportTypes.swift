@@ -68,19 +68,19 @@ public enum ImportError: LocalizedError, Sendable {
     public var errorDescription: String? {
         switch self {
         case .fileAccessDenied:
-            return "The selected file could not be accessed."
+            "The selected file could not be accessed."
         case let .invalidFormat(message):
-            return message
+            message
         case let .parsingError(message):
-            return message
+            message
         case let .missingRequiredField(field):
-            return "CSV is missing required field: \(field)."
+            "CSV is missing required field: \(field)."
         case .emptyFile:
-            return "CSV file is empty."
+            "CSV file is empty."
         case let .invalidDateFormat(value):
-            return "Invalid date format: \(value)."
+            "Invalid date format: \(value)."
         case let .invalidAmountFormat(value):
-            return "Invalid amount format: \(value)."
+            "Invalid amount format: \(value)."
         }
     }
 }

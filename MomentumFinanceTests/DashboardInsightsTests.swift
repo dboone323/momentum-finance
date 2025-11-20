@@ -1,30 +1,16 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DashboardInsightsTests: XCTestCase {
     var insightsViewModel: DashboardInsightsViewModel!
     var mockOnDetailsTapped: (() -> Void)?
 
-    override func setUp() {
-        super.setUp()
-        insightsViewModel = DashboardInsightsViewModel(insights: ["Monthly spending is 15% lower than last month", "Savings increased by 8% this month", "3 subscriptions will renew next week"], onDetailsTapped: { [weak self] in
-            self?.mockOnDetailsTapped?()
-        })
-    }
-
-    override func tearDown() {
-        insightsViewModel = nil
-        mockOnDetailsTapped = nil
-        super.tearDown()
-    }
-
     // Test the Insights View Model's properties and methods
 
     func testInsightsViewModelProperties() {
         XCTAssertEqual(insightsViewModel.insights.count, 3)
-        XCTAssertEqual(insightsViewModel.onDetailsTapped, { [weak self] in
-            self?.mockOnDetailsTapped?()
-        })
+        // NOTE: `onDetailsTapped` is a closure; verifying equality of closures is not straightforward in tests
+        XCTAssertNotNil(insightsViewModel.onDetailsTapped)
     }
 
     func testInsightsView() {

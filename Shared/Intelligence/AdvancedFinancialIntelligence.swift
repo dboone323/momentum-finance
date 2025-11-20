@@ -57,7 +57,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
             savingsInsights,
             budgetInsights,
             riskInsights,
-            predictiveInsights,
+            predictiveInsights
         ].flatMap(\.self)
 
         // AI-powered insight ranking and prioritization
@@ -105,8 +105,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
     // MARK: - Private Analysis Methods
 
     private func analyzeSpendingPatterns(_ transactions: [Transaction]) async
-        -> [EnhancedFinancialInsight]
-    {
+        -> [EnhancedFinancialInsight] {
         var insights: [EnhancedFinancialInsight] = []
 
         // Analyze spending velocity
@@ -123,7 +122,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                     actionRecommendations: [
                         "Review recent transactions",
                         "Set stricter budget limits",
-                        "Enable spending alerts",
+                        "Enable spending alerts"
                     ],
                     impactScore: 8.5
                 )
@@ -173,7 +172,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                     actionRecommendations: [
                         "Review subscription usage",
                         "Cancel unused subscriptions",
-                        "Set usage reminders",
+                        "Set usage reminders"
                     ],
                     potentialSavings: potentialSavings * 12, // Annual savings
                     impactScore: 7.2
@@ -196,7 +195,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                     actionRecommendations: [
                         "Research high-yield savings accounts",
                         "Compare interest rates",
-                        "Consider CDs for longer terms",
+                        "Consider CDs for longer terms"
                     ],
                     potentialSavings: cashBalance * 0.045, // Potential annual earnings
                     impactScore: 6.8
@@ -230,7 +229,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                         actionRecommendations: [
                             "Reduce spending in this category",
                             "Consider increasing budget if necessary",
-                            "Review recent transactions",
+                            "Review recent transactions"
                         ],
                         impactScore: percentageUsed > 100 ? 9.5 : 8.0
                     )
@@ -265,7 +264,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                     actionRecommendations: [
                         "Set up automatic savings transfers",
                         "Reduce discretionary spending temporarily",
-                        "Consider side income opportunities",
+                        "Consider side income opportunities"
                     ],
                     impactScore: monthsCovered < 1 ? 9.8 : 7.5
                 )
@@ -299,7 +298,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                     actionRecommendations: [
                         "Review upcoming expenses",
                         "Consider increasing income",
-                        "Reduce non-essential spending",
+                        "Reduce non-essential spending"
                     ],
                     impactScore: 8.2
                 )
@@ -329,8 +328,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
     }
 
     private func prioritizeInsights(_ insights: [EnhancedFinancialInsight])
-        -> [EnhancedFinancialInsight]
-    {
+        -> [EnhancedFinancialInsight] {
         insights.sorted { first, second in
             // Priority by severity first, then by impact score
             if first.priority != second.priority {

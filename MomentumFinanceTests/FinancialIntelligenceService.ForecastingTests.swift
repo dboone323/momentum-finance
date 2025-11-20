@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class FinancialIntelligenceServiceTests: XCTestCase {
     var service: FinancialIntelligenceService!
-
-    override func setUp() {
-        super.setUp()
-        service = FinancialIntelligenceService()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        service = nil
-    }
 
     // Test generateForecasts method with sample data
     func testGenerateForecasts() throws {

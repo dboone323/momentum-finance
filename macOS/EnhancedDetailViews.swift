@@ -494,7 +494,7 @@ import SwiftUI
 
                             TextField("Transaction name", text: Binding(
                                 get: { self.editedTransaction?.name ?? transaction.name },
-                                set: { self.editedTransaction?.name = $0 },
+                                set: { self.editedTransaction?.name = $0 }
                             ))
                             .textFieldStyle(.roundedBorder)
                         }
@@ -507,7 +507,7 @@ import SwiftUI
                             HStack {
                                 TextField("Amount", value: Binding(
                                     get: { self.editedTransaction?.amount ?? transaction.amount },
-                                    set: { self.editedTransaction?.amount = $0 },
+                                    set: { self.editedTransaction?.amount = $0 }
                                 ), format: .currency(code: transaction.currencyCode))
                                     .textFieldStyle(.roundedBorder)
                                     .frame(width: 150)
@@ -518,7 +518,7 @@ import SwiftUI
                                         if let amount = editedTransaction?.amount {
                                             self.editedTransaction?.amount = isIncome ? abs(amount) : -abs(amount)
                                         }
-                                    },
+                                    }
                                 )) {
                                     Text("Expense").tag(false)
                                     Text("Income").tag(true)
@@ -534,7 +534,7 @@ import SwiftUI
 
                             DatePicker("Date", selection: Binding(
                                 get: { self.editedTransaction?.date ?? transaction.date },
-                                set: { self.editedTransaction?.date = $0 },
+                                set: { self.editedTransaction?.date = $0 }
                             ))
                             .datePickerStyle(.compact)
                             .labelsHidden()
@@ -548,7 +548,7 @@ import SwiftUI
                             VStack {
                                 Picker("Category", selection: Binding(
                                     get: { self.editedTransaction?.categoryId ?? transaction.category?.id ?? "" },
-                                    set: { self.editedTransaction?.categoryId = $0 },
+                                    set: { self.editedTransaction?.categoryId = $0 }
                                 )) {
                                     Text("None").tag("")
                                     ForEach(self.categories) { category in
@@ -562,7 +562,7 @@ import SwiftUI
                                         "Subcategory (optional).accessibilityLabel("Text Field").accessibilityLabel("Text Field")",
                                         text: Binding(
                                             get: { subcategory },
-                                            set: { self.editedTransaction?.subcategory = $0 },
+                                            set: { self.editedTransaction?.subcategory = $0 }
                                         )
                                     )
                                     .textFieldStyle(.roundedBorder)
@@ -577,7 +577,7 @@ import SwiftUI
 
                             Picker("Account", selection: Binding(
                                 get: { self.editedTransaction?.accountId ?? transaction.account?.id ?? "" },
-                                set: { self.editedTransaction?.accountId = $0 },
+                                set: { self.editedTransaction?.accountId = $0 }
                             )) {
                                 Text("None").tag("")
                                 // This would be populated with accounts
@@ -595,7 +595,7 @@ import SwiftUI
 
                             Picker("Status", selection: Binding(
                                 get: { self.editedTransaction?.isReconciled ?? transaction.isReconciled },
-                                set: { self.editedTransaction?.isReconciled = $0 },
+                                set: { self.editedTransaction?.isReconciled = $0 }
                             )) {
                                 Text("Pending").tag(false)
                                 Text("Reconciled").tag(true)
@@ -611,7 +611,7 @@ import SwiftUI
 
                             Toggle("This transaction repeats regularly", isOn: Binding(
                                 get: { self.editedTransaction?.isRecurring ?? transaction.isRecurring },
-                                set: { self.editedTransaction?.isRecurring = $0 },
+                                set: { self.editedTransaction?.isRecurring = $0 }
                             ))
                         }
 
@@ -622,7 +622,7 @@ import SwiftUI
 
                             TextField("Transaction location", text: Binding(
                                 get: { self.editedTransaction?.location ?? transaction.location ?? "" },
-                                set: { self.editedTransaction?.location = $0 },
+                                set: { self.editedTransaction?.location = $0 }
                             ))
                             .textFieldStyle(.roundedBorder)
                         }
@@ -633,7 +633,7 @@ import SwiftUI
 
                     TextEditor(text: Binding(
                         get: { self.editedTransaction?.notes ?? transaction.notes },
-                        set: { self.editedTransaction?.notes = $0 },
+                        set: { self.editedTransaction?.notes = $0 }
                     ))
                     .font(.body)
                     .frame(minHeight: 100)
@@ -830,7 +830,7 @@ import SwiftUI
                     (month: "Mar", amount: 45.75),
                     (month: "Apr", amount: 120.00),
                     (month: "May", amount: 87.25),
-                    (month: "Jun", amount: 95.50),
+                    (month: "Jun", amount: 95.50)
                 ]
 
                 var body: some View {
@@ -839,7 +839,7 @@ import SwiftUI
                             ForEach(self.monthlyData, id: \.month) { item in
                                 BarMark(
                                     x: .value("Month", item.month),
-                                    y: .value("Amount", item.amount),
+                                    y: .value("Amount", item.amount)
                                 )
                                 .foregroundStyle(Color.blue.gradient)
                             }
@@ -896,7 +896,7 @@ import SwiftUI
                     (date: "Mar 5", amount: 52.25),
                     (date: "Apr 2", amount: 48.50),
                     (date: "May 7", amount: 55.75),
-                    (date: "Jun 4", amount: 50.30),
+                    (date: "Jun 4", amount: 50.30)
                 ]
 
                 var body: some View {
@@ -905,7 +905,7 @@ import SwiftUI
                             ForEach(self.transactions, id: \.date) { item in
                                 LineMark(
                                     x: .value("Date", item.date),
-                                    y: .value("Amount", item.amount),
+                                    y: .value("Amount", item.amount)
                                 )
                                 .symbol(Circle().strokeBorder(lineWidth: 2))
                                 .foregroundStyle(.blue)
@@ -914,7 +914,7 @@ import SwiftUI
                             ForEach(self.transactions, id: \.date) { item in
                                 PointMark(
                                     x: .value("Date", item.date),
-                                    y: .value("Amount", item.amount),
+                                    y: .value("Amount", item.amount)
                                 )
                                 .foregroundStyle(.blue)
                             }
@@ -973,7 +973,7 @@ import SwiftUI
                     "February Grocery Shopping",
                     "March Grocery Shopping",
                     "April Grocery Shopping",
-                    "May Grocery Shopping",
+                    "May Grocery Shopping"
                 ]
 
                 var body: some View {
@@ -1069,7 +1069,7 @@ import SwiftUI
                     amount: original.amount,
                     date: Date(),
                     notes: original.notes,
-                    isReconciled: false,
+                    isReconciled: false
                 )
 
                 // Copy other properties and relationships

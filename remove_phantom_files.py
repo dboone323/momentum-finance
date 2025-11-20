@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import re
-import sys
 
 
 def remove_phantom_files(project_file):

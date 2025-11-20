@@ -14,7 +14,7 @@ extension ContentView {
 
 #if os(iOS)
     // iOS-specific UI components and helpers
-    enum iOSSpecificViews {
+    struct IOSSpecificViews: View {
         /// iOS navigation bar configuration
         static func configureNavigationBar() {
             let appearance = UINavigationBarAppearance()
@@ -22,7 +22,7 @@ extension ContentView {
             appearance.backgroundColor = UIColor.systemBackground
             appearance.titleTextAttributes = [
                 .foregroundColor: UIColor.label,
-                .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+                .font: UIFont.systemFont(ofSize: 18, weight: .semibold)
             ]
 
             UINavigationBar.appearance().standardAppearance = appearance
@@ -53,7 +53,7 @@ extension ContentView {
                         #selector(UIResponder.resignFirstResponder),
                         to: nil,
                         from: nil,
-                        for: nil,
+                        for: nil
                     )
                 }
         }

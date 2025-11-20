@@ -92,10 +92,10 @@ public extension Features {
                                     Button(action: {
                                         self.searchText = ""
                                         self.performSearch()
-                                    }) {
+                                    }, label: {
                                         Image(systemName: "xmark.circle.fill")
                                             .foregroundColor(.secondary)
-                                    }
+                                    })
                                 }
                             }
                             .padding(.horizontal)

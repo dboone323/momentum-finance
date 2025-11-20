@@ -1,22 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class FinancialIntelligenceServiceTests: XCTestCase {
     var service: FinancialIntelligenceService!
     var mockModelContext: MockModelContext!
-
-    override func setUp() {
-        super.setUp()
-        service = FinancialIntelligenceService.shared
-        mockModelContext = MockModelContext()
-        service.mlModels = FinancialMLModels(mockModelContext)
-        service.patternAnalyzer = TransactionPatternAnalyzer(mockModelContext)
-    }
-
-    override func tearDown() {
-        mockModelContext.reset()
-        super.tearDown()
-    }
 
     // MARK: - Test Cases
 
@@ -122,3 +109,5 @@ class FinancialIntelligenceServiceTests: XCTestCase {
             XCTAssertEqual(service.insights.count, 2) // Two insights should be present after analysis
         }
     }
+
+}

@@ -15,7 +15,7 @@ public struct ImportExportSection: View {
         Section(header: Text("Import & Export")) {
             Button(action: {
                 self.showingExportSheet = true
-            }) {
+            }, label: {
                 HStack {
                     Image(systemName: "square.and.arrow.up")
                     Text("Export Data")
@@ -24,12 +24,12 @@ public struct ImportExportSection: View {
                         ProgressView()
                     }
                 }
-            }
+            })
             .disabled(self.isExporting)
 
             Button(action: {
                 self.showingImportPicker = true
-            }) {
+            }, label: {
                 HStack {
                     Image(systemName: "square.and.arrow.down")
                     Text("Import Data")
@@ -38,7 +38,7 @@ public struct ImportExportSection: View {
                         ProgressView()
                     }
                 }
-            }
+            })
             .disabled(self.isImporting)
         }
         .sheet(isPresented: self.$showingExportSheet) {
@@ -70,15 +70,15 @@ public struct ImportExportSection: View {
 
     private func shareExportedFile(_ url: URL) {
         #if os(iOS)
-        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first,
-           let rootVC = window.rootViewController {
-            rootVC.present(activityVC, animated: true)
-        }
+            let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let window = windowScene.windows.first,
+               let rootVC = window.rootViewController {
+                rootVC.present(activityVC, animated: true)
+            }
         #else
-        // On macOS, you might want to show a save panel or open the file
-        NSWorkspace.shared.open(url)
+            // On macOS, you might want to show a save panel or open the file
+            NSWorkspace.shared.open(url)
         #endif
     }
 }

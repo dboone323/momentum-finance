@@ -44,12 +44,12 @@ public struct DashboardSubscriptionsSection: View {
                 .onTapGesture { self.onSubscriptionTapped(subscription) }
             }
 
-            Button(action: self.onAddTapped) {
+            Button(action: self.onAddTapped, label: {
                 HStack {
                     Image(systemName: "plus.circle.fill").foregroundColor(.blue)
                     Text("Add Subscription").foregroundColor(.blue)
                 }.font(.subheadline)
-            }
+            })
             .accessibilityLabel("Add Subscription")
         }
         .padding()

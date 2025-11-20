@@ -1,22 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class GoalsAndReportsViewTests: XCTestCase {
     var viewModel: GoalsAndReportsViewModel!
     var modelContext: ModelContext!
-
-    override func setUp() {
-        super.setUp()
-        // Initialize the model context and view model for testing
-        self.modelContext = ModelContext()
-        self.viewModel = GoalsAndReportsViewModel(modelContext: self.modelContext)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources after each test
-        self.modelContext.reset()
-    }
 
     // Test the initialization of the view model with a specific context
     func testInitializationWithModelContext() {

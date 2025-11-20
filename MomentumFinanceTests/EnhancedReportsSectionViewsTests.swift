@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class EnhancedReportsSectionViewsTests: XCTestCase {
     var viewModel: Features.GoalsAndReports.EnhancedReportsSectionViewModel!
-
-    override func setUp() {
-        super.setUp()
-        viewModel = Features.GoalsAndReports.EnhancedReportsSectionViewModel(transactions: [], budgets: [], categories: [])
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        viewModel = nil
-    }
 
     // Test the header section
     func testHeaderSection() {

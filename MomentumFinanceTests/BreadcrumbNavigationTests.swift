@@ -1,39 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class BreadcrumbNavigationTests: XCTestCase {
     var breadcrumbItems: [BreadcrumbItem]!
     var deepLinks: [DeepLink]!
-
-    override func setUp() {
-        super.setUp()
-        breadcrumbItems = [
-            BreadcrumbItem(title: "Dashboard", destination: nil),
-            BreadcrumbItem(title: "Transactions", destination: nil),
-            BreadcrumbItem(title: "Budgets", destination: nil),
-            BreadcrumbItem(title: "Subscriptions", destination: nil),
-            BreadcrumbItem(title: "Goals", destination: nil),
-            BreadcrumbItem(title: "Settings", destination: nil)
-        ]
-        deepLinks = [
-            DeepLink.dashboard,
-            DeepLink.transactions,
-            DeepLink.budgets,
-            DeepLink.subscriptions,
-            DeepLink.goals,
-            DeepLink.settings,
-            DeepLink.search(query: "test"),
-            DeepLink.transaction(id: UUID()),
-            DeepLink.account(id: UUID()),
-            DeepLink.subscription(id: UUID()),
-            DeepLink.budget(id: UUID()),
-            DeepLink.goal(id: UUID())
-        ]
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
 
     // Test BreadcrumbItem properties
     func testBreadcrumbItemTitle() {

@@ -1,28 +1,10 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class EnhancedSubscriptionDetailViewTests: XCTestCase {
     var subscriptionId: String = "12345"
     var subscription: Subscription?
     var relatedTransactions: [FinancialTransaction] = []
-
-    override func setUp() {
-        super.setUp()
-        // Set up test data
-        let subscription = Subscription(id: subscriptionId, name: "Test Subscription", status: .active)
-        self.subscription = subscription
-        self.relatedTransactions = [
-            FinancialTransaction(id: "1234567890", date: Date(), amount: 100.0, description: "Monthly Payment"),
-            FinancialTransaction(id: "0987654321", date: Date().addingTimeInterval(-1 * 30 * 24 * 60 * 60), amount: -50.0, description: "Previous Payment")
-        ]
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up test data
-        self.subscription = nil
-        self.relatedTransactions.removeAll()
-    }
 
     func testSubscriptionName() {
         let view = EnhancedSubscriptionDetailView(subscriptionId: subscriptionId)

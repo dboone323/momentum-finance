@@ -1,0 +1,137 @@
+import XCTest
+@testable import MomentumFinance
+
+class DataParserTests: XCTestCase {
+    // Test parsing date strings
+    func testParseDate() throws {
+        let dateString = "2023-10-05"
+        let expectedDate = DateComponents(year: 2023, month: 10, day: 5).date!
+
+        do {
+            let parsedDate = DataParser.parseDate(dateString)
+            XCTAssertEqual(parsedDate, expectedDate)
+        } catch {
+            XCTFail("Failed to parse date: \(dateString)")
+        }
+    }
+
+    func testParseDateInvalidFormat() throws {
+        let dateString = "10/05/2023"
+        do {
+            DataParser.parseDate(dateString)
+            XCTFail("Expected error for invalid date format")
+        } catch ImportError.invalidDateFormat(let errorMessage) {
+            XCTAssertEqual(errorMessage, "Invalid date format: \(dateString)")
+        }
+    }
+
+    // Test parsing amount strings
+    func testParseAmount() throws {
+        let amountString = "$100.50"
+        let expectedAmount = 100.50
+
+        do {
+            let parsedAmount = DataParser.parseAmount(amountString)
+            XCTAssertEqual(parsedAmount, expectedAmount)
+        } catch {
+            XCTFail("Failed to parse amount: \(amountString)")
+        }
+    }
+
+    func testParseAmountInvalidFormat() throws {
+        let amountString = "100,50"
+        do {
+            DataParser.parseAmount(amountString)
+            XCTFail("Expected error for invalid amount format")
+        } catch ImportError.invalidAmountFormat(let errorMessage) {
+            XCTAssertEqual(errorMessage, "Invalid amount format: \(amountString)")
+        }
+    }
+
+    // Test parsing transaction type
+    func testParseTransactionTypeIncome() throws {
+        let typeString = "Salary"
+        let expectedType = .income
+
+        do {
+            let parsedType = DataParser.parseTransactionType(typeString, amount: 5000.0)
+            XCTAssertEqual(parsedType, expectedType)
+        } catch {
+            XCTFail("Failed to parse transaction type for income")
+        }
+    }
+
+    func testParseTransactionTypeExpense() throws {
+        let typeString = "Payment"
+        let expectedType = .expense
+
+        do {
+            let parsedType = DataParser.parseTransactionType(typeString, amount: -200.0)
+            XCTAssertEqual(parsedType, expectedType)
+        } catch {
+            XCTFail("Failed to parse transaction type for expense")
+        }
+    }
+
+    func testParseTransactionTypeInvalidType() throws {
+        let typeString = "Unknown"
+        let expectedType = .expense
+
+        do {
+            let parsedType = DataParser.parseTransactionType(typeString, amount: 100.0)
+            XCTAssertEqual(parsedType, expectedType)
+        } catch {
+            XCTFail("Expected error for invalid transaction type")
+        }
+    }
+
+    // Test parsing with different amounts
+    func testParseTransactionTypeWithPositiveAmount() throws {
+        let typeString = "Salary"
+        let expectedType = .income
+
+        do {
+            let parsedType = DataParser.parseTransactionType(typeString, amount: 5000.0)
+            XCTAssertEqual(parsedType, expectedType)
+        } catch {
+            XCTFail("Failed to parse transaction type for positive amount")
+        }
+    }
+
+    func testParseTransactionTypeWithNegativeAmount() throws {
+        let typeString = "Payment"
+        let expectedType = .expense
+
+        do {
+            let parsedType = DataParser.parseTransactionType(typeString, amount: -200.0)
+            XCTAssertEqual(parsedType, expectedType)
+        } catch {
+            XCTFail("Failed to parse transaction type for negative amount")
+        }
+    }
+
+    // Test parsing with zero amount
+    func testParseTransactionTypeWithZeroAmount() throws {
+        let typeString = "Salary"
+        let expectedType = .income
+
+        do {
+            let parsedType = DataParser.parseTransactionType(typeString, amount: 0.0)
+            XCTAssertEqual(parsedType, expectedType)
+        } catch {
+            XCTFail("Failed to parse transaction type for zero amount")
+        }
+    }
+
+    // Test parsing with negative amount
+    func testParseTransactionTypeWithNegativeAmount() throws {
+        let typeString = "Payment"
+        let expectedType = .expense
+
+        do {
+            let parsedType = DataParser.parseTransactionType(typeString, amount: -200.0)
+            XCTAssertEqual(parsedType, expectedType)
+        } catch {
+            XCTFail("Failed to parse transaction type for negative amount")
+        }
+    }

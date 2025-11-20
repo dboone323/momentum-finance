@@ -1,18 +1,10 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class MomentumFinanceTypesTests: XCTestCase {
     // Test setup method to ensure all dependencies are properly mocked or provided
-    override func setUp() {
-        super.setUp()
-        // Add any necessary setup code here
-    }
 
     // Test teardown method to clean up after each test
-    override func tearDown() {
-        super.tearDown()
-        // Add any necessary cleanup code here
-    }
 
     // Test the NotificationPermissionManager class
     func testNotificationPermissionManager() {

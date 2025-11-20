@@ -326,7 +326,7 @@ runTest("testAccountBalanceCalculations") {
         ),
         FinancialTransaction(
             title: "Expense 2", amount: 50.0, date: Date(), transactionType: .expense
-        ),
+        )
     ]
 
     for transaction in transactions {
@@ -708,7 +708,7 @@ runTest("testAccountTransactionIntegration") {
             title: "Grocery", amount: 75.0, date: Date(), transactionType: .expense
         ),
         FinancialTransaction(title: "Gas", amount: 40.0, date: Date(), transactionType: .expense),
-        FinancialTransaction(title: "Coffee", amount: 5.0, date: Date(), transactionType: .expense),
+        FinancialTransaction(title: "Coffee", amount: 5.0, date: Date(), transactionType: .expense)
     ]
 
     for transaction in transactions {

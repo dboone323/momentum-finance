@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class InsightsEmptyStateViewTests: XCTestCase {
     // Mocks for dependencies if needed
-
-    override func setUp() {
-        super.setUp()
-        // Initialize any necessary objects or mocks here
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources here
-    }
 
     // Test case to check the appearance of the image and text
     func testInsightsEmptyStateViewAppearance() {

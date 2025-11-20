@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class TransactionEmptyStateViewTests: XCTestCase {
     var sut: TransactionEmptyStateView!
@@ -7,32 +7,19 @@ class TransactionEmptyStateViewTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        
-        // Initialize the view model with some test data
-        let searchText = "test"
-        let onAddTransaction = { [weak self] in
-            guard let self = self else { return }
-            self.viewModel.onAddTransaction()
-        }
+        let onAddTransaction = {}
+        let searchText = ""
         viewModel = Features.Transactions.TransactionEmptyStateViewModel(searchText: searchText, onAddTransaction: onAddTransaction)
-        
-        // Create the view with the initialized view model
         sut = TransactionEmptyStateView(viewModel: viewModel)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        sut = nil
-        viewModel = nil
     }
 
     func testSearchTextIsEmptyImageAndText() {
         // GIVEN: The search text is empty
         let searchText = ""
-        
+
         // WHEN: The view is created
         sut = TransactionEmptyStateView(viewModel: viewModel)
-        
+
         // THEN: The image should be "list.bullet" and the text should be "No Transactions"
         XCTAssertEqual(sut.image.systemName, "list.bullet")
         XCTAssertEqual(sut.text.title2, "No Transactions")
@@ -41,10 +28,10 @@ class TransactionEmptyStateViewTests: XCTestCase {
     func testSearchTextIsNotEmptyImageAndText() {
         // GIVEN: The search text is not empty
         let searchText = "test"
-        
+
         // WHEN: The view is created
         sut = TransactionEmptyStateView(viewModel: viewModel)
-        
+
         // THEN: The image should be "magnifyingglass" and the text should be "No Results Found"
         XCTAssertEqual(sut.image.systemName, "magnifyingglass")
         XCTAssertEqual(sut.text.title2, "No Results Found")
@@ -53,18 +40,18 @@ class TransactionEmptyStateViewTests: XCTestCase {
     func testAddTransactionButton() {
         // GIVEN: The search text is empty
         let searchText = ""
-        
+
         // WHEN: The view is created
         sut = TransactionEmptyStateView(viewModel: viewModel)
-        
+
         // THEN: The button should be present and the action should be called when tapped
         XCTAssertTrue(sut.addTransactionButton.isDisplayed)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(addTransactionButtonTapped))
         sut.addTransactionButton.addGestureRecognizer(tapGesture)
-        
+
         // WHEN: The button is tapped
         tapGesture.sendActions(for: .touchUpInside)
-        
+
         // THEN: The onAddTransaction method should be called
         XCTAssertEqual(viewModel.onAddTransactionCount, 1)
     }

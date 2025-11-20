@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck shell=ksh
 
 # Multi-platform launcher for MomentumFinance
 # Supports iOS Simulator and macOS
@@ -18,7 +19,7 @@ echo -e "${BLUE}🚀 MomentumFinance Multi-Platform Launcher${NC}"
 echo "=========================================="
 
 # Set working directory
-cd "$(dirname "$0")"
+cd "$(dirname "$0")" || exit
 
 # Function to show usage
 show_usage() {

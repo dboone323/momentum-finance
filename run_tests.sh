@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck shell=ksh
 
 # Test Runner Script for MomentumFinance
 # This script provides alternative ways to run tests

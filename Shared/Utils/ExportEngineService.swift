@@ -185,7 +185,7 @@ final class ExportEngineService {
             // Title
             let titleAttributes: [NSAttributedString.Key: Any] = [
                 .font: NSFont.boldSystemFont(ofSize: 24),
-                .foregroundColor: NSColor.black,
+                .foregroundColor: NSColor.black
             ]
             let title = "Momentum Finance Report"
             title.draw(at: CGPoint(x: 50, y: pageRect.height - 50), withAttributes: titleAttributes)
@@ -194,7 +194,7 @@ final class ExportEngineService {
             let dateRange = "Period: \(dateFormatter.string(from: settings.startDate)) - \(dateFormatter.string(from: settings.endDate))"
             let dateAttributes: [NSAttributedString.Key: Any] = [
                 .font: NSFont.systemFont(ofSize: 14),
-                .foregroundColor: NSColor.gray,
+                .foregroundColor: NSColor.gray
             ]
             dateRange.draw(at: CGPoint(x: 50, y: pageRect.height - 80), withAttributes: dateAttributes)
 
@@ -218,11 +218,11 @@ final class ExportEngineService {
 
         let headerAttributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.boldSystemFont(ofSize: 18),
-            .foregroundColor: NSColor.black,
+            .foregroundColor: NSColor.black
         ]
         let textAttributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 12),
-            .foregroundColor: NSColor.black,
+            .foregroundColor: NSColor.black
         ]
 
         "Transactions Summary".draw(at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes)
@@ -253,11 +253,11 @@ final class ExportEngineService {
 
         let headerAttributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.boldSystemFont(ofSize: 18),
-            .foregroundColor: NSColor.black,
+            .foregroundColor: NSColor.black
         ]
         let textAttributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 12),
-            .foregroundColor: NSColor.black,
+            .foregroundColor: NSColor.black
         ]
 
         "Accounts Summary".draw(at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes)
@@ -283,7 +283,7 @@ final class ExportEngineService {
             "startDate": ISO8601DateFormatter().string(from: settings.startDate),
             "endDate": ISO8601DateFormatter().string(from: settings.endDate),
             "app": "Momentum Finance",
-            "version": "1.0.0",
+            "version": "1.0.0"
         ]
 
         if settings.includeTransactions {
@@ -313,35 +313,35 @@ final class ExportEngineService {
             predicate: #Predicate { transaction in
                 transaction.date >= startDate && transaction.date <= endDate
             },
-            sortBy: [SortDescriptor(\.date, order: .reverse)],
+            sortBy: [SortDescriptor(\.date, order: .reverse)]
         )
         return try self.modelContext.fetch(descriptor)
     }
 
     private func fetchAccounts() throws -> [FinancialAccount] {
         let descriptor = FetchDescriptor<FinancialAccount>(
-            sortBy: [SortDescriptor(\.name)],
+            sortBy: [SortDescriptor(\.name)]
         )
         return try self.modelContext.fetch(descriptor)
     }
 
     private func fetchBudgets() throws -> [Budget] {
         let descriptor = FetchDescriptor<Budget>(
-            sortBy: [SortDescriptor(\.name)],
+            sortBy: [SortDescriptor(\.name)]
         )
         return try self.modelContext.fetch(descriptor)
     }
 
     private func fetchSubscriptions() throws -> [Subscription] {
         let descriptor = FetchDescriptor<Subscription>(
-            sortBy: [SortDescriptor(\.name)],
+            sortBy: [SortDescriptor(\.name)]
         )
         return try self.modelContext.fetch(descriptor)
     }
 
     private func fetchGoals() throws -> [SavingsGoal] {
         let descriptor = FetchDescriptor<SavingsGoal>(
-            sortBy: [SortDescriptor(\.name)],
+            sortBy: [SortDescriptor(\.name)]
         )
         return try self.modelContext.fetch(descriptor)
     }
@@ -361,7 +361,7 @@ final class ExportEngineService {
                 "type": transaction.transactionType.rawValue,
                 "category": transaction.category?.name ?? "",
                 "account": transaction.account?.name ?? "",
-                "notes": transaction.notes ?? "",
+                "notes": transaction.notes ?? ""
             ]
         }
     }
@@ -377,7 +377,7 @@ final class ExportEngineService {
                 "balance": account.balance,
                 "type": account.accountType.rawValue,
                 "currencyCode": account.currencyCode,
-                "createdDate": formatter.string(from: account.createdDate),
+                "createdDate": formatter.string(from: account.createdDate)
             ]
         }
     }
@@ -394,7 +394,7 @@ final class ExportEngineService {
                 "spentAmount": budget.spentAmount,
                 "category": budget.category?.name ?? "",
                 "month": formatter.string(from: budget.month),
-                "createdDate": formatter.string(from: budget.createdDate),
+                "createdDate": formatter.string(from: budget.createdDate)
             ]
         }
     }
@@ -412,7 +412,7 @@ final class ExportEngineService {
                 "nextDueDate": formatter.string(from: subscription.nextDueDate),
                 "category": subscription.category?.name ?? "",
                 "account": subscription.account?.name ?? "",
-                "isActive": subscription.isActive,
+                "isActive": subscription.isActive
             ]
         }
     }
@@ -427,7 +427,7 @@ final class ExportEngineService {
                 "name": goal.name,
                 "targetAmount": goal.targetAmount,
                 "currentAmount": goal.currentAmount,
-                "progressPercentage": goal.progressPercentage,
+                "progressPercentage": goal.progressPercentage
             ]
 
             if let targetDate = goal.targetDate {

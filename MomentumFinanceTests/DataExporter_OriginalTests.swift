@@ -1,24 +1,14 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DataExporterTests: XCTestCase {
     var dataExporter: DataExporter!
-
-    override func setUp() {
-        super.setUp()
-        dataExporter = DataExporter()
-    }
-
-    override func tearDown() {
-        dataExporter = nil
-        super.tearDown()
-    }
 
     // Test that the configure method initializes the engine asynchronously when a ModelContext is available
     func testConfigureWithModelContext() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
-        
+
         XCTAssertNotNil(dataExporter.engine, "Engine should be initialized")
         XCTAssertEqual(modelContext, dataExporter.engine!.modelContext, "ModelContext should be set on the engine")
     }
@@ -27,7 +17,7 @@ class DataExporterTests: XCTestCase {
     func testExportWithInvalidSettings() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
-        
+
         do {
             await dataExporter.export(with: ExportSettings())
             XCTFail("Expected to throw an error")
@@ -40,7 +30,7 @@ class DataExporterTests: XCTestCase {
     func testExportWithSuccess() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
-        
+
         let settings = ExportSettings()
         let expectedURL = URL(string: "https://example.com/exported-file")!
         do {
@@ -55,13 +45,13 @@ class DataExporterTests: XCTestCase {
     func testEngineDeallocated() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
-        
+
         do {
             try await dataExporter.export(with: ExportSettings())
         } catch {
             XCTFail("Unexpected error exporting file")
         }
-        
+
         XCTAssertNil(dataExporter.engine, "Engine should be deallocated after use")
     }
 
@@ -69,7 +59,7 @@ class DataExporterTests: XCTestCase {
     func testConfigureWithModelContextAsync() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
-        
+
         XCTAssertNotNil(dataExporter.engine, "Engine should be initialized")
         XCTAssertEqual(modelContext, dataExporter.engine!.modelContext, "ModelContext should be set on the engine")
     }
@@ -78,7 +68,7 @@ class DataExporterTests: XCTestCase {
     func testExportWithInvalidSettingsAsync() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
-        
+
         do {
             try await dataExporter.export(with: ExportSettings())
             XCTFail("Expected to throw an error")
@@ -91,7 +81,7 @@ class DataExporterTests: XCTestCase {
     func testExportWithSuccessAsync() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
-        
+
         let settings = ExportSettings()
         let expectedURL = URL(string: "https://example.com/exported-file")!
         do {
@@ -106,13 +96,13 @@ class DataExporterTests: XCTestCase {
     func testEngineDeallocatedAsync() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
-        
+
         do {
             try await dataExporter.export(with: ExportSettings())
         } catch {
             XCTFail("Unexpected error exporting file")
         }
-        
+
         XCTAssertNil(dataExporter.engine, "Engine should be deallocated after use")
     }
 }

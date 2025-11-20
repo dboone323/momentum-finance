@@ -38,8 +38,7 @@ public final class SwiftDataEntityManager: EntityManager {
     }
 
     public func getOrCreateAccount(from fields: [String], columnMapping: CSVColumnMapping)
-        async throws -> FinancialAccount?
-    {
+        async throws -> FinancialAccount? {
         // Extract account name from CSV fields
         guard let accountColumnIndex = getColumnIndex(for: columnMapping.accountColumn, in: fields) else {
             return nil
@@ -131,7 +130,7 @@ public final class SwiftDataEntityManager: EntityManager {
             "Health": "heart.fill",
             "Travel": "airplane",
             "Education": "book.fill",
-            "Income": "dollarsign.circle.fill",
+            "Income": "dollarsign.circle.fill"
         ]
         return iconMap[categoryName] ?? "circle"
     }
@@ -279,8 +278,7 @@ public final class SwiftDataFinancialMLService: Sendable {
             var anomalies: [TransactionAnomaly] = []
 
             // Simple anomaly detection based on amount thresholds
-            for transaction in transactions {
-                if transaction.amount > 1000 { // High amount threshold
+            for transaction in transactions where if transaction.amount > 1000 { // High amount threshold
                     anomalies.append(TransactionAnomaly(
                         transaction: transaction,
                         type: .unusuallyHighAmount,

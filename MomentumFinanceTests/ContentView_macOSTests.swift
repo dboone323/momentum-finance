@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class ContentViewMacOSTests: XCTestCase {
     var contentView: ContentView!
-
-    override func setUp() {
-        super.setUp()
-        contentView = ContentView()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        contentView = nil
-    }
 
     // macOS-specific view modifiers and optimizations
     func test_macOSOptimizations() {
@@ -36,7 +26,7 @@ class ContentViewMacOSTests: XCTestCase {
 
         // Test toolbar configuration
         let toolbar = configureToolbar()
-        XCTAssertTrue(toolbar.items.count > 0)
+        XCTAssertTrue(!toolbar.items.isEmpty)
     }
 
     // macOS-specific view extensions
@@ -52,7 +42,7 @@ class ContentViewMacOSTests: XCTestCase {
         let settingsView = SettingsView(
             defaultCurrency: .defaultCurrency,
             enableNotifications: .enableNotifications,
-            autoBackup: .autoBackup,
+            autoBackup: .autoBackup
         )
 
         // Test tab items
@@ -62,7 +52,7 @@ class ContentViewMacOSTests: XCTestCase {
         let generalSettingsView = GeneralSettingsView(
             defaultCurrency: .defaultCurrency,
             enableNotifications: .enableNotifications,
-            autoBackup: .autoBackup,
+            autoBackup: .autoBackup
         )
 
         // Test data settings view

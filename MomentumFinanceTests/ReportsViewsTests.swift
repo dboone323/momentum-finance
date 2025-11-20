@@ -1,32 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class ReportsSectionTests: XCTestCase {
     var reportsSection: ReportsSection!
-
-    override func setUp() {
-        super.setUp()
-        let transactions = [
-            FinancialTransaction(date: Date(), transactionType: .income, amount: 100.0),
-            FinancialTransaction(date: Date(), transactionType: .expense, amount: -50.0),
-            FinancialTransaction(date: Date(), transactionType: .income, amount: 200.0)
-        ]
-        let budgets = [
-            Budget(month: "January", totalAmount: 1000.0),
-            Budget(month: "February", totalAmount: 800.0)
-        ]
-        let categories = [
-            ExpenseCategory(name: "Food", amountSpent: 300.0),
-            ExpenseCategory(name: "Transportation", amountSpent: 200.0)
-        ]
-
-        reportsSection = ReportsSection(transactions: transactions, budgets: budgets, categories: categories)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        reportsSection = nil
-    }
 
     // Test filteredTransactions method
     func testFilteredTransactions() {

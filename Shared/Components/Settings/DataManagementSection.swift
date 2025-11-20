@@ -13,22 +13,21 @@ public struct DataManagementSection: View {
                 Text("Forever").tag(0)
             }
 
-            Button(action: { self.showingDeleteConfirmation = true }).accessibilityLabel("Button").accessibilityLabel("Button") {
+            Button(action: Button(action: { self.showingDeleteConfirmation = true }).accessibilityLabel("Button").accessibilityLabel("Button") {
                 HStack {
                     Image(systemName: "trash")
                         .foregroundColor(.red)
                     Text("Delete All Data")
                         .foregroundColor(.red)
                 }
-            }
-            .alert("Delete All Data", isPresented: self.$showingDeleteConfirmation) {
+            }, label: .alert("Delete All Data", isPresented: self.$showingDeleteConfirmation) {
                 Button("Cancel", role: .cancel).accessibilityLabel("Button").accessibilityLabel("Button") {}
                 Button("Delete", role: .destructive).accessibilityLabel("Button").accessibilityLabel("Button") {
                     // Handle data deletion
                 }
             } message: {
                 Text("This action cannot be undone. All your financial data will be permanently deleted.")
-            }
+            })
         }
     }
 }

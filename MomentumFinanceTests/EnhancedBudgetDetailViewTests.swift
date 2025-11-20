@@ -1,27 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class EnhancedBudgetDetailViewTests: XCTestCase {
     var sut: EnhancedBudgetDetailView!
-
-    override func setUp() {
-        super.setUp()
-        let budget = Budget(id: "123", name: "Test Budget")
-        let transaction1 = FinancialTransaction(amount: -100, date: Date(), category: ExpenseCategory(name: "Groceries"))
-        let transaction2 = FinancialTransaction(amount: 50, date: Date(), category: ExpenseCategory(name: "Transportation"))
-        let categories = [ExpenseCategory(name: "Groceries"), ExpenseCategory(name: "Transportation")]
-
-        modelContext.insert(budget)
-        modelContext.insert(transaction1)
-        modelContext.insert(transaction2)
-
-        sut = EnhancedBudgetDetailView(budgetId: budget.id)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any remaining data
-    }
 
     func testBudgetNameDisplay() {
         XCTAssertEqual(sut.name, "Test Budget")
@@ -53,6 +34,6 @@ class EnhancedBudgetDetailViewTests: XCTestCase {
 
     func testDetailViewWithTransactions() {
         let expectedTransactionNames = ["Groceries", "Transportation"]
-        XCTAssertEqual(sut.relatedTransactions.map { $0.name }, expectedTransactionNames)
+        XCTAssertEqual(sut.relatedTransactions.map(\.name), expectedTransactionNames)
     }
 }

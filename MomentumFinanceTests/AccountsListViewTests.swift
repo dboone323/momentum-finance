@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class AccountsListViewTests: XCTestCase {
     var accounts: [FinancialAccount] = [
@@ -10,16 +10,6 @@ class AccountsListViewTests: XCTestCase {
         ExpenseCategory(name: "Food", color: .red),
         ExpenseCategory(name: "Transportation", color: .blue)
     ]
-
-    override func setUp() {
-        super.setUp()
-        // Set up any necessary data or configurations
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources used during testing
-    }
 
     func testTotalBalance() {
         let view = AccountsListView(categories: categories, accounts: accounts)

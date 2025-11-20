@@ -22,7 +22,7 @@ public struct ThemeSelectorCard: View {
                 ForEach(ThemeMode.allCases, id: \.self) { mode in
                     Button(action: {
                         self.selectedThemeMode = mode
-                    }) {
+                    }, label: {
                         VStack(spacing: 8) {
                             Image(systemName: self.themeIcon(for: mode))
                                 .font(.title2)
@@ -35,7 +35,7 @@ public struct ThemeSelectorCard: View {
                         )
                         .foregroundColor(self.selectedThemeMode == mode ? .white : .primary)
                         .cornerRadius(8)
-                    }
+                    })
                 }
             }
         }

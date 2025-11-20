@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SubscriptionRowViewsTests: XCTestCase {
     var viewModel: Features.Subscriptions.EnhancedSubscriptionRowViewModel!
-
-    override func setUp() {
-        super.setUp()
-        viewModel = Features.Subscriptions.EnhancedSubscriptionRowViewModel(subscription: Features.Subscriptions.Subscription(name: "Monthly Subscription", amount: 10.99, billingCycle: .monthly))
-    }
-
-    override func tearDown() {
-        viewModel = nil
-        super.tearDown()
-    }
 
     // Test the EnhancedSubscriptionRowView with a valid subscription
     func testEnhancedSubscriptionRowViewWithValidSubscription() {

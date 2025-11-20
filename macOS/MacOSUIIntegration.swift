@@ -5,8 +5,8 @@ import SwiftData
 import SwiftUI
 
 #if os(macOS)
-    /// This file provides integration between the macOS three-column UI and the app's navigation system
-    /// It connects existing view models and data with the enhanced macOS interface
+    // This file provides integration between the macOS three-column UI and the app's navigation system
+    // It connects existing view models and data with the enhanced macOS interface
 
     // MARK: - Navigation System Integration
 
@@ -81,7 +81,7 @@ import SwiftUI
                     self.navigationCoordinator.selectedSidebarItem = $0
                     // Clear detail selection when changing main navigation
                     self.navigationCoordinator.clearDetailSelection()
-                },
+                }
             )
         }
 
@@ -89,7 +89,7 @@ import SwiftUI
         private var selectedListItemBinding: Binding<ListableItem?> {
             Binding(
                 get: { self.navigationCoordinator.selectedListItem },
-                set: { self.navigationCoordinator.navigateToDetail(item: $0) },
+                set: { self.navigationCoordinator.navigateToDetail(item: $0) }
             )
         }
 
@@ -97,7 +97,7 @@ import SwiftUI
         private var columnVisibilityBinding: Binding<NavigationSplitViewVisibility> {
             Binding(
                 get: { self.navigationCoordinator.columnVisibility },
-                set: { self.navigationCoordinator.columnVisibility = $0 },
+                set: { self.navigationCoordinator.columnVisibility = $0 }
             )
         }
 
@@ -304,7 +304,7 @@ import SwiftUI
         var body: some View {
             List(selection: Binding(
                 get: { self.navigationCoordinator.selectedListItem },
-                set: { self.navigationCoordinator.navigateToDetail(item: $0) },
+                set: { self.navigationCoordinator.navigateToDetail(item: $0) }
             )) {
                 Section("Accounts") {
                     ForEach(self.accounts) { account in
@@ -433,9 +433,9 @@ import SwiftUI
 
                     Button(action: {
                         // Add new transaction
-                    }) {
+                    }, label: {
                         Label("Add", systemImage: "plus")
-                    }
+                    })
                     .buttonStyle(.bordered)
                 }
                 .padding(.horizontal)
@@ -446,7 +446,7 @@ import SwiftUI
 
                 List(selection: Binding(
                     get: { self.navigationCoordinator.selectedListItem },
-                    set: { self.navigationCoordinator.navigateToDetail(item: $0) },
+                    set: { self.navigationCoordinator.navigateToDetail(item: $0) }
                 )) {
                     Section("Accounts") {
                         ForEach(self.accounts) { account in
@@ -523,9 +523,9 @@ import SwiftUI
 
                     Button(action: {
                         // Add new budget
-                    }) {
+                    }, label: {
                         Label("Add Budget", systemImage: "plus")
-                    }
+                    })
                     .buttonStyle(.bordered)
                 }
                 .padding(.horizontal)
@@ -536,7 +536,7 @@ import SwiftUI
 
                 List(selection: Binding(
                     get: { self.navigationCoordinator.selectedListItem },
-                    set: { self.navigationCoordinator.navigateToDetail(item: $0) },
+                    set: { self.navigationCoordinator.navigateToDetail(item: $0) }
                 )) {
                     ForEach(self.budgets) { budget in
                         NavigationLink(value: ListableItem(id: budget.id, name: budget.name, type: .budget)) {
@@ -603,9 +603,9 @@ import SwiftUI
 
                     Button(action: {
                         // Add new subscription
-                    }) {
+                    }, label: {
                         Label("Add", systemImage: "plus")
-                    }
+                    })
                     .buttonStyle(.bordered)
                 }
                 .padding(.horizontal)
@@ -616,7 +616,7 @@ import SwiftUI
 
                 List(selection: Binding(
                     get: { self.navigationCoordinator.selectedListItem },
-                    set: { self.navigationCoordinator.navigateToDetail(item: $0) },
+                    set: { self.navigationCoordinator.navigateToDetail(item: $0) }
                 )) {
                     ForEach(self.getGroupedSubscriptions()) { group in
                         Section(header: Text(group.title)) {
@@ -764,7 +764,7 @@ import SwiftUI
         var goalsList: some View {
             List(selection: Binding(
                 get: { self.navigationCoordinator.selectedListItem },
-                set: { self.navigationCoordinator.navigateToDetail(item: $0) },
+                set: { self.navigationCoordinator.navigateToDetail(item: $0) }
             )) {
                 ForEach(self.goals) { goal in
                     NavigationLink(value: ListableItem(id: goal.id, name: goal.name, type: .goal)) {
@@ -810,7 +810,7 @@ import SwiftUI
         var reportsList: some View {
             List(selection: Binding(
                 get: { self.navigationCoordinator.selectedListItem },
-                set: { self.navigationCoordinator.navigateToDetail(item: $0) },
+                set: { self.navigationCoordinator.navigateToDetail(item: $0) }
             )) {
                 NavigationLink(value: ListableItem(id: "spending", name: "Spending by Category", type: .report)) {
                     HStack {

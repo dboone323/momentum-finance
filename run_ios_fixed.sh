@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck shell=ksh
 
 # Fixed iOS launcher for MomentumFinance
 # With improved path handling

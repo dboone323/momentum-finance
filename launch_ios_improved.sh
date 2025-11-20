@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck shell=ksh
 #!/bin/bash
 #!/bin/bash
 #!/bin/bash
@@ -26,7 +27,7 @@ echo -e "${BLUE}📱 MomentumFinance iOS Launcher${NC}"
 echo "================================"
 
 # Set working directory
-cd "$(dirname "$0")"
+cd "$(dirname "$0")" || exit
 
 # Look for iPhone 16 simulator with iOS 18.1
 echo "🔍 Checking for iPhone 16 simulator..."

@@ -16,8 +16,8 @@ echo "==============================================="
 DEVICE_ID=$(xcrun simctl list devices available | grep "iPhone 16" | head -1 | sed -E 's/.*\(([0-9A-Z-]+)\).*/\1/')
 
 if [ -z "$DEVICE_ID" ]; then
-  echo -e "${RED}No iPhone simulator found. Please create one in Xcode.${NC}"
-  exit 1
+	echo -e "${RED}No iPhone simulator found. Please create one in Xcode.${NC}"
+	exit 1
 fi
 
 # Clean DerivedData directory to avoid conflicts
@@ -31,10 +31,10 @@ open -a Simulator
 
 echo "Building and running in simulator..."
 if xcodebuild -scheme MomentumFinance -destination "platform=iOS Simulator,id=$DEVICE_ID" -quiet build; then
-  echo -e "${GREEN}✅ Build successful!${NC}"
-  xcrun simctl install "$DEVICE_ID" ./DerivedData/Build/Products/Debug-iphonesimulator/MomentumFinance.app
-  xcrun simctl launch "$DEVICE_ID" com.momentumfinance.MomentumFinance
-  echo -e "${GREEN}✨ App launched in simulator!${NC}"
+	echo -e "${GREEN}✅ Build successful!${NC}"
+	xcrun simctl install "$DEVICE_ID" ./DerivedData/Build/Products/Debug-iphonesimulator/MomentumFinance.app
+	xcrun simctl launch "$DEVICE_ID" com.momentumfinance.MomentumFinance
+	echo -e "${GREEN}✨ App launched in simulator!${NC}"
 else
-  echo -e "${RED}❌ Build failed${NC}"
+	echo -e "${RED}❌ Build failed${NC}"
 fi

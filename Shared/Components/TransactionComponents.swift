@@ -295,10 +295,10 @@ public struct SearchAndFilterSection: View {
                 TextField("Search transactions...", text: self.$searchText)
                     .textFieldStyle(PlainTextFieldStyle())
 
-                Button(action: { self.showingSearch = true }) {
+                Button(action: { self.showingSearch = true }, label: {
                     Image(systemName: "line.horizontal.3.decrease.circle")
                         .foregroundColor(.blue)
-                }
+                })
                 .accessibilityLabel("Filter")
             }
             .padding(.horizontal, 12)
@@ -319,11 +319,10 @@ public struct SearchAndFilterSection: View {
     }
 
     private func filterChip(_ title: String, _ isSelected: Bool, _ filter: TransactionFilter)
-        -> some View
-    {
+        -> some View {
         Button(action: {
             self.selectedFilter = filter
-        }) {
+        }, label: {
             Text(title)
                 .font(.caption)
                 .fontWeight(.medium)
@@ -332,7 +331,7 @@ public struct SearchAndFilterSection: View {
                 .background(isSelected ? Color.blue : Color.gray.opacity(0.2))
                 .foregroundColor(isSelected ? .white : .primary)
                 .cornerRadius(16)
-        }
+        })
         .accessibilityLabel("Filter by \(title)")
     }
 

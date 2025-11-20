@@ -1,19 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SearchEngineServiceTests: XCTestCase {
     var service: SearchEngineService!
-
-    override func setUp() {
-        super.setUp()
-        let modelContext = ModelContext(for: .main)
-        self.service = SearchEngineService(modelContext: modelContext)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources here
-    }
 
     // Test searchAll method
     func testSearchAll() throws {

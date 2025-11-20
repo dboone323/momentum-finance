@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class PerformanceManagerTests: XCTestCase {
     var performanceManager: PerformanceManager!
-
-    override func setUp() {
-        super.setUp()
-        performanceManager = PerformanceManager.shared
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        performanceManager = nil
-    }
 
     // MARK: - Test RecordFrame
 
@@ -30,7 +20,7 @@ class PerformanceManagerTests: XCTestCase {
 
     func testRecordFrameWithMultipleFrames() {
         // GIVEN: Multiple frames are recorded
-        for _ in 0..<120 {
+        for _ in 0 ..< 120 {
             performanceManager.recordFrame()
         }
 
@@ -58,7 +48,7 @@ class PerformanceManagerTests: XCTestCase {
 
     func testGetCurrentFPSWithMultipleFrames() {
         // GIVEN: Multiple frames are recorded
-        for _ in 0..<120 {
+        for _ in 0 ..< 120 {
             performanceManager.recordFrame()
         }
 
@@ -82,7 +72,7 @@ class PerformanceManagerTests: XCTestCase {
 
     func testGetMemoryUsageWithMultipleFrames() {
         // GIVEN: Multiple frames are recorded
-        for _ in 0..<120 {
+        for _ in 0 ..< 120 {
             performanceManager.recordFrame()
         }
 
@@ -110,7 +100,7 @@ class PerformanceManagerTests: XCTestCase {
 
     func testIsPerformanceDegradedWithMultipleFrames() {
         // GIVEN: Multiple frames are recorded
-        for _ in 0..<120 {
+        for _ in 0 ..< 120 {
             performanceManager.recordFrame()
         }
 

@@ -1,20 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DashboardViewModelTests: XCTestCase {
     var viewModel: DashboardViewModel!
     var modelContext: ModelContext!
-
-    override func setUp() {
-        super.setUp()
-        viewModel = DashboardViewModel()
-        modelContext = ModelContext()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources here
-    }
 
     /// Test setModelContext method
     func testSetModelContext() {
@@ -128,3 +117,5 @@ class DashboardViewModelTests: XCTestCase {
         let updatedSubscription = modelContext.fetchOne(Subscription.self, where: \.id == subscription.id)
         XCTAssertEqual(updatedSubscription?.isActive, false)
     }
+
+}

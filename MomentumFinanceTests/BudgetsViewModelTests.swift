@@ -1,21 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class BudgetsViewModelTests: XCTestCase {
     var viewModel: BudgetsViewModel!
     var modelContext: ModelContext!
-
-    override func setUp() {
-        super.setUp()
-        self.modelContext = ModelContext(inMemoryOnly: true)
-        self.viewModel = BudgetsViewModel()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any remaining data
-        try? modelContext.deleteAll()
-    }
 
     // Test setModelContext method
     func testSetModelContext() {
@@ -108,3 +96,5 @@ class BudgetsViewModelTests: XCTestCase {
         XCTAssertEqual(existingBudget.limitAmount, limitAmount)
         XCTAssertEqual(existingBudget.month, month)
     }
+
+}

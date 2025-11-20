@@ -1,28 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DashboardAccountsSummaryTests: XCTestCase {
     var viewModel: DashboardAccountsSummaryViewModel!
     var accounts: [FinancialAccount]!
-
-    override func setUp() {
-        super.setUp()
-        
-        // Create some sample data for testing
-        let account1 = FinancialAccount(id: UUID(), name: "Checking", balance: 1000.50, iconName: "account")
-        let account2 = FinancialAccount(id: UUID(), name: "Savings", balance: 500.75, iconName: "bank")
-        let account3 = FinancialAccount(id: UUID(), name: "Investments", balance: 1500.25, iconName: "money")
-
-        accounts = [account1, account2, account3]
-        
-        // Initialize the view model with the sample data
-        viewModel = DashboardAccountsSummaryViewModel(accounts: accounts)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources here if needed
-    }
 
     // Test that the total balance is calculated correctly
     func testTotalBalance() {
@@ -54,7 +35,7 @@ class DashboardAccountsSummaryTests: XCTestCase {
         let expectedNames = ["Checking", "Savings", "Investments"]
         let expectedIconNames = ["account", "bank", "money"]
 
-        for i in 0..<3 {
+        for i in 0 ..< 3 {
             XCTAssertEqual(viewModel.accounts[i].name, expectedNames[i])
             XCTAssertEqual(viewModel.accounts[i].iconName, expectedIconNames[i])
         }
@@ -65,7 +46,7 @@ class DashboardAccountsSummaryTests: XCTestCase {
         let expectedNames = ["Checking", "Savings", "Investments", "Other"]
         let expectedIconNames = ["account", "bank", "money", "other"]
 
-        for i in 0..<4 {
+        for i in 0 ..< 4 {
             XCTAssertEqual(viewModel.accounts[i].name, expectedNames[i])
             XCTAssertEqual(viewModel.accounts[i].iconName, expectedIconNames[i])
         }
@@ -85,7 +66,7 @@ class DashboardAccountsSummaryTests: XCTestCase {
     // Test that the account details are displayed correctly with no accounts
     func testNoAccounts() {
         let viewModel = DashboardAccountsSummaryViewModel(accounts: [])
-        
+
         XCTAssertTrue(viewModel.accounts.isEmpty)
     }
 }

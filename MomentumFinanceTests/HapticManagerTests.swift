@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class HapticManagerTests: XCTestCase {
     var hapticManager: HapticManager!
-
-    override func setUp() {
-        super.setUp()
-        hapticManager = HapticManager.shared
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        hapticManager.isEnabled = true // Reset to default state after tests
-    }
 
     // MARK: - Impact Feedback
 

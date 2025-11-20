@@ -168,9 +168,17 @@ public struct ThemeBudgetProgress: View {
     }
 }
 
+/// Subscription item model for demo
+public struct SubscriptionItem: Hashable {
+    let name: String
+    let icon: String
+    let renewalDate: String
+    let amount: Double
+}
+
 /// Subscriptions list for the demo view
 public struct ThemeSubscriptionsList: View {
-    let subscriptions: [(String, String, String, Double)]
+    let subscriptions: [SubscriptionItem]
     let theme: ColorTheme
 
     var body: some View {
@@ -179,26 +187,26 @@ public struct ThemeSubscriptionsList: View {
                 .font(.headline)
                 .foregroundStyle(self.theme.primaryText)
 
-            ForEach(self.subscriptions, id: \.0) { subscription in
+            ForEach(self.subscriptions, id: \.name) { subscription in
                 HStack {
-                    Image(systemName: subscription.1)
+                    Image(systemName: subscription.icon)
                         .frame(width: 32, height: 32)
                         .foregroundStyle(self.theme.accentPrimary)
                         .background(self.theme.secondaryBackground)
                         .clipShape(Circle())
 
                     VStack(alignment: .leading) {
-                        Text(subscription.0)
+                        Text(subscription.name)
                             .font(.subheadline)
                             .foregroundStyle(self.theme.primaryText)
-                        Text("Renews \(subscription.2)")
+                        Text("Renews \(subscription.renewalDate)")
                             .font(.caption)
                             .foregroundStyle(self.theme.secondaryText)
                     }
 
                     Spacer()
 
-                    Text("$\(String(format: "%.2f", subscription.3))")
+                    Text("$\(String(format: "%.2f", subscription.amount))")
                         .font(.subheadline)
                         .foregroundStyle(self.theme.primaryText)
                 }

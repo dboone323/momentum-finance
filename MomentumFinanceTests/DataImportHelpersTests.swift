@@ -1,18 +1,10 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DataImportHelpersTests: XCTestCase {
     // Test setup
-    override func setUp() {
-        super.setUp()
-        // Initialize any necessary objects or data here
-    }
 
     // Test teardown
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources used in the test
-    }
 
     // Test public method: importData
     func testImportData() {
@@ -22,13 +14,13 @@ class DataImportHelpersTests: XCTestCase {
             ["key": "value1", "anotherKey": "anotherValue"],
             ["key2": "value2", "anotherKey2": "anotherValue2"]
         ]
-        
+
         // WHEN
         do {
             let result = DataImporter.importData(testData)
-            
+
             // THEN
-            XCTAssertEqual(result.count, testData.count) { (expected, actual) in
+            XCTAssertEqual(result.count, testData.count) { expected, actual in
                 XCTAssertEqual(expected.key, actual.key) && XCTAssertEqual(expected.anotherKey, actual.anotherKey)
             }
         } catch {
@@ -43,13 +35,13 @@ class DataImportHelpersTests: XCTestCase {
             ["key": "value1", "anotherKey": "anotherValue"],
             ["key2": "value2", "anotherKey2": "anotherValue2"]
         ]
-        
+
         // WHEN
         do {
             let result = DataImporter.importData(testData)
-            
+
             // THEN
-            XCTAssertEqual(result.count, testData.count) { (expected, actual) in
+            XCTAssertEqual(result.count, testData.count) { expected, actual in
                 XCTAssertEqual(expected.key, actual.key) && XCTAssertEqual(expected.anotherKey, actual.anotherKey)
             }
         } catch {
@@ -64,13 +56,13 @@ class DataImportHelpersTests: XCTestCase {
             ["key": "value1", "anotherKey": "anotherValue"],
             ["key2": "value2", "anotherKey2": "anotherValue2"]
         ]
-        
+
         // WHEN
         do {
             let result = DataImporter.exportData(testData)
-            
+
             // THEN
-            XCTAssertEqual(result.count, testData.count) { (expected, actual) in
+            XCTAssertEqual(result.count, testData.count) { expected, actual in
                 XCTAssertEqual(expected.key, actual.key) && XCTAssertEqual(expected.anotherKey, actual.anotherKey)
             }
         } catch {
@@ -85,13 +77,13 @@ class DataImportHelpersTests: XCTestCase {
             ["key": "value1", "anotherKey": "anotherValue"],
             ["key2": "value2", "anotherKey2": "anotherValue2"]
         ]
-        
+
         // WHEN
         do {
             let result = DataImporter.importData(testData)
-            
+
             // THEN
-            XCTAssertEqual(result.count, testData.count) { (expected, actual) in
+            XCTAssertEqual(result.count, testData.count) { expected, actual in
                 XCTAssertEqual(expected.key, actual.key) && XCTAssertEqual(expected.anotherKey, actual.anotherKey)
             }
         } catch {
@@ -106,12 +98,12 @@ class DataImportHelpersTests: XCTestCase {
             ["key": "value1", "anotherKey": "anotherValue"],
             ["key2": "value2", "anotherKey2": "anotherValue2"]
         ]
-        
+
         // WHEN
         do {
             DataImporter.importData(testData)
             DataImporter.clearData()
-            
+
             // THEN
             XCTAssertEqual(DataImporter.currentData.count, 0)
         } catch {
@@ -126,16 +118,18 @@ class DataImportHelpersTests: XCTestCase {
             ["key": "value1", "anotherKey": "anotherValue"],
             ["key2": "value2", "anotherKey2": "anotherValue2"]
         ]
-        
+
         // WHEN
         do {
             let result = DataImporter.importData(testData)
-            
+
             // THEN
-            XCTAssertEqual(result.count, testData.count) { (expected, actual) in
+            XCTAssertEqual(result.count, testData.count) { expected, actual in
                 XCTAssertEqual(expected.key, actual.key) && XCTAssertEqual(expected.anotherKey, actual.anotherKey)
             }
         } catch {
             XCTFail("Test failed with error: \(error)")
         }
     }
+
+}

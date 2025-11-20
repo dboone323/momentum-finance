@@ -2,7 +2,7 @@ import SwiftData
 import SwiftUI
 
 #if canImport(AppKit)
-import AppKit
+    import AppKit
 #endif
 
 // Momentum Finance - Personal Finance App
@@ -115,15 +115,15 @@ extension Features.Transactions {
                     Button(action: {
                         self.showingSearch = true
                         NavigationCoordinator.shared.activateSearch()
-                    }) {
+                    }, label: {
                         Image(systemName: "magnifyingglass")
-                    }
+                    })
 
                     Button(action: {
                         self.showingAddTransaction = true
-                    }) {
+                    }, label: {
                         Image(systemName: "plus")
-                    }
+                    })
                     .buttonStyle(.borderedProminent)
                 }
             }

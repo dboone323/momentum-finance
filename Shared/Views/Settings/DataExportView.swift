@@ -167,7 +167,7 @@ public struct DataExportView: View {
                 Task {
                     await self.exportData()
                 }
-            }) {
+            }, label: {
                 HStack {
                     if self.isExporting {
                         ProgressView()
@@ -178,7 +178,7 @@ public struct DataExportView: View {
 
                     Text(self.isExporting ? "Exporting..." : "Export Data")
                 }
-            }
+            })
             .disabled(self.isExporting || !self.hasDataSelected)
             #if os(iOS)
                 .hapticFeedback(.medium, trigger: self.isExporting)
@@ -278,7 +278,7 @@ public struct DataExportView: View {
         func makeUIViewController(context _: Context) -> UIActivityViewController {
             let controller = UIActivityViewController(
                 activityItems: activityItems,
-                applicationActivities: nil,
+                applicationActivities: nil
             )
             return controller
         }
@@ -318,6 +318,6 @@ public struct DataExportView: View {
     DataExportView()
         .modelContainer(for: [
             FinancialTransaction.self, FinancialAccount.self, Budget.self, Subscription.self,
-            SavingsGoal.self,
+            SavingsGoal.self
         ])
 }

@@ -1,22 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class MacOSUIIntegrationTests: XCTestCase {
     var modelContext: ModelContext!
     var navigationCoordinator: NavigationCoordinator!
-
-    override func setUp() {
-        super.setUp()
-        // Initialize the model context and navigation coordinator
-        self.modelContext = ModelContext()
-        self.navigationCoordinator = NavigationCoordinator.shared
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources after each test case
-        self.modelContext.deleteAllObjects()
-    }
 
     // Test navigateToDetail method
     func testNavigateToDetail() {
@@ -95,3 +82,5 @@ class MacOSUIIntegrationTests: XCTestCase {
         // Assert that the appropriate navigation path is updated
         XCTAssertEqual(navigationCoordinator.subscriptionsNavPath, [SubscriptionsDestination.subscriptionDetail(id)])
     }
+
+}

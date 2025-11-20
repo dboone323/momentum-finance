@@ -1,17 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class TransactionPatternAnalyzerTests: XCTestCase {
     var analyzer: TransactionPatternAnalyzer!
-
-    override func setUp() {
-        super.setUp()
-        analyzer = TransactionPatternAnalyzer.shared
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
 
     // Test analyzePatterns method with real data
     func testAnalyzePatterns_withRealData() {
@@ -19,7 +10,7 @@ class TransactionPatternAnalyzerTests: XCTestCase {
             FinancialTransaction(date: Date(), amount: -100.0, category: "Groceries"),
             FinancialTransaction(date: Date(), amount: -200.0, category: "Entertainment"),
             FinancialTransaction(date: Date(), amount: 50.0, category: "Groceries"),
-            FinancialTransaction(date: Date(), amount: 100.0, category: "Entertainment"),
+            FinancialTransaction(date: Date(), amount: 100.0, category: "Entertainment")
         ]
 
         let insights = analyzer.analyzePatterns(transactions)
@@ -46,7 +37,7 @@ class TransactionPatternAnalyzerTests: XCTestCase {
             FinancialTransaction(date: Date(), amount: -100.0, category: "Groceries"),
             FinancialTransaction(date: Date(), amount: -200.0, category: "Entertainment"),
             FinancialTransaction(date: Date(), amount: 50.0, category: "Groceries"),
-            FinancialTransaction(date: Date(), amount: 100.0, category: "Entertainment"),
+            FinancialTransaction(date: Date(), amount: 100.0, category: "Entertainment")
         ]
 
         let insights = analyzer.analyzePatterns(transactions)
@@ -65,3 +56,5 @@ class TransactionPatternAnalyzerTests: XCTestCase {
         XCTAssertTrue(insights[1].visualizationType == .lineChart)
         XCTAssertEqual(insights[1].data.count, 2)
     }
+
+}

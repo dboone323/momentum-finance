@@ -36,10 +36,10 @@ public struct GlobalSearchView: View {
                         Button(action: {
                             self.searchText = ""
                             self.searchResults = []
-                        }) {
+                        }, label: {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(.secondary)
-                        }
+                        })
                     }
                 }
                 .padding()

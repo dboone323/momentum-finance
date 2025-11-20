@@ -46,7 +46,7 @@ final class ErrorHandler {
         Logger.logError(
             appError,
             context:
-            "\(context) [\(URL(fileURLWithPath: file).lastPathComponent):\(line) \(function)]",
+            "\(context) [\(URL(fileURLWithPath: file).lastPathComponent):\(line) \(function)]"
         )
 
         // Determine if this is a frequent error (same type occurring rapidly)
@@ -65,7 +65,7 @@ final class ErrorHandler {
             // Log but don't show frequent identical errors to avoid spamming the user
             Logger.logDebug(
                 "Suppressing frequent error: \(appError.errorDescription ?? "Unknown")",
-                category: Logger.ui,
+                category: Logger.ui
             )
         }
     }
@@ -342,8 +342,7 @@ public enum AppError: LocalizedError, Identifiable {
         if nsError.code == NSValidationErrorMinimum {
             return .validationError("\(context) \(nsError.localizedDescription)")
         } else if nsError.code == NSFileReadNoSuchFileError
-            || nsError.code == NSFileWriteOutOfSpaceError
-        {
+            || nsError.code == NSFileWriteOutOfSpaceError {
             return .fileSystemError("\(context) \(nsError.localizedDescription)")
         }
         return .dataError("\(context) \(nsError.localizedDescription)")
@@ -368,7 +367,7 @@ public enum AppError: LocalizedError, Identifiable {
             ("Goal", .goalError(description)),
             ("Sync", .syncError(description)),
             ("File", .fileSystemError(description)),
-            ("Storage", .fileSystemError(description)),
+            ("Storage", .fileSystemError(description))
         ]
 
         for (keyword, errorType) in errorMappings where errorName.contains(keyword) {
@@ -399,9 +398,9 @@ public struct ErrorAlert: ViewModifier {
         ForEach(self.errorHandler.recoveryOptions) { option in
             Button(action: {
                 option.action()
-            }) {
+            }, label: {
                 Text(option.title)
-            }
+            })
             .accessibilityLabel("Button")
         }
     }

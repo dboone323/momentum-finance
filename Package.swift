@@ -8,31 +8,31 @@ let package = Package(
     name: "MomentumFinance",
     platforms: [
         .iOS(.v18),
-        .macOS(.v15),
+        .macOS(.v15)
     ],
     products: [
         .library(
             name: "MomentumFinance",
             targets: ["MomentumFinance"]
-        ),
+        )
     ],
     dependencies: [
-        .package(path: "../../Shared"),
+        .package(path: "../Shared")
     ],
     targets: [
         .target(
             name: "MomentumFinance",
-            dependencies: ["SharedKit"],
-            path: "Shared",
+            dependencies: ["Shared"],
+            path: "Sources/MomentumFinanceCore",
             resources: [],
             swiftSettings: [
-                .enableUpcomingFeature("StrictConcurrency"),
+                .enableUpcomingFeature("StrictConcurrency")
             ]
         ),
         .testTarget(
             name: "MomentumFinanceTests",
             dependencies: ["MomentumFinance"],
-            path: "Tests/MomentumFinanceTests"
-        ),
+            path: "MomentumFinanceTests"
+        )
     ]
 )

@@ -98,7 +98,7 @@ public struct ColorDefinitions: Sendable {
         Color.red, // bills
         Color.mint, // income
         Color.teal, // savings
-        Color.gray, // other
+        Color.gray
     ]
 
     // Additional methods for complex color system

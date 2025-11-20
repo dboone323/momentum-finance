@@ -1,21 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class FinancialSummaryCardTests: XCTestCase {
     var viewModel: Features.GoalsAndReports.EnhancedFinancialSummaryCard!
-
-    override func setUp() {
-        super.setUp()
-        viewModel = Features.GoalsAndReports.EnhancedFinancialSummaryCard(transactions: [
-            FinancialTransaction(transactionType: .income, amount: 100.0),
-            FinancialTransaction(transactionType: .expense, amount: 50.0)
-        ], timeframe: .lastMonth)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        viewModel = nil
-    }
 
     // Test calculateIncome method
     func testCalculateIncome() {

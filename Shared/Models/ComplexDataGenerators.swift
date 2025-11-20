@@ -109,7 +109,7 @@ public class TransactionsDataGenerator: DataGenerator {
             (
                 title: "Travel", amount: 500.0, date: Date().addingTimeInterval(-86400 * 40),
                 type: TransactionType.expense, category: "Travel", account: creditCard
-            ),
+            )
         ]
 
         for transaction in transactions {
@@ -117,7 +117,7 @@ public class TransactionsDataGenerator: DataGenerator {
                 title: transaction.title,
                 amount: transaction.amount,
                 date: transaction.date,
-                transactionType: transaction.type,
+                transactionType: transaction.type
             )
             newTransaction.category = categoryDict[transaction.category]
             newTransaction.account = transaction.account
@@ -183,7 +183,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 name: subscription.name,
                 amount: subscription.amount,
                 billingCycle: subscription.cycle,
-                nextDueDate: subscription.nextDue,
+                nextDueDate: subscription.nextDue
             )
 
             newSubscription.category = categoryDict[subscription.category]
@@ -218,8 +218,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
     /// - Parameter creditCard: The user's credit card account.
     /// - Returns: An array of entertainment `SubscriptionData`.
     private func createEntertainmentSubscriptions(creditCard: FinancialAccount)
-        -> [SubscriptionData]
-    {
+        -> [SubscriptionData] {
         let calendar = Calendar.current
         let today = Date()
 
@@ -237,7 +236,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 nextDue: safeDateByAdding(days: 5, to: today),
                 category: "Entertainment",
                 account: creditCard,
-                isActive: true,
+                isActive: true
             ),
             SubscriptionData(
                 name: "Spotify",
@@ -246,7 +245,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 nextDue: safeDateByAdding(days: 12, to: today),
                 category: "Entertainment",
                 account: creditCard,
-                isActive: true,
+                isActive: true
             ),
             SubscriptionData(
                 name: "Video Streaming",
@@ -255,8 +254,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 nextDue: safeDateByAdding(days: 2, to: today),
                 category: "Entertainment",
                 account: creditCard,
-                isActive: false,
-            ),
+                isActive: false
+            )
         ]
     }
 
@@ -285,7 +284,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 nextDue: safeDateByAdding(days: 15, to: today),
                 category: "Utilities",
                 account: creditCard,
-                isActive: true,
+                isActive: true
             ),
             SubscriptionData(
                 name: "Phone Bill",
@@ -294,7 +293,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 nextDue: safeDateByAdding(days: 22, to: today),
                 category: "Utilities",
                 account: checkingAccount,
-                isActive: true,
+                isActive: true
             ),
             SubscriptionData(
                 name: "Internet",
@@ -303,8 +302,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 nextDue: safeDateByAdding(days: 18, to: today),
                 category: "Utilities",
                 account: checkingAccount,
-                isActive: true,
-            ),
+                isActive: true
+            )
         ]
     }
 
@@ -312,8 +311,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
     /// - Parameter checkingAccount: The user's checking account.
     /// - Returns: An array of personal `SubscriptionData`.
     private func createPersonalSubscriptions(checkingAccount: FinancialAccount)
-        -> [SubscriptionData]
-    {
+        -> [SubscriptionData] {
         let calendar = Calendar.current
         let today = Date()
 
@@ -331,8 +329,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 nextDue: safeDateByAdding(days: 8, to: today),
                 category: "Personal Care",
                 account: checkingAccount,
-                isActive: true,
-            ),
+                isActive: true
+            )
         ]
     }
 
@@ -340,8 +338,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
     /// - Parameter checkingAccount: The user's checking account.
     /// - Returns: An array of transportation `SubscriptionData`.
     private func createTransportationSubscriptions(checkingAccount: FinancialAccount)
-        -> [SubscriptionData]
-    {
+        -> [SubscriptionData] {
         let calendar = Calendar.current
         let today = Date()
 
@@ -359,8 +356,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 nextDue: safeDateByAdding(days: 25, to: today),
                 category: "Transportation",
                 account: checkingAccount,
-                isActive: true,
-            ),
+                isActive: true
+            )
         ]
     }
 }

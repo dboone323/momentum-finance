@@ -15,7 +15,7 @@ extension ContentView {
 
 #if os(macOS)
     // macOS-specific UI components and helpers
-    enum macOSSpecificViews {
+    struct MacOSSpecificViews: View {
         /// macOS window configuration
         static func configureWindow() {
             // Configure macOS-specific window settings
@@ -70,7 +70,7 @@ extension ContentView {
                 GeneralSettingsView(
                     defaultCurrency: self.$defaultCurrency,
                     enableNotifications: self.$enableNotifications,
-                    autoBackup: self.$autoBackup,
+                    autoBackup: self.$autoBackup
                 )
                 .tabItem {
                     Label("General", systemImage: "gear")

@@ -442,7 +442,7 @@ extension Features.Subscriptions {
                 amount: amountValue,
                 billingCycle: frequency,
                 nextDueDate: nextDueDate,
-                notes: notes.isEmpty ? nil : self.notes,
+                notes: notes.isEmpty ? nil : self.notes
             )
 
             subscription.category = self.selectedCategory
@@ -532,13 +532,13 @@ extension Features.Subscriptions {
                     SubscriptionHeaderView(
                         subscriptions: self.subscriptions,
                         selectedFilter: self.$selectedFilter,
-                        showingAddSubscription: self.$showingAddSubscription,
+                        showingAddSubscription: self.$showingAddSubscription
                     )
 
                     // Content Section
                     SubscriptionContentView(
                         filteredSubscriptions: self.filteredSubscriptions,
-                        selectedSubscription: self.$selectedSubscription,
+                        selectedSubscription: self.$selectedSubscription
                     )
                 }
                 .navigationTitle("Subscriptions")
@@ -553,9 +553,9 @@ extension Features.Subscriptions {
                             }
                             .accessibilityLabel("Search Subscriptions")
 
-                            Button(action: { self.showingAddSubscription = true }) {
+                            Button(action: { self.showingAddSubscription = true }, label: {
                                 Image(systemName: "plus")
-                            }
+                            })
                             .accessibilityLabel("Add Subscription")
                         }
                     }

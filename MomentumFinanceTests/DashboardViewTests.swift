@@ -1,22 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DashboardViewTests: XCTestCase {
     var dashboardView: DashboardView!
     var modelContext: ModelContext!
-
-    override func setUp() {
-        super.setUp()
-        // Set up the model context and dashboard view
-        self.modelContext = ModelContext()
-        self.dashboardView = DashboardView(modelContext: self.modelContext)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources after each test
-        self.modelContext.reset()
-    }
 
     // Test case for the timeOfDayGreeting property
     func testTimeOfDayGreeting() {
@@ -112,3 +99,5 @@ class DashboardViewTests: XCTestCase {
         // THEN
         XCTAssertEqual(self.dashboardView.navigationPath.count, 2)
     }
+
+}

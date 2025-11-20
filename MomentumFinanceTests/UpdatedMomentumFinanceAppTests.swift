@@ -1,25 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class MomentumFinanceAppTests: XCTestCase {
     var sharedModelContainer: ModelContainer!
-
-    override func setUp() {
-        super.setUp()
-        self.sharedModelContainer = ModelContainer(for: Schema([
-            ModelReferences.accounts,
-            ModelReferences.transactions,
-            ModelReferences.subscriptions,
-            ModelReferences.budgets,
-            ModelReferences.categories,
-            ModelReferences.goals,
-        ]))
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources here
-    }
 
     // Test the sharedModelContainer creation
     func testSharedModelContainerCreation() {

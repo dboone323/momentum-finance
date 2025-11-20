@@ -1,33 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SubscriptionManagementViewsTests: XCTestCase {
     var subscriptionViewModel: SubscriptionViewModel!
-
-    override func setUp() {
-        super.setUp()
-        // Initialize the subscriptionViewModel with real data
-        let expenseCategory = ExpenseCategory(name: "Groceries", isActive: true)
-        let financialAccount = FinancialAccount(name: "Checking Account", isActive: true)
-        self.categories = [expenseCategory]
-        self.accounts = [financialAccount]
-
-        subscriptionViewModel = SubscriptionViewModel(
-            name: "",
-            amount: "",
-            frequency: BillingCycle.monthly,
-            nextDueDate: Date(),
-            selectedCategory: expenseCategory,
-            selectedAccount: financialAccount,
-            notes: "",
-            isActive: true
-        )
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources after each test case
-    }
 
     // Test the AddSubscriptionView's name field
     func testAddSubscriptionViewNameField() {
@@ -155,3 +130,5 @@ class SubscriptionManagementViewsTests: XCTestCase {
         // THEN
         XCTAssertTrue(actualIsValidForm)
     }
+
+}

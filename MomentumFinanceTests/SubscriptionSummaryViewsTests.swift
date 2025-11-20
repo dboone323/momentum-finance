@@ -1,21 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SubscriptionSummaryViewsTests: XCTestCase {
     var viewModel: Features.Subscriptions.EnhancedSubscriptionSummaryViewModel!
-
-    override func setUp() {
-        super.setUp()
-        viewModel = Features.Subscriptions.EnhancedSubscriptionSummaryViewModel(subscriptions: [
-            Subscription(name: "Monthly Plan", isActive: true, nextDueDate: Date().addingTimeInterval(30 * 24 * 60 * 60)), // 1 month
-            Subscription(name: "Annual Plan", isActive: false, nextDueDate: Date().addingTimeInterval(365 * 24 * 60 * 60)) // 1 year
-        ])
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        viewModel = nil
-    }
 
     // Test the header text
     func testHeaderText() {
@@ -29,7 +16,7 @@ class SubscriptionSummaryViewsTests: XCTestCase {
 
     // Test the yearly total
     func testYearlyTotal() {
-        XCTAssertEqual(viewModel.yearlyTotal, 365 * 24 * 60 * 60) * 12) // 1 year in seconds
+        XCTAssertEqual(viewModel.yearlyTotal, 365 * 24 * 60 * 60) // 1 year in seconds
     }
 
     // Test the active subscriptions count

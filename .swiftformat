@@ -7,7 +7,7 @@
 # Format options
 --indent 4
 --linebreaks lf
---commas always
+--commas never
 --wraparguments preserve
 --wrapparameters preserve
 --wrapcollections preserve
@@ -29,7 +29,7 @@
 --enable blankLinesBetweenScopes
 --enable consecutiveSpaces
 --enable duplicateImports
---enable sortedImports
+--enable sortImports
 --enable unusedArguments
 --enable void
 --enable trailingCommas
@@ -44,3 +44,18 @@
 
 # Swift version
 --swiftversion 6.0
+
+
+# SwiftFormat Configuration for Unified Code Architecture
+# https://github.com/nicklockwood/SwiftFormat
+
+# File options
+
+# Format options
+
+# Enabled rules
+
+# Disabled rules
+
+# Swift version
+--wrapcollections preserve

@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 final class CoreFinancialModelsTests: XCTestCase {
 
@@ -206,12 +206,12 @@ final class CoreFinancialModelsTests: XCTestCase {
     func testFinancialTransactionLargeAmount() {
         let transaction = FinancialTransaction(
             title: "Property Purchase",
-            amount: 500000.0,
+            amount: 500_000.0,
             type: .expense
         )
 
-        XCTAssertEqual(transaction.amount, 500000.0)
-        XCTAssertGreaterThan(transaction.amount, 100000)
+        XCTAssertEqual(transaction.amount, 500_000.0)
+        XCTAssertGreaterThan(transaction.amount, 100_000)
     }
 
     // MARK: - Integration Tests
@@ -242,7 +242,7 @@ final class CoreFinancialModelsTests: XCTestCase {
             FinancialAccount(name: "Savings", type: .savings, balance: 5000),
             FinancialAccount(name: "Credit Card", type: .credit, balance: -200),
             FinancialAccount(name: "401k", type: .investment, balance: 50000),
-            FinancialAccount(name: "Mortgage", type: .loan, balance: -250000)
+            FinancialAccount(name: "Mortgage", type: .loan, balance: -250_000)
         ]
 
         XCTAssertEqual(accounts.count, 5)

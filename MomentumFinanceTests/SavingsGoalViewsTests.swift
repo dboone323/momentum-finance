@@ -1,24 +1,10 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SavingsGoalsSectionTests: XCTestCase {
     var goals: [SavingsGoal]
     var showingAddGoal = false
     var selectedGoal: SavingsGoal?
-
-    override func setUp() {
-        super.setUp()
-        // Arrange
-        goals = [
-            SavingsGoal(name: "Monthly Rent", targetDate: Date(), currentAmount: 1000, progressPercentage: 75),
-            SavingsGoal(name: "Car Payment", targetDate: Date(), currentAmount: 2000, progressPercentage: 50)
-        ]
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up
-    }
 
     // Test case for showingAddGoal property
     func testShowingAddGoalProperty() {

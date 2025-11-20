@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DashboardUpcomingSubscriptionsTests: XCTestCase {
     var subscriptions: [Subscription]!
@@ -7,25 +7,22 @@ class DashboardUpcomingSubscriptionsTests: XCTestCase {
     var themeComponents: ThemeComponents!
     var onSubscriptionTap: (Subscription) -> Void!
     var onViewAllTap: () -> Void!
+    var subscriptionTappedFlag: Bool!
+    var viewAllTappedFlag: Bool!
 
     override func setUp() {
         super.setUp()
-        
-        // Initialize test data
         subscriptions = [
-            Subscription(id: 1, name: "Monthly Subscription", icon: "bell", amount: 50.0),
-            Subscription(id: 2, name: "Quarterly Subscription", icon: "bell", amount: 100.0),
-            Subscription(id: 3, name: "Annual Subscription", icon: "bell", amount: 200.0)
+            Subscription(id: 1, name: "Netflix", icon: "film", amount: 15.99),
+            Subscription(id: 2, name: "Spotify", icon: "music.note", amount: 9.99),
+            Subscription(id: 3, name: "iCloud", icon: "cloud", amount: 2.99)
         ]
-        
-        colorTheme = ColorTheme(categoryColors: [UIColor.blue, UIColor.green, UIColor.red])
+        colorTheme = ColorTheme.default
         themeComponents = ThemeComponents()
-        onSubscriptionTap = { subscription in print("Subscription tapped: \(subscription.name)") }
-        onViewAllTap = {}
-    }
-
-    override func tearDown() {
-        super.tearDown()
+        subscriptionTappedFlag = false
+        viewAllTappedFlag = false
+        onSubscriptionTap = { _ in self.subscriptionTappedFlag = true }
+        onViewAllTap = { self.viewAllTappedFlag = true }
     }
 
     // Test the formattedDateString method
@@ -36,46 +33,51 @@ class DashboardUpcomingSubscriptionsTests: XCTestCase {
 
     // Test the body of DashboardUpcomingSubscriptions view
     func testBody() {
-        let viewModel = Dashboard.UpcomingSubscriptions(subscriptions: subscriptions, colorTheme: colorTheme, themeComponents: themeComponents, onSubscriptionTap: onSubscriptionTap, onViewAllTap: onViewAllTap)
-        
+        let viewModel = Dashboard.UpcomingSubscriptions(
+            subscriptions: subscriptions,
+            colorTheme: colorTheme,
+            themeComponents: themeComponents,
+            onSubscriptionTap: onSubscriptionTap,
+            onViewAllTap: onViewAllTap
+        )
+
         // GIVEN: Subscriptions are present
         XCTAssertEqual(viewModel.subscriptions.count, 3)
 
         // WHEN: User taps a subscription
         let subscription = viewModel.subscriptions[0]
-        viewModel.onSubscriptionTap(subscription)
-        
+        XCTAssertNoThrow(viewModel.onSubscriptionTap(subscription))
         // THEN: Subscription tap action is called
-        XCTAssertTrue(onSubscriptionTap.calledOnce)
+        XCTAssertTrue(subscriptionTappedFlag)
     }
 
     // Test the body of DashboardUpcomingSubscriptions view when no subscriptions are present
     func testBodyNoSubscriptions() {
         let viewModel = Dashboard.UpcomingSubscriptions(subscriptions: [], colorTheme: colorTheme, themeComponents: themeComponents, onSubscriptionTap: onSubscriptionTap, onViewAllTap: onViewAllTap)
-        
+
         // GIVEN: No subscriptions are present
         XCTAssertEqual(viewModel.subscriptions.count, 0)
 
         // WHEN: User taps a subscription (should not trigger any action)
-        let subscription = viewModel.subscriptions[0]
-        viewModel.onSubscriptionTap(subscription)
-        
-        // THEN: Subscription tap action is not called
-        XCTAssertTrue(onSubscriptionTap.calledOnce)
+        // No subscription to tap; ensure count is 0 and tapping does not occur
+        XCTAssertEqual(viewModel.subscriptions.count, 0)
+        // THEN: Nothing to tap and flags remain false
+        XCTAssertFalse(subscriptionTappedFlag)
     }
 
     // Test the body of DashboardUpcomingSubscriptions view when there are more than 3 subscriptions
     func testBodyMoreThanThreeSubscriptions() {
-        let viewModel = Dashboard.UpcomingSubscriptions(subscriptions: subscriptions, colorTheme: colorTheme, themeComponents: themeComponents, onSubscriptionTap: onSubscriptionTap, onViewAllTap: onViewAllTap)
-        
+        // Create four subscriptions for this test
+        let subs = subscriptions + [Subscription(id: 4, name: "Extra Subscription", icon: "bell", amount: 150.0)]
+        let viewModel = Dashboard.UpcomingSubscriptions(subscriptions: subs, colorTheme: colorTheme, themeComponents: themeComponents, onSubscriptionTap: onSubscriptionTap, onViewAllTap: onViewAllTap)
+
         // GIVEN: More than 3 subscriptions are present
         XCTAssertEqual(viewModel.subscriptions.count, 4)
 
         // WHEN: User taps a subscription (should trigger the "View All" button)
         let subscription = viewModel.subscriptions[0]
         viewModel.onSubscriptionTap(subscription)
-        
-        // THEN: View all button is tapped
-        XCTAssertTrue(onViewAllTap.calledOnce)
+        // THEN: View all button is tapped when more than 3 subscriptions are present
+        XCTAssertTrue(viewAllTappedFlag)
     }
 }

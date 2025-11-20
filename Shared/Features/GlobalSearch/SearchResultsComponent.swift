@@ -44,7 +44,7 @@ private struct SearchResultRow: View {
     var onResultTapped: ((SearchResult) -> Void)?
 
     var body: some View {
-        Button(action: { self.onResultTapped?(self.result).accessibilityLabel("Button").accessibilityLabel("Button") }) {
+        Button(action: { self.onResultTapped?(self.result).accessibilityLabel("Button").accessibilityLabel("Button") }, label: {
             HStack(spacing: 12) {
                 // Icon based on type
                 Image(systemName: self.result.iconName)
@@ -77,7 +77,7 @@ private struct SearchResultRow: View {
                     .cornerRadius(8)
             }
             .padding(.vertical, 8)
-        }
+        })
         .buttonStyle(.plain)
     }
 }

@@ -1,22 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SubscriptionsViewModelTests: XCTestCase {
     var viewModel: SubscriptionsViewModel!
     var mockModelContext: MockModelContext!
-
-    override func setUp() {
-        super.setUp()
-        mockModelContext = MockModelContext()
-        viewModel = SubscriptionsViewModel()
-        viewModel.setModelContext(mockModelContext)
-    }
-
-    override func tearDown() {
-        viewModel = nil
-        mockModelContext = nil
-        super.tearDown()
-    }
 
     // Test setModelContext method
     func testSetModelContext() {
@@ -73,3 +60,5 @@ class SubscriptionsViewModelTests: XCTestCase {
 
         XCTAssertEqual(viewModel.totalMonthlyAmount(subscriptions), expectedTotal)
     }
+
+}

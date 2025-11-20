@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DragAndDropSupportTests: XCTestCase {
     // MARK: - Setup & Teardown
-
-    override func setUp() {
-        super.setUp()
-        // Initialize any necessary data or setup here
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources here
-    }
 
     // MARK: - Test Draggable Finance Item Protocol
 
@@ -36,7 +26,7 @@ class DragAndDropSupportTests: XCTestCase {
     func testFinancialAccountAsItemProvider() {
         let account = FinancialAccount(name: "Checking Account", balance: 1000.0, currencyCode: "USD")
         let provider = account.asItemProvider()
-        
+
         var data: Data?
         var error: Error?
 
@@ -53,7 +43,7 @@ class DragAndDropSupportTests: XCTestCase {
     func testFinancialTransactionAsItemProvider() {
         let transaction = FinancialTransaction(name: "Salary", amount: 500.0, date: Date())
         let provider = transaction.asItemProvider()
-        
+
         var data: Data?
         var error: Error?
 

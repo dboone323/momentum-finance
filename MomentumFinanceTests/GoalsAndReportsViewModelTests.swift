@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class GoalsAndReportsViewModelTests: XCTestCase {
     var viewModel: GoalsAndReportsViewModel!
-
-    override func setUp() {
-        super.setUp()
-        viewModel = GoalsAndReportsViewModel()
-    }
-
-    override func tearDown() {
-        viewModel = nil
-        super.tearDown()
-    }
 
     // Test setModelContext method
     func testSetModelContext() {
@@ -102,3 +92,5 @@ class GoalsAndReportsViewModelTests: XCTestCase {
         viewModel.addFundsToGoal(goal, amount: 500.0)
         XCTAssertEqual(goal.currentAmount, 1500.0, "Current amount should be 1500.0")
     }
+
+}

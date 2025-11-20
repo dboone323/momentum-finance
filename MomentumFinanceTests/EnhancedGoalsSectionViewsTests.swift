@@ -1,21 +1,11 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class EnhancedGoalsSectionViewsTests: XCTestCase {
     var viewModel: Features.GoalsAndReports.EnhancedSavingsGoalsSection!
     var goals: [Features.GoalsAndReports.SavingsGoal] = []
     var showingAddGoal: Bool = false
     var selectedGoal: Features.GoalsAndReports.SavingsGoal?
-
-    override func setUp() {
-        super.setUp()
-        viewModel = Features.GoalsAndReports.EnhancedSavingsGoalsSection(goals: [], showingAddGoal: false, selectedGoal: nil)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        viewModel = nil
-    }
 
     // Test emptyGoalsView
     func testEmptyGoalsView() {
@@ -53,11 +43,11 @@ class EnhancedGoalsSectionViewsTests: XCTestCase {
                                 LinearGradient(
                                     gradient: Gradient(colors: [.blue, .blue.opacity(0.8)]),
                                     startPoint: .leading,
-                                    endPoint: .trailing,
-                                ),
+                                    endPoint: .trailing
+                                )
                             )
                             .cornerRadius(12)
-                    },
+                    }
                 )
 
                 Spacer()
@@ -174,3 +164,5 @@ class EnhancedGoalsSectionViewsTests: XCTestCase {
             }
         """)
     }
+
+}

@@ -1,21 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SearchResultsComponentTests: XCTestCase {
     var component: SearchResultsComponent!
     var viewModel: MockSearchViewModel!
-
-    override func setUp() {
-        super.setUp()
-        viewModel = MockSearchViewModel()
-        component = SearchResultsComponent(results: [], isLoading: false, onResultTapped: nil)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        component = nil
-        viewModel = nil
-    }
 
     // Test case for the initializer
     func testInitialization() {

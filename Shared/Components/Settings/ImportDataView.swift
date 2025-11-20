@@ -33,7 +33,7 @@ public struct ImportDataView: View {
 
                 Button(action: {
                     self.selectFile()
-                }) {
+                }, label: {
                     HStack {
                         Image(systemName: "folder")
                         Text(self.selectedFileURL?.lastPathComponent ?? "Choose CSV File")
@@ -43,7 +43,7 @@ public struct ImportDataView: View {
                     .background(Color.blue.opacity(0.1))
                     .cornerRadius(10)
                     .foregroundColor(.blue)
-                }
+                })
                 .padding(.horizontal)
 
                 if let url = selectedFileURL {
@@ -58,7 +58,7 @@ public struct ImportDataView: View {
                     Task {
                         await self.performImport()
                     }
-                }) {
+                }, label: {
                     HStack {
                         if self.isImporting {
                             ProgressView()
@@ -71,7 +71,7 @@ public struct ImportDataView: View {
                     .background(self.selectedFileURL == nil || self.isImporting ? Color.gray : Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
-                }
+                })
                 .disabled(self.selectedFileURL == nil || self.isImporting)
                 .padding(.horizontal)
             }
@@ -95,8 +95,7 @@ public struct ImportDataView: View {
 
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                let window = windowScene.windows.first,
-               let rootVC = window.rootViewController
-            {
+               let rootVC = window.rootViewController {
                 rootVC.present(picker, animated: true)
             }
         #else

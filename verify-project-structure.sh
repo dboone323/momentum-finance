@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck shell=ksh
 # Momentum Finance App Project Structure Verification
 # This script verifies that your project follows the MVVM architecture guidelines
 
@@ -21,7 +22,7 @@ for file in "${MODEL_FILES[@]}"; do
 		find /Users/danielstevens/Desktop/MomentumFinaceApp -name "${file}" | sed 's/^/      /'
 		DUPLICATE_COUNT=$((DUPLICATE_COUNT + 1))
 	else
-		echo "‚ú${ $fi}le: OK"
+		echo "ÔøΩ${ $fi}le: OK"
 	fi
 done
 
@@ -47,17 +48,17 @@ for feature in "${FEATURES[@]}"; do
 	VIEWMODEL_COUNT=$(find /Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Features/"$feature" -name "*ViewModel*.swift" | wc -l | tr -d ' ')
 
 	if [[ "${VIEW_COUNT}" -eq 0 ]]; then
-		echo "‚ö†Ô${è  $fea}ture: Missing View files"
+		echo "‚ö†ÔøΩ${ÔøΩ  $fea}ture: Missing View files"
 		FEATURE_ISSUES=$((FEATURE_ISSUES + 1))
 	fi
 
 	if [[ "${VIEWMODEL_COUNT}" -eq 0 ]]; then
-		echo "‚ö†Ô${è  $fea}ture: Missing ViewModel files"
+		echo "‚ö†ÔøΩ${ÔøΩ  $fea}ture: Missing ViewModel files"
 		FEATURE_ISSUES=$((FEATURE_ISSUES + 1))
 	fi
 
 	if [[ "${VIEW_COUNT}" -gt 0 ]] && [[ "${VIEWMODEL_COUNT}" -gt 0 ]]; then
-		echo "‚ú${ $featu}re: Complete MVVM structure (Views${ $VIEW_COU}NT, ViewModels${ $VIEWMODEL_COU}NT)"
+		echo "ÔøΩ${ $featu}re: Complete MVVM structure (Views${ $VIEW_COU}NT, ViewModels${ $VIEWMODEL_COU}NT)"
 	fi
 done
 

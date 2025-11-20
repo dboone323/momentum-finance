@@ -1,16 +1,7 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SimpleTransactionSectionHeaderTests: XCTestCase {
-    override func setUp() {
-        super.setUp()
-        // Initialize any necessary data here
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up any resources here
-    }
 
     func testSimpleTransactionSectionHeader() {
         // GIVEN: A group with a key and an array of financial transactions

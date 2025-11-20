@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class EnhancedContentViewMacOSTests: XCTestCase {
     var contentView: ContentView_macOS!
-
-    override func setUp() {
-        super.setUp()
-        contentView = ContentView_macOS()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        contentView = nil
-    }
 
     // Test sidebar item functionality
     func testSidebarItem() {

@@ -1,28 +1,11 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class EnhancedDetailViewsTests: XCTestCase {
     var transactionId: String = "12345"
-    var modelContext: ModelContext = ModelContext()
+    var modelContext: ModelContext = .init()
     var transactions: [FinancialTransaction] = []
     var categories: [ExpenseCategory] = []
-
-    override func setUp() {
-        super.setUp()
-        // Set up the test environment
-        let context = ModelContext()
-        let transaction = FinancialTransaction(id: transactionId, amount: 100.0, category: categories.first!)
-        context.insert(transaction)
-        modelContext.save()
-
-        transactions = try! context.fetch(FinancialTransaction.self)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        // Clean up the test environment
-        modelContext.deleteAll()
-    }
 
     func testEnhancedTransactionDetailView() {
         let view = EnhancedTransactionDetailView(transactionId: transactionId)

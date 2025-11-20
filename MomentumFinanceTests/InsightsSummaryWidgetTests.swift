@@ -1,19 +1,11 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class InsightsSummaryWidgetTests: XCTestCase {
     var widget: InsightsSummaryWidget!
 
-    override func setUp() {
-        super.setUp()
-        widget = InsightsSummaryWidget()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
-
     // MARK: - Test Case 1: Insight Empty State View
+
     func testInsightEmptyStateView() {
         // GIVEN: No accounts and transactions
         let viewModel = InsightsViewModel(transactions: [], accounts: [], budgets: [])
@@ -26,6 +18,7 @@ class InsightsSummaryWidgetTests: XCTestCase {
     }
 
     // MARK: - Test Case 2: Insight Content View
+
     func testInsightContentView() {
         // GIVEN: Real test data with specific values
         let transactions = [
@@ -48,6 +41,7 @@ class InsightsSummaryWidgetTests: XCTestCase {
     }
 
     // MARK: - Test Case 3: Monthly Trend View
+
     func testMonthlyTrendView() {
         // GIVEN: A positive value for monthly change
         let viewModel = InsightsViewModel(transactions: [], accounts: [], budgets: [])
@@ -65,6 +59,7 @@ class InsightsSummaryWidgetTests: XCTestCase {
     }
 
     // MARK: - Test Case 4: Expense Comparison View
+
     func testExpenseComparisonView() {
         // GIVEN: A positive value for month comparison ratio
         let viewModel = InsightsViewModel(transactions: [], accounts: [], budgets: [])

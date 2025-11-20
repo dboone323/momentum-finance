@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck shell=ksh
 
 # MacOS UI Enhancement Integration Script
 # This script integrates all macOS UI enhancements into the Momentum Finance app
@@ -55,7 +56,8 @@ is_file_in_project() {
 # Add files to the project
 add_file_to_project() {
 	local file_path=$1
-	local file_name=$(basename "${file_path}")
+	local file_name
+	file_name=$(basename "${file_path}")
 
 	if is_file_in_project "${file_path}"; then
 		echo -e "${YELLOW}File ${file_name} is already in project${NC}"

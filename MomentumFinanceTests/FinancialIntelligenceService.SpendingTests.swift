@@ -1,18 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class FinancialIntelligenceServiceTests: XCTestCase {
     var service: FinancialIntelligenceService!
-
-    override func setUp() {
-        super.setUp()
-        service = FinancialIntelligenceService()
-    }
-
-    override func tearDown() {
-        service = nil
-        super.tearDown()
-    }
 
     // Test computeMonthlySpendingByCategory
     func testComputeMonthlySpendingByCategory() {
@@ -103,3 +93,5 @@ class FinancialIntelligenceServiceTests: XCTestCase {
 
         XCTAssertEqual(service.fi_topCategoriesInsight(transactions, categories), expectedInsight)
     }
+
+}

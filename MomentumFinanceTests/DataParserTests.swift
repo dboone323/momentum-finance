@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DataParserTests: XCTestCase {
     // Test parsing date strings
@@ -20,7 +20,7 @@ class DataParserTests: XCTestCase {
         do {
             DataParser.parseDate(dateString)
             XCTFail("Expected error for invalid date format")
-        } catch ImportError.invalidDateFormat(let errorMessage) {
+        } catch let ImportError.invalidDateFormat(errorMessage) {
             XCTAssertEqual(errorMessage, "Invalid date format: \(dateString)")
         }
     }
@@ -43,7 +43,7 @@ class DataParserTests: XCTestCase {
         do {
             DataParser.parseAmount(amountString)
             XCTFail("Expected error for invalid amount format")
-        } catch ImportError.invalidAmountFormat(let errorMessage) {
+        } catch let ImportError.invalidAmountFormat(errorMessage) {
             XCTAssertEqual(errorMessage, "Invalid amount format: \(amountString)")
         }
     }
@@ -135,3 +135,5 @@ class DataParserTests: XCTestCase {
             XCTFail("Failed to parse transaction type for negative amount")
         }
     }
+
+}

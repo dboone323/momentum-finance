@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck shell=ksh
 
 # Launch MomentumFinance on iPhone 16 iOS 18.1 Simulator
 # Momentum Finance - Personal Finance App

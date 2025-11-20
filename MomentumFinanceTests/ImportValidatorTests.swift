@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class ImportValidatorTests: XCTestCase {
     var modelContext: ModelContext!
@@ -27,7 +27,7 @@ class ImportValidatorTests: XCTestCase {
         await self.modelContext.save(transaction)
 
         // Validate that the transaction is not a duplicate
-        XCTAssertTrue(await ImportValidator.isDuplicate(transaction))
+        await XCTAssertTrue(ImportValidator.isDuplicate(transaction))
     }
 
     // Test isDuplicate method with a non-duplicate transaction
@@ -42,7 +42,7 @@ class ImportValidatorTests: XCTestCase {
         await self.modelContext.save(transaction)
 
         // Validate that the transaction is not a duplicate
-        XCTAssertFalse(await ImportValidator.isDuplicate(FinancialTransaction(
+        await XCTAssertFalse(ImportValidator.isDuplicate(FinancialTransaction(
             title: "Test Transaction",
             amount: 100.0,
             date: Date()

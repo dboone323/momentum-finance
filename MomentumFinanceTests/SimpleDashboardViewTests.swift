@@ -1,21 +1,9 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SimpleDashboardViewTests: XCTestCase {
     var sut: SimpleDashboardView!
     var mockModelContext: MockModelContext!
-
-    override func setUp() {
-        super.setUp()
-        mockModelContext = MockModelContext()
-        sut = SimpleDashboardView(modelContext: mockModelContext)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        mockModelContext = nil
-        sut = nil
-    }
 
     // Test that the view displays a welcome message
     func test_welcomeMessage() {
