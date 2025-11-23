@@ -1,14 +1,4 @@
 #!/bin/bash
-# shellcheck shell=ksh
-#!/bin/bash
-#!/bin/bash
-#!/bin/bash
-#!/bin/bash
-#!/bin/bash
-#!/bin/bash
-#!/bin/bash
-#!/bin/bash
-#!/bin/bash
 
 # iOS-specific launcher for MomentumFinance
 # Momentum Finance - Personal Finance App
@@ -55,7 +45,7 @@ if [[ -z "${DEVICE_ID}" ]]; then
 	exit 1
 fi
 
-echo -e "${GREEN}✅ Selected${ $DEVICE_NA}ME${NC}"
+echo -e "${GREEN}✅ Selected ${DEVICE_NAME}${NC}"
 echo "Device ID: ${DEVICE_ID}"
 
 # Boot the simulator
@@ -93,7 +83,7 @@ if [[ $? -eq 0 ]]; then
 	echo "🚀 Launching app..."
 	xcrun simctl launch "${DEVICE_ID}" "${APP_BUNDLE_ID}"
 
-	echo -e "${GREEN}✨ MomentumFinance launched successfully o${ $DEVICE_NA}ME!${NC}"
+	echo -e "${GREEN}✨ MomentumFinance launched successfully on ${DEVICE_NAME}!${NC}"
 else
 	echo -e "${RED}❌ Build failed${NC}"
 	exit 1
