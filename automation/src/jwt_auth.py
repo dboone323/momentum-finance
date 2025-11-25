@@ -5,6 +5,7 @@ Working JWT Auth for Phase 3 Testing
 
 import hashlib
 import os
+import threading
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional
 
@@ -12,7 +13,13 @@ import jwt
 
 
 class JWTAuthManager:
+    # Class-level lock for any shared resources if needed in future
+    _lock = threading.Lock()
+
     def __init__(self, secret_key: str = None):
+        # Instance-level lock for user operations
+        self._user_lock = threading.RLock()
+        
         # Use provided key, environment variable, or load from secure config
         if secret_key:
             self.secret_key = secret_key
@@ -67,13 +74,14 @@ class JWTAuthManager:
         return hashlib.sha256(password.encode()).hexdigest()
 
     def authenticate_user(self, username: str, password: str) -> Optional[Dict]:
-        user = self.users.get(username)
-        if user and user["password_hash"] == self._hash_password(password):
-            return {
-                "username": username,
-                "role": user["role"],
-                "permissions": user["permissions"],
-            }
+        with self._user_lock:
+            user = self.users.get(username)
+            if user and user["password_hash"] == self._hash_password(password):
+                return {
+                    "username": username,
+                    "role": user["role"],
+                    "permissions": user["permissions"],
+                }
         return None
 
     def generate_token(self, username: str, role: str, permissions: List[str]) -> str:
@@ -113,12 +121,20 @@ class JWTAuthManager:
 
 # Global instance
 _auth_manager = None
+_auth_manager_lock = threading.Lock()
 
 
 def get_auth_manager():
     global _auth_manager
+    
+    # First check (without lock for performance)
     if _auth_manager is None:
-        _auth_manager = JWTAuthManager()
+        # Acquire lock for initialization
+        with _auth_manager_lock:
+            # Second check (with lock to prevent race)
+            if _auth_manager is None:
+                _auth_manager = JWTAuthManager()
+    
     return _auth_manager
 
 

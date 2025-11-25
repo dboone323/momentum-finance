@@ -5,7 +5,7 @@ import SwiftUI
 // MARK: - Core Financial Types
 
 /// Represents a financial account
-public struct FinancialAccount: Identifiable, Codable, Sendable {
+public struct SimpleFinancialAccount: Identifiable, Codable, Sendable {
     public let id: UUID
     public let name: String
     public let type: AccountType
@@ -32,7 +32,7 @@ public struct FinancialAccount: Identifiable, Codable, Sendable {
 }
 
 /// Represents an expense category
-public struct ExpenseCategory: Identifiable, Codable, Sendable {
+public struct SimpleExpenseCategory: Identifiable, Codable, Sendable {
     public let id: UUID
     public let name: String
     public let color: String
@@ -52,13 +52,13 @@ public struct ExpenseCategory: Identifiable, Codable, Sendable {
 }
 
 /// Represents a financial transaction
-public struct FinancialTransaction: Identifiable, Codable, Sendable {
+public struct SimpleFinancialTransaction: Identifiable, Codable, Sendable {
     public let id: UUID
     public let title: String
     public let amount: Double
     public let date: Date
-    public let category: ExpenseCategory?
-    public let account: FinancialAccount?
+    public let category: SimpleExpenseCategory?
+    public let account: SimpleFinancialAccount?
     public let type: TransactionType
     public let notes: String?
 
@@ -67,8 +67,8 @@ public struct FinancialTransaction: Identifiable, Codable, Sendable {
         title: String,
         amount: Double,
         date: Date = Date(),
-        category: ExpenseCategory? = nil,
-        account: FinancialAccount? = nil,
+        category: SimpleExpenseCategory? = nil,
+        account: SimpleFinancialAccount? = nil,
         type: TransactionType = .expense,
         notes: String? = nil
     ) {
@@ -88,10 +88,10 @@ public struct FinancialTransaction: Identifiable, Codable, Sendable {
 }
 
 /// Represents a budget
-public struct Budget: Identifiable, Codable, Sendable {
+public struct SimpleBudget: Identifiable, Codable, Sendable {
     public let id: UUID
     public let name: String
-    public let category: ExpenseCategory
+    public let category: SimpleExpenseCategory
     public let limit: Double
     public let spent: Double
     public let period: BudgetPeriod
@@ -99,7 +99,7 @@ public struct Budget: Identifiable, Codable, Sendable {
     public init(
         id: UUID = UUID(),
         name: String,
-        category: ExpenseCategory,
+        category: SimpleExpenseCategory,
         limit: Double,
         spent: Double = 0.0,
         period: BudgetPeriod = .monthly

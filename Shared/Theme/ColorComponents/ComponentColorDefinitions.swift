@@ -9,7 +9,7 @@
 import SwiftUI
 
 /// Static color definitions for light and dark theme schemes
-enum ColorDefinitions {
+enum ComponentColorDefinitions {
     // MARK: - Background Colors
 
     static func background(_ mode: ThemeScheme) -> Color {

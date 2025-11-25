@@ -1,7 +1,7 @@
 import SwiftUI
 
 public struct AboutSection: View {
-    var body: some View {
+    public var body: some View {
         Section(header: Text("About")) {
             HStack {
                 Text("Version")

@@ -16,7 +16,7 @@ public struct ThemeEnums {
 // MARK: - Theme Mode
 
 /// Represents the app's theme mode
-public enum ThemeMode: String, CaseIterable, Identifiable, Hashable {
+public enum ComponentThemeMode: String, CaseIterable, Identifiable, Hashable {
     case light
     case dark
     case system
@@ -49,7 +49,7 @@ public enum ThemeMode: String, CaseIterable, Identifiable, Hashable {
 // MARK: - Theme Scheme
 
 /// Theme scheme (light/dark)
-public enum ThemeScheme {
+public enum ComponentThemeScheme {
     case light
     case dark
 }

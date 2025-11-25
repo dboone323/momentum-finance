@@ -1,9 +1,7 @@
 import Foundation
 import SwiftUI
 
-// Import transaction types
-import struct Shared.CoreFinancialModels.FinancialTransaction
-import enum Shared.TransactionModels.TransactionFilter
+// Import transaction types removed
 
 public struct TransactionEmptyStateView: View {
     public let searchText: String

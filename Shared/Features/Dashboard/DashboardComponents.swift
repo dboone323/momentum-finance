@@ -131,7 +131,7 @@ public struct DashboardBudgetProgress: View {
                     .font(.subheadline)
                     .foregroundColor(.blue)
             }
-            ForEach(self.budgets.prefix(2)) { budget in
+            ForEach(self.budgets.prefix(2), id: \.id) { budget in
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
                         Text(budget.name)
@@ -198,7 +198,7 @@ public struct DashboardInsights: View {
                             Text(insight.title)
                                 .font(.subheadline)
                                 .foregroundColor(.primary)
-                            Text(insight.description)
+                            Text(insight.insightDescription)
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                                 .lineLimit(2)

@@ -32,7 +32,7 @@ func fi_suggestIdleCashInsights(transactions: [FinancialTransaction], accounts: 
             let idleDescription = "You have \(excessCashStr) more than needed in your \(accountName). "
                 + "Consider moving some to a higher-yielding savings or investment account."
 
-            let insight = FinancialInsight(
+            let insight = IntelligenceFinancialInsight(
                 title: "Idle Cash Detected",
                 description: idleDescription,
                 priority: .medium,
@@ -66,7 +66,7 @@ func fi_suggestCreditUtilizationInsights(accounts: [FinancialAccount]) -> [Finan
             let utilDescription = "Your credit utilization on \(account.name) is \(Int(utilization * 100))%. "
                 + "It's recommended to keep this under 30% to maintain a good credit score."
 
-            let insight = FinancialInsight(
+            let insight = IntelligenceFinancialInsight(
                 title: "High Credit Utilization",
                 description: utilDescription,
                 priority: utilization > 0.7 ? .critical : .high,

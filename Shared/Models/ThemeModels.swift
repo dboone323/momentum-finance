@@ -3,7 +3,7 @@ import SwiftUI
 
 // MARK: - Theme Types
 
-public enum ThemeMode: String, CaseIterable, Sendable {
+public enum SimpleThemeMode: String, CaseIterable, Sendable {
     case light
     case dark
     case system
@@ -25,7 +25,7 @@ public enum ThemeMode: String, CaseIterable, Sendable {
     }
 }
 
-public struct ColorDefinitions: Sendable {
+public struct SimpleColorDefinitions: Sendable {
     public static let primary = Color.blue
     public static let secondary = Color.gray
     public static let accent = Color.orange
@@ -35,7 +35,7 @@ public struct ColorDefinitions: Sendable {
     public static let info = Color.blue
 
     // Functions to match the expected interface
-    public static func background(_ mode: ThemeMode) -> Color {
+    public static func background(_ mode: SimpleThemeMode) -> Color {
         switch mode {
         case .light:
             Color.white
@@ -46,7 +46,7 @@ public struct ColorDefinitions: Sendable {
         }
     }
 
-    public static func surface(_ mode: ThemeMode) -> Color {
+    public static func surface(_ mode: SimpleThemeMode) -> Color {
         switch mode {
         case .light:
             Color.gray.opacity(0.1)
@@ -57,7 +57,7 @@ public struct ColorDefinitions: Sendable {
         }
     }
 
-    public static func secondaryBackground(_ mode: ThemeMode) -> Color {
+    public static func secondaryBackground(_ mode: SimpleThemeMode) -> Color {
         switch mode {
         case .light:
             Color.gray.opacity(0.05)
@@ -68,7 +68,7 @@ public struct ColorDefinitions: Sendable {
         }
     }
 
-    public static func groupedBackground(_ mode: ThemeMode) -> Color {
+    public static func groupedBackground(_ mode: SimpleThemeMode) -> Color {
         switch mode {
         case .light:
             Color(red: 0.95, green: 0.95, blue: 0.97)
@@ -79,7 +79,7 @@ public struct ColorDefinitions: Sendable {
         }
     }
 
-    public static func cardBackground(_ mode: ThemeMode) -> Color {
+    public static func cardBackground(_ mode: SimpleThemeMode) -> Color {
         switch mode {
         case .light:
             Color.white
@@ -102,7 +102,7 @@ public struct ColorDefinitions: Sendable {
     ]
 
     // Additional methods for complex color system
-    public static func text(_ type: TextType, _ mode: ThemeMode) -> Color {
+    public static func text(_ type: SimpleTextType, _ mode: SimpleThemeMode) -> Color {
         switch (type, mode) {
         case (.primary, .light):
             Color.black
@@ -117,7 +117,7 @@ public struct ColorDefinitions: Sendable {
         }
     }
 
-    public static func accent(_ type: AccentType, _: ThemeMode) -> Color {
+    public static func accent(_ type: SimpleAccentType, _: SimpleThemeMode) -> Color {
         switch type {
         case .primary:
             Color.blue
@@ -126,7 +126,7 @@ public struct ColorDefinitions: Sendable {
         }
     }
 
-    public static func financial(_ type: FinancialType, _: ThemeMode) -> Color {
+    public static func financial(_ type: SimpleFinancialType, _: SimpleThemeMode) -> Color {
         switch type {
         case .income:
             Color.green
@@ -141,7 +141,7 @@ public struct ColorDefinitions: Sendable {
         }
     }
 
-    public static func budget(_ type: BudgetType, _: ThemeMode) -> Color {
+    public static func budget(_ type: SimpleBudgetType, _: SimpleThemeMode) -> Color {
         switch type {
         case .under:
             Color.green
@@ -156,25 +156,25 @@ public struct ColorDefinitions: Sendable {
 }
 
 // Supporting enums for ColorDefinitions
-public enum TextType: Sendable {
+public enum SimpleTextType: Sendable {
     case primary, secondary, tertiary
 }
 
-public enum AccentType: Sendable {
+public enum SimpleAccentType: Sendable {
     case primary, secondary
 }
 
-public enum FinancialType: Sendable {
+public enum SimpleFinancialType: Sendable {
     case income, expense, savings, warning, critical
 }
 
-public enum BudgetType: Sendable {
+public enum SimpleBudgetType: Sendable {
     case under, near, over
 }
 
 // MARK: - Dark Mode Preference
 
-public enum DarkModePreference: String, CaseIterable, Sendable {
+public enum SimpleDarkModePreference: String, CaseIterable, Sendable {
     case light
     case dark
     case system

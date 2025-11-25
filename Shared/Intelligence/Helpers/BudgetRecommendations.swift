@@ -54,7 +54,7 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
             let budgetDescription = "Based on your average spending of \(fi_formatCurrency(averageSpend)), "
                 + "consider setting a budget of \(fi_formatCurrency(recommendedBudget)) for \(categoryName)."
 
-            let insight = FinancialInsight(
+            let insight = IntelligenceFinancialInsight(
                 title: "Budget Recommendation: \(categoryName)",
                 description: budgetDescription,
                 priority: .medium,
@@ -75,7 +75,7 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
             let budgetDescription = "Your current budget of \(fi_formatCurrency(currentBudgetAmount)) for \(categoryName) "
                 + "may be too low. Consider increasing it to \(fi_formatCurrency(recommendedBudget))."
 
-            let insight = FinancialInsight(
+            let insight = IntelligenceFinancialInsight(
                 title: "Budget Adjustment: \(categoryName)",
                 description: budgetDescription,
                 priority: .medium,

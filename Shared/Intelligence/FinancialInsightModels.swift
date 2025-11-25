@@ -19,7 +19,7 @@ public enum FinancialInsightType: String, CaseIterable, Identifiable, Hashable {
     }
 }
 
-public struct FinancialInsight: Identifiable, Hashable {
+public struct IntelligenceFinancialInsight: Identifiable, Hashable {
     public let id = UUID()
     public let type: FinancialInsightType
     public let title: String

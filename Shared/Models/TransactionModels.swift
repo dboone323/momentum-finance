@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - Transaction Types
 
-public enum TransactionFilter: String, CaseIterable, Sendable {
+public enum SimpleTransactionFilter: String, CaseIterable, Sendable {
     case all
     case income
     case expense
@@ -18,7 +18,7 @@ public enum TransactionFilter: String, CaseIterable, Sendable {
 
 // MARK: - Navigation Types
 
-public struct BreadcrumbItem: Identifiable, Sendable {
+public struct SimpleBreadcrumbItem: Identifiable, Sendable {
     public let id = UUID()
     public let title: String
     public let destination: String?
@@ -29,7 +29,7 @@ public struct BreadcrumbItem: Identifiable, Sendable {
     }
 }
 
-public struct DeepLink: Sendable {
+public struct SimpleDeepLink: Sendable {
     public let path: String
     public let parameters: [String: String]
 

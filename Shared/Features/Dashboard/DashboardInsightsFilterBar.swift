@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct InsightsFilterBar: View {
+public struct DashboardFilterBar: View {
     @Binding var filterPriority: InsightPriority?
     @Binding var filterType: InsightType?
 

@@ -2,26 +2,26 @@
 # Core iOS app development dependencies
 
 # Data processing and analysis
-pandas>=1.5.0
-numpy>=1.24.0
+pandas==2.2.0
+numpy==1.26.3
 
 # Network requests for financial data APIs
-requests>=2.31.0
-urllib3>=1.26.0
+requests==2.31.0
+urllib3==2.1.0
 
 # JSON handling and data serialization
-jsonschema>=4.17.0
+jsonschema==4.21.1
 
 # Testing framework
-pytest>=7.4.0
-pytest-cov>=4.1.0
+pytest==8.0.0
+pytest-cov==4.1.0
 
 # Code quality and formatting
-flake8>=6.0.0
-black>=23.0.0
+flake8==7.0.0
+black==24.1.1
 
 # Documentation
-sphinx>=7.0.0
+sphinx==7.2.6
 
 # Development utilities
-pre-commit>=3.3.0
+pre-commit==3.6.0

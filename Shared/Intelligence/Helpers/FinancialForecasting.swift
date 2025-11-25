@@ -31,7 +31,7 @@ func fi_generateFinancialForecasts(transactions: [FinancialTransaction], account
             "This forecast helps with budgeting and financial planning."
         ].joined(separator: " ")
 
-        let insight = FinancialInsight(
+        let insight = IntelligenceFinancialInsight(
             title: "Income Forecast",
             description: forecastDescription,
             priority: InsightPriority.low,
@@ -67,7 +67,7 @@ func fi_generateFinancialForecasts(transactions: [FinancialTransaction], account
             "Use this to plan your budget and savings goals."
         ].joined(separator: " ")
 
-        let insight = FinancialInsight(
+        let insight = IntelligenceFinancialInsight(
             title: "Expense Forecast",
             description: forecastDescription,
             priority: InsightPriority.low,
@@ -104,7 +104,7 @@ func fi_generateFinancialForecasts(transactions: [FinancialTransaction], account
             priority = InsightPriority.high
         }
 
-        let insight = FinancialInsight(
+        let insight = IntelligenceFinancialInsight(
             title: "Cash Flow Forecast",
             description: flowDescription,
             priority: priority,

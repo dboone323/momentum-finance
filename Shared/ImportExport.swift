@@ -100,31 +100,7 @@ public class DefaultEntityManager: EntityManager {
     }
 }
 
-public enum ExportFormat: String, CaseIterable {
-    case csv = "CSV"
-    case pdf = "PDF"
-    case json = "JSON"
 
-    public var displayName: String { rawValue }
-    public var icon: String {
-        switch self {
-        case .csv: "tablecells"
-        case .pdf: "doc.richtext"
-        case .json: "curlybraces"
-        }
-    }
-}
-
-public enum DateRange: String, CaseIterable {
-    case lastWeek = "Last Week"
-    case lastMonth = "Last Month"
-    case lastThreeMonths = "Last 3 Months"
-    case lastSixMonths = "Last 6 Months"
-    case lastYear = "Last Year"
-    case allTime = "All Time"
-    case custom = "Custom"
-    public var displayName: String { rawValue }
-}
 
 public struct ExportSettings {
     public let format: ExportFormat

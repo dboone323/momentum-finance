@@ -3,7 +3,8 @@ import SwiftUI
 
 // MARK: - Search Types
 
-public enum SearchFilter: String, CaseIterable, Hashable {
+public enum SearchFilter: String, CaseIterable, Hashable, Identifiable {
+    public var id: String { rawValue }
     case all = "All"
     case accounts = "Accounts"
     case transactions = "Transactions"

@@ -50,7 +50,7 @@ extension FinancialIntelligenceService {
                 let nextMonthFormatted = fi_formatCurrency(nextMonthForecast, code: "USD")
                 let descA = "Your cash flow is \(trendDirection)."
                 let descB = " Next month's estimated net flow is \(nextMonthFormatted)."
-                let insight = FinancialInsight(
+                let insight = IntelligenceFinancialInsight(
                     title: title,
                     description: descA + descB,
                     priority: priority,
@@ -140,7 +140,7 @@ extension FinancialIntelligenceService {
             description = "Your \(account.name) balance is stable."
         }
 
-        let insight = FinancialInsight(
+        let insight = IntelligenceFinancialInsight(
             title: title,
             description: description,
             priority: priority,

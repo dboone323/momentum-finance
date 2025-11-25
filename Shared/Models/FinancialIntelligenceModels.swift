@@ -4,7 +4,7 @@ import SwiftUI
 // MARK: - Financial Intelligence Types
 
 /// Represents the type of financial insight
-public enum InsightType: Sendable {
+public enum SimpleInsightType: Sendable {
     case spendingPattern, anomaly, budgetAlert, forecast, optimization, budgetRecommendation,
          positiveSpendingTrend
 
@@ -34,12 +34,12 @@ public enum InsightType: Sendable {
 }
 
 /// Represents a financial insight
-public struct FinancialInsight: Identifiable, Sendable {
+public struct SimpleFinancialInsight: Identifiable, Sendable {
     public let id = UUID()
     public let title: String
     public let description: String
-    public let type: InsightType
-    public let priority: InsightPriority
+    public let type: SimpleInsightType
+    public let priority: SimpleInsightPriority
     public let confidence: Double
     public let value: Double?
     public let category: String?
@@ -49,8 +49,8 @@ public struct FinancialInsight: Identifiable, Sendable {
     public init(
         title: String,
         description: String,
-        type: InsightType,
-        priority: InsightPriority,
+        type: SimpleInsightType,
+        priority: SimpleInsightPriority,
         confidence: Double = 0.8,
         value: Double? = nil,
         category: String? = nil,
@@ -70,13 +70,13 @@ public struct FinancialInsight: Identifiable, Sendable {
 }
 
 /// Priority levels for insights
-public enum InsightPriority: Int, CaseIterable, Sendable, Comparable {
+public enum SimpleInsightPriority: Int, CaseIterable, Sendable, Comparable {
     case low = 0
     case medium = 1
     case high = 2
     case urgent = 3
 
-    public static func < (lhs: InsightPriority, rhs: InsightPriority) -> Bool {
+    public static func < (lhs: SimpleInsightPriority, rhs: SimpleInsightPriority) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
 

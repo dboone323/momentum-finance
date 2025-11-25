@@ -62,7 +62,7 @@ public enum AnimatedTransactionComponent {
     }
 }
 
-public enum AnimatedProgressComponents {
+public enum UIAnimatedProgressComponents {
     public struct AnimatedBudgetProgress: View {
         let progress: Double
 

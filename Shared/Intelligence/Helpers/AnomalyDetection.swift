@@ -35,7 +35,7 @@ func fi_detectCategoryOutliers(_ transactions: [FinancialTransaction]) -> [Finan
             let restPart = " on \(formattedDate) is \(percentageHigher)% higher than your average \(categoryName) transaction."
             let descriptionText = titlePart + restPart
 
-            let insight = FinancialInsight(
+            let insight = IntelligenceFinancialInsight(
                 title: "Unusual Spending in \(categoryName)",
                 description: descriptionText,
                 priority: .high,
@@ -84,7 +84,7 @@ func fi_detectRecentFrequencyAnomalies(_ transactions: [FinancialTransaction], d
         let partA = "You had \(transactionCount) transactions on \(formattedDate),"
         let partB = " which is \(percentageMore)% more than your daily average."
         let descriptionText = partA + partB
-        let insight = FinancialInsight(
+        let insight = IntelligenceFinancialInsight(
             title: "Unusual Transaction Activity",
             description: descriptionText,
             priority: .medium,
@@ -121,7 +121,7 @@ func fi_suggestDuplicatePaymentInsights(transactions: [FinancialTransaction]) ->
             )
         }
 
-        let insight = FinancialInsight(
+        let insight = IntelligenceFinancialInsight(
             title: "Potential Duplicate Payment",
             description: dupDescription,
             priority: .high,

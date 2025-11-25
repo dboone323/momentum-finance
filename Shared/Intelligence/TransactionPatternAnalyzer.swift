@@ -58,7 +58,7 @@ final class TransactionPatternAnalyzer {
         let weekdayNames = ["", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         let dayName = weekdayNames[maxWeekday]
 
-        return FinancialInsight(
+        return IntelligenceFinancialInsight(
             title: "Spending Patterns",
             description: "You tend to spend the most on \(dayName)s. Consider this when planning your budget.",
             priority: .low,
@@ -86,7 +86,7 @@ final class TransactionPatternAnalyzer {
             return nil
         }
 
-        return FinancialInsight(
+        return IntelligenceFinancialInsight(
             title: "Monthly Spending Cycle",
             description: "You tend to spend more around the \(maxDay)th of each month. This could indicate bill payment patterns.",
             priority: .low,
@@ -115,7 +115,7 @@ final class TransactionPatternAnalyzer {
         let anomalies = expenses.filter { abs($0.amount) > threshold }
 
         for anomaly in anomalies {
-            let insight = FinancialInsight(
+            let insight = IntelligenceFinancialInsight(
                 title: "Unusual Transaction Detected",
                 description: "A transaction of \(fi_formatCurrency(abs(anomaly.amount))) on \(anomaly.date.formatted()) seems unusually large compared to your typical spending.",
                 priority: .medium,

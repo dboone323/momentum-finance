@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Dark Mode Preferences
 
 /// Dark mode preference options
-public enum DarkModePreference: String, CaseIterable {
+public enum SettingsDarkModePreference: String, CaseIterable {
     case light
     case dark
     case system

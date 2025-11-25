@@ -38,7 +38,7 @@ func fi_generateSpendingInsightsFromMonthlyData(
         if last > average * 1.2, last > prev * 1.1 {
             let percentIncrease = prev > 0 ? Int(((last - prev) / prev) * 100) : 0
             insights.append(
-                FinancialInsight(
+                IntelligenceFinancialInsight(
                     title: "Increased Spending in \(category.name)",
                     description:
                     "Your spending in \(category.name) increased by \(percentIncrease)% last month.",
@@ -52,7 +52,7 @@ func fi_generateSpendingInsightsFromMonthlyData(
         } else if last < average * 0.8, last < prev * 0.9 {
             let percentDecrease = prev > 0 ? Int(((prev - last) / prev) * 100) : 0
             insights.append(
-                FinancialInsight(
+                IntelligenceFinancialInsight(
                     title: "Reduced Spending in \(category.name)",
                     description:
                     "Your spending in \(category.name) decreased by \(percentDecrease)% last month.",
@@ -84,7 +84,7 @@ func fi_topCategoriesInsight(
     }
     guard !topCategoryData.isEmpty else { return nil }
 
-    return FinancialInsight(
+    return IntelligenceFinancialInsight(
         title: "Top Spending Categories",
         description:
         "Your highest spending categories are \(topCategoryData.map(\.0).joined(separator: ", ")).",
@@ -116,7 +116,7 @@ func fi_analyzeSpendingPatterns(
     let recurring = fi_findRecurringTransactions(transactions)
     if !recurring.isEmpty {
         insights.append(
-            FinancialInsight(
+            IntelligenceFinancialInsight(
                 title: "Potential Recurring Expenses",
                 description:
                 "You may have \(recurring.count) recurring payments that are not tracked as subscriptions.",
@@ -140,7 +140,7 @@ func fi_checkBudgetExceeded(
         .currency(code: Locale.current.currency?.identifier ?? "USD")
     )
 
-    return FinancialInsight(
+    return IntelligenceFinancialInsight(
         title: "Budget Exceeded",
         description: "You've exceeded your \(budget.name) budget by \(overspentFormatted).",
         priority: .critical,
@@ -188,7 +188,7 @@ func fi_checkBudgetAtRisk(context: BudgetAnalysisContext) -> FinancialInsight? {
         " You have \(remainingBudgetFormatted) left for \(context.daysRemaining) days."
     let descriptionText = baseMessage + remainingMessage
 
-    return FinancialInsight(
+    return IntelligenceFinancialInsight(
         title: "Budget at Risk",
         description: descriptionText,
         priority: .high,
@@ -213,7 +213,7 @@ func fi_checkBudgetUnderutilized(
     let remainingMessage = " with \(daysRemaining) days remaining. Consider reallocating funds."
     let descriptionText = baseMessage + remainingMessage
 
-    return FinancialInsight(
+    return IntelligenceFinancialInsight(
         title: "Budget Underutilized",
         description: descriptionText,
         priority: .low,
@@ -297,7 +297,7 @@ extension FinancialIntelligenceService {
 
         let topFive = recurringTransactions.prefix(5).map { ($0.title, abs($0.amount)) }
 
-        let insight = FinancialInsight(
+        let insight = IntelligenceFinancialInsight(
             title: "Potential Recurring Expenses",
             description:
             "You may have \(recurringTransactions.count) recurring payments that are not tracked as subscriptions.",

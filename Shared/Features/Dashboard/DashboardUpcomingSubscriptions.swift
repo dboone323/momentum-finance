@@ -74,12 +74,13 @@ extension Features.Dashboard {
 
                         // View all subscriptions button
                         if self.subscriptions.count > 3 {
-                            Button(action: self.onViewAllTap).accessibilityLabel("Button").accessibilityLabel("Button") {
+                            Button(action: self.onViewAllTap) {
                                 Text("View All \(self.subscriptions.count) Subscriptions")
                                     .font(.caption)
                                     .fontWeight(.medium)
                                     .foregroundStyle(self.colorTheme.accentPrimary)
                             }
+                            .accessibilityLabel("View All Subscriptions")
                             .padding(.top, 8)
                         }
                     } else {
@@ -97,9 +98,10 @@ extension Features.Dashboard {
                                 .foregroundStyle(self.colorTheme.secondaryText)
                                 .multilineTextAlignment(.center)
 
-                            Button("Add Subscription").accessibilityLabel("Button").accessibilityLabel("Button") {
+                            Button("Add Subscription") {
                                 self.onViewAllTap()
                             }
+                            .accessibilityLabel("Add Subscription")
                             .buttonStyle(.borderedProminent)
                             .font(.caption)
                         }

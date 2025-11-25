@@ -22,7 +22,7 @@ public struct InsightDetailView: View {
                         PriorityBadge(priority: self.insight.priority)
                     }
 
-                    Text(self.insight.description)
+                    Text(self.insight.insightDescription)
                         .font(.body)
                         .foregroundColor(.secondary)
                 }
@@ -75,33 +75,19 @@ public struct InsightDetailView: View {
                             }
                         }
                     }
-
-                    // Data visualization info
-                    if let visualizationType = insight.visualizationType {
+                    
+                    // Action Recommendations
+                    if !self.insight.actionRecommendations.isEmpty {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Visualization")
+                            Text("Recommendations")
                                 .font(.headline)
-
-                            Text("Type: \(String(describing: visualizationType))")
-                                .font(.body)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-
-                    // Data points
-                    if !self.insight.data.isEmpty {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Data Points")
-                                .font(.headline)
-
-                            ForEach(self.insight.data, id: \.0) { key, value in
-                                HStack {
-                                    Text(key)
+                            
+                            ForEach(self.insight.actionRecommendations, id: \.self) { recommendation in
+                                HStack(alignment: .top) {
+                                    Image(systemName: "checkmark.circle")
+                                        .foregroundColor(.green)
+                                    Text(recommendation)
                                         .font(.body)
-                                    Spacer()
-                                    Text(String(format: "%.2f", value))
-                                        .font(.body)
-                                        .foregroundColor(.secondary)
                                 }
                             }
                         }
