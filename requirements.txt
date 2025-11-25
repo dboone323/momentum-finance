@@ -6,7 +6,7 @@ pandas==2.2.0
 numpy==1.26.3
 
 # Network requests for financial data APIs
-requests==2.31.0
+requests==2.32.4
 urllib3==2.1.0
 
 # JSON handling and data serialization
