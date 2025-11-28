@@ -47,7 +47,10 @@ public final class PerformanceManager {
         self.frameTimes = Array(repeating: 0, count: self.maxFrameHistory)
     }
 
-    /// Record a frame time for FPS calculation using a circular buffer
+    /// Record a frame time for FPS calculation using a circular buffer.
+    ///
+    /// This method should be called once per frame render loop. It stores the timestamp
+    /// in a thread-safe circular buffer for later FPS calculation.
     public func recordFrame() {
         let currentTime = CACurrentMediaTime()
         self.frameQueue.async(flags: .barrier) {
@@ -60,7 +63,9 @@ public final class PerformanceManager {
         }
     }
 
-    /// Get the current FPS, using cached values when possible
+    /// Get the current FPS, using cached values when possible.
+    ///
+    /// - Returns: The calculated Frames Per Second.
     public func getCurrentFPS() -> Double {
         let now = CACurrentMediaTime()
         return self.frameQueue.sync {
@@ -75,7 +80,9 @@ public final class PerformanceManager {
         }
     }
 
-    /// Fetch the current FPS asynchronously
+    /// Fetch the current FPS asynchronously.
+    ///
+    /// - Parameter completion: Closure called with the calculated FPS.
     public func getCurrentFPS(completion: @escaping (Double) -> Void) {
         self.frameQueue.async {
             let now = CACurrentMediaTime()
@@ -95,7 +102,9 @@ public final class PerformanceManager {
         }
     }
 
-    /// Get memory usage in MB with caching
+    /// Get memory usage in MB with caching.
+    ///
+    /// - Returns: Resident memory usage in Megabytes.
     public func getMemoryUsage() -> Double {
         let now = CACurrentMediaTime()
         return self.metricsQueue.sync {
@@ -103,7 +112,9 @@ public final class PerformanceManager {
         }
     }
 
-    /// Fetch memory usage asynchronously
+    /// Fetch memory usage asynchronously.
+    ///
+    /// - Parameter completion: Closure called with the memory usage in MB.
     public func getMemoryUsage(completion: @escaping (Double) -> Void) {
         self.metricsQueue.async {
             let usage = self.fetchMemoryUsageLocked(currentTime: CACurrentMediaTime())
@@ -113,7 +124,12 @@ public final class PerformanceManager {
         }
     }
 
-    /// Determine if performance is degraded based on FPS and memory thresholds
+    /// Determine if performance is degraded based on FPS and memory thresholds.
+    ///
+    /// This method checks if the current FPS is below the threshold (30 FPS) or if memory usage
+    /// exceeds the limit (500 MB). It uses cached metrics to avoid frequent expensive calculations.
+    ///
+    /// - Returns: `true` if performance is considered degraded, `false` otherwise.
     public func isPerformanceDegraded() -> Bool {
         self.metricsQueue.sync {
             let now = CACurrentMediaTime()
@@ -131,7 +147,12 @@ public final class PerformanceManager {
         }
     }
 
-    /// Determine performance degradation asynchronously
+    /// Determine performance degradation asynchronously.
+    ///
+    /// This method performs the check on a background utility queue to avoid blocking the caller,
+    /// then returns the result on the main queue.
+    ///
+    /// - Parameter completion: Closure called with the degradation status.
     public func isPerformanceDegraded(completion: @escaping (Bool) -> Void) {
         DispatchQueue.global(qos: .utility).async {
             let degraded = self.isPerformanceDegraded()

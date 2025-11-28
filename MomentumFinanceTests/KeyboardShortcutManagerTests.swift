@@ -1,123 +1,63 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
-class KeyboardShortcutManagerTests: XCTestCase {
-    var keyboardShortcutManager: KeyboardShortcutManager!
-
-    // Test the registerGlobalShortcuts method
-    func testRegisterGlobalShortcuts() {
-        // Arrange
-        let expectedMenu = NSMenu()
-
-        // Act
-        keyboardShortcutManager.registerGlobalShortcuts()
-
-        // Assert
-        XCTAssertEqual(NSApp.mainMenu, expectedMenu)
+#if os(macOS)
+final class KeyboardShortcutManagerTests: XCTestCase {
+    
+    var manager: KeyboardShortcutManager!
+    
+    override func setUp() {
+        super.setUp()
+        manager = KeyboardShortcutManager.shared
     }
-
-    // Test the dashboardShortcut property
-    func testDashboardShortcut() {
-        // Arrange
-        let expectedShortcut = KeyboardShortcut("1", modifiers: [.command])
-
-        // Act
-        let shortcut = keyboardShortcutManager.dashboardShortcut
-
-        // Assert
-        XCTAssertEqual(shortcut.key, "1")
-        XCTAssertEqual(shortcut.modifiers, [.command])
+    
+    func testSingleton() {
+        let instance1 = KeyboardShortcutManager.shared
+        let instance2 = KeyboardShortcutManager.shared
+        XCTAssertTrue(instance1 === instance2, "KeyboardShortcutManager should be a singleton")
     }
-
-    // Test the transactionsShortcut property
-    func testTransactionsShortcut() {
-        // Arrange
-        let expectedShortcut = KeyboardShortcut("2", modifiers: [.command])
-
-        // Act
-        let shortcut = keyboardShortcutManager.transactionsShortcut
-
-        // Assert
-        XCTAssertEqual(shortcut.key, "2")
-        XCTAssertEqual(shortcut.modifiers, [.command])
+    
+    func testNavigationShortcutsExist() {
+        XCTAssertEqual(manager.dashboardShortcut.key, KeyEquivalent("1"))
+        XCTAssertEqual(manager.transactionsShortcut.key, KeyEquivalent("2"))
+        XCTAssertEqual(manager.budgetsShortcut.key, KeyEquivalent("3"))
+        XCTAssertEqual(manager.subscriptionsShortcut.key, KeyEquivalent("4"))
+        XCTAssertEqual(manager.goalsReportsShortcut.key, KeyEquivalent("5"))
     }
-
-    // Test the budgetsShortcut property
-    func testBudgetsShortcut() {
-        // Arrange
-        let expectedShortcut = KeyboardShortcut("3", modifiers: [.command])
-
-        // Act
-        let shortcut = keyboardShortcutManager.budgetsShortcut
-
-        // Assert
-        XCTAssertEqual(shortcut.key, "3")
-        XCTAssertEqual(shortcut.modifiers, [.command])
+    
+    func testActionShortcutsExist() {
+        XCTAssertEqual(manager.newTransactionShortcut.key, KeyEquivalent("n"))
+        XCTAssertEqual(manager.newBudgetShortcut.key, KeyEquivalent("b"))
+        XCTAssertEqual(manager.newSubscriptionShortcut.key, KeyEquivalent("s"))
+        XCTAssertEqual(manager.newGoalShortcut.key, KeyEquivalent("g"))
     }
-
-    // Test the subscriptionsShortcut property
-    func testSubscriptionsShortcut() {
-        // Arrange
-        let expectedShortcut = KeyboardShortcut("4", modifiers: [.command])
-
-        // Act
-        let shortcut = keyboardShortcutManager.subscriptionsShortcut
-
-        // Assert
-        XCTAssertEqual(shortcut.key, "4")
-        XCTAssertEqual(shortcut.modifiers, [.command])
+    
+    func testMenuCreation() {
+        manager.registerGlobalShortcuts()
+        XCTAssertNotNil(NSApp.mainMenu, "Main menu should be created")
+        XCTAssertGreaterThan(NSApp.mainMenu?.items.count ?? 0, 0, "Main menu should have items")
     }
-
-    // Test the goalsReportsShortcut property
-    func testGoalsReportsShortcut() {
-        // Arrange
-        let expectedShortcut = KeyboardShortcut("5", modifiers: [.command])
-
-        // Act
-        let shortcut = keyboardShortcutManager.goalsReportsShortcut
-
-        // Assert
-        XCTAssertEqual(shortcut.key, "5")
-        XCTAssertEqual(shortcut.modifiers, [.command])
+    
+    func testNotificationFiring() {
+        let expectation = XCTestExpectation(description: "Notification received")
+        var receivedNotification = false
+        
+        let observer = NotificationCenter.default.addObserver(
+            forName: Notification.Name("NewTransaction"),
+            object: nil,
+            queue: .main
+        ) { _ in
+            receivedNotification = true
+            expectation.fulfill()
+        }
+        
+        // Simulate menu action
+        NSApplication.shared.newTransaction()
+        
+        wait(for: [expectation], timeout: 1.0)
+        XCTAssertTrue(receivedNotification)
+        
+        NotificationCenter.default.removeObserver(observer)
     }
-
-    // Test the newTransactionShortcut property
-    func testNewTransactionShortcut() {
-        // Arrange
-        let expectedShortcut = KeyboardShortcut("n", modifiers: [.command, .shift])
-
-        // Act
-        let shortcut = keyboardShortcutManager.newTransactionShortcut
-
-        // Assert
-        XCTAssertEqual(shortcut.key, "n")
-        XCTAssertEqual(shortcut.modifiers, [.command, .shift])
-    }
-
-    // Test the newBudgetShortcut property
-    func testNewBudgetShortcut() {
-        // Arrange
-        let expectedShortcut = KeyboardShortcut("b", modifiers: [.command, .shift])
-
-        // Act
-        let shortcut = keyboardShortcutManager.newBudgetShortcut
-
-        // Assert
-        XCTAssertEqual(shortcut.key, "b")
-        XCTAssertEqual(shortcut.modifiers, [.command, .shift])
-    }
-
-    // Test the newSubscriptionShortcut property
-    func testNewSubscriptionShortcut() {
-        // Arrange
-        let expectedShortcut = KeyboardShortcut("s", modifiers: [.command, .shift])
-
-        // Act
-        let shortcut = keyboardShortcutManager.newSubscriptionShortcut
-
-        // Assert
-        XCTAssertEqual(shortcut.key, "s")
-        XCTAssertEqual(shortcut.modifiers, [.command, .shift])
-    }
-
 }
+#endif

@@ -5,34 +5,119 @@ import Foundation
 import SwiftUI
 
 #if os(macOS)
-    /// Manages keyboard shortcuts for the macOS version of Momentum Finance
+    /**
+     Manages keyboard shortcuts for the macOS version of Momentum Finance.
+     
+     ## Overview
+     `KeyboardShortcutManager` provides centralized keyboard shortcut management for the macOS application,
+     registering global shortcuts and creating menu items with keyboard equivalents.
+     
+     ## Keyboard Shortcut Categories
+     
+     ### Navigation Shortcuts
+     - **⌘1**: Jump to Dashboard view
+     - **⌘2**: Jump to Transactions view
+     - **⌘3**: Jump to Budgets view
+     - **⌘4**: Jump to Subscriptions view
+     - **⌘5**: Jump to Goals & Reports view
+     
+     ### Action Shortcuts
+     - **⌘⇧N**: Create new transaction
+     - **⌘⇧B**: Create new budget
+     - **⌘⇧S**: Create new subscription
+     - **⌘⇧G**: Create new savings goal
+     - **⌘F**: Open global search
+     
+     ### View Management
+     - **⌘S**: Toggle sidebar visibility
+     - **⌘R**: Refresh all data
+     - **⌘⇧E**: Export data to file
+     
+     ## Usage Example
+     ```swift
+     // Registration happens automatically at app launch
+     KeyboardShortcutManager.shared.registerGlobalShortcuts()
+     
+     // Access shortcuts for SwiftUI views
+     Button("Dashboard") {
+         // Action
+     }
+     .keyboardShortcut(KeyboardShortcutManager.shared.dashboardShortcut)
+     ```
+     
+     ## Implementation Notes
+     - This class is a singleton accessible via `shared`
+     - Shortcuts are registered through NSMenu integration
+     - macOS automatically handles keyboard shortcut conflicts
+     - All shortcuts follow Apple's Human Interface Guidelines
+     
+     - Note: Shortcuts defined here must not conflict with system-level shortcuts
+     - Important: Changes to shortcuts require updating both the property definitions and menu creation
+     */
     class KeyboardShortcutManager {
+        /// Shared singleton instance
         static let shared = KeyboardShortcutManager()
 
-        // Shortcuts for navigation
+        // MARK: - Navigation Shortcuts
+        
+        /// Keyboard shortcut for Dashboard (⌘1)
         let dashboardShortcut = KeyboardShortcut("1", modifiers: [.command])
+        
+        /// Keyboard shortcut for Transactions (⌘2)
         let transactionsShortcut = KeyboardShortcut("2", modifiers: [.command])
+        
+        /// Keyboard shortcut for Budgets (⌘3)
         let budgetsShortcut = KeyboardShortcut("3", modifiers: [.command])
+        
+        /// Keyboard shortcut for Subscriptions (⌘4)
         let subscriptionsShortcut = KeyboardShortcut("4", modifiers: [.command])
+        
+        /// Keyboard shortcut for Goals & Reports (⌘5)
         let goalsReportsShortcut = KeyboardShortcut("5", modifiers: [.command])
 
-        // Shortcuts for common actions
+        // MARK: - Action Shortcuts
+        
+        /// Keyboard shortcut for creating a new transaction (⌘⇧N)
         let newTransactionShortcut = KeyboardShortcut("n", modifiers: [.command, .shift])
+        
+        /// Keyboard shortcut for creating a new budget (⌘⇧B)
         let newBudgetShortcut = KeyboardShortcut("b", modifiers: [.command, .shift])
+        
+        /// Keyboard shortcut for creating a new subscription (⌘⇧S)
         let newSubscriptionShortcut = KeyboardShortcut("s", modifiers: [.command, .shift])
+        
+        /// Keyboard shortcut for creating a new savings goal (⌘⇧G)
         let newGoalShortcut = KeyboardShortcut("g", modifiers: [.command, .shift])
+        
+        /// Keyboard shortcut for opening global search (⌘F)
         let searchShortcut = KeyboardShortcut("f", modifiers: [.command])
 
-        // Shortcuts for view management
+        // MARK: - View Management Shortcuts
+        
+        /// Keyboard shortcut for toggling sidebar (⌘S)
         let toggleSidebarShortcut = KeyboardShortcut("s", modifiers: [.command])
+        
+        /// Keyboard shortcut for refreshing data (⌘R)
         let refreshDataShortcut = KeyboardShortcut("r", modifiers: [.command])
+        
+        /// Keyboard shortcut for exporting data (⌘⇧E)
         let exportDataShortcut = KeyboardShortcut("e", modifiers: [.command, .shift])
 
         private init() {}
 
-        /// Registers global keyboard shortcuts for the app
-        /// <#Description#>
-        /// - Returns: <#description#>
+        /**
+         Registers global keyboard shortcuts for the application.
+         
+         This method creates the main menu with all keyboard shortcuts properly configured.
+         It should be called once during application launch.
+         
+         ## Implementation
+         The method assigns the created menu to `NSApp.mainMenu`, which automatically
+         registers all keyboard shortcuts defined within menu items.
+         
+         - Note: macOS handles keyboard shortcut conflicts automatically
+         - Important: This must be called on the main thread
+         */
         func registerGlobalShortcuts() {
             // macOS automatically handles keyboard shortcuts defined in the menu
             NSApp.mainMenu = self.createMainMenu()

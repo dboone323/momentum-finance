@@ -1,49 +1,72 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
+import UserNotifications
 
 final class NotificationManagerTests: XCTestCase {
-
-    // MARK: - Setup & Teardown
-
-    // MARK: - Initialization Tests
-
-    func testInitialization() {
-        // Test basic initialization
-        XCTAssertTrue(true, "Initialization test placeholder")
+    
+    var manager: NotificationManager!
+    
+    @MainActor
+    override func setUp() async throws {
+        try await super.setUp()
+        manager = NotificationManager.shared
     }
-
-    // MARK: - Property Tests
-
-    func testProperties() {
-        // Test property access and validation
-        XCTAssertTrue(true, "Property test placeholder")
+    
+    @MainActor
+    override func tearDown() async throws {
+        manager.clearAllNotifications()
+        try await super.tearDown()
     }
-
-    // MARK: - Method Tests
-
-    func testPublicMethods() {
-        // Test public method functionality
-        XCTAssertTrue(true, "Method test placeholder")
+    
+    @MainActor
+    func testSingleton() {
+        let instance1 = NotificationManager.shared
+        let instance2 = NotificationManager.shared
+        XCTAssertTrue(instance1 === instance2)
     }
-
-    // MARK: - Edge Case Tests
-
-    func testEdgeCases() {
-        // Test edge cases and boundary conditions
-        XCTAssertTrue(true, "Edge case test placeholder")
+    
+    @MainActor
+    func testPermissionCheck() async {
+        await manager.requestNotificationPermission()
+        // Permissions may or may not be granted in test environment
+        // Just verify no crash occurs
+        XCTAssertTrue(true)
     }
-
-    // MARK: - Error Handling Tests
-
-    func testErrorHandling() {
-        // Test error handling and validation
-        XCTAssertTrue(true, "Error handling test placeholder")
+    
+    @MainActor
+    func testClearAllNotifications() {
+        manager.clearAllNotifications()
+        XCTAssertTrue(manager.pendingNotifications.isEmpty)
     }
-
-    // MARK: - Integration Tests
-
-    func testIntegration() {
-        // Test integration with other components
-        XCTAssertTrue(true, "Integration test placeholder")
+    
+    @MainActor
+    func testGetPendingNotifications() async {
+        let notifications = await manager.getPendingNotifications()
+        XCTAssertNotNil(notifications)
+    }
+    
+    @MainActor
+    func testScheduleBudgetNotifications() {
+        let testBudget = Budget.createSampleBudget()
+        manager.schedulebudgetWarningNotifications(for: [testBudget])
+        // Should not crash even if permissions not granted
+        XCTAssertTrue(true)
+    }
+    
+    @MainActor
+    func testScheduleSubscriptionNotifications() {
+        let testSubscription = Subscription.createSampleSubscription()
+        manager.scheduleSubscriptionNotifications(for: [testSubscription])
+        // Should not crash even if permissions not granted
+        XCTAssertTrue(true)
+    }
+    
+    @MainActor
+    func testClearNotificationsByType() async {
+        manager.clearNotifications(ofType: "budget_warning")
+        manager.clearNotifications(ofType: "subscription_reminder")
+        // Should complete without crashing
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertTrue(true)
     }
 }

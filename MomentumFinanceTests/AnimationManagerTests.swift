@@ -1,49 +1,42 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
+import SwiftUI
 
+@MainActor
 final class AnimationManagerTests: XCTestCase {
-
-    // MARK: - Setup & Teardown
-
-    // MARK: - Initialization Tests
-
-    func testInitialization() {
-        // Test basic initialization
-        XCTAssertTrue(true, "Initialization test placeholder")
+    
+    var manager: AnimationManager!
+    
+    override func setUp() async throws {
+        try await super.setUp()
+        manager = AnimationManager.shared
     }
-
-    // MARK: - Property Tests
-
-    func testProperties() {
-        // Test property access and validation
-        XCTAssertTrue(true, "Property test placeholder")
+    
+    func testSingleton() {
+        let instance1 = AnimationManager.shared
+        let instance2 = AnimationManager.shared
+        XCTAssertTrue(instance1 === instance2)
     }
-
-    // MARK: - Method Tests
-
-    func testPublicMethods() {
-        // Test public method functionality
-        XCTAssertTrue(true, "Method test placeholder")
+    
+    func testAnimationRetrieval() {
+        // Test that animations can be retrieved without crashing
+        let springAnimation = manager.spring
+        let easeInOutAnimation = manager.easeInOut
+        
+        XCTAssertNotNil(springAnimation)
+        XCTAssertNotNil(easeInOutAnimation)
     }
-
-    // MARK: - Edge Case Tests
-
-    func testEdgeCases() {
-        // Test edge cases and boundary conditions
-        XCTAssertTrue(true, "Edge case test placeholder")
+    
+    func testCustomAnimationCreation() {
+        let customAnimation = manager.custom(duration: 0.5, curve: .easeIn)
+        XCTAssertNotNil(customAnimation)
     }
-
-    // MARK: - Error Handling Tests
-
-    func testErrorHandling() {
-        // Test error handling and validation
-        XCTAssertTrue(true, "Error handling test placeholder")
-    }
-
-    // MARK: - Integration Tests
-
-    func testIntegration() {
-        // Test integration with other components
-        XCTAssertTrue(true, "Integration test placeholder")
+    
+    func testAnimationToggle() {
+        manager.isReducedMotion = false
+        XCTAssertFalse(manager.isReducedMotion)
+        
+        manager.isReducedMotion = true
+        XCTAssertTrue(manager.isReducedMotion)
     }
 }

@@ -29,8 +29,34 @@ public class HapticManager: ObservableObject {
             self.impactFeedbackGenerator.prepare()
             self.notificationFeedbackGenerator.prepare()
             self.selectionFeedbackGenerator.prepare()
+            
+            // Respect system accessibility settings
+            checkAccessibilitySettings()
+            
+            // Listen for accessibility changes
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(accessibilitySettingsChanged),
+                name: UIAccessibility.reduceMotionStatusDidChangeNotification,
+                object: nil
+            )
         #endif
     }
+    
+    #if os(iOS)
+    /// Check and respect system accessibility settings
+    private func checkAccessibilitySettings() {
+        // Disable haptics if Reduce Motion is enabled
+        if UIAccessibility.isReduceMotionEnabled {
+            isEnabled = false
+        }
+    }
+    
+    /// Handle accessibility settings changes
+    @objc private func accessibilitySettingsChanged() {
+        checkAccessibilitySettings()
+    }
+    #endif
 
     // MARK: - Impact Feedback
 
