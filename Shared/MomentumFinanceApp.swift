@@ -2,6 +2,7 @@ import Foundation
 import os
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 // Import KeychainHelper for secure storage
 // import KeychainHelper

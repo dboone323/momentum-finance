@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import SwiftUI
+import MomentumFinanceCore
 
 //
 //  AdvancedFinancialIntelligence.swift

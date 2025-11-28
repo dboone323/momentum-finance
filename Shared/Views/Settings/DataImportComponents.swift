@@ -1,4 +1,5 @@
 import SwiftUI
+import MomentumFinanceCore
 
 public struct DataImportHeaderComponent: View {
     public init() {}

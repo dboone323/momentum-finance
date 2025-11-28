@@ -2,6 +2,7 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 import SwiftUI
+import MomentumFinanceCore
 
 /// Centralized animation management for consistent app-wide animations
 @MainActor

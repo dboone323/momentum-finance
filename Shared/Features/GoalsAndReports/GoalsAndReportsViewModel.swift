@@ -4,6 +4,7 @@
 import Observation
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 @MainActor
 @Observable

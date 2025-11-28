@@ -1,4 +1,5 @@
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 public enum ImportError: Error {
@@ -102,33 +103,7 @@ public class DefaultEntityManager: EntityManager {
 
 
 
-public struct ExportSettings {
-    public let format: ExportFormat
-    public let dateRange: DateRange
-    public let includeCategories: Bool
-    public let includeAccounts: Bool
-    public let includeBudgets: Bool
-    public let startDate: Date
-    public let endDate: Date
 
-    public init(
-        format: ExportFormat,
-        dateRange: DateRange,
-        includeCategories: Bool = true,
-        includeAccounts: Bool = true,
-        includeBudgets: Bool = true,
-        startDate: Date,
-        endDate: Date
-    ) {
-        self.format = format
-        self.dateRange = dateRange
-        self.includeCategories = includeCategories
-        self.includeAccounts = includeAccounts
-        self.includeBudgets = includeBudgets
-        self.startDate = startDate
-        self.endDate = endDate
-    }
-}
 
 public struct ImportResult {
     public let success: Bool

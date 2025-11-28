@@ -1,4 +1,5 @@
 import Foundation
+import MomentumFinanceCore
 
 @MainActor
 extension FinancialIntelligenceService {

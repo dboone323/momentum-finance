@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import MomentumFinanceCore
 import UserNotifications
 
 /// Notification center for managing smart alerts and system notifications

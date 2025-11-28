@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import MomentumFinanceCore
 
 /// Static color definitions for the Momentum Finance theme
 public enum ColorDefinitions {

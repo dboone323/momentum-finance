@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import MomentumFinanceCore
 
 /// A demonstration view showing the dark mode optimizations and theme system
 public struct ThemeDemoView: View {

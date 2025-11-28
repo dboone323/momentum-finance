@@ -3,6 +3,7 @@
 
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 import UniformTypeIdentifiers
 
 /// Comprehensive data export view with multiple format options
@@ -206,9 +207,7 @@ public struct DataExportView: View {
 
     private func getDateRange() -> (start: Date, end: Date) {
         switch self.dateRange {
-        case .lastWeek:
-            let start = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
-            return (start, Date())
+
         case .lastMonth:
             let start = Calendar.current.date(byAdding: .month, value: -1, to: Date()) ?? Date()
             return (start, Date())
@@ -241,12 +240,13 @@ public struct DataExportView: View {
 
             let exportSettings = ExportSettings(
                 format: exportFormat,
-                dateRange: dateRange,
-                includeCategories: includeTransactions,
+                startDate: start,
+                endDate: end,
+                includeTransactions: includeTransactions,
                 includeAccounts: includeAccounts,
                 includeBudgets: includeBudgets,
-                startDate: start,
-                endDate: end
+                includeSubscriptions: includeSubscriptions,
+                includeGoals: includeGoals
             )
 
             let fileURL = try await exporter.exportData(settings: exportSettings)

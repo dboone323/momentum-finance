@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 
 /// Type definitions and enums for theme system
 public struct ThemeEnums {

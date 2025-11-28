@@ -1,5 +1,6 @@
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 public struct ImportExportSection: View {
     @Environment(\.modelContext) private var modelContext

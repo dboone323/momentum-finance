@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 import OSLog
 import UserNotifications
 

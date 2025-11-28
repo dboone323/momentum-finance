@@ -8,6 +8,7 @@
 
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 // Import the models
 // Note: FinancialAccount should be available from the Models folder

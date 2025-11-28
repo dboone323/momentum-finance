@@ -3,6 +3,7 @@
 
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 /// A summary widget to display financial insights on the dashboard
 public struct InsightsSummaryWidget: View {

@@ -9,6 +9,7 @@ import Charts
 import Shared
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 #if os(macOS)
 

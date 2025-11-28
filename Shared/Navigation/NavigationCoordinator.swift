@@ -3,6 +3,7 @@ import LocalAuthentication
 import Observation
 import OSLog
 import SwiftUI
+import MomentumFinanceCore
 
 // SearchResult types are available from Shared/SearchTypes.swift
 // Explicit import to ensure SearchTypes are available

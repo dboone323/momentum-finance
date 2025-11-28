@@ -1,4 +1,5 @@
 import SwiftUI
+import MomentumFinanceCore
 
 public struct ImportResultView: View {
     let result: ImportResult

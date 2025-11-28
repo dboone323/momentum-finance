@@ -3,6 +3,7 @@
 
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 extension Features.Transactions {
     struct AddTransactionView: View {

@@ -1,4 +1,5 @@
 import Foundation
+import MomentumFinanceCore
 import os
 import OSLog
 import SwiftData

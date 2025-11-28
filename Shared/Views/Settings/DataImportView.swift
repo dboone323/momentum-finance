@@ -3,6 +3,7 @@
 
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 import UniformTypeIdentifiers
 
 /// Data import view for CSV files

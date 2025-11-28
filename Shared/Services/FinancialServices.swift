@@ -1,4 +1,5 @@
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 // MARK: - Service Protocols

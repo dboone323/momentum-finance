@@ -2,6 +2,7 @@ import Foundation
 import Observation
 import os
 import SwiftUI
+import MomentumFinanceCore
 
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.

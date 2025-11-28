@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 
 /// Navigation tab sections - separated from SwiftUI imports to avoid generic type conflicts
 public enum AppTabSection: String, CaseIterable, Hashable {

@@ -3,6 +3,7 @@ import Foundation
 import OSLog
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 // Momentum Finance - Financial Intelligence Services
 // Copyright © 2025 Momentum Finance. All rights reserved.

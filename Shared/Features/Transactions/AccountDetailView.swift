@@ -3,6 +3,7 @@
 
 import Charts
 import SwiftUI
+import MomentumFinanceCore
 
 public struct AccountDetailView: View {
     @Environment(\.dismiss)

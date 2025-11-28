@@ -1,4 +1,5 @@
 import SwiftUI
+import MomentumFinanceCore
 
 public struct DashboardSubscriptionsSection: View {
     let subscriptions: [Subscription]
@@ -162,10 +163,10 @@ public struct DashboardBudgetProgress: View {
 }
 
 public struct DashboardInsights: View {
-    let insights: [FinancialInsight]
+    let insights: [IntelligenceFinancialInsight]
     let onDetailsTapped: () -> Void
 
-    public init(insights: [FinancialInsight], onDetailsTapped: @escaping () -> Void) {
+    public init(insights: [IntelligenceFinancialInsight], onDetailsTapped: @escaping () -> Void) {
         self.insights = insights
         self.onDetailsTapped = onDetailsTapped
     }
@@ -198,7 +199,7 @@ public struct DashboardInsights: View {
                             Text(insight.title)
                                 .font(.subheadline)
                                 .foregroundColor(.primary)
-                            Text(insight.insightDescription)
+                            Text(insight.description)
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                                 .lineLimit(2)

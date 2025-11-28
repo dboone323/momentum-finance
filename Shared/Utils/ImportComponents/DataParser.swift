@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 
 /// Handles parsing and validation of financial data from CSV fields
 enum DataParser {

@@ -2,6 +2,7 @@ import Charts
 import Foundation
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 // Momentum Finance - Insights View
 // Copyright © 2025 Momentum Finance. All rights reserved.

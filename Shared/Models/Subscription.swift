@@ -2,6 +2,7 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 /// Represents the billing cycle for a subscription (weekly, monthly, yearly).

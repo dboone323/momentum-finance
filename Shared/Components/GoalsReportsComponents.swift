@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MomentumFinanceCore
 
 // MARK: - Goal Progress Components
 

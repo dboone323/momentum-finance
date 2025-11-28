@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import MomentumFinanceCore
 
 // MARK: - Financial Intelligence Types
 

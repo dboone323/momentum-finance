@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 
 /// Color scheme for theme definitions
 public enum ColorScheme {

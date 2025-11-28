@@ -2,6 +2,7 @@ import Foundation
 import PDFKit
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 final class ExportEngineService {
     private let modelContext: ModelContext

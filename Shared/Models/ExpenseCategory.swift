@@ -2,6 +2,7 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 /// Represents a spending category (e.g., Groceries, Utilities) for expenses in the app.

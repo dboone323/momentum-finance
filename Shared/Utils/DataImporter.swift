@@ -1,4 +1,5 @@
 @preconcurrency import Foundation
+import MomentumFinanceCore
 @preconcurrency import SwiftData
 
 // MARK: - Data Import Coordinator

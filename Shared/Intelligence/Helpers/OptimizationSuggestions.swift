@@ -1,4 +1,5 @@
 import Foundation
+import MomentumFinanceCore
 
 // MARK: - Optimization Suggestions
 

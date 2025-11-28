@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MomentumFinanceCore
 
 // MARK: - Budget Row Component
 

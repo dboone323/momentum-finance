@@ -1,4 +1,5 @@
 import SwiftUI
+import MomentumFinanceCore
 
 #if canImport(AppKit)
     import AppKit

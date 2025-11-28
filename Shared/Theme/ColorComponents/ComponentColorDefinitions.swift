@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import MomentumFinanceCore
 
 /// Static color definitions for light and dark theme schemes
 enum ComponentColorDefinitions {

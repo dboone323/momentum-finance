@@ -1,5 +1,6 @@
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 // AppKit is only available on macOS
 #if canImport(AppKit)

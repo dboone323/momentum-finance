@@ -8,6 +8,7 @@
 import Charts
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 #if os(macOS)
 

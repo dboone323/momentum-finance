@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import MomentumFinanceCore
 
 // MARK: - Navigation Types
 

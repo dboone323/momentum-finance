@@ -1,4 +1,5 @@
 import SwiftUI
+import MomentumFinanceCore
 
 public struct InsightDetailView: View {
     let insight: FinancialInsight

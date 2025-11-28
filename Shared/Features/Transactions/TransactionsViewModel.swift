@@ -4,6 +4,7 @@
 import Observation
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 extension Features.Transactions {
     @MainActor

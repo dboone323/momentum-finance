@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 /// Handles validation and duplicate detection for imported data

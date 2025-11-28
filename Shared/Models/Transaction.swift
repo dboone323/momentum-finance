@@ -3,6 +3,7 @@
 // #-hidden-code
 import CoreData
 import SwiftUI
+import MomentumFinanceCore
 
 /// Represents a simple transaction record for legacy or compatibility use.
 public struct Transaction: Identifiable, Codable {

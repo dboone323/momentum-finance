@@ -1,5 +1,6 @@
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 /// Data models and enums for financial insights and analysis results
 

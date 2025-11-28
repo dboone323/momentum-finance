@@ -1,4 +1,5 @@
 import Foundation
+import MomentumFinanceCore
 
 func fi_computeMonthlySpendingByCategory(transactions: [FinancialTransaction]) -> [String: [Date:
         Double]] {

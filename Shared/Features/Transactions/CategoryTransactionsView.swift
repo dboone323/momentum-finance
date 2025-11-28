@@ -3,6 +3,7 @@
 
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 /// A view that shows transactions filtered by a specific category
 extension Features.Transactions {

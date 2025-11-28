@@ -7,6 +7,7 @@
 
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 extension Features.Dashboard {
     struct DashboardUpcomingSubscriptions: View {

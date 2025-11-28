@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 
 /// Analyzes transaction patterns to identify trends and anomalies
 @MainActor

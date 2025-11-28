@@ -3,6 +3,7 @@
 
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 /// A view that shows details for a specific subscription
 extension Features.Subscriptions {

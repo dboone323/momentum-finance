@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 
 /// Machine learning models for financial analysis and predictions
 @MainActor

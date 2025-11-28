@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 /// Manages creation and retrieval of financial entities during import

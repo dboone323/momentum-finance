@@ -10,6 +10,7 @@
 import Foundation
 import OSLog
 import SwiftUI
+import MomentumFinanceCore
 import UserNotifications
 
 // NOTE: Notification types and schedulers were intentionally removed from this aggregated

@@ -33,7 +33,14 @@ final class DataExporterDateRangeTests: XCTestCase {
         let start = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
         let end = Calendar.current.date(byAdding: .day, value: 2, to: Date())!
         let settings = ExportSettings(
-            format: .csv, dateRange: .custom, startDate: start, endDate: end
+            format: .csv,
+            startDate: start,
+            endDate: end,
+            includeTransactions: true,
+            includeAccounts: true,
+            includeBudgets: true,
+            includeSubscriptions: true,
+            includeGoals: true
         )
         let exporter = await DataExporter(modelContainer: container)
         let url = try await exporter.exportData(settings: settings)

@@ -4,6 +4,7 @@
 import Foundation
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 // MARK: - Account Types
 

@@ -3,6 +3,7 @@
 
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 public struct SimpleDashboardView: View {
     @Environment(\.modelContext)

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import MomentumFinanceCore
 
 // MARK: - Theme Demo Components
 

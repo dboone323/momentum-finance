@@ -2,6 +2,7 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 /// Represents the type of a financial transaction (income, expense, or transfer).

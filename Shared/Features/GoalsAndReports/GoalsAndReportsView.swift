@@ -9,6 +9,7 @@
 import Charts
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 
 extension Features.GoalsAndReports {
     /// Main view for goals and financial reports

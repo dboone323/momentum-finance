@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import MomentumFinanceCore
 
 public struct ThemeSettingsView: View {
     @State private var theme = ColorTheme.shared

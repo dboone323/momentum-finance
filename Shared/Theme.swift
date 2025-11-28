@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import MomentumFinanceCore
 
 // Platform color helpers (now internal for cross-file use)
 func platformBackgroundColor() -> Color {

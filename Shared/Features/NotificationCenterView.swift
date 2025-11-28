@@ -8,6 +8,7 @@
 
 import SwiftData
 import SwiftUI
+import MomentumFinanceCore
 @preconcurrency import UserNotifications
 
 /// Centralized notification center for viewing and managing smart alerts

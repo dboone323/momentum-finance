@@ -1,4 +1,5 @@
 import SwiftUI
+import MomentumFinanceCore
 
 public struct TransactionEmptyStateView: View {
     let searchText: String
