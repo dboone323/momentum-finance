@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class InsightsSummaryWidgetTests: XCTestCase {
     var widget: InsightsSummaryWidget!
@@ -23,21 +23,29 @@ class InsightsSummaryWidgetTests: XCTestCase {
         // GIVEN: Real test data with specific values
         let transactions = [
             FinancialTransaction(amount: 1000.00),
-            FinancialTransaction(amount: -500.00)
+            FinancialTransaction(amount: -500.00),
         ]
         let accounts = [
             FinancialAccount(name: "Checking", balance: 2000.00),
-            FinancialAccount(name: "Savings", balance: 3000.00)
+            FinancialAccount(name: "Savings", balance: 3000.00),
         ]
         let budgets = [
-            Budget(name: "Monthly", amount: 5000.00)
+            Budget(name: "Monthly", amount: 5000.00),
         ]
 
         // WHEN: The widget is presented
         let viewModel = InsightsViewModel(transactions: transactions, accounts: accounts, budgets: budgets)
 
         // THEN: The insight content view is displayed with correct data
-        XCTAssertEqual(viewModel.view(), InsightContentView(totalBalance: 1500.00, recentSpending: -500.00, monthlyChange: 25.0%, monthComparisonRatio: 0.8))
+        XCTAssertEqual(
+            viewModel.view(),
+            InsightContentView(
+                totalBalance: 1500.00,
+                recentSpending: -500.00,
+                monthlyChange: 25.0%,
+                monthComparisonRatio: 0.8
+            )
+        )
     }
 
     // MARK: - Test Case 3: Monthly Trend View

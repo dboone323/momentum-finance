@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class TransactionEmptyStateViewTests: XCTestCase {
     var sut: TransactionEmptyStateView!
@@ -9,7 +9,10 @@ class TransactionEmptyStateViewTests: XCTestCase {
         super.setUp()
         let onAddTransaction = {}
         let searchText = ""
-        viewModel = Features.Transactions.TransactionEmptyStateViewModel(searchText: searchText, onAddTransaction: onAddTransaction)
+        viewModel = Features.Transactions.TransactionEmptyStateViewModel(
+            searchText: searchText,
+            onAddTransaction: onAddTransaction
+        )
         sut = TransactionEmptyStateView(viewModel: viewModel)
     }
 
@@ -56,7 +59,8 @@ class TransactionEmptyStateViewTests: XCTestCase {
         XCTAssertEqual(viewModel.onAddTransactionCount, 1)
     }
 
-    @objc func addTransactionButtonTapped() {
+    @objc
+    func addTransactionButtonTapped() {
         viewModel.onAddTransaction()
     }
 }

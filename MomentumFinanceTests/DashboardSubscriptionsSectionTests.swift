@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class DashboardSubscriptionsSectionTests: XCTestCase {
     var subscriptions: [Subscription]!
@@ -9,8 +9,18 @@ class DashboardSubscriptionsSectionTests: XCTestCase {
     override func setUp() {
         super.setUp()
         subscriptions = [
-            Subscription(name: "Service1", amount: 9.99, billingCycle: .monthly, nextDueDate: Date().addingTimeInterval(86400 * 3)),
-            Subscription(name: "Service2", amount: 14.99, billingCycle: .monthly, nextDueDate: Date().addingTimeInterval(86400 * 7))
+            Subscription(
+                name: "Service1",
+                amount: 9.99,
+                billingCycle: .monthly,
+                nextDueDate: Date().addingTimeInterval(86400 * 3)
+            ),
+            Subscription(
+                name: "Service2",
+                amount: 14.99,
+                billingCycle: .monthly,
+                nextDueDate: Date().addingTimeInterval(86400 * 7)
+            ),
         ]
         onSubscriptionTapped = { _ in }
         onViewAllTapped = {}
@@ -62,7 +72,7 @@ class DashboardSubscriptionsSectionTests: XCTestCase {
     // Test case for the categoryColor method
     func testCategoryColor() {
         let colors = [.blue, .green, .orange, .purple, .pink, .red]
-        for index in 0 ..< colors.count {
+        for index in 0..<colors.count {
             let color = DashboardSubscriptionsSection.categoryColor(for: index)
             XCTAssertEqual(color, colors[index])
         }

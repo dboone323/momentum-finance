@@ -262,31 +262,59 @@ import SwiftUI
 
         private func setupNotificationHandlers() {
             // Setup notification handlers for keyboard shortcut actions
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("ShowDashboard"), object: nil, queue: .main) { _ in
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("ShowDashboard"),
+                object: nil,
+                queue: .main
+            ) { _ in
                 self.navigationCoordinator.selectedSidebarItem = .dashboard
             }
 
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("ShowTransactions"), object: nil, queue: .main) { _ in
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("ShowTransactions"),
+                object: nil,
+                queue: .main
+            ) { _ in
                 self.navigationCoordinator.selectedSidebarItem = .transactions
             }
 
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("ShowBudgets"), object: nil, queue: .main) { _ in
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("ShowBudgets"),
+                object: nil,
+                queue: .main
+            ) { _ in
                 self.navigationCoordinator.selectedSidebarItem = .budgets
             }
 
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("ShowSubscriptions"), object: nil, queue: .main) { _ in
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("ShowSubscriptions"),
+                object: nil,
+                queue: .main
+            ) { _ in
                 self.navigationCoordinator.selectedSidebarItem = .subscriptions
             }
 
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("ShowGoalsAndReports"), object: nil, queue: .main) { _ in
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("ShowGoalsAndReports"),
+                object: nil,
+                queue: .main
+            ) { _ in
                 self.navigationCoordinator.selectedSidebarItem = .goalsAndReports
             }
 
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("ToggleSidebar"), object: nil, queue: .main) { _ in
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("ToggleSidebar"),
+                object: nil,
+                queue: .main
+            ) { _ in
                 self.toggleSidebar()
             }
 
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("PerformGlobalSearch"), object: nil, queue: .main) { _ in
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("PerformGlobalSearch"),
+                object: nil,
+                queue: .main
+            ) { _ in
                 self.isSearching = true
             }
         }
@@ -327,7 +355,11 @@ import SwiftUI
 
                 Section("Recent Transactions") {
                     ForEach(self.recentTransactions.prefix(5)) { transaction in
-                        NavigationLink(value: ListableItem(id: transaction.id, name: transaction.name, type: .transaction)) {
+                        NavigationLink(value: ListableItem(
+                            id: transaction.id,
+                            name: transaction.name,
+                            type: .transaction
+                        )) {
                             HStack {
                                 Image(systemName: transaction.amount < 0 ? "arrow.down" : "arrow.up")
                                     .foregroundStyle(transaction.amount < 0 ? .red : .green)
@@ -350,7 +382,11 @@ import SwiftUI
 
                 Section("Upcoming Subscriptions") {
                     ForEach(self.upcomingSubscriptions) { subscription in
-                        NavigationLink(value: ListableItem(id: subscription.id, name: subscription.name, type: .subscription)) {
+                        NavigationLink(value: ListableItem(
+                            id: subscription.id,
+                            name: subscription.name,
+                            type: .subscription
+                        )) {
                             HStack {
                                 Image(systemName: "calendar.badge.clock")
                                     .foregroundStyle(.purple)
@@ -471,7 +507,11 @@ import SwiftUI
 
                     Section("Transactions") {
                         ForEach(self.filteredTransactions) { transaction in
-                            NavigationLink(value: ListableItem(id: transaction.id, name: transaction.name, type: .transaction)) {
+                            NavigationLink(value: ListableItem(
+                                id: transaction.id,
+                                name: transaction.name,
+                                type: .transaction
+                            )) {
                                 HStack {
                                     Image(systemName: transaction.amount < 0 ? "arrow.down" : "arrow.up")
                                         .foregroundStyle(transaction.amount < 0 ? .red : .green)
@@ -621,7 +661,11 @@ import SwiftUI
                     ForEach(self.getGroupedSubscriptions()) { group in
                         Section(header: Text(group.title)) {
                             ForEach(group.items) { subscription in
-                                NavigationLink(value: ListableItem(id: subscription.id, name: subscription.name, type: .subscription)) {
+                                NavigationLink(value: ListableItem(
+                                    id: subscription.id,
+                                    name: subscription.name,
+                                    type: .subscription
+                                )) {
                                     HStack {
                                         Image(systemName: "calendar.badge.clock")
                                             .foregroundStyle(.purple)
@@ -638,7 +682,8 @@ import SwiftUI
                                         Spacer()
 
                                         VStack(alignment: .trailing) {
-                                            Text(subscription.amount.formatted(.currency(code: subscription.currencyCode)))
+                                            Text(subscription.amount
+                                                .formatted(.currency(code: subscription.currencyCode)))
                                                 .font(.subheadline)
 
                                             Text(subscription.billingCycle.capitalized)
@@ -888,15 +933,30 @@ import SwiftUI
 
                     // Summary cards
                     HStack(spacing: 20) {
-                        SummaryCard(title: "Total Income", amount: self.totalIncome, icon: "arrow.up.circle.fill", color: .green)
-                        SummaryCard(title: "Total Expenses", amount: self.totalExpenses, icon: "arrow.down.circle.fill", color: .red)
+                        SummaryCard(
+                            title: "Total Income",
+                            amount: self.totalIncome,
+                            icon: "arrow.up.circle.fill",
+                            color: .green
+                        )
+                        SummaryCard(
+                            title: "Total Expenses",
+                            amount: self.totalExpenses,
+                            icon: "arrow.down.circle.fill",
+                            color: .red
+                        )
                         SummaryCard(
                             title: "Net Cash Flow",
                             amount: self.netCashflow,
                             icon: "arrow.left.arrow.right.circle.fill",
                             color: self.netCashflow >= 0 ? .blue : .orange
                         )
-                        SummaryCard(title: "Total Balance", amount: self.totalBalance, icon: "banknote.fill", color: .purple)
+                        SummaryCard(
+                            title: "Total Balance",
+                            amount: self.totalBalance,
+                            icon: "banknote.fill",
+                            color: .purple
+                        )
                     }
 
                     Text("Select an account or transaction from the list to view details.")
@@ -1125,7 +1185,8 @@ import SwiftUI
 
                             Spacer()
 
-                            Text("\(self.totalSaved.formatted(.currency(code: "USD"))) of \(self.totalTarget.formatted(.currency(code: "USD")))"
+                            Text(
+                                "\(self.totalSaved.formatted(.currency(code: "USD"))) of \(self.totalTarget.formatted(.currency(code: "USD")))"
                             )
                             .bold()
                         }
@@ -1174,19 +1235,25 @@ import SwiftUI
                     .frame(height: 40)
 
                 HStack(spacing: 30) {
-                    self.quickAccessButton("Transactions", icon: "creditcard.fill", color: .blue).accessibilityLabel("Button")
+                    self.quickAccessButton("Transactions", icon: "creditcard.fill", color: .blue)
+                        .accessibilityLabel("Button")
                         .accessibilityLabel("Button") {
                             NotificationCenter.default.post(name: NSNotification.Name("ShowTransactions"), object: nil)
                         }
 
-                    self.quickAccessButton("Budgets", icon: "chart.pie.fill", color: .orange).accessibilityLabel("Button")
+                    self.quickAccessButton("Budgets", icon: "chart.pie.fill", color: .orange)
+                        .accessibilityLabel("Button")
                         .accessibilityLabel("Button") {
                             NotificationCenter.default.post(name: NSNotification.Name("ShowBudgets"), object: nil)
                         }
 
-                    self.quickAccessButton("Goals", icon: "target", color: .green).accessibilityLabel("Button").accessibilityLabel("Button") {
-                        NotificationCenter.default.post(name: NSNotification.Name("ShowGoalsAndReports"), object: nil)
-                    }
+                    self.quickAccessButton("Goals", icon: "target", color: .green).accessibilityLabel("Button")
+                        .accessibilityLabel("Button") {
+                            NotificationCenter.default.post(
+                                name: NSNotification.Name("ShowGoalsAndReports"),
+                                object: nil
+                            )
+                        }
                 }
             }
             .padding()

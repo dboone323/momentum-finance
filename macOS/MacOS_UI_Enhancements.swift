@@ -41,7 +41,11 @@ import SwiftUI
 
                     Section("Recent Transactions") {
                         ForEach(self.recentTransactions.prefix(5)) { transaction in
-                            NavigationLink(value: ListableItem(id: transaction.id, name: transaction.name, type: .transaction)) {
+                            NavigationLink(value: ListableItem(
+                                id: transaction.id,
+                                name: transaction.name,
+                                type: .transaction
+                            )) {
                                 HStack {
                                     Image(systemName: transaction.amount < 0 ? "arrow.down" : "arrow.up")
                                         .foregroundStyle(transaction.amount < 0 ? .red : .green)
@@ -128,7 +132,11 @@ import SwiftUI
             var body: some View {
                 List(selection: self.$selectedItem) {
                     ForEach(self.filteredTransactions) { transaction in
-                        NavigationLink(value: ListableItem(id: transaction.id, name: transaction.name, type: .transaction)) {
+                        NavigationLink(value: ListableItem(
+                            id: transaction.id,
+                            name: transaction.name,
+                            type: .transaction
+                        )) {
                             HStack {
                                 Image(systemName: transaction.amount < 0 ? "arrow.down" : "arrow.up")
                                     .foregroundStyle(transaction.amount < 0 ? .red : .green)
@@ -281,18 +289,28 @@ import SwiftUI
                         }
                         .toolbar {
                             ToolbarItem {
-                                Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }, label: {
-                                    Text(self.isEditing ? "Done" : "Edit")
-                                })
+                                Button(
+                                    action: {
+                                        self.isEditing.toggle().accessibilityLabel("Button")
+                                            .accessibilityLabel("Button")
+                                    },
+                                    label: {
+                                        Text(self.isEditing ? "Done" : "Edit")
+                                    }
+                                )
                             }
 
                             ToolbarItem {
                                 Menu {
-                                    Button("Duplicate", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
-                                    Button("Export as CSV", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
-                                    Button("Print", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                                    Button("Duplicate", action: {}).accessibilityLabel("Button")
+                                        .accessibilityLabel("Button")
+                                    Button("Export as CSV", action: {}).accessibilityLabel("Button")
+                                        .accessibilityLabel("Button")
+                                    Button("Print", action: {}).accessibilityLabel("Button")
+                                        .accessibilityLabel("Button")
                                     Divider()
-                                    Button("Delete", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                                    Button("Delete", action: {}).accessibilityLabel("Button")
+                                        .accessibilityLabel("Button")
                                         .foregroundStyle(.red)
                                 } label: {
                                     Image(systemName: "ellipsis.circle")
@@ -470,13 +488,18 @@ import SwiftUI
                                         .padding(.vertical, 8)
 
                                     HStack {
-                                        Text("Remaining: \((budget.amount - budget.spent).formatted(.currency(code: "USD")))")
-                                            .foregroundStyle(.secondary)
+                                        Text(
+                                            "Remaining: \((budget.amount - budget.spent).formatted(.currency(code: "USD")))"
+                                        )
+                                        .foregroundStyle(.secondary)
 
                                         Spacer()
 
                                         Text("\(Int((budget.spent / budget.amount) * 100))%")
-                                            .foregroundStyle(self.getBudgetColor(spent: budget.spent, total: budget.amount))
+                                            .foregroundStyle(self.getBudgetColor(
+                                                spent: budget.spent,
+                                                total: budget.amount
+                                            ))
                                             .bold()
                                     }
                                 }
@@ -513,9 +536,15 @@ import SwiftUI
                         }
                         .toolbar {
                             ToolbarItem {
-                                Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }, label: {
-                                    Text(self.isEditing ? "Done" : "Edit")
-                                })
+                                Button(
+                                    action: {
+                                        self.isEditing.toggle().accessibilityLabel("Button")
+                                            .accessibilityLabel("Button")
+                                    },
+                                    label: {
+                                        Text(self.isEditing ? "Done" : "Edit")
+                                    }
+                                )
                             }
                         }
                     } else {
@@ -606,7 +635,11 @@ import SwiftUI
                     ForEach(self.getGroupedSubscriptions()) { group in
                         Section(header: Text(group.title)) {
                             ForEach(group.items) { subscription in
-                                NavigationLink(value: ListableItem(id: subscription.id, name: subscription.name, type: .subscription)) {
+                                NavigationLink(value: ListableItem(
+                                    id: subscription.id,
+                                    name: subscription.name,
+                                    type: .subscription
+                                )) {
                                     HStack {
                                         Image(systemName: "calendar.badge.clock")
                                             .foregroundStyle(.purple)
@@ -877,8 +910,10 @@ import SwiftUI
                                         if let targetDate = goal.targetDate {
                                             HStack {
                                                 Image(systemName: "calendar")
-                                                Text("Target Date: \(targetDate.formatted(date: .long, time: .omitted))")
-                                                    .font(.headline)
+                                                Text(
+                                                    "Target Date: \(targetDate.formatted(date: .long, time: .omitted))"
+                                                )
+                                                .font(.headline)
                                             }
                                             .foregroundStyle(.secondary)
                                         }
@@ -914,8 +949,10 @@ import SwiftUI
                                         .padding(.vertical, 8)
 
                                     HStack {
-                                        Text("Remaining: \((goal.targetAmount - goal.currentAmount).formatted(.currency(code: "USD")))")
-                                            .foregroundStyle(.secondary)
+                                        Text(
+                                            "Remaining: \((goal.targetAmount - goal.currentAmount).formatted(.currency(code: "USD")))"
+                                        )
+                                        .foregroundStyle(.secondary)
 
                                         Spacer()
 
@@ -935,7 +972,11 @@ import SwiftUI
                                         Text("Time Remaining")
                                             .font(.headline)
 
-                                        let daysRemaining = Calendar.current.dateComponents([.day], from: Date(), to: targetDate).day ?? 0
+                                        let daysRemaining = Calendar.current.dateComponents(
+                                            [.day],
+                                            from: Date(),
+                                            to: targetDate
+                                        ).day ?? 0
 
                                         if daysRemaining > 0 {
                                             Text("\(daysRemaining) days until target date")
@@ -981,9 +1022,15 @@ import SwiftUI
                         }
                         .toolbar {
                             ToolbarItem {
-                                Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }, label: {
-                                    Text(self.isEditing ? "Done" : "Edit")
-                                })
+                                Button(
+                                    action: {
+                                        self.isEditing.toggle().accessibilityLabel("Button")
+                                            .accessibilityLabel("Button")
+                                    },
+                                    label: {
+                                        Text(self.isEditing ? "Done" : "Edit")
+                                    }
+                                )
                             }
 
                             ToolbarItem {
@@ -1023,7 +1070,7 @@ import SwiftUI
 
                         Text(
                             "This report provides insights into your \(self.getReportDescription()). " +
-                            "Use this information to make informed financial decisions and track your progress toward your financial goals."
+                                "Use this information to make informed financial decisions and track your progress toward your financial goals."
                         )
                         .padding()
                         .background(Color(.windowBackgroundColor).opacity(0.3))
@@ -1037,8 +1084,10 @@ import SwiftUI
                 .toolbar {
                     ToolbarItem {
                         Menu {
-                            Button("Export as PDF", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
-                            Button("Export as CSV", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                            Button("Export as PDF", action: {}).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
+                            Button("Export as CSV", action: {}).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
                             Button("Print", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
                             Button("Share", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
                         } label: {
@@ -1049,11 +1098,15 @@ import SwiftUI
                     ToolbarItem {
                         Menu {
                             Button("Last 30 Days", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
-                            Button("Last 3 Months", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
-                            Button("Last 6 Months", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                            Button("Last 3 Months", action: {}).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
+                            Button("Last 6 Months", action: {}).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
                             Button("Year to Date", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
-                            Button("Last 12 Months", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
-                            Button("Custom Range...", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                            Button("Last 12 Months", action: {}).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
+                            Button("Custom Range...", action: {}).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
                         } label: {
                             HStack {
                                 Text("Last 30 Days")

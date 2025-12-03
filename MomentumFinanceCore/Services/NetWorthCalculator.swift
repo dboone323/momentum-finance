@@ -17,15 +17,15 @@ struct NetWorthPoint: Identifiable {
 
 class NetWorthCalculator {
     static let shared = NetWorthCalculator()
-    
+
     func calculateCurrentNetWorth(accounts: [Account]) -> Decimal {
-        return accounts.reduce(0) { $0 + $1.balance }
+        accounts.reduce(0) { $0 + $1.balance }
     }
-    
+
     func generateHistory(accounts: [Account], transactions: [Transaction]) -> [NetWorthPoint] {
         // Replay transactions to build history
         // This is complex; simplified placeholder for now
-        return []
+        []
     }
 }
 

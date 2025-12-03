@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class FinancialSummaryCardTests: XCTestCase {
     var viewModel: Features.GoalsAndReports.EnhancedFinancialSummaryCard!
@@ -19,6 +19,10 @@ class FinancialSummaryCardTests: XCTestCase {
     // Test calculateNet method
     func testCalculateNet() {
         let expectedNet = "50.00"
-        XCTAssertEqual(String(format: "%.2f", viewModel.calculateNet()), expectedNet, "Expected net to be \(expectedNet)")
+        XCTAssertEqual(
+            String(format: "%.2f", viewModel.calculateNet()),
+            expectedNet,
+            "Expected net to be \(expectedNet)"
+        )
     }
 }

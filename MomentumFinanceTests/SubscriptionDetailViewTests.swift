@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class SubscriptionDetailViewTests: XCTestCase {
     var subscriptionViewModel: SubscriptionViewModel!
@@ -7,7 +7,10 @@ class SubscriptionDetailViewTests: XCTestCase {
     // Test the initialization with direct subscription reference
     func testInitializationWithDirectSubscriptionReference() {
         let subscriptionId = UUID()
-        let subscriptionViewModel = SubscriptionViewModel(subscriptionId: subscriptionId, modelContext: MockModelContext())
+        let subscriptionViewModel = SubscriptionViewModel(
+            subscriptionId: subscriptionId,
+            modelContext: MockModelContext()
+        )
 
         XCTAssertEqual(subscriptionViewModel.subscription?.persistentModelID, subscriptionId)
         XCTAssertNil(subscriptionViewModel.subscription?.category)
@@ -17,7 +20,10 @@ class SubscriptionDetailViewTests: XCTestCase {
     // Test the initialization with subscription ID (for cross-module navigation)
     func testInitializationWithSubscriptionId() {
         let subscriptionId = UUID()
-        let subscriptionViewModel = SubscriptionViewModel(subscriptionId: subscriptionId, modelContext: MockModelContext())
+        let subscriptionViewModel = SubscriptionViewModel(
+            subscriptionId: subscriptionId,
+            modelContext: MockModelContext()
+        )
 
         XCTAssertEqual(subscriptionViewModel.subscription?.persistentModelID, subscriptionId)
         XCTAssertNil(subscriptionViewModel.subscription?.category)
@@ -40,13 +46,19 @@ class SubscriptionDetailViewTests: XCTestCase {
         let mockModelContext = MockModelContext()
         subscriptionViewModel = SubscriptionViewModel(subscription: mockSubscription, modelContext: mockModelContext)
 
-        XCTAssertEqual(subscriptionViewModel.resolvedSubscription?.persistentModelID, mockSubscription.persistentModelID)
+        XCTAssertEqual(
+            subscriptionViewModel.resolvedSubscription?.persistentModelID,
+            mockSubscription.persistentModelID
+        )
     }
 
     // Test the body view
     func testBodyView() {
         let subscriptionId = UUID()
-        let subscriptionViewModel = SubscriptionViewModel(subscriptionId: subscriptionId, modelContext: MockModelContext())
+        let subscriptionViewModel = SubscriptionViewModel(
+            subscriptionId: subscriptionId,
+            modelContext: MockModelContext()
+        )
 
         // Simulate a payment due soon and overdue status
         subscriptionViewModel.isPaymentDueSoon = true
@@ -59,7 +71,10 @@ class SubscriptionDetailViewTests: XCTestCase {
     // Test the paymentStatusText method
     func testPaymentStatusText() {
         let subscriptionId = UUID()
-        let subscriptionViewModel = SubscriptionViewModel(subscriptionId: subscriptionId, modelContext: MockModelContext())
+        let subscriptionViewModel = SubscriptionViewModel(
+            subscriptionId: subscriptionId,
+            modelContext: MockModelContext()
+        )
 
         XCTAssertEqual(subscriptionViewModel.paymentStatusText(.active), "Active")
         XCTAssertEqual(subscriptionViewModel.paymentStatusText(.dueSoon), "Due Soon")
@@ -69,7 +84,10 @@ class SubscriptionDetailViewTests: XCTestCase {
     // Test the isPaymentDueSoon method
     func testIsPaymentDueSoon() {
         let subscriptionId = UUID()
-        let subscriptionViewModel = SubscriptionViewModel(subscriptionId: subscriptionId, modelContext: MockModelContext())
+        let subscriptionViewModel = SubscriptionViewModel(
+            subscriptionId: subscriptionId,
+            modelContext: MockModelContext()
+        )
 
         XCTAssertEqual(subscriptionViewModel.isPaymentDueSoon(.active), false)
         XCTAssertEqual(subscriptionViewModel.isPaymentDueSoon(.dueSoon), true)
@@ -79,7 +97,10 @@ class SubscriptionDetailViewTests: XCTestCase {
     // Test the isPaymentOverdue method
     func testIsPaymentOverdue() {
         let subscriptionId = UUID()
-        let subscriptionViewModel = SubscriptionViewModel(subscriptionId: subscriptionId, modelContext: MockModelContext())
+        let subscriptionViewModel = SubscriptionViewModel(
+            subscriptionId: subscriptionId,
+            modelContext: MockModelContext()
+        )
 
         XCTAssertEqual(subscriptionViewModel.isPaymentOverdue(.active), false)
         XCTAssertEqual(subscriptionViewModel.isPaymentOverdue(.dueSoon), false)

@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class BudgetsViewModelTests: XCTestCase {
     var viewModel: BudgetsViewModel!
@@ -87,7 +87,12 @@ class BudgetsViewModelTests: XCTestCase {
 
         viewModel.createBudget(category, limitAmount: limitAmount, month: month)
 
-        guard let existingBudget = try? modelContext.fetchFirst(FetchDescriptor<Budget>(sortDescriptors: [NSSortDescriptor(keyPath: \.month, ascending: true)])) else {
+        guard let existingBudget = try? modelContext
+            .fetchFirst(FetchDescriptor<Budget>(sortDescriptors: [NSSortDescriptor(
+                keyPath: \.month,
+                ascending: true
+            )]))
+        else {
             XCTFail("Budget not created")
             return
         }

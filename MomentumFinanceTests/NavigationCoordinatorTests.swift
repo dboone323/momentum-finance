@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class NavigationCoordinatorTests: XCTestCase {
     var coordinator: NavigationCoordinator!
@@ -74,8 +74,15 @@ class NavigationCoordinatorTests: XCTestCase {
         coordinator.breadcrumbHistory.append(BreadcrumbItem(name: "Home", identifier: "home"))
 
         // THEN breadcrumbHistory should contain the new item
-        XCTAssertEqual(coordinator.breadcrumbHistory.count, 1, "breadcrumbHistory should contain one item after updating.")
-        XCTAssertTrue(coordinator.breadcrumbHistory[0].name == "Home", "The first item in breadcrumbHistory should be 'Home'.")
+        XCTAssertEqual(
+            coordinator.breadcrumbHistory.count,
+            1,
+            "breadcrumbHistory should contain one item after updating."
+        )
+        XCTAssertTrue(
+            coordinator.breadcrumbHistory[0].name == "Home",
+            "The first item in breadcrumbHistory should be 'Home'."
+        )
     }
 
     func testIsShowingSearchResults() {

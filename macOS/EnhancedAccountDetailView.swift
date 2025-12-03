@@ -35,8 +35,6 @@ import SwiftUI
                 .sorted { $0.date > $1.date }
         }
 
-
-
         var body: some View {
             VStack(spacing: 0) {
                 // Top toolbar with actions
@@ -62,22 +60,28 @@ import SwiftUI
                     }
                     .frame(width: 150)
 
-                    Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }, label: {
-                        Text(self.isEditing ? "Done" : "Edit")
-                    })
+                    Button(
+                        action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") },
+                        label: {
+                            Text(self.isEditing ? "Done" : "Edit")
+                        }
+                    )
                     .keyboardShortcut("e", modifiers: .command)
 
                     Menu {
-                        Button("Add Transaction", action: self.addTransaction).accessibilityLabel("Button").accessibilityLabel("Button")
+                        Button("Add Transaction", action: self.addTransaction).accessibilityLabel("Button")
+                            .accessibilityLabel("Button")
                         Divider()
-                        Button("Export Transactions...", action: { self.showingExportOptions = true }).accessibilityLabel("Button")
+                        Button("Export Transactions...", action: { self.showingExportOptions = true })
+                            .accessibilityLabel("Button")
                             .accessibilityLabel("Button")
                         Button("Print Account Summary", action: self.printAccountSummary).accessibilityLabel("Button")
                             .accessibilityLabel("Button")
                         Divider()
-                        Button("Delete Account", role: .destructive).accessibilityLabel("Button").accessibilityLabel("Button") {
-                            self.showingDeleteConfirmation = true
-                        }
+                        Button("Delete Account", role: .destructive).accessibilityLabel("Button")
+                            .accessibilityLabel("Button") {
+                                self.showingDeleteConfirmation = true
+                            }
                     } label: {
                         Image(systemName: "ellipsis.circle")
                     }
@@ -103,7 +107,9 @@ import SwiftUI
                     self.deleteAccount()
                 }
             } message: {
-                Text("Are you sure you want to delete this account? This will also delete all associated transactions and cannot be undone.")
+                Text(
+                    "Are you sure you want to delete this account? This will also delete all associated transactions and cannot be undone."
+                )
             }
             .alert("Validation Error", isPresented: self.$showingValidationAlert) {
                 Button("OK").accessibilityLabel("Button").accessibilityLabel("Button") {}
@@ -178,13 +184,15 @@ import SwiftUI
                                     GridRow {
                                         DetailField(
                                             label: "Income",
-                                            value: self.getIncomeTotal().formatted(.currency(code: account.currencyCode))
+                                            value: self.getIncomeTotal()
+                                                .formatted(.currency(code: account.currencyCode))
                                         )
                                         .foregroundStyle(.green)
 
                                         DetailField(
                                             label: "Expenses",
-                                            value: self.getExpensesTotal().formatted(.currency(code: account.currencyCode))
+                                            value: self.getExpensesTotal()
+                                                .formatted(.currency(code: account.currencyCode))
                                         )
                                         .foregroundStyle(.red)
                                     }
@@ -192,7 +200,8 @@ import SwiftUI
                                     GridRow {
                                         DetailField(
                                             label: "Net Flow",
-                                            value: self.getNetCashFlow().formatted(.currency(code: account.currencyCode))
+                                            value: self.getNetCashFlow()
+                                                .formatted(.currency(code: account.currencyCode))
                                         )
                                         .foregroundStyle(self.getNetCashFlow() >= 0 ? .green : .red)
 
@@ -201,8 +210,11 @@ import SwiftUI
 
                                     if let interestRate = account.interestRate, interestRate > 0 {
                                         GridRow {
-                                            DetailField(label: "Interest Rate", value: "\(interestRate.formatted(.percent))")
-                                                .gridCellColumns(2)
+                                            DetailField(
+                                                label: "Interest Rate",
+                                                value: "\(interestRate.formatted(.percent))"
+                                            )
+                                            .gridCellColumns(2)
                                         }
                                     }
                                 }
@@ -273,10 +285,11 @@ import SwiftUI
 
                             Spacer()
 
-                            Button(action: self.addTransaction).accessibilityLabel("Button").accessibilityLabel("Button") {
-                                Label("Add", systemImage: "plus")
-                            }
-                            .buttonStyle(.bordered)
+                            Button(action: self.addTransaction).accessibilityLabel("Button")
+                                .accessibilityLabel("Button") {
+                                    Label("Add", systemImage: "plus")
+                                }
+                                .buttonStyle(.bordered)
                         }
                         .padding()
                         .background(Color(.windowBackgroundColor).opacity(0.5))
@@ -465,7 +478,7 @@ import SwiftUI
                                 get: { self.editedAccount?.dueDate ?? account.dueDate ?? 1 },
                                 set: { self.editedAccount?.dueDate = $0 }
                             )) {
-                                ForEach(1 ... 31, id: \.self) { day in
+                                ForEach(1...31, id: \.self) { day in
                                     Text("\(day)").tag(day)
                                 }
                             }
@@ -614,7 +627,8 @@ import SwiftUI
                 var componentsThisYear = calendar.dateComponents([.year], from: today)
                 guard let startOfThisYear = calendar.date(from: componentsThisYear),
                       let startOfLastYear = calendar.date(byAdding: .year, value: -1, to: startOfThisYear),
-                      let endOfLastYear = calendar.date(byAdding: .day, value: -1, to: startOfThisYear) else { return false }
+                      let endOfLastYear = calendar.date(byAdding: .day, value: -1, to: startOfThisYear)
+                else { return false }
                 return date >= startOfLastYear && date <= endOfLastYear
             case .allTime:
                 return true

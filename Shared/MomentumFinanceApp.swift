@@ -1,8 +1,8 @@
 import Foundation
+import MomentumFinanceCore
 import os
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 // Import KeychainHelper for secure storage
 // import KeychainHelper
@@ -149,7 +149,7 @@ public struct MomentumFinanceApp: App {
             ModelReferences.subscriptions,
             ModelReferences.budgets,
             ModelReferences.categories,
-            ModelReferences.goals
+            ModelReferences.goals,
         ])
 
         print("MomentumFinanceApp: Schema created")

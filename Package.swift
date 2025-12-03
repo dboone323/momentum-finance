@@ -13,17 +13,25 @@ let package = Package(
     products: [
         .library(
             name: "MomentumFinance",
-            targets: ["MomentumFinance"]
+            targets: ["MomentumFinanceCore", "Shared"]
         )
     ],
-    dependencies: [
-        .package(path: "Shared")
-    ],
+    dependencies: [],
     targets: [
         .target(
-            name: "MomentumFinance",
-            dependencies: ["Shared"],
+            name: "MomentumFinanceCore",
+            dependencies: [],
             path: "Sources/MomentumFinanceCore",
+            resources: [],
+            swiftSettings: [
+                .enableUpcomingFeature("StrictConcurrency")
+            ]
+        ),
+        .target(
+            name: "Shared",
+            dependencies: ["MomentumFinanceCore"],
+            path: "Shared",
+            exclude: ["Package.swift", ".build", "README.md"],
             resources: [],
             swiftSettings: [
                 .enableUpcomingFeature("StrictConcurrency")
@@ -31,7 +39,7 @@ let package = Package(
         ),
         .testTarget(
             name: "MomentumFinanceTests",
-            dependencies: ["MomentumFinance"],
+            dependencies: ["MomentumFinanceCore", "Shared"],
             path: "MomentumFinanceTests"
         )
     ]

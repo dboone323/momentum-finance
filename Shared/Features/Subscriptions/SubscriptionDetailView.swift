@@ -1,9 +1,9 @@
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 /// A view that shows details for a specific subscription
 extension Features.Subscriptions {
@@ -176,7 +176,8 @@ extension Features.Subscriptions {
                                     .padding(.vertical, 4)
 
                                     if relatedTransactions.firstIndex(of: transaction)
-                                        != relatedTransactions.prefix(5).count - 1 {
+                                        != relatedTransactions.prefix(5).count - 1
+                                    {
                                         Divider()
                                     }
                                 }
@@ -268,7 +269,8 @@ extension Features.Subscriptions {
         }
 
         private func getRelatedTransactions(for subscription: Subscription)
-            -> [FinancialTransaction] {
+            -> [FinancialTransaction]
+        {
             // In a real implementation, we would filter transactions specifically related to this subscription
             // For example, by matching notes field or subscription ID field
             self.transactions

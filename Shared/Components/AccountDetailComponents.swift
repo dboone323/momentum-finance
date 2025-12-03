@@ -6,10 +6,10 @@
 //
 
 import Charts
+import MomentumFinanceCore
 import Shared
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 #if os(macOS)
 
@@ -26,7 +26,7 @@ import MomentumFinanceCore
     }
 
     struct AccountTypeBadge: View {
-        let type: FinancialAccount.AccountType
+        let type: AccountType
 
         private var text: String {
             switch self.type {
@@ -71,7 +71,7 @@ import MomentumFinanceCore
                 (date: "Mar", balance: 2100.50),
                 (date: "Apr", balance: 1825.75),
                 (date: "May", balance: 2200.00),
-                (date: "Jun", balance: self.account.balance)
+                (date: "Jun", balance: self.account.balance),
             ]
         }
 
@@ -101,7 +101,8 @@ import MomentumFinanceCore
                     }
 
                     // Average line
-                    let average = self.generateSampleData().reduce(0) { $0 + $1.balance } / Double(self.generateSampleData().count)
+                    let average = self.generateSampleData()
+                        .reduce(0) { $0 + $1.balance } / Double(self.generateSampleData().count)
                     RuleMark(y: .value("Average", average))
                         .lineStyle(StrokeStyle(lineWidth: 1, dash: [5, 5]))
                         .foregroundStyle(.gray)
@@ -164,7 +165,7 @@ import MomentumFinanceCore
                 CategoryData(name: "Dining", amount: 320.50, color: .blue),
                 CategoryData(name: "Entertainment", amount: 150.25, color: .purple),
                 CategoryData(name: "Shopping", amount: 280.75, color: .orange),
-                CategoryData(name: "Utilities", amount: 190.30, color: .red)
+                CategoryData(name: "Utilities", amount: 190.30, color: .red),
             ]
         }
 
@@ -342,7 +343,8 @@ import MomentumFinanceCore
                     GridRow {
                         DetailField(
                             label: "Interest Rate",
-                            value: ((self.account.interestRate ?? 0) * 100).formatted(.number.precision(.fractionLength(2))) + "%"
+                            value: ((self.account.interestRate ?? 0) * 100)
+                                .formatted(.number.precision(.fractionLength(2))) + "%"
                         )
 
                         if let dueDate = account.dueDate {
@@ -372,9 +374,11 @@ import MomentumFinanceCore
                             .tint(self.getCreditUtilizationColor(used: abs(self.account.balance), limit: creditLimit))
 
                         HStack {
-                            Text("Used: \(abs(self.account.balance).formatted(.currency(code: self.account.currencyCode)))")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            Text(
+                                "Used: \(abs(self.account.balance).formatted(.currency(code: self.account.currencyCode)))"
+                            )
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
 
                             Spacer()
 

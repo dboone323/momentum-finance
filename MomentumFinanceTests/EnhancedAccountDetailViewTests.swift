@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class EnhancedAccountDetailViewTests: XCTestCase {
     var enhancedAccountDetailView: EnhancedAccountDetailView!
@@ -9,7 +9,12 @@ class EnhancedAccountDetailViewTests: XCTestCase {
         let account = FinancialAccount(id: "12345", name: "Test Account", type: .checking)
         let transactions = [FinancialTransaction(date: Date(), amount: 100, account: account)]
 
-        enhancedAccountDetailView = EnhancedAccountDetailView(accountId: "12345", modelContext: ModelContext.shared, accounts: [account], transactions: transactions)
+        enhancedAccountDetailView = EnhancedAccountDetailView(
+            accountId: "12345",
+            modelContext: ModelContext.shared,
+            accounts: [account],
+            transactions: transactions
+        )
 
         // Test Edit button
         XCTAssertEqual(enhancedAccountDetailView.isEditing, false)
@@ -34,7 +39,12 @@ class EnhancedAccountDetailViewTests: XCTestCase {
         let account = FinancialAccount(id: "12345", name: "Test Account", type: .checking)
         let transactions = [FinancialTransaction(date: Date(), amount: 100, account: account)]
 
-        enhancedAccountDetailView = EnhancedAccountDetailView(accountId: "12345", modelContext: ModelContext.shared, accounts: [account], transactions: transactions)
+        enhancedAccountDetailView = EnhancedAccountDetailView(
+            accountId: "12345",
+            modelContext: ModelContext.shared,
+            accounts: [account],
+            transactions: transactions
+        )
 
         XCTAssertEqual(enhancedAccountDetailView.selectedTimeFrame, .last30Days)
         enhancedAccountDetailView.selectedTimeFrame = .last90Days
@@ -46,7 +56,12 @@ class EnhancedAccountDetailViewTests: XCTestCase {
         let account = FinancialAccount(id: "12345", name: "Test Account", type: .checking)
         let transactions = [FinancialTransaction(date: Date(), amount: 100, account: account)]
 
-        enhancedAccountDetailView = EnhancedAccountDetailView(accountId: "12345", modelContext: ModelContext.shared, accounts: [account], transactions: transactions)
+        enhancedAccountDetailView = EnhancedAccountDetailView(
+            accountId: "12345",
+            modelContext: ModelContext.shared,
+            accounts: [account],
+            transactions: transactions
+        )
 
         XCTAssertEqual(enhancedAccountDetailView.filteredTransactions.count, 1)
         XCTAssertEqual(enhancedAccountDetailView.filteredTransactions[0].amount, 100)

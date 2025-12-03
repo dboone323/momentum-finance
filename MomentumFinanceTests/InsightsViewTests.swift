@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class InsightsViewTests: XCTestCase {
     var intelligenceService: FinancialIntelligenceService!
@@ -68,7 +68,8 @@ class InsightsViewTests: XCTestCase {
         await insightsView.loadView()
 
         // Then: The insights list should be populated with the filtered insights
-        XCTAssertEqual(insightsView.insightsList.count, 2) // Assuming there are 2 insights in the modelContext that match the filter criteria
+        XCTAssertEqual(insightsView.insightsList.count,
+                       2) // Assuming there are 2 insights in the modelContext that match the filter criteria
     }
 
     // Test that the InsightsView displays insights sorted by priority (critical first)
@@ -88,6 +89,7 @@ class InsightsViewTests: XCTestCase {
         await insightsView.loadView()
 
         // Then: The insights list should be populated with the sorted insights
-        XCTAssertEqual(insightsView.insightsList.count, 3) // Assuming there are 3 insights in the modelContext that match the filter criteria
+        XCTAssertEqual(insightsView.insightsList.count,
+                       3) // Assuming there are 3 insights in the modelContext that match the filter criteria
     }
 }

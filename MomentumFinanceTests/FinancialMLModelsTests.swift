@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class FinancialMLModelsTests: XCTestCase {
     var financialMLModels: FinancialMLModels!
@@ -10,7 +10,7 @@ class FinancialMLModelsTests: XCTestCase {
             FinancialTransaction(amount: -100.0, description: "Grocery"),
             FinancialTransaction(amount: 50.0, description: "Restaurant"),
             FinancialTransaction(amount: -200.0, description: "Gas"),
-            FinancialTransaction(amount: 300.0, description: "Shopping")
+            FinancialTransaction(amount: 300.0, description: "Shopping"),
         ]
 
         let expected = [
@@ -19,7 +19,7 @@ class FinancialMLModelsTests: XCTestCase {
             "mediumTransactionCount": 1,
             "largeTransactionCount": 1,
             "averageTransactionSize": 90.0,
-            "transactionFrequency": 4.0
+            "transactionFrequency": 4.0,
         ]
 
         let result = financialMLModels.analyzeSpendingPatterns(transactions: transactions)
@@ -42,7 +42,15 @@ class FinancialMLModelsTests: XCTestCase {
         let transaction1 = FinancialTransaction(amount: -50.0, description: "Grocery")
         let transaction2 = FinancialTransaction(amount: 300.0, description: "Shopping")
 
-        XCTAssertEqual(financialMLModels.classifyTransaction(transaction: transaction1), "Food & Dining", "Expected classifyTransaction to return 'Food & Dining' for grocery transaction.")
-        XCTAssertEqual(financialMLModels.classifyTransaction(transaction: transaction2), "Shopping", "Expected classifyTransaction to return 'Shopping' for shopping transaction.")
+        XCTAssertEqual(
+            financialMLModels.classifyTransaction(transaction: transaction1),
+            "Food & Dining",
+            "Expected classifyTransaction to return 'Food & Dining' for grocery transaction."
+        )
+        XCTAssertEqual(
+            financialMLModels.classifyTransaction(transaction: transaction2),
+            "Shopping",
+            "Expected classifyTransaction to return 'Shopping' for shopping transaction."
+        )
     }
 }

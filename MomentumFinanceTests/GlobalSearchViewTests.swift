@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class GlobalSearchViewTests: XCTestCase {
     var sut: GlobalSearchView!
@@ -47,7 +47,8 @@ class GlobalSearchViewTests: XCTestCase {
         self.waitForExpectations(timeout: 2.0)
     }
 
-    // GIVEN a search query, WHEN the user taps on a result, THEN the navigation coordinator should be called with the selected result
+    // GIVEN a search query, WHEN the user taps on a result, THEN the navigation coordinator should be called with the
+    // selected result
     func testNavigationCoordinatorIsCalledWithSelectedResultWhenUserTapsOnResult() {
         let expectation = XCTestExpectation(description: "Navigation coordinator should be called")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {

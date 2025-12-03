@@ -1,6 +1,6 @@
-@testable import MomentumFinance
 import OSLog
 import XCTest
+@testable import MomentumFinance
 
 @MainActor
 final class AppLoggerTests: XCTestCase {
@@ -178,7 +178,7 @@ final class AppLoggerTests: XCTestCase {
 
     func testConcurrentLogging() async {
         await withTaskGroup(of: Void.self) { group in
-            for i in 0 ..< 100 {
+            for i in 0..<100 {
                 group.addTask { @MainActor in
                     self.logger.log("Concurrent log \(i)", level: .info, category: .general)
                 }
@@ -190,7 +190,7 @@ final class AppLoggerTests: XCTestCase {
 
     func testMultipleCategoriesConcurrently() async {
         let categories: [AppLogger.LogCategory] = [
-            .general, .ui, .data, .business, .network, .performance
+            .general, .ui, .data, .business, .network, .performance,
         ]
 
         await withTaskGroup(of: Void.self) { group in
@@ -230,7 +230,7 @@ final class AppLoggerTests: XCTestCase {
         let levels: [AppLogger.LogLevel] = [.debug, .info, .warning, .error, .critical]
         let categories: [AppLogger.LogCategory] = [
             .general, .analysis, .performance, .security,
-            .ui, .ai, .network, .data, .business
+            .ui, .ai, .network, .data, .business,
         ]
 
         for level in levels {
@@ -256,7 +256,7 @@ final class AppLoggerTests: XCTestCase {
 
     func testLoggingPerformance() {
         measure {
-            for i in 0 ..< 1000 {
+            for i in 0..<1000 {
                 logger.log("Performance test \(i)", level: .info, category: .performance)
             }
         }
@@ -264,7 +264,7 @@ final class AppLoggerTests: XCTestCase {
 
     func testDebugMethodPerformance() {
         measure {
-            for i in 0 ..< 1000 {
+            for i in 0..<1000 {
                 logger.debug("Debug performance \(i)")
             }
         }

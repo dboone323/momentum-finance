@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class EnhancedContentViewMacOSTests: XCTestCase {
     var contentView: ContentView_macOS!
@@ -9,7 +9,7 @@ class EnhancedContentViewMacOSTests: XCTestCase {
         let sidebarItems = [
             SidebarItem(title: "Dashboard", icon: "house", item: .dashboard),
             SidebarItem(title: "Transactions", icon: "creditcard", item: .transactions),
-            SidebarItem(title: "Budgets", icon: "chart.pie", item: .budgets)
+            SidebarItem(title: "Budgets", icon: "chart.pie", item: .budgets),
         ]
 
         for item in sidebarItems {

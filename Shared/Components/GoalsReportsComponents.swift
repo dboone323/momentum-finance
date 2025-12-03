@@ -5,8 +5,8 @@
 //  Extracted components from GoalsAndReportsView for SwiftLint compliance
 //
 
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 // MARK: - Goal Progress Components
 
@@ -97,15 +97,15 @@ struct BudgetAlertCard: View {
 
         var color: Color {
             switch self {
-            case .warning: return .orange
-            case .critical: return .red
+            case .warning: .orange
+            case .critical: .red
             }
         }
 
         var icon: String {
             switch self {
-            case .warning: return "exclamationmark.triangle.fill"
-            case .critical: return "exclamationmark.octagon.fill"
+            case .warning: "exclamationmark.triangle.fill"
+            case .critical: "exclamationmark.octagon.fill"
             }
         }
     }

@@ -59,15 +59,18 @@ final class TransactionPatternAnalyzer {
         let weekdayNames = ["", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         let dayName = weekdayNames[maxWeekday]
 
-        return IntelligenceFinancialInsight(
+        return FinancialInsight(
             title: "Spending Patterns",
             description: "You tend to spend the most on \(dayName)s. Consider this when planning your budget.",
             priority: .low,
-            type: .pattern,
+            type: .spendingPattern,
             visualizationType: .barChart,
-            data: [
-                ("Highest Spending Day", Double(maxWeekday)),
-                ("Average Daily Spending", spendingByWeekday.values.reduce(0, +) / Double(spendingByWeekday.count))
+            chartData: [
+                ChartDataPoint(label: "Highest Spending Day", value: Double(maxWeekday)),
+                ChartDataPoint(
+                    label: "Average Daily Spending",
+                    value: spendingByWeekday.values.reduce(0, +) / Double(spendingByWeekday.count)
+                ),
             ]
         )
     }
@@ -87,15 +90,15 @@ final class TransactionPatternAnalyzer {
             return nil
         }
 
-        return IntelligenceFinancialInsight(
+        return FinancialInsight(
             title: "Monthly Spending Cycle",
             description: "You tend to spend more around the \(maxDay)th of each month. This could indicate bill payment patterns.",
             priority: .low,
-            type: .pattern,
+            type: .spendingPattern,
             visualizationType: .lineChart,
-            data: [
-                ("Peak Spending Day", Double(maxDay)),
-                ("Monthly Pattern Detected", 1.0)
+            chartData: [
+                ChartDataPoint(label: "Peak Spending Day", value: Double(maxDay)),
+                ChartDataPoint(label: "Monthly Pattern Detected", value: 1.0),
             ]
         )
     }
@@ -116,16 +119,16 @@ final class TransactionPatternAnalyzer {
         let anomalies = expenses.filter { abs($0.amount) > threshold }
 
         for anomaly in anomalies {
-            let insight = IntelligenceFinancialInsight(
+            let insight = FinancialInsight(
                 title: "Unusual Transaction Detected",
                 description: "A transaction of \(fi_formatCurrency(abs(anomaly.amount))) on \(anomaly.date.formatted()) seems unusually large compared to your typical spending.",
                 priority: .medium,
                 type: .anomaly,
                 visualizationType: .barChart,
-                data: [
-                    ("Transaction Amount", abs(anomaly.amount)),
-                    ("Average Amount", average),
-                    ("Deviation", abs(anomaly.amount) - average)
+                chartData: [
+                    ChartDataPoint(label: "Transaction Amount", value: abs(anomaly.amount)),
+                    ChartDataPoint(label: "Average Amount", value: average),
+                    ChartDataPoint(label: "Deviation", value: abs(anomaly.amount) - average),
                 ]
             )
             insights.append(insight)

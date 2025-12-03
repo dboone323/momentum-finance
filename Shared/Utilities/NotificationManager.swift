@@ -153,7 +153,7 @@ public class NotificationManager: ObservableObject {
 
         UNUserNotificationCenter.current().setNotificationCategories([
             budgetCategory,
-            subscriptionCategory
+            subscriptionCategory,
         ])
     }
 }

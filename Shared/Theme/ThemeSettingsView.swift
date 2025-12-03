@@ -6,8 +6,8 @@
 //  Copyright © 2025 Daniel Stevens. All rights reserved.
 //
 
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 public struct ThemeSettingsView: View {
     @State private var theme = ColorTheme.shared

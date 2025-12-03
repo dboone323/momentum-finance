@@ -1,9 +1,9 @@
 // Momentum Finance - Insights Widget
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 /// Compact widget showing key financial insights for the dashboard
 public struct InsightsWidget: View {
@@ -193,7 +193,7 @@ public struct CompactInsightRow: View {
             FinancialAccount.self,
             FinancialTransaction.self,
             Budget.self,
-            ExpenseCategory.self
+            ExpenseCategory.self,
         ], inMemory: true
     )
 }

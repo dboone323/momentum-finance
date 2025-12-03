@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class TransactionPatternDetectionTests: XCTestCase {
     var transactions: [FinancialTransaction]!
@@ -31,7 +31,7 @@ class TransactionPatternDetectionTests: XCTestCase {
         let transactionsWithoutPattern = [
             FinancialTransaction(title: "Car Payment", amount: -300, date: Date().addingTimeInterval(24 * 60 * 60)),
             FinancialTransaction(title: "Monthly Rent", amount: -1000, date: Date()),
-            FinancialTransaction(title: "Groceries", amount: -500, date: Date().addingTimeInterval(7 * 24 * 60 * 60))
+            FinancialTransaction(title: "Groceries", amount: -500, date: Date().addingTimeInterval(7 * 24 * 60 * 60)),
         ]
         let recurringTransactions = fi_findRecurringTransactions(transactionsWithoutPattern)
         XCTAssertEqual(recurringTransactions.count, 0)
@@ -50,7 +50,7 @@ class TransactionPatternDetectionTests: XCTestCase {
         let transactionsWithoutShortTimePeriod = [
             FinancialTransaction(title: "Car Payment", amount: -300, date: Date().addingTimeInterval(24 * 60 * 60)),
             FinancialTransaction(title: "Monthly Rent", amount: -1000, date: Date()),
-            FinancialTransaction(title: "Groceries", amount: -500, date: Date().addingTimeInterval(7 * 24 * 60 * 60))
+            FinancialTransaction(title: "Groceries", amount: -500, date: Date().addingTimeInterval(7 * 24 * 60 * 60)),
         ]
         let duplicateSuspects = fi_findPotentialDuplicates(transactionsWithoutShortTimePeriod)
         XCTAssertEqual(duplicateSuspects.count, 0)

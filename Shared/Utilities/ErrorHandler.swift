@@ -1,8 +1,8 @@
 import Foundation
+import MomentumFinanceCore
 import Observation
 import os
 import SwiftUI
-import MomentumFinanceCore
 
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
@@ -343,7 +343,8 @@ public enum AppError: LocalizedError, Identifiable {
         if nsError.code == NSValidationErrorMinimum {
             return .validationError("\(context) \(nsError.localizedDescription)")
         } else if nsError.code == NSFileReadNoSuchFileError
-            || nsError.code == NSFileWriteOutOfSpaceError {
+            || nsError.code == NSFileWriteOutOfSpaceError
+        {
             return .fileSystemError("\(context) \(nsError.localizedDescription)")
         }
         return .dataError("\(context) \(nsError.localizedDescription)")
@@ -368,7 +369,7 @@ public enum AppError: LocalizedError, Identifiable {
             ("Goal", .goalError(description)),
             ("Sync", .syncError(description)),
             ("File", .fileSystemError(description)),
-            ("Storage", .fileSystemError(description))
+            ("Storage", .fileSystemError(description)),
         ]
 
         for (keyword, errorType) in errorMappings where errorName.contains(keyword) {

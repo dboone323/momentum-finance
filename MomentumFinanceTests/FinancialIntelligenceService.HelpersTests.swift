@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class FinancialIntelligenceServiceHelpersTests: XCTestCase {
 
@@ -32,7 +32,7 @@ class FinancialIntelligenceServiceHelpersTests: XCTestCase {
         let transactions = [
             Transaction(date: Date(), amount: 100.0),
             Transaction(date: Date().addingTimeInterval(86400), amount: 100.0),
-            Transaction(date: Date().addingTimeInterval(172_800), amount: -50.0)
+            Transaction(date: Date().addingTimeInterval(172_800), amount: -50.0),
         ]
 
         let recurringTransactions = TransactionPatternDetection.detectRecurringTransactions(transactions)
@@ -44,7 +44,7 @@ class FinancialIntelligenceServiceHelpersTests: XCTestCase {
         let transactions = [
             Transaction(date: Date(), amount: 100.0),
             Transaction(date: Date().addingTimeInterval(86400), amount: 200.0),
-            Transaction(date: Date().addingTimeInterval(172_800), amount: -50.0)
+            Transaction(date: Date().addingTimeInterval(172_800), amount: -50.0),
         ]
 
         let anomalies = TransactionPatternDetection.detectAnomalies(transactions)
@@ -78,7 +78,7 @@ class FinancialIntelligenceServiceHelpersTests: XCTestCase {
         let transactions = [
             Transaction(date: Date(), amount: 100.0),
             Transaction(date: Date().addingTimeInterval(86400), amount: 200.0),
-            Transaction(date: Date().addingTimeInterval(172_800), amount: -50.0)
+            Transaction(date: Date().addingTimeInterval(172_800), amount: -50.0),
         ]
 
         let budgetRecommendation = BudgetRecommendations.generateBudgetRecommendation(transactions)
@@ -92,7 +92,7 @@ class FinancialIntelligenceServiceHelpersTests: XCTestCase {
         let transactions = [
             Transaction(date: Date(), amount: 100.0),
             Transaction(date: Date().addingTimeInterval(86400), amount: 200.0),
-            Transaction(date: Date().addingTimeInterval(172_800), amount: -50.0)
+            Transaction(date: Date().addingTimeInterval(172_800), amount: -50.0),
         ]
 
         let financialForecast = FinancialForecasting.generateFinancialForecast(transactions)

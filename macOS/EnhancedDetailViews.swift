@@ -49,52 +49,66 @@ import SwiftUI
 
                                 HStack(spacing: 12) {
                                     if !self.isEditing {
-                                        Button(action: { self.isEditing = true }).accessibilityLabel("Button").accessibilityLabel("Button") {
-                                            Text("Edit")
-                                                .frame(width: 80)
-                                        }
-                                        .buttonStyle(.bordered)
-                                        .keyboardShortcut("e", modifiers: .command)
+                                        Button(action: { self.isEditing = true }).accessibilityLabel("Button")
+                                            .accessibilityLabel("Button") {
+                                                Text("Edit")
+                                                    .frame(width: 80)
+                                            }
+                                            .buttonStyle(.bordered)
+                                            .keyboardShortcut("e", modifiers: .command)
                                     } else {
-                                        Button(action: self.saveChanges).accessibilityLabel("Button").accessibilityLabel("Button") {
-                                            Text("Save")
-                                                .frame(width: 80)
-                                        }
-                                        .buttonStyle(.borderedProminent)
-                                        .keyboardShortcut(.return, modifiers: .command)
+                                        Button(action: self.saveChanges).accessibilityLabel("Button")
+                                            .accessibilityLabel("Button") {
+                                                Text("Save")
+                                                    .frame(width: 80)
+                                            }
+                                            .buttonStyle(.borderedProminent)
+                                            .keyboardShortcut(.return, modifiers: .command)
 
-                                        Button(action: { self.isEditing = false }).accessibilityLabel("Button").accessibilityLabel("Button") {
-                                            Text("Cancel")
-                                                .frame(width: 80)
-                                        }
-                                        .buttonStyle(.bordered)
-                                        .keyboardShortcut(.escape, modifiers: [])
+                                        Button(action: { self.isEditing = false }).accessibilityLabel("Button")
+                                            .accessibilityLabel("Button") {
+                                                Text("Cancel")
+                                                    .frame(width: 80)
+                                            }
+                                            .buttonStyle(.bordered)
+                                            .keyboardShortcut(.escape, modifiers: [])
                                     }
 
                                     Divider()
                                         .frame(height: 20)
 
                                     Menu {
-                                        Button("Duplicate Transaction", action: self.duplicateTransaction).accessibilityLabel("Button")
+                                        Button("Duplicate Transaction", action: self.duplicateTransaction)
+                                            .accessibilityLabel("Button")
                                             .accessibilityLabel("Button")
                                         Button(
                                             "Mark as \(transaction.isReconciled ? "Unreconciled" : "Reconciled").accessibilityLabel("Button")",
                                             action: self.toggleReconciled
                                         )
                                         Divider()
-                                        Button("Find Similar Transactions", action: { self.showRelatedTransactions = true })
+                                        Button(
+                                            "Find Similar Transactions",
+                                            action: { self.showRelatedTransactions = true }
+                                        )
+                                        .accessibilityLabel("Button")
+                                        .accessibilityLabel("Button")
+                                        Button("Show in Account", action: self.navigateToAccount)
                                             .accessibilityLabel("Button")
-                                            .accessibilityLabel("Button")
-                                        Button("Show in Account", action: self.navigateToAccount).accessibilityLabel("Button")
                                             .accessibilityLabel("Button")
                                         Divider()
-                                        Button("Export as CSV", action: { self.showingExportOptions = true }).accessibilityLabel("Button")
+                                        Button("Export as CSV", action: { self.showingExportOptions = true })
                                             .accessibilityLabel("Button")
-                                        Button("Print", action: self.printTransaction).accessibilityLabel("Button").accessibilityLabel("Button")
+                                            .accessibilityLabel("Button")
+                                        Button("Print", action: self.printTransaction).accessibilityLabel("Button")
+                                            .accessibilityLabel("Button")
                                         Divider()
-                                        Button("Delete Transaction", role: .destructive, action: { self.showingDeleteConfirmation = true })
-                                            .accessibilityLabel("Button")
-                                            .accessibilityLabel("Button")
+                                        Button(
+                                            "Delete Transaction",
+                                            role: .destructive,
+                                            action: { self.showingDeleteConfirmation = true }
+                                        )
+                                        .accessibilityLabel("Button")
+                                        .accessibilityLabel("Button")
                                     } label: {
                                         Image(systemName: "ellipsis.circle")
                                     }
@@ -135,9 +149,10 @@ import SwiftUI
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .alert("Delete Transaction", isPresented: self.$showingDeleteConfirmation) {
                             Button("Cancel", role: .cancel).accessibilityLabel("Button").accessibilityLabel("Button") {}
-                            Button("Delete", role: .destructive).accessibilityLabel("Button").accessibilityLabel("Button") {
-                                self.deleteTransaction(transaction)
-                            }
+                            Button("Delete", role: .destructive).accessibilityLabel("Button")
+                                .accessibilityLabel("Button") {
+                                    self.deleteTransaction(transaction)
+                                }
                         } message: {
                             Text("Are you sure you want to delete this transaction? This action cannot be undone.")
                         }
@@ -157,7 +172,9 @@ import SwiftUI
                         ContentUnavailableView(
                             "Transaction Not Found",
                             systemImage: "exclamationmark.triangle",
-                            description: Text("The transaction you're looking for could not be found or has been deleted.")
+                            description: Text(
+                                "The transaction you're looking for could not be found or has been deleted."
+                            )
                         )
                     }
                 }
@@ -212,7 +229,10 @@ import SwiftUI
                         // Core transaction details
                         Grid(alignment: .leading, horizontalSpacing: 40, verticalSpacing: 16) {
                             GridRow {
-                                DetailField(label: "Date", value: transaction.date.formatted(date: .long, time: .shortened))
+                                DetailField(
+                                    label: "Date",
+                                    value: transaction.date.formatted(date: .long, time: .shortened)
+                                )
 
                                 DetailField(label: "Account", value: transaction.account?.name ?? "Unknown Account")
                             }
@@ -229,7 +249,10 @@ import SwiftUI
                                     DetailField(label: "Recurrence", value: "Monthly")
 
                                     if let nextDate = transaction.date.addingTimeInterval(30 * 24 * 60 * 60) {
-                                        DetailField(label: "Next Due", value: nextDate.formatted(date: .abbreviated, time: .omitted))
+                                        DetailField(
+                                            label: "Next Due",
+                                            value: nextDate.formatted(date: .abbreviated, time: .omitted)
+                                        )
                                     }
                                 }
                             }
@@ -330,7 +353,9 @@ import SwiftUI
                                     GridRow {
                                         Text("Annual cost:")
                                             .gridColumnAlignment(.trailing)
-                                        Text("\((transaction.amount * 12).formatted(.currency(code: transaction.currencyCode)))")
+                                        Text(
+                                            "\((transaction.amount * 12).formatted(.currency(code: transaction.currencyCode)))"
+                                        )
                                         Text("(2.5% of yearly expenses)")
                                             .foregroundStyle(.secondary)
                                     }
@@ -400,7 +425,7 @@ import SwiftUI
 
                     // This would show other transactions in the series
                     List {
-                        ForEach(0 ..< 5) { i in
+                        ForEach(0..<5) { i in
                             HStack {
                                 Image(systemName: "calendar")
                                     .foregroundStyle(.blue)
@@ -409,10 +434,11 @@ import SwiftUI
                                     Text(transaction.name)
                                         .font(.headline)
 
-                                    Text(Calendar.current.date(byAdding: .month, value: i - 2, to: transaction.date)?.formatted(
-                                        date: .abbreviated,
-                                        time: .omitted
-                                    ) ?? "")
+                                    Text(Calendar.current.date(byAdding: .month, value: i - 2, to: transaction.date)?
+                                        .formatted(
+                                            date: .abbreviated,
+                                            time: .omitted
+                                        ) ?? "")
                                         .font(.caption)
                                 }
 
@@ -431,8 +457,10 @@ import SwiftUI
                     Spacer()
 
                     HStack {
-                        Text("Total series value: \((transaction.amount * 5).formatted(.currency(code: transaction.currencyCode)))")
-                            .font(.headline)
+                        Text(
+                            "Total series value: \((transaction.amount * 5).formatted(.currency(code: transaction.currencyCode)))"
+                        )
+                        .font(.headline)
 
                         Spacer()
 

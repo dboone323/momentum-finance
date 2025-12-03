@@ -36,17 +36,17 @@ func fi_detectCategoryOutliers(_ transactions: [FinancialTransaction]) -> [Finan
             let restPart = " on \(formattedDate) is \(percentageHigher)% higher than your average \(categoryName) transaction."
             let descriptionText = titlePart + restPart
 
-            let insight = IntelligenceFinancialInsight(
+            let insight = FinancialInsight(
                 title: "Unusual Spending in \(categoryName)",
                 description: descriptionText,
                 priority: .high,
                 type: .anomaly,
                 relatedTransactionId: topOutlier.id.hashValue.description,
                 visualizationType: .boxPlot,
-                data: [
-                    ("Average", mean),
-                    ("This Transaction", transactionAmount),
-                    ("Typical Range", mean + stdDev)
+                chartData: [
+                    ChartDataPoint(label: "Average", value: mean),
+                    ChartDataPoint(label: "This Transaction", value: transactionAmount),
+                    ChartDataPoint(label: "Typical Range", value: mean + stdDev),
                 ]
             )
             insights.append(insight)
@@ -75,7 +75,8 @@ func fi_detectRecentFrequencyAnomalies(_ transactions: [FinancialTransaction], d
     let averageCount = Double(transactionCounts.reduce(0, +)) / Double(transactionCounts.count)
 
     if let highestDay = last7Days.max(by: { $0.value.count < $1.value.count }),
-       Double(highestDay.value.count) > averageCount * 2 {
+       Double(highestDay.value.count) > averageCount * 2
+    {
         let transactionCount = highestDay.value.count
         let percentageMore = Int((Double(transactionCount) / averageCount - 1) * 100)
         let formattedDate = highestDay.key.formatted(date: .abbreviated, time: .omitted)
@@ -85,13 +86,13 @@ func fi_detectRecentFrequencyAnomalies(_ transactions: [FinancialTransaction], d
         let partA = "You had \(transactionCount) transactions on \(formattedDate),"
         let partB = " which is \(percentageMore)% more than your daily average."
         let descriptionText = partA + partB
-        let insight = IntelligenceFinancialInsight(
+        let insight = FinancialInsight(
             title: "Unusual Transaction Activity",
             description: descriptionText,
             priority: .medium,
             type: .anomaly,
             visualizationType: .barChart,
-            data: chartData
+            chartData: chartData.map { ChartDataPoint(label: $0.0, value: $0.1) }
         )
         insights.append(insight)
     }
@@ -122,13 +123,13 @@ func fi_suggestDuplicatePaymentInsights(transactions: [FinancialTransaction]) ->
             )
         }
 
-        let insight = IntelligenceFinancialInsight(
+        let insight = FinancialInsight(
             title: "Potential Duplicate Payment",
             description: dupDescription,
             priority: .high,
             type: .anomaly,
             relatedTransactionId: duplicate.first?.id.hashValue.description,
-            data: dupData
+            chartData: dupData.map { ChartDataPoint(label: $0.0, value: $0.1) }
         )
         insights.append(insight)
     }

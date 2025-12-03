@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class TabSectionTests: XCTestCase {
     // Test setup method to ensure all dependencies are properly initialized

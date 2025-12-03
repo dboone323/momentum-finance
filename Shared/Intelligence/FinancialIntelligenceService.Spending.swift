@@ -2,7 +2,8 @@ import Foundation
 import MomentumFinanceCore
 
 func fi_computeMonthlySpendingByCategory(transactions: [FinancialTransaction]) -> [String: [Date:
-        Double]] {
+        Double]]
+{
     let calendar = Calendar.current
     var monthlySpendingByCategory: [String: [Date: Double]] = [:]
 
@@ -39,7 +40,7 @@ func fi_generateSpendingInsightsFromMonthlyData(
         if last > average * 1.2, last > prev * 1.1 {
             let percentIncrease = prev > 0 ? Int(((last - prev) / prev) * 100) : 0
             insights.append(
-                IntelligenceFinancialInsight(
+                FinancialInsight(
                     title: "Increased Spending in \(category.name)",
                     description:
                     "Your spending in \(category.name) increased by \(percentIncrease)% last month.",
@@ -47,13 +48,16 @@ func fi_generateSpendingInsightsFromMonthlyData(
                     type: .spendingPattern,
                     relatedCategoryId: categoryId,
                     visualizationType: .lineChart,
-                    data: sorted.map { ($0.key.formatted(.dateTime.month(.abbreviated)), $0.value) }
+                    chartData: sorted.map { ChartDataPoint(
+                        label: $0.key.formatted(.dateTime.month(.abbreviated)),
+                        value: $0.value
+                    ) }
                 )
             )
         } else if last < average * 0.8, last < prev * 0.9 {
             let percentDecrease = prev > 0 ? Int(((prev - last) / prev) * 100) : 0
             insights.append(
-                IntelligenceFinancialInsight(
+                FinancialInsight(
                     title: "Reduced Spending in \(category.name)",
                     description:
                     "Your spending in \(category.name) decreased by \(percentDecrease)% last month.",
@@ -61,7 +65,10 @@ func fi_generateSpendingInsightsFromMonthlyData(
                     type: .positiveSpendingTrend,
                     relatedCategoryId: categoryId,
                     visualizationType: .lineChart,
-                    data: sorted.map { ($0.key.formatted(.dateTime.month(.abbreviated)), $0.value) }
+                    chartData: sorted.map { ChartDataPoint(
+                        label: $0.key.formatted(.dateTime.month(.abbreviated)),
+                        value: $0.value
+                    ) }
                 )
             )
         }
@@ -85,14 +92,14 @@ func fi_topCategoriesInsight(
     }
     guard !topCategoryData.isEmpty else { return nil }
 
-    return IntelligenceFinancialInsight(
+    return FinancialInsight(
         title: "Top Spending Categories",
         description:
         "Your highest spending categories are \(topCategoryData.map(\.0).joined(separator: ", ")).",
         priority: .medium,
         type: .spendingPattern,
         visualizationType: .pieChart,
-        data: topCategoryData
+        chartData: topCategoryData.map { ChartDataPoint(label: $0.0, value: $0.1) }
     )
 }
 
@@ -117,13 +124,14 @@ func fi_analyzeSpendingPatterns(
     let recurring = fi_findRecurringTransactions(transactions)
     if !recurring.isEmpty {
         insights.append(
-            IntelligenceFinancialInsight(
+            FinancialInsight(
                 title: "Potential Recurring Expenses",
                 description:
                 "You may have \(recurring.count) recurring payments that are not tracked as subscriptions.",
                 priority: .medium,
                 type: .subscriptionDetection,
-                data: recurring.prefix(5).map { ($0.title, abs($0.amount)) }
+                visualizationType: nil,
+                chartData: recurring.prefix(5).map { ChartDataPoint(label: $0.title, value: abs($0.amount)) }
             )
         )
     }
@@ -141,16 +149,17 @@ func fi_checkBudgetExceeded(
         .currency(code: Locale.current.currency?.identifier ?? "USD")
     )
 
-    return IntelligenceFinancialInsight(
+    return FinancialInsight(
         title: "Budget Exceeded",
         description: "You've exceeded your \(budget.name) budget by \(overspentFormatted).",
         priority: .critical,
         type: .budgetAlert,
         relatedBudgetId: budget.id.hashValue.description,
         visualizationType: .progressBar,
-        data: [
-            ("Budget", budget.limitAmount), ("Spent", totalSpent),
-            ("Overspent", overspent)
+        chartData: [
+            ChartDataPoint(label: "Budget", value: budget.limitAmount),
+            ChartDataPoint(label: "Spent", value: totalSpent),
+            ChartDataPoint(label: "Overspent", value: overspent),
         ]
     )
 }
@@ -189,16 +198,17 @@ func fi_checkBudgetAtRisk(context: BudgetAnalysisContext) -> FinancialInsight? {
         " You have \(remainingBudgetFormatted) left for \(context.daysRemaining) days."
     let descriptionText = baseMessage + remainingMessage
 
-    return IntelligenceFinancialInsight(
+    return FinancialInsight(
         title: "Budget at Risk",
         description: descriptionText,
         priority: .high,
         type: .budgetAlert,
         relatedBudgetId: context.budget.id.hashValue.description,
         visualizationType: .progressBar,
-        data: [
-            ("Budget", context.budget.limitAmount), ("Spent", context.totalSpent),
-            ("Projected", projectedTotal)
+        chartData: [
+            ChartDataPoint(label: "Budget", value: context.budget.limitAmount),
+            ChartDataPoint(label: "Spent", value: context.totalSpent),
+            ChartDataPoint(label: "Projected", value: projectedTotal),
         ]
     )
 }
@@ -214,22 +224,24 @@ func fi_checkBudgetUnderutilized(
     let remainingMessage = " with \(daysRemaining) days remaining. Consider reallocating funds."
     let descriptionText = baseMessage + remainingMessage
 
-    return IntelligenceFinancialInsight(
+    return FinancialInsight(
         title: "Budget Underutilized",
         description: descriptionText,
         priority: .low,
         type: .budgetInsight,
         relatedBudgetId: budget.id.hashValue.description,
         visualizationType: .progressBar,
-        data: [
-            ("Budget", budget.limitAmount), ("Spent", totalSpent),
-            ("Remaining", budget.limitAmount - totalSpent)
+        chartData: [
+            ChartDataPoint(label: "Budget", value: budget.limitAmount),
+            ChartDataPoint(label: "Spent", value: totalSpent),
+            ChartDataPoint(label: "Remaining", value: budget.limitAmount - totalSpent),
         ]
     )
 }
 
 func fi_analyzeBudgets(transactions: [FinancialTransaction], budgets: [Budget])
-    -> [FinancialInsight] {
+    -> [FinancialInsight]
+{
     var insights: [FinancialInsight] = []
     let calendar = Calendar.current
     let currentMonth = calendar.component(.month, from: Date())
@@ -292,20 +304,21 @@ func fi_analyzeBudgets(transactions: [FinancialTransaction], budgets: [Budget])
 @MainActor
 extension FinancialIntelligenceService {
     private func findRecurringTransactionInsights(from transactions: [FinancialTransaction])
-        -> [FinancialInsight] {
+        -> [FinancialInsight]
+    {
         let recurringTransactions = fi_findRecurringTransactions(transactions)
         guard !recurringTransactions.isEmpty else { return [] }
 
         let topFive = recurringTransactions.prefix(5).map { ($0.title, abs($0.amount)) }
 
-        let insight = IntelligenceFinancialInsight(
+        let insight = FinancialInsight(
             title: "Potential Recurring Expenses",
             description:
             "You may have \(recurringTransactions.count) recurring payments that are not tracked as subscriptions.",
             priority: .medium,
             type: .subscriptionDetection,
-            visualizationType: .none,
-            data: topFive
+            visualizationType: nil,
+            chartData: topFive.map { ChartDataPoint(label: $0.0, value: $0.1) }
         )
 
         return [insight]

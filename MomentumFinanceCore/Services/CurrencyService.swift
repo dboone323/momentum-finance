@@ -13,7 +13,7 @@ enum Currency: String, CaseIterable, Identifiable {
     case gbp = "GBP"
     case jpy = "JPY"
     case cad = "CAD"
-    
+
     var id: String { rawValue }
     var symbol: String {
         switch self {
@@ -27,26 +27,26 @@ enum Currency: String, CaseIterable, Identifiable {
 
 class CurrencyService {
     static let shared = CurrencyService()
-    
+
     // Mock exchange rates (Base: USD)
     private let rates: [Currency: Decimal] = [
         .usd: 1.0,
         .eur: 0.92,
         .gbp: 0.79,
         .jpy: 150.5,
-        .cad: 1.35
+        .cad: 1.35,
     ]
-    
+
     func convert(amount: Decimal, from source: Currency, to target: Currency) -> Decimal {
         guard let sourceRate = rates[source], let targetRate = rates[target] else {
             return amount
         }
-        
+
         // Convert to USD first, then to target
         let amountInUSD = amount / sourceRate
         return amountInUSD * targetRate
     }
-    
+
     func format(_ amount: Decimal, currency: Currency) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency

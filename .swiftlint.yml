@@ -11,6 +11,8 @@ disabled_rules:
   - inclusive_language
   - function_parameter_count
   - shorthand_operator
+  - trailing_comma
+  - opening_brace
 
 opt_in_rules:
   - array_init

@@ -25,7 +25,8 @@ public struct GlobalSearchView: View {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.secondary)
 
-                    TextField("Search transactions, accounts, budgets...", text: self.$searchText).accessibilityLabel("Text Field")
+                    TextField("Search transactions, accounts, budgets...", text: self.$searchText)
+                        .accessibilityLabel("Text Field")
                         .textFieldStyle(.plain)
                         .autocorrectionDisabled()
                         .onChange(of: self.searchText) { _, newValue in

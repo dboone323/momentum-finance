@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class DashboardViewModelTests: XCTestCase {
     var viewModel: DashboardViewModel!
@@ -17,7 +17,7 @@ class DashboardViewModelTests: XCTestCase {
         // Arrange
         let subscriptions = [
             Subscription(id: 1, isActive: true, nextDueDate: Date().addingTimeInterval(3600 * 24)),
-            Subscription(id: 2, isActive: false, nextDueDate: Date().addingTimeInterval(-3600 * 24))
+            Subscription(id: 2, isActive: false, nextDueDate: Date().addingTimeInterval(-3600 * 24)),
         ]
         viewModel.setModelContext(modelContext)
 
@@ -34,7 +34,7 @@ class DashboardViewModelTests: XCTestCase {
         // Arrange
         let budgets = [
             Budget(id: 1, month: Date().addingTimeInterval(3600 * 24), amount: 100.0),
-            Budget(id: 2, month: Date(), amount: -50.0)
+            Budget(id: 2, month: Date(), amount: -50.0),
         ]
         viewModel.setModelContext(modelContext)
 
@@ -51,7 +51,7 @@ class DashboardViewModelTests: XCTestCase {
         // Arrange
         let accounts = [
             FinancialAccount(id: 1, balance: 500.0),
-            FinancialAccount(id: 2, balance: -300.0)
+            FinancialAccount(id: 2, balance: -300.0),
         ]
         viewModel.setModelContext(modelContext)
 
@@ -66,8 +66,13 @@ class DashboardViewModelTests: XCTestCase {
     func testRecentTransactions() {
         // Arrange
         let transactions = [
-            FinancialTransaction(id: 1, date: Date().addingTimeInterval(-3600 * 24), transactionType: .expense, amount: 50.0),
-            FinancialTransaction(id: 2, date: Date(), transactionType: .income, amount: 100.0)
+            FinancialTransaction(
+                id: 1,
+                date: Date().addingTimeInterval(-3600 * 24),
+                transactionType: .expense,
+                amount: 50.0
+            ),
+            FinancialTransaction(id: 2, date: Date(), transactionType: .income, amount: 100.0),
         ]
         viewModel.setModelContext(modelContext)
 
@@ -84,7 +89,7 @@ class DashboardViewModelTests: XCTestCase {
         // Arrange
         let subscriptions = [
             Subscription(id: 1, isActive: true, nextDueDate: Date().addingTimeInterval(3600 * 24)),
-            Subscription(id: 2, isActive: false, nextDueDate: Date().addingTimeInterval(-3600 * 24))
+            Subscription(id: 2, isActive: false, nextDueDate: Date().addingTimeInterval(-3600 * 24)),
         ]
         viewModel.setModelContext(modelContext)
 

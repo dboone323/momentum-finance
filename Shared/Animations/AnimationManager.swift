@@ -1,8 +1,8 @@
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 /// Centralized animation management for consistent app-wide animations
 @MainActor
@@ -186,7 +186,7 @@ extension View {
                         gradient: Gradient(colors: [
                             Color.clear,
                             Color.white.opacity(0.4),
-                            Color.clear
+                            Color.clear,
                         ]),
                         startPoint: .leading,
                         endPoint: .trailing
@@ -289,7 +289,7 @@ public struct LoadingIndicator: View {
             switch self.style {
             case .dots:
                 HStack(spacing: 4) {
-                    ForEach(0 ..< 3, id: \.self) { index in
+                    ForEach(0..<3, id: \.self) { index in
                         Circle()
                             .fill(Color.accentColor)
                             .frame(width: 8, height: 8)

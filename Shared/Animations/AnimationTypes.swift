@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MomentumFinanceCore
 
 // MARK: - Animation Component Types
 
@@ -37,7 +36,8 @@ public enum AnimatedButtonComponent {
         }
 
         public var body: some View {
-            Button(self.title, action: self.action).accessibilityLabel("Button").accessibilityLabel("Button")
+            Button(self.title, action: self.action)
+                .accessibilityLabel(self.title)
                 .scaleEffect(1.0)
                 .animation(.easeInOut(duration: 0.2), value: UUID())
         }
@@ -98,11 +98,12 @@ public enum FloatingActionButtonComponent {
         }
 
         public var body: some View {
-            Button(action: self.action).accessibilityLabel("Button").accessibilityLabel("Button") {
+            Button(action: self.action) {
                 Image(systemName: "plus")
                     .font(.title2)
                     .foregroundColor(.white)
             }
+            .accessibilityLabel("Add")
             .frame(width: 56, height: 56)
             .background(Color.accentColor)
             .clipShape(Circle())

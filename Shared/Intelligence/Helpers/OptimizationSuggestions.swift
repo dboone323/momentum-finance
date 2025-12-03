@@ -4,7 +4,9 @@ import MomentumFinanceCore
 // MARK: - Optimization Suggestions
 
 /// Suggest insights for idle cash optimization
-func fi_suggestIdleCashInsights(transactions: [FinancialTransaction], accounts: [FinancialAccount]) -> [FinancialInsight] {
+func fi_suggestIdleCashInsights(transactions: [FinancialTransaction],
+                                accounts: [FinancialAccount]) -> [FinancialInsight]
+{
     var insights: [FinancialInsight] = []
 
     let checkingAccounts = accounts.filter { $0.accountType == .checking }
@@ -22,7 +24,8 @@ func fi_suggestIdleCashInsights(transactions: [FinancialTransaction], accounts: 
 
         let monthlyExpenses = monthlyTransactions.map { $0.value.reduce(0) { $0 + abs($1.amount) } }
         let averageMonthlyExpense = monthlyExpenses.isEmpty
-            ? 0 : monthlyExpenses.reduce(0, +) / Double(monthlyExpenses.count)
+            ? 0
+            : monthlyExpenses.reduce(0, +) / Double(monthlyExpenses.count)
 
         let recommendedBuffer = averageMonthlyExpense * 2
 
@@ -33,16 +36,16 @@ func fi_suggestIdleCashInsights(transactions: [FinancialTransaction], accounts: 
             let idleDescription = "You have \(excessCashStr) more than needed in your \(accountName). "
                 + "Consider moving some to a higher-yielding savings or investment account."
 
-            let insight = IntelligenceFinancialInsight(
+            let insight = FinancialInsight(
                 title: "Idle Cash Detected",
                 description: idleDescription,
                 priority: .medium,
                 type: .optimization,
                 relatedAccountId: String(account.id.hashValue),
-                data: [
-                    ("Current Balance", account.balance),
-                    ("Recommended Buffer", recommendedBuffer),
-                    ("Excess Cash", excessCash)
+                chartData: [
+                    ChartDataPoint(label: "Current Balance", value: account.balance),
+                    ChartDataPoint(label: "Recommended Buffer", value: recommendedBuffer),
+                    ChartDataPoint(label: "Excess Cash", value: excessCash),
                 ]
             )
             insights.append(insight)
@@ -67,17 +70,17 @@ func fi_suggestCreditUtilizationInsights(accounts: [FinancialAccount]) -> [Finan
             let utilDescription = "Your credit utilization on \(account.name) is \(Int(utilization * 100))%. "
                 + "It's recommended to keep this under 30% to maintain a good credit score."
 
-            let insight = IntelligenceFinancialInsight(
+            let insight = FinancialInsight(
                 title: "High Credit Utilization",
                 description: utilDescription,
                 priority: utilization > 0.7 ? .critical : .high,
                 type: .optimization,
                 relatedAccountId: String(account.id.hashValue),
                 visualizationType: .progressBar,
-                data: [
-                    ("Balance", balance),
-                    ("Credit Limit", creditLimit),
-                    ("Utilization", utilization)
+                chartData: [
+                    ChartDataPoint(label: "Balance", value: balance),
+                    ChartDataPoint(label: "Credit Limit", value: creditLimit),
+                    ChartDataPoint(label: "Utilization", value: utilization),
                 ]
             )
             insights.append(insight)

@@ -6,8 +6,8 @@
 //  Copyright © 2025 Daniel Stevens. All rights reserved.
 //
 
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 #if DEBUG
 
@@ -67,7 +67,7 @@ import MomentumFinanceCore
                     Section("Category Colors") {
                         ScrollView(.horizontal) {
                             HStack(spacing: 10) {
-                                ForEach(0 ..< self.theme.categoryColors.count, id: \.self) { index in
+                                ForEach(0..<self.theme.categoryColors.count, id: \.self) { index in
                                     Circle()
                                         .fill(self.theme.categoryColors[index])
                                         .frame(width: 40, height: 40)

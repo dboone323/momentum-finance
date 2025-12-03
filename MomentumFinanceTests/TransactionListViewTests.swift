@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class TransactionListViewTests: XCTestCase {
     var viewModel: Features.Transactions.TransactionListViewModel!
@@ -8,8 +8,12 @@ class TransactionListViewTests: XCTestCase {
     override func setUp() {
         super.setUp()
         transactions = [
-            FinancialTransaction(date: Date(timeIntervalSince1970: 1_672_531_200), amount: 100.0, category: "Groceries"),
-            FinancialTransaction(date: Date(timeIntervalSince1970: 1_675_209_600), amount: 50.0, category: "Coffee")
+            FinancialTransaction(
+                date: Date(timeIntervalSince1970: 1_672_531_200),
+                amount: 100.0,
+                category: "Groceries"
+            ),
+            FinancialTransaction(date: Date(timeIntervalSince1970: 1_675_209_600), amount: 50.0, category: "Coffee"),
         ]
         viewModel = Features.Transactions.TransactionListViewModel(transactions: transactions)
     }

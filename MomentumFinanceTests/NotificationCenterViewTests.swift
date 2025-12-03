@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class NotificationCenterViewTests: XCTestCase {
     var notificationManager: NotificationManager!
@@ -10,7 +10,11 @@ class NotificationCenterViewTests: XCTestCase {
         // Arrange
         let expectedNotifications = [
             ScheduledNotification(id: "1", title: "Monthly Income Alert", scheduledDate: Date()),
-            ScheduledNotification(id: "2", title: "Emergency Fund Alert", scheduledDate: Date().addingTimeInterval(3600))
+            ScheduledNotification(
+                id: "2",
+                title: "Emergency Fund Alert",
+                scheduledDate: Date().addingTimeInterval(3600)
+            ),
         ]
 
         // Act
@@ -18,10 +22,13 @@ class NotificationCenterViewTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(notificationManager.pendingNotifications.count, expectedNotifications.count)
-        for i in 0 ..< expectedNotifications.count {
+        for i in 0..<expectedNotifications.count {
             XCTAssertEqual(notificationManager.pendingNotifications[i].id, expectedNotifications[i].id)
             XCTAssertEqual(notificationManager.pendingNotifications[i].title, expectedNotifications[i].title)
-            XCTAssertEqual(notificationManager.pendingNotifications[i].scheduledDate, expectedNotifications[i].scheduledDate)
+            XCTAssertEqual(
+                notificationManager.pendingNotifications[i].scheduledDate,
+                expectedNotifications[i].scheduledDate
+            )
         }
     }
 
@@ -30,7 +37,11 @@ class NotificationCenterViewTests: XCTestCase {
         // Arrange
         let expectedNotifications = [
             ScheduledNotification(id: "1", title: "Monthly Income Alert", scheduledDate: Date()),
-            ScheduledNotification(id: "2", title: "Emergency Fund Alert", scheduledDate: Date().addingTimeInterval(3600))
+            ScheduledNotification(
+                id: "2",
+                title: "Emergency Fund Alert",
+                scheduledDate: Date().addingTimeInterval(3600)
+            ),
         ]
 
         notificationManager.pendingNotifications = expectedNotifications
@@ -40,7 +51,7 @@ class NotificationCenterViewTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(view.notificationsList.count, expectedNotifications.count)
-        for i in 0 ..< expectedNotifications.count {
+        for i in 0..<expectedNotifications.count {
             XCTAssertEqual(view.notificationsList[i].notification.id, expectedNotifications[i].id)
             XCTAssertEqual(view.notificationsList[i].notification.title, expectedNotifications[i].title)
             XCTAssertEqual(view.notificationsList[i].notification.scheduledDate, expectedNotifications[i].scheduledDate)
@@ -72,6 +83,9 @@ class NotificationCenterViewTests: XCTestCase {
         // Assert
         XCTAssertEqual(view.notificationsList.count, 0)
         XCTAssertEqual(view.emptyNotificationsView.title, "No Notifications")
-        XCTAssertEqual(view.emptyNotificationsView.description, "You're all caught up! Any important financial alerts will appear here.")
+        XCTAssertEqual(
+            view.emptyNotificationsView.description,
+            "You're all caught up! Any important financial alerts will appear here."
+        )
     }
 }

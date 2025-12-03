@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class AdvancedFinancialIntelligenceTests: XCTestCase {
     var advancedFinancialIntelligence: AdvancedFinancialIntelligence!
@@ -9,15 +9,15 @@ class AdvancedFinancialIntelligenceTests: XCTestCase {
         let transactions = [
             Transaction(date: Date(), amount: 1000, category: "Groceries"),
             Transaction(date: Date(), amount: 2000, category: "Entertainment"),
-            Transaction(date: Date(), amount: 3000, category: "Food")
+            Transaction(date: Date(), amount: 3000, category: "Food"),
         ]
         let accounts = [
             Account(name: "Checking", balance: 5000),
-            Account(name: "Savings", balance: 1000)
+            Account(name: "Savings", balance: 1000),
         ]
         let budgets = [
             AIBudget(category: "Groceries", budgetAmount: 2000, threshold: 3000),
-            AIBudget(category: "Entertainment", budgetAmount: 500, threshold: 750)
+            AIBudget(category: "Entertainment", budgetAmount: 500, threshold: 750),
         ]
 
         // Simulate a delay for the analysis process
@@ -29,7 +29,8 @@ class AdvancedFinancialIntelligenceTests: XCTestCase {
         // Assert that insights are generated correctly
         XCTAssertEqual(advancedFinancialIntelligence.insights.count, 5)
 
-        let spendingInsight = advancedFinancialIntelligence.insights.first(where: { $0.title == "Accelerating Spending Detected" })
+        let spendingInsight = advancedFinancialIntelligence.insights
+            .first(where: { $0.title == "Accelerating Spending Detected" })
         XCTAssertNotNil(spendingInsight)
         XCTAssertTrue(spendingInsight.priority == .high)
         XCTAssertTrue(spendingInsight.type == .spendingAlert)
@@ -47,13 +48,17 @@ class AdvancedFinancialIntelligenceTests: XCTestCase {
         let timeHorizon = TimeHorizon.longTerm
         let currentPortfolio = [
             Investment(name: "Stock A", value: 1000),
-            Investment(name: "Bond B", value: 500)
+            Investment(name: "Bond B", value: 500),
         ]
 
         // Simulate a delay for the recommendation generation process
         let delay = DispatchTime.now() + .seconds(1)
         DispatchQueue.main.asyncAfter(deadline: delay) {
-            advancedFinancialIntelligence.getInvestmentRecommendations(riskTolerance: riskTolerance, timeHorizon: timeHorizon, currentPortfolio: currentPortfolio)
+            advancedFinancialIntelligence.getInvestmentRecommendations(
+                riskTolerance: riskTolerance,
+                timeHorizon: timeHorizon,
+                currentPortfolio: currentPortfolio
+            )
         }
 
         // Assert that recommendations are generated correctly
@@ -73,7 +78,7 @@ class AdvancedFinancialIntelligenceTests: XCTestCase {
         let transactions = [
             Transaction(date: Date(), amount: 1000, category: "Groceries"),
             Transaction(date: Date(), amount: 2000, category: "Entertainment"),
-            Transaction(date: Date(), amount: 3000, category: "Food")
+            Transaction(date: Date(), amount: 3000, category: "Food"),
         ]
         let months = 6
 

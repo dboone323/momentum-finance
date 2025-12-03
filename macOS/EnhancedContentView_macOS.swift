@@ -174,7 +174,7 @@ import SwiftUI
     }
 
     // macOS-specific UI components and helpers
-    struct MacOSSpecificViews {
+    enum MacOSSpecificViews {
         /// macOS window configuration
         static func configureWindow() {
             // Configure macOS-specific window settings

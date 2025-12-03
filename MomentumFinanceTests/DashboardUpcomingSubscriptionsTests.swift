@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class DashboardUpcomingSubscriptionsTests: XCTestCase {
     var subscriptions: [Subscription]!
@@ -15,7 +15,7 @@ class DashboardUpcomingSubscriptionsTests: XCTestCase {
         subscriptions = [
             Subscription(id: 1, name: "Netflix", icon: "film", amount: 15.99),
             Subscription(id: 2, name: "Spotify", icon: "music.note", amount: 9.99),
-            Subscription(id: 3, name: "iCloud", icon: "cloud", amount: 2.99)
+            Subscription(id: 3, name: "iCloud", icon: "cloud", amount: 2.99),
         ]
         colorTheme = ColorTheme.default
         themeComponents = ThemeComponents()
@@ -53,7 +53,13 @@ class DashboardUpcomingSubscriptionsTests: XCTestCase {
 
     // Test the body of DashboardUpcomingSubscriptions view when no subscriptions are present
     func testBodyNoSubscriptions() {
-        let viewModel = Dashboard.UpcomingSubscriptions(subscriptions: [], colorTheme: colorTheme, themeComponents: themeComponents, onSubscriptionTap: onSubscriptionTap, onViewAllTap: onViewAllTap)
+        let viewModel = Dashboard.UpcomingSubscriptions(
+            subscriptions: [],
+            colorTheme: colorTheme,
+            themeComponents: themeComponents,
+            onSubscriptionTap: onSubscriptionTap,
+            onViewAllTap: onViewAllTap
+        )
 
         // GIVEN: No subscriptions are present
         XCTAssertEqual(viewModel.subscriptions.count, 0)
@@ -69,7 +75,13 @@ class DashboardUpcomingSubscriptionsTests: XCTestCase {
     func testBodyMoreThanThreeSubscriptions() {
         // Create four subscriptions for this test
         let subs = subscriptions + [Subscription(id: 4, name: "Extra Subscription", icon: "bell", amount: 150.0)]
-        let viewModel = Dashboard.UpcomingSubscriptions(subscriptions: subs, colorTheme: colorTheme, themeComponents: themeComponents, onSubscriptionTap: onSubscriptionTap, onViewAllTap: onViewAllTap)
+        let viewModel = Dashboard.UpcomingSubscriptions(
+            subscriptions: subs,
+            colorTheme: colorTheme,
+            themeComponents: themeComponents,
+            onSubscriptionTap: onSubscriptionTap,
+            onViewAllTap: onViewAllTap
+        )
 
         // GIVEN: More than 3 subscriptions are present
         XCTAssertEqual(viewModel.subscriptions.count, 4)

@@ -18,22 +18,3 @@ public enum FinancialInsightType: String, CaseIterable, Identifiable, Hashable {
         }
     }
 }
-
-public struct IntelligenceFinancialInsight: Identifiable, Hashable {
-    public let id = UUID()
-    public let type: FinancialInsightType
-    public let title: String
-    public let description: String
-    public let priority: Int
-    public let createdAt: Date
-    public init(
-        type: FinancialInsightType, title: String, description: String, priority: Int,
-        createdAt: Date = Date()
-    ) {
-        self.type = type
-        self.title = title
-        self.description = description
-        self.priority = priority
-        self.createdAt = createdAt
-    }
-}

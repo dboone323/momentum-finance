@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class FinancialIntelligenceServiceTests: XCTestCase {
     var service: FinancialIntelligenceService!
@@ -9,12 +9,16 @@ class FinancialIntelligenceServiceTests: XCTestCase {
         let transactions: [FinancialTransaction] = [
             FinancialTransaction(amount: -100, date: Date(), category: ExpenseCategory(id: "category1", name: "Food")),
             FinancialTransaction(amount: 200, date: Date(), category: ExpenseCategory(id: "category1", name: "Food")),
-            FinancialTransaction(amount: -50, date: Date(), category: ExpenseCategory(id: "category2", name: "Entertainment"))
+            FinancialTransaction(
+                amount: -50,
+                date: Date(),
+                category: ExpenseCategory(id: "category2", name: "Entertainment")
+            ),
         ]
 
         let expected = [
             "category1": [DateComponents(year: 2023, month: 4): 300.0],
-            "category2": [DateComponents(year: 2023, month: 4): -50.0]
+            "category2": [DateComponents(year: 2023, month: 4): -50.0],
         ]
 
         XCTAssertEqual(service.fi_computeMonthlySpendingByCategory(transactions), expected)
@@ -25,12 +29,16 @@ class FinancialIntelligenceServiceTests: XCTestCase {
         let transactions: [FinancialTransaction] = [
             FinancialTransaction(amount: -100, date: Date(), category: ExpenseCategory(id: "category1", name: "Food")),
             FinancialTransaction(amount: 200, date: Date(), category: ExpenseCategory(id: "category1", name: "Food")),
-            FinancialTransaction(amount: -50, date: Date(), category: ExpenseCategory(id: "category2", name: "Entertainment"))
+            FinancialTransaction(
+                amount: -50,
+                date: Date(),
+                category: ExpenseCategory(id: "category2", name: "Entertainment")
+            ),
         ]
 
         let categories = [
             ExpenseCategory(id: "category1", name: "Food"),
-            ExpenseCategory(id: "category2", name: "Entertainment")
+            ExpenseCategory(id: "category2", name: "Entertainment"),
         ]
 
         let expectedInsights = [
@@ -44,7 +52,7 @@ class FinancialIntelligenceServiceTests: XCTestCase {
                 visualizationType: .lineChart,
                 data: [
                     ("2023-04-01", -100.0),
-                    ("2023-04-08", 200.0)
+                    ("2023-04-08", 200.0),
                 ]
             ),
             FinancialInsight(
@@ -57,9 +65,9 @@ class FinancialIntelligenceServiceTests: XCTestCase {
                 visualizationType: .lineChart,
                 data: [
                     ("2023-04-01", -50.0),
-                    ("2023-04-08", 0.0)
+                    ("2023-04-08", 0.0),
                 ]
-            )
+            ),
         ]
 
         XCTAssertEqual(service.fi_generateSpendingInsightsFromMonthlyData(transactions, categories), expectedInsights)
@@ -70,12 +78,16 @@ class FinancialIntelligenceServiceTests: XCTestCase {
         let transactions: [FinancialTransaction] = [
             FinancialTransaction(amount: -100, date: Date(), category: ExpenseCategory(id: "category1", name: "Food")),
             FinancialTransaction(amount: 200, date: Date(), category: ExpenseCategory(id: "category1", name: "Food")),
-            FinancialTransaction(amount: -50, date: Date(), category: ExpenseCategory(id: "category2", name: "Entertainment"))
+            FinancialTransaction(
+                amount: -50,
+                date: Date(),
+                category: ExpenseCategory(id: "category2", name: "Entertainment")
+            ),
         ]
 
         let categories = [
             ExpenseCategory(id: "category1", name: "Food"),
-            ExpenseCategory(id: "category2", name: "Entertainment")
+            ExpenseCategory(id: "category2", name: "Entertainment"),
         ]
 
         let expectedInsight = FinancialInsight(
@@ -87,7 +99,7 @@ class FinancialIntelligenceServiceTests: XCTestCase {
             visualizationType: .pieChart,
             data: [
                 ("Food", 300.0),
-                ("Entertainment", 200.0)
+                ("Entertainment", 200.0),
             ]
         )
 

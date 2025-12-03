@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class FinancialIntelligenceServiceTests: XCTestCase {
     var service: FinancialIntelligenceService!
@@ -11,11 +11,11 @@ class FinancialIntelligenceServiceTests: XCTestCase {
         // GIVEN
         let transactions = [
             FinancialTransaction(amount: 100, category: .food, date: Date()),
-            FinancialTransaction(amount: 200, category: .entertainment, date: Date())
+            FinancialTransaction(amount: 200, category: .entertainment, date: Date()),
         ]
         let categories = [
             ExpenseCategory(name: "Food", priority: 1),
-            ExpenseCategory(name: "Entertainment", priority: 2)
+            ExpenseCategory(name: "Entertainment", priority: 2),
         ]
 
         // WHEN
@@ -46,11 +46,11 @@ class FinancialIntelligenceServiceTests: XCTestCase {
         // GIVEN
         let transactions = [
             FinancialTransaction(amount: 100, category: .food, date: Date()),
-            FinancialTransaction(amount: 200, category: .entertainment, date: Date())
+            FinancialTransaction(amount: 200, category: .entertainment, date: Date()),
         ]
         let categories = [
             ExpenseCategory(name: "Food", priority: 1),
-            ExpenseCategory(name: "Entertainment", priority: 2)
+            ExpenseCategory(name: "Entertainment", priority: 2),
         ]
 
         // WHEN
@@ -70,7 +70,7 @@ class FinancialIntelligenceServiceTests: XCTestCase {
         // GIVEN
         let transactions = [
             FinancialTransaction(amount: 100, category: .food, date: Date()),
-            FinancialTransaction(amount: 200, category: .entertainment, date: Date())
+            FinancialTransaction(amount: 200, category: .entertainment, date: Date()),
         ]
 
         // WHEN
@@ -90,11 +90,11 @@ class FinancialIntelligenceServiceTests: XCTestCase {
         // GIVEN
         let transactions = [
             FinancialTransaction(amount: 100, category: .food, date: Date()),
-            FinancialTransaction(amount: 200, category: .entertainment, date: Date())
+            FinancialTransaction(amount: 200, category: .entertainment, date: Date()),
         ]
         let budgets = [
             Budget(name: "Food", priority: 1),
-            Budget(name: "Entertainment", priority: 2)
+            Budget(name: "Entertainment", priority: 2),
         ]
 
         // WHEN

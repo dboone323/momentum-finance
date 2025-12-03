@@ -1,8 +1,8 @@
 import Foundation
+import MomentumFinanceCore
 import PDFKit
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 final class ExportEngineService {
     private let modelContext: ModelContext
@@ -55,7 +55,8 @@ final class ExportEngineService {
     private func generateTransactionsCSV(settings: ExportSettings) async throws -> String {
         let transactions = try fetchTransactions(from: settings.startDate, to: settings.endDate)
 
-        let formatter = DateFormatter(); formatter.dateFormat = "yyyy-MM-dd"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
 
         var csvLines = ["TRANSACTIONS", "Date,Title,Amount,Type,Category,Account,Notes"]
 
@@ -77,7 +78,8 @@ final class ExportEngineService {
     private func generateAccountsCSV(settings _: ExportSettings) async throws -> String {
         let accounts = try fetchAccounts()
 
-        let formatter = DateFormatter(); formatter.dateFormat = "yyyy-MM-dd"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
 
         var csvLines = ["ACCOUNTS", "Name,Balance,Type,Currency,Created Date"]
 
@@ -97,7 +99,8 @@ final class ExportEngineService {
     private func generateBudgetsCSV(settings _: ExportSettings) async throws -> String {
         let budgets = try fetchBudgets()
 
-        let formatter = DateFormatter(); formatter.dateFormat = "yyyy-MM-dd"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
 
         var csvLines = ["BUDGETS", "Name,Limit Amount,Spent Amount,Category,Month,Created Date"]
 
@@ -118,7 +121,8 @@ final class ExportEngineService {
     private func generateSubscriptionsCSV(settings _: ExportSettings) async throws -> String {
         let subscriptions = try fetchSubscriptions()
 
-        let formatter = DateFormatter(); formatter.dateFormat = "yyyy-MM-dd"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
 
         var csvLines = ["SUBSCRIPTIONS", "Name,Amount,Billing Cycle,Next Due Date,Category,Account,Is Active"]
 
@@ -140,7 +144,8 @@ final class ExportEngineService {
     private func generateGoalsCSV(settings _: ExportSettings) async throws -> String {
         let goals = try fetchGoals()
 
-        let formatter = DateFormatter(); formatter.dateFormat = "yyyy-MM-dd"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
 
         var csvLines = ["SAVINGS GOALS", "Name,Target Amount,Current Amount,Target Date,Progress"]
 
@@ -186,22 +191,27 @@ final class ExportEngineService {
             // Title
             let titleAttributes: [NSAttributedString.Key: Any] = [
                 .font: NSFont.boldSystemFont(ofSize: 24),
-                .foregroundColor: NSColor.black
+                .foregroundColor: NSColor.black,
             ]
             let title = "Momentum Finance Report"
             title.draw(at: CGPoint(x: 50, y: pageRect.height - 50), withAttributes: titleAttributes)
 
-            let dateFormatter = DateFormatter(); dateFormatter.dateStyle = .long
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .long
             let dateRange = "Period: \(dateFormatter.string(from: settings.startDate)) - \(dateFormatter.string(from: settings.endDate))"
             let dateAttributes: [NSAttributedString.Key: Any] = [
                 .font: NSFont.systemFont(ofSize: 14),
-                .foregroundColor: NSColor.gray
+                .foregroundColor: NSColor.gray,
             ]
             dateRange.draw(at: CGPoint(x: 50, y: pageRect.height - 80), withAttributes: dateAttributes)
 
             var yPosition = pageRect.height - 120
             if settings.includeTransactions {
-                yPosition = try self.drawTransactionsSummary(context: pdfContext, yPosition: yPosition, settings: settings)
+                yPosition = try self.drawTransactionsSummary(
+                    context: pdfContext,
+                    yPosition: yPosition,
+                    settings: settings
+                )
             }
             if settings.includeAccounts {
                 yPosition = try self.drawAccountsSummary(context: pdfContext, yPosition: yPosition, settings: settings)
@@ -214,16 +224,18 @@ final class ExportEngineService {
         #endif
     }
 
-    private func drawTransactionsSummary(context _: CGContext, yPosition: Double, settings: ExportSettings) throws -> Double {
+    private func drawTransactionsSummary(context _: CGContext, yPosition: Double,
+                                         settings: ExportSettings) throws -> Double
+    {
         let transactions = try fetchTransactions(from: settings.startDate, to: settings.endDate)
 
         let headerAttributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.boldSystemFont(ofSize: 18),
-            .foregroundColor: NSColor.black
+            .foregroundColor: NSColor.black,
         ]
         let textAttributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 12),
-            .foregroundColor: NSColor.black
+            .foregroundColor: NSColor.black,
         ]
 
         "Transactions Summary".draw(at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes)
@@ -234,31 +246,45 @@ final class ExportEngineService {
 
         var currentY = yPosition + 30
 
-        "Total Transactions: \(transactions.count)".draw(at: CGPoint(x: 70, y: currentY), withAttributes: textAttributes)
+        "Total Transactions: \(transactions.count)".draw(
+            at: CGPoint(x: 70, y: currentY),
+            withAttributes: textAttributes
+        )
         currentY += 20
 
-        "Total Income: $\(String(format: "%.2f", totalIncome))".draw(at: CGPoint(x: 70, y: currentY), withAttributes: textAttributes)
+        "Total Income: $\(String(format: "%.2f", totalIncome))".draw(
+            at: CGPoint(x: 70, y: currentY),
+            withAttributes: textAttributes
+        )
         currentY += 20
 
-        "Total Expenses: $\(String(format: "%.2f", totalExpenses))".draw(at: CGPoint(x: 70, y: currentY), withAttributes: textAttributes)
+        "Total Expenses: $\(String(format: "%.2f", totalExpenses))".draw(
+            at: CGPoint(x: 70, y: currentY),
+            withAttributes: textAttributes
+        )
         currentY += 20
 
-        "Net Amount: $\(String(format: "%.2f", netAmount))".draw(at: CGPoint(x: 70, y: currentY), withAttributes: textAttributes)
+        "Net Amount: $\(String(format: "%.2f", netAmount))".draw(
+            at: CGPoint(x: 70, y: currentY),
+            withAttributes: textAttributes
+        )
         currentY += 40
 
         return currentY
     }
 
-    private func drawAccountsSummary(context _: CGContext, yPosition: Double, settings _: ExportSettings) throws -> Double {
+    private func drawAccountsSummary(context _: CGContext, yPosition: Double,
+                                     settings _: ExportSettings) throws -> Double
+    {
         let accounts = try fetchAccounts()
 
         let headerAttributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.boldSystemFont(ofSize: 18),
-            .foregroundColor: NSColor.black
+            .foregroundColor: NSColor.black,
         ]
         let textAttributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 12),
-            .foregroundColor: NSColor.black
+            .foregroundColor: NSColor.black,
         ]
 
         "Accounts Summary".draw(at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes)
@@ -284,7 +310,7 @@ final class ExportEngineService {
             "startDate": ISO8601DateFormatter().string(from: settings.startDate),
             "endDate": ISO8601DateFormatter().string(from: settings.endDate),
             "app": "Momentum Finance",
-            "version": "1.0.0"
+            "version": "1.0.0",
         ]
 
         if settings.includeTransactions {
@@ -362,7 +388,7 @@ final class ExportEngineService {
                 "type": transaction.transactionType.rawValue,
                 "category": transaction.category?.name ?? "",
                 "account": transaction.account?.name ?? "",
-                "notes": transaction.notes ?? ""
+                "notes": transaction.notes ?? "",
             ]
         }
     }
@@ -378,7 +404,7 @@ final class ExportEngineService {
                 "balance": account.balance,
                 "type": account.accountType.rawValue,
                 "currencyCode": account.currencyCode,
-                "createdDate": formatter.string(from: account.createdDate)
+                "createdDate": formatter.string(from: account.createdDate),
             ]
         }
     }
@@ -395,7 +421,7 @@ final class ExportEngineService {
                 "spentAmount": budget.spentAmount,
                 "category": budget.category?.name ?? "",
                 "month": formatter.string(from: budget.month),
-                "createdDate": formatter.string(from: budget.createdDate)
+                "createdDate": formatter.string(from: budget.createdDate),
             ]
         }
     }
@@ -413,7 +439,7 @@ final class ExportEngineService {
                 "nextDueDate": formatter.string(from: subscription.nextDueDate),
                 "category": subscription.category?.name ?? "",
                 "account": subscription.account?.name ?? "",
-                "isActive": subscription.isActive
+                "isActive": subscription.isActive,
             ]
         }
     }
@@ -428,7 +454,7 @@ final class ExportEngineService {
                 "name": goal.name,
                 "targetAmount": goal.targetAmount,
                 "currentAmount": goal.currentAmount,
-                "progressPercentage": goal.progressPercentage
+                "progressPercentage": goal.progressPercentage,
             ]
 
             if let targetDate = goal.targetDate {

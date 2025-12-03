@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class FinancialForecastingTests: XCTestCase {
 
@@ -24,7 +24,10 @@ class FinancialForecastingTests: XCTestCase {
 
         XCTAssertEqual(insights.count, 1)
         XCTAssertEqual(insights[0].title, "Income Forecast")
-        XCTAssertEqual(insights[0].description, "Based on recent trends, your estimated monthly income is $1,000. This forecast helps with budgeting and financial planning.")
+        XCTAssertEqual(
+            insights[0].description,
+            "Based on recent trends, your estimated monthly income is $1,000. This forecast helps with budgeting and financial planning."
+        )
         XCTAssertEqual(insights[0].priority, InsightPriority.low)
         XCTAssertEqual(insights[0].type, InsightType.forecast)
         XCTAssertEqual(insights[0].visualizationType, VisualizationType.lineChart)
@@ -35,7 +38,7 @@ class FinancialForecastingTests: XCTestCase {
         let transactions = [
             FinancialTransaction(amount: 1000, date: Date()),
             FinancialTransaction(amount: -500, date: Date()),
-            FinancialTransaction(amount: 750, date: Date())
+            FinancialTransaction(amount: 750, date: Date()),
         ]
         let accounts = []
 
@@ -43,7 +46,10 @@ class FinancialForecastingTests: XCTestCase {
 
         XCTAssertEqual(insights.count, 1)
         XCTAssertEqual(insights[0].title, "Income Forecast")
-        XCTAssertEqual(insights[0].description, "Based on recent trends, your estimated monthly income is $1,250. This forecast helps with budgeting and financial planning.")
+        XCTAssertEqual(
+            insights[0].description,
+            "Based on recent trends, your estimated monthly income is $1,250. This forecast helps with budgeting and financial planning."
+        )
         XCTAssertEqual(insights[0].priority, InsightPriority.low)
         XCTAssertEqual(insights[0].type, InsightType.forecast)
         XCTAssertEqual(insights[0].visualizationType, VisualizationType.lineChart)
@@ -69,7 +75,10 @@ class FinancialForecastingTests: XCTestCase {
 
         XCTAssertEqual(insights.count, 1)
         XCTAssertEqual(insights[0].title, "Expense Forecast")
-        XCTAssertEqual(insights[0].description, "Based on recent trends, your estimated monthly expenses are $1,000. Use this to plan your budget and savings goals.")
+        XCTAssertEqual(
+            insights[0].description,
+            "Based on recent trends, your estimated monthly expenses are $1,000. Use this to plan your budget and savings goals."
+        )
         XCTAssertEqual(insights[0].priority, InsightPriority.low)
         XCTAssertEqual(insights[0].type, InsightType.forecast)
         XCTAssertEqual(insights[0].visualizationType, VisualizationType.lineChart)
@@ -80,7 +89,7 @@ class FinancialForecastingTests: XCTestCase {
         let transactions = [
             FinancialTransaction(amount: -1000, date: Date()),
             FinancialTransaction(amount: 500, date: Date()),
-            FinancialTransaction(amount: -750, date: Date())
+            FinancialTransaction(amount: -750, date: Date()),
         ]
         let accounts = []
 
@@ -88,7 +97,10 @@ class FinancialForecastingTests: XCTestCase {
 
         XCTAssertEqual(insights.count, 1)
         XCTAssertEqual(insights[0].title, "Expense Forecast")
-        XCTAssertEqual(insights[0].description, "Based on recent trends, your estimated monthly expenses are $375. Use this to plan your budget and savings goals.")
+        XCTAssertEqual(
+            insights[0].description,
+            "Based on recent trends, your estimated monthly expenses are $375. Use this to plan your budget and savings goals."
+        )
         XCTAssertEqual(insights[0].priority, InsightPriority.low)
         XCTAssertEqual(insights[0].type, InsightType.forecast)
         XCTAssertEqual(insights[0].visualizationType, VisualizationType.lineChart)

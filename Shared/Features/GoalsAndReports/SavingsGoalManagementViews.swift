@@ -1,5 +1,5 @@
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 #if canImport(AppKit)
     import AppKit
@@ -29,13 +29,15 @@ public struct AddSavingsGoalView: View {
         NavigationView {
             Form {
                 Section(header: Text("Goal Details")) {
-                    TextField("Goal Name", text: self.$name).accessibilityLabel("Text Field").accessibilityLabel("Text Field")
+                    TextField("Goal Name", text: self.$name).accessibilityLabel("Text Field")
+                        .accessibilityLabel("Text Field")
 
-                    TextField("Target Amount", text: self.$targetAmountString).accessibilityLabel("Text Field").accessibilityLabel(
-                        "Text Field"
-                    )
+                    TextField("Target Amount", text: self.$targetAmountString).accessibilityLabel("Text Field")
+                        .accessibilityLabel(
+                            "Text Field"
+                        )
                     #if canImport(UIKit)
-                    .keyboardType(.decimalPad)
+                        .keyboardType(.decimalPad)
                     #endif
 
                     Toggle("Set Target Date", isOn: self.$hasTargetDate)
@@ -53,9 +55,10 @@ public struct AddSavingsGoalView: View {
                 }
 
                 Section(header: Text("Notes (Optional)")) {
-                    TextField("Add notes about this goal...", text: self.$notes, axis: .vertical).accessibilityLabel("Text Field")
+                    TextField("Add notes about this goal...", text: self.$notes, axis: .vertical)
                         .accessibilityLabel("Text Field")
-                        .lineLimit(3 ... 6)
+                        .accessibilityLabel("Text Field")
+                        .lineLimit(3...6)
                 }
             }
             .navigationTitle("Add Savings Goal")
@@ -135,7 +138,8 @@ public struct SavingsGoalDetailView: View {
                         .overlay {
                             Image(
                                 systemName: self.goal.isCompleted
-                                    ? "checkmark.circle.fill" : "target"
+                                    ? "checkmark.circle.fill"
+                                    : "target"
                             )
                             .font(.largeTitle)
                             .foregroundColor(self.goal.isCompleted ? .green : .blue)

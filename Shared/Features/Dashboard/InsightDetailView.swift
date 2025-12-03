@@ -1,5 +1,5 @@
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 public struct InsightDetailView: View {
     let insight: FinancialInsight
@@ -46,7 +46,8 @@ public struct InsightDetailView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     // Related IDs
                     if self.insight.relatedAccountId != nil || self.insight.relatedTransactionId != nil ||
-                        self.insight.relatedCategoryId != nil || self.insight.relatedBudgetId != nil {
+                        self.insight.relatedCategoryId != nil || self.insight.relatedBudgetId != nil
+                    {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Related Items")
                                 .font(.headline)
@@ -76,13 +77,13 @@ public struct InsightDetailView: View {
                             }
                         }
                     }
-                    
+
                     // Action Recommendations
                     if !self.insight.actionRecommendations.isEmpty {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Recommendations")
                                 .font(.headline)
-                            
+
                             ForEach(self.insight.actionRecommendations, id: \.self) { recommendation in
                                 HStack(alignment: .top) {
                                     Image(systemName: "checkmark.circle")

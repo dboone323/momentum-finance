@@ -1,9 +1,9 @@
 // Momentum Finance - Insights Summary Widget
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 /// A summary widget to display financial insights on the dashboard
 public struct InsightsSummaryWidget: View {
@@ -153,7 +153,8 @@ public struct InsightsSummaryWidget: View {
         return HStack {
             Image(
                 systemName: currentRatio <= 1.0
-                    ? "checkmark.circle.fill" : "exclamationmark.circle.fill"
+                    ? "checkmark.circle.fill"
+                    : "exclamationmark.circle.fill"
             )
             .foregroundColor(currentRatio <= 1.0 ? .green : .orange)
             .imageScale(.small)

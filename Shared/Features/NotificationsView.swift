@@ -6,8 +6,8 @@
 //  Copyright © 2025 Daniel Stevens. All rights reserved.
 //
 
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 import UserNotifications
 
 /// Notification center for managing smart alerts and system notifications
@@ -219,7 +219,7 @@ public struct NotificationsView: View {
 
         // Remove from system
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [
-            notification.id
+            notification.id,
         ])
     }
 

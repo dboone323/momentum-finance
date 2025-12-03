@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class TransactionsViewModelTests: XCTestCase {
     var viewModel: TransactionsViewModel!
@@ -18,7 +18,7 @@ class TransactionsViewModelTests: XCTestCase {
         let transactions = [
             FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
             FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
-            FinancialTransaction(transactionType: .transfer, amount: 20.0, date: Date())
+            FinancialTransaction(transactionType: .transfer, amount: 20.0, date: Date()),
         ]
 
         let filteredIncome = viewModel.filterTransactions(transactions, by: .income)
@@ -36,7 +36,7 @@ class TransactionsViewModelTests: XCTestCase {
         let transactions = [
             FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
             FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
-            FinancialTransaction(transactionType: .transfer, amount: 20.0, date: Date())
+            FinancialTransaction(transactionType: .transfer, amount: 20.0, date: Date()),
         ]
 
         let filteredByTitle = viewModel.searchTransactions(transactions, query: "Income")
@@ -54,14 +54,14 @@ class TransactionsViewModelTests: XCTestCase {
         let transactions = [
             FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
             FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
-            FinancialTransaction(transactionType: .transfer, amount: 20.0, date: Date())
+            FinancialTransaction(transactionType: .transfer, amount: 20.0, date: Date()),
         ]
 
         let grouped = viewModel.groupTransactionsByMonth(transactions)
         XCTAssertEqual(grouped.count, 1)
 
         let expectedGroup = [
-            "January 2023": [transactions[0]]
+            "January 2023": [transactions[0]],
         ]
         XCTAssertEqual(grouped, expectedGroup)
     }
@@ -70,7 +70,7 @@ class TransactionsViewModelTests: XCTestCase {
     func testTotalIncome() {
         let transactions = [
             FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
-            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date())
+            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
         ]
 
         XCTAssertEqual(viewModel.totalIncome(transactions), 50.0)
@@ -80,7 +80,7 @@ class TransactionsViewModelTests: XCTestCase {
     func testTotalExpenses() {
         let transactions = [
             FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
-            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date())
+            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
         ]
 
         XCTAssertEqual(viewModel.totalExpenses(transactions), -50.0)
@@ -90,7 +90,7 @@ class TransactionsViewModelTests: XCTestCase {
     func testNetIncome() {
         let transactions = [
             FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
-            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date())
+            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
         ]
 
         XCTAssertEqual(viewModel.netIncome(transactions), 50.0)
@@ -100,7 +100,7 @@ class TransactionsViewModelTests: XCTestCase {
     func testCurrentMonthTransactions() {
         let transactions = [
             FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
-            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date())
+            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
         ]
 
         let currentMonth = viewModel.currentMonthTransactions(transactions)

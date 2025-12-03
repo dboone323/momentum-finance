@@ -26,10 +26,14 @@ final class TransactionsGenerator: DataGenerator {
         let now = Date()
 
         // Generate transactions for the past 3 months
-        for monthOffset in 0 ..< 3 {
+        for monthOffset in 0..<3 {
             guard let monthDate = calendar.date(byAdding: .month, value: -monthOffset, to: now) else { continue }
 
-            let transactions = self.generateTransactionsForMonth(monthDate, categories: categoryDict, accounts: accountDict)
+            let transactions = self.generateTransactionsForMonth(
+                monthDate,
+                categories: categoryDict,
+                accounts: accountDict
+            )
             for transaction in transactions {
                 self.modelContext.insert(transaction)
             }
@@ -55,8 +59,9 @@ final class TransactionsGenerator: DataGenerator {
 
         // Income transactions (salary, etc.)
         if let incomeCategory = categories["Income"],
-           let checkingAccount = accounts["Checking Account"] {
-            for week in 0 ..< 4 {
+           let checkingAccount = accounts["Checking Account"]
+        {
+            for week in 0..<4 {
                 let payDate = calendar.date(byAdding: .day, value: week * 7 + 1, to: startOfMonth) ?? startOfMonth
                 let income = FinancialTransaction(
                     title: "Salary Deposit",
@@ -87,14 +92,16 @@ final class TransactionsGenerator: DataGenerator {
             ("Movie Theater", 28.00, "Entertainment"),
             ("Hardware Store", 156.75, "Shopping"),
             ("Car Insurance", 145.00, "Transportation"),
-            ("Doctor Visit", 120.00, "Health & Fitness")
+            ("Doctor Visit", 120.00, "Health & Fitness"),
         ]
 
         for (title, amount, categoryName) in expenseData {
             if let category = categories[categoryName],
-               let account = accounts["Checking Account"] ?? accounts.values.first {
-                let randomDay = Int.random(in: 1 ... daysInMonth)
-                let transactionDate = calendar.date(byAdding: .day, value: randomDay - 1, to: startOfMonth) ?? startOfMonth
+               let account = accounts["Checking Account"] ?? accounts.values.first
+            {
+                let randomDay = Int.random(in: 1...daysInMonth)
+                let transactionDate = calendar
+                    .date(byAdding: .day, value: randomDay - 1, to: startOfMonth) ?? startOfMonth
 
                 let transaction = FinancialTransaction(
                     title: title,

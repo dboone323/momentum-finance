@@ -1,5 +1,5 @@
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 #if canImport(UIKit)
     import UIKit
@@ -29,10 +29,10 @@ public class HapticManager: ObservableObject {
             self.impactFeedbackGenerator.prepare()
             self.notificationFeedbackGenerator.prepare()
             self.selectionFeedbackGenerator.prepare()
-            
+
             // Respect system accessibility settings
             checkAccessibilitySettings()
-            
+
             // Listen for accessibility changes
             NotificationCenter.default.addObserver(
                 self,
@@ -42,20 +42,21 @@ public class HapticManager: ObservableObject {
             )
         #endif
     }
-    
+
     #if os(iOS)
-    /// Check and respect system accessibility settings
-    private func checkAccessibilitySettings() {
-        // Disable haptics if Reduce Motion is enabled
-        if UIAccessibility.isReduceMotionEnabled {
-            isEnabled = false
+        /// Check and respect system accessibility settings
+        private func checkAccessibilitySettings() {
+            // Disable haptics if Reduce Motion is enabled
+            if UIAccessibility.isReduceMotionEnabled {
+                isEnabled = false
+            }
         }
-    }
-    
-    /// Handle accessibility settings changes
-    @objc private func accessibilitySettingsChanged() {
-        checkAccessibilitySettings()
-    }
+
+        /// Handle accessibility settings changes
+        @objc
+        private func accessibilitySettingsChanged() {
+            checkAccessibilitySettings()
+        }
     #endif
 
     // MARK: - Impact Feedback
@@ -309,7 +310,8 @@ extension View {
         /// <#Description#>
         /// - Returns: <#description#>
         func hapticFeedback(_ style: UIImpactFeedbackGenerator.FeedbackStyle, trigger: Bool)
-            -> some View {
+            -> some View
+        {
             modifier(HapticFeedbackModifier(style: style, trigger: trigger))
         }
     #else

@@ -43,7 +43,8 @@ public enum InsightType: Sendable {
 // - DataImportModels.swift: ValidationError, ImportResult, CSVColumnMapping
 // - ThemeModels.swift: ThemeMode, ColorDefinitions, DarkModePreference
 // - TransactionModels.swift: TransactionFilter, BreadcrumbItem, DeepLink
-// - FinancialServices.swift: EntityManager, DefaultEntityManager, ExportEngineService, FinancialMLModels, TransactionPatternAnalyzer
+// - FinancialServices.swift: EntityManager, DefaultEntityManager, ExportEngineService, FinancialMLModels,
+// TransactionPatternAnalyzer
 // - AnimationComponents.swift: AnimatedCardComponent, AnimatedButtonComponent, etc.
 // - ImportComponents.swift: DataImportHeaderComponent, FileSelectionComponent, etc.
 // - InsightsComponents.swift: InsightsLoadingView, InsightRowView, etc.

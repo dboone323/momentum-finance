@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class ReportsSectionTests: XCTestCase {
     var reportsSection: ReportsSection!
@@ -8,7 +8,7 @@ class ReportsSectionTests: XCTestCase {
     func testFilteredTransactions() {
         let expectedTransactions = [
             FinancialTransaction(date: Date(), transactionType: .income, amount: 100.0),
-            FinancialTransaction(date: Date(), transactionType: .expense, amount: -50.0)
+            FinancialTransaction(date: Date(), transactionType: .expense, amount: -50.0),
         ]
 
         XCTAssertEqual(reportsSection.filteredTransactions, expectedTransactions)
@@ -18,7 +18,7 @@ class ReportsSectionTests: XCTestCase {
     func testCurrentPeriodBudgets() {
         let expectedBudgets = [
             Budget(month: "January", totalAmount: 1000.0),
-            Budget(month: "February", totalAmount: 800.0)
+            Budget(month: "February", totalAmount: 800.0),
         ]
 
         XCTAssertEqual(reportsSection.currentPeriodBudgets, expectedBudgets)
@@ -41,7 +41,7 @@ class ReportsSectionTests: XCTestCase {
     func testSpendingByCategoryCard() {
         let expectedCategories = [
             ExpenseCategory(name: "Food", amountSpent: 300.0),
-            ExpenseCategory(name: "Transportation", amountSpent: 200.0)
+            ExpenseCategory(name: "Transportation", amountSpent: 200.0),
         ]
 
         XCTAssertEqual(reportsSection.categories, expectedCategories)
@@ -51,7 +51,7 @@ class ReportsSectionTests: XCTestCase {
     func testBudgetPerformanceCard() {
         let expectedBudgets = [
             Budget(month: "January", totalAmount: 1000.0),
-            Budget(month: "February", totalAmount: 800.0)
+            Budget(month: "February", totalAmount: 800.0),
         ]
 
         XCTAssertEqual(reportsSection.budgets, expectedBudgets)

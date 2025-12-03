@@ -110,7 +110,7 @@ public class TransactionsDataGenerator: DataGenerator {
             (
                 title: "Travel", amount: 500.0, date: Date().addingTimeInterval(-86400 * 40),
                 type: TransactionType.expense, category: "Travel", account: creditCard
-            )
+            ),
         ]
 
         for transaction in transactions {
@@ -219,7 +219,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
     /// - Parameter creditCard: The user's credit card account.
     /// - Returns: An array of entertainment `SubscriptionData`.
     private func createEntertainmentSubscriptions(creditCard: FinancialAccount)
-        -> [SubscriptionData] {
+        -> [SubscriptionData]
+    {
         let calendar = Calendar.current
         let today = Date()
 
@@ -256,7 +257,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 category: "Entertainment",
                 account: creditCard,
                 isActive: false
-            )
+            ),
         ]
     }
 
@@ -304,7 +305,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 category: "Utilities",
                 account: checkingAccount,
                 isActive: true
-            )
+            ),
         ]
     }
 
@@ -312,7 +313,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
     /// - Parameter checkingAccount: The user's checking account.
     /// - Returns: An array of personal `SubscriptionData`.
     private func createPersonalSubscriptions(checkingAccount: FinancialAccount)
-        -> [SubscriptionData] {
+        -> [SubscriptionData]
+    {
         let calendar = Calendar.current
         let today = Date()
 
@@ -331,7 +333,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 category: "Personal Care",
                 account: checkingAccount,
                 isActive: true
-            )
+            ),
         ]
     }
 
@@ -339,7 +341,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
     /// - Parameter checkingAccount: The user's checking account.
     /// - Returns: An array of transportation `SubscriptionData`.
     private func createTransportationSubscriptions(checkingAccount: FinancialAccount)
-        -> [SubscriptionData] {
+        -> [SubscriptionData]
+    {
         let calendar = Calendar.current
         let today = Date()
 
@@ -358,7 +361,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 category: "Transportation",
                 account: checkingAccount,
                 isActive: true
-            )
+            ),
         ]
     }
 }

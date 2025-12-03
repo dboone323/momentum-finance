@@ -9,7 +9,9 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
 
     // Group by category
     // Map categories to a non-optional key (use category name or "Uncategorized")
-    let categorySpending = Dictionary(grouping: transactions.filter { $0.amount < 0 }) { (tx: FinancialTransaction) -> String in
+    let categorySpending = Dictionary(grouping: transactions
+        .filter { $0.amount < 0 })
+    { (tx: FinancialTransaction) -> String in
         tx.category?.name ?? "Uncategorized"
     }
 
@@ -20,13 +22,14 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
     var monthlyAverages: [String: Double] = [:]
 
     for (category, categoryTransactions) in categorySpending {
-        let monthlySpends = (0 ..< monthsBack).compactMap { monthOffset -> Double? in
+        let monthlySpends = (0..<monthsBack).compactMap { monthOffset -> Double? in
             let targetMonth = calendar.date(byAdding: .month, value: -monthOffset, to: currentMonth)!
             let monthTransactions = categoryTransactions.filter {
-                calendar.date(from: calendar.dateComponents([.year, .month], from: $0.date)) == calendar.date(from: calendar.dateComponents(
-                    [.year, .month],
-                    from: targetMonth
-                ))
+                calendar.date(from: calendar.dateComponents([.year, .month], from: $0.date)) == calendar
+                    .date(from: calendar.dateComponents(
+                        [.year, .month],
+                        from: targetMonth
+                    ))
             }
             guard !monthTransactions.isEmpty else { return nil }
             return monthTransactions.reduce(0) { $0 + abs($1.amount) }
@@ -55,7 +58,7 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
             let budgetDescription = "Based on your average spending of \(fi_formatCurrency(averageSpend)), "
                 + "consider setting a budget of \(fi_formatCurrency(recommendedBudget)) for \(categoryName)."
 
-            let insight = IntelligenceFinancialInsight(
+            let insight = FinancialInsight(
                 title: "Budget Recommendation: \(categoryName)",
                 description: budgetDescription,
                 priority: .medium,
@@ -65,9 +68,9 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
                 relatedCategoryId: categoryName,
                 relatedBudgetId: nil,
                 visualizationType: nil,
-                data: [
-                    ("Average Spending", averageSpend),
-                    ("Recommended Budget", recommendedBudget)
+                chartData: [
+                    ChartDataPoint(label: "Average Spending", value: averageSpend),
+                    ChartDataPoint(label: "Recommended Budget", value: recommendedBudget),
                 ]
             )
             insights.append(insight)
@@ -76,7 +79,7 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
             let budgetDescription = "Your current budget of \(fi_formatCurrency(currentBudgetAmount)) for \(categoryName) "
                 + "may be too low. Consider increasing it to \(fi_formatCurrency(recommendedBudget))."
 
-            let insight = IntelligenceFinancialInsight(
+            let insight = FinancialInsight(
                 title: "Budget Adjustment: \(categoryName)",
                 description: budgetDescription,
                 priority: .medium,
@@ -86,10 +89,10 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
                 relatedCategoryId: categoryName,
                 relatedBudgetId: nil,
                 visualizationType: nil,
-                data: [
-                    ("Current Budget", currentBudgetAmount),
-                    ("Average Spending", averageSpend),
-                    ("Recommended Budget", recommendedBudget)
+                chartData: [
+                    ChartDataPoint(label: "Current Budget", value: currentBudgetAmount),
+                    ChartDataPoint(label: "Average Spending", value: averageSpend),
+                    ChartDataPoint(label: "Recommended Budget", value: recommendedBudget),
                 ]
             )
             insights.append(insight)

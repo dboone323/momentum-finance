@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class DashboardComponentsTests: XCTestCase {
     var subscriptions: [Subscription]!
@@ -16,7 +16,13 @@ class DashboardComponentsTests: XCTestCase {
         )
 
         // GIVEN
-        let expectedTexts = ["Subscriptions", "View All", "Monthly Subscription", "Yearly Subscription", "Biannual Subscription"]
+        let expectedTexts = [
+            "Subscriptions",
+            "View All",
+            "Monthly Subscription",
+            "Yearly Subscription",
+            "Biannual Subscription",
+        ]
         var actualTexts = [String]()
 
         // WHEN

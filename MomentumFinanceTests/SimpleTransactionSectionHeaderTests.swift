@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class SimpleTransactionSectionHeaderTests: XCTestCase {
 
@@ -8,7 +8,7 @@ class SimpleTransactionSectionHeaderTests: XCTestCase {
         let group = (key: "2025-08", value: [
             FinancialTransaction(transactionType: .income, amount: 100.0),
             FinancialTransaction(transactionType: .expense, amount: -50.0),
-            FinancialTransaction(transactionType: .income, amount: 75.0)
+            FinancialTransaction(transactionType: .income, amount: 75.0),
         ])
 
         // WHEN: Creating an instance of SimpleTransactionSectionHeader
@@ -34,7 +34,7 @@ class SimpleTransactionSectionHeaderTests: XCTestCase {
         // GIVEN: A group with a key and an array of financial transactions
         let group = (key: "2025-08", value: [
             FinancialTransaction(transactionType: .income, amount: 100.0),
-            FinancialTransaction(transactionType: .expense, amount: -50.0)
+            FinancialTransaction(transactionType: .expense, amount: -50.0),
         ])
 
         // WHEN: Creating an instance of SimpleTransactionSectionHeader
@@ -61,7 +61,7 @@ class SimpleTransactionSectionHeaderTests: XCTestCase {
         // GIVEN: A group with a key and an array of financial transactions
         let group = (key: "2025-08", value: [
             FinancialTransaction(transactionType: .income, amount: 100.0),
-            FinancialTransaction(transactionType: .expense, amount: -30.0)
+            FinancialTransaction(transactionType: .expense, amount: -30.0),
         ])
 
         // WHEN: Creating an instance of SimpleTransactionSectionHeader

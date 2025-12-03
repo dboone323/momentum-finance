@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class BudgetRecommendationsTests: XCTestCase {
     var budgetRecommendations: BudgetRecommendations!
@@ -9,13 +9,13 @@ class BudgetRecommendationsTests: XCTestCase {
         let transactions: [FinancialTransaction] = [
             FinancialTransaction(amount: -100, date: Date(), category: Category(name: "Groceries")),
             FinancialTransaction(amount: 200, date: Date(), category: Category(name: "Entertainment")),
-            FinancialTransaction(amount: -50, date: Date(), category: Category(name: "Clothing"))
+            FinancialTransaction(amount: -50, date: Date(), category: Category(name: "Clothing")),
         ]
 
         let budgets: [Budget] = [
             Budget(limitAmount: 300, category: Category(name: "Groceries")),
             Budget(limitAmount: 400, category: Category(name: "Entertainment")),
-            Budget(limitAmount: 250, category: Category(name: "Clothing"))
+            Budget(limitAmount: 250, category: Category(name: "Clothing")),
         ]
 
         let insights = budgetRecommendations.fi_findBudgetRecommendations(transactions: transactions, budgets: budgets)
@@ -24,7 +24,10 @@ class BudgetRecommendationsTests: XCTestCase {
 
         let insight = insights.first!
         XCTAssertEqual(insight.title, "Budget Recommendation: Groceries")
-        XCTAssertEqual(insight.description, "Based on your average spending of $200.00, consider setting a budget of $310.00 for Groceries.")
+        XCTAssertEqual(
+            insight.description,
+            "Based on your average spending of $200.00, consider setting a budget of $310.00 for Groceries."
+        )
         XCTAssertEqual(insight.priority, .medium)
         XCTAssertEqual(insight.type, .budgetRecommendation)
         XCTAssertEqual(insight.relatedAccountId, nil)
@@ -46,13 +49,13 @@ class BudgetRecommendationsTests: XCTestCase {
         let transactions: [FinancialTransaction] = [
             FinancialTransaction(amount: -100, date: Date(), category: Category(name: "Groceries")),
             FinancialTransaction(amount: 200, date: Date(), category: Category(name: "Entertainment")),
-            FinancialTransaction(amount: -50, date: Date(), category: Category(name: "Clothing"))
+            FinancialTransaction(amount: -50, date: Date(), category: Category(name: "Clothing")),
         ]
 
         let budgets: [Budget] = [
             Budget(limitAmount: 300, category: Category(name: "Groceries")),
             Budget(limitAmount: 400, category: Category(name: "Entertainment")),
-            Budget(limitAmount: 250, category: Category(name: "Clothing"))
+            Budget(limitAmount: 250, category: Category(name: "Clothing")),
         ]
 
         let insights = budgetRecommendations.fi_findBudgetRecommendations(transactions: transactions, budgets: budgets)
@@ -61,7 +64,10 @@ class BudgetRecommendationsTests: XCTestCase {
 
         let insight = insights.first!
         XCTAssertEqual(insight.title, "Budget Recommendation: Groceries")
-        XCTAssertEqual(insight.description, "Based on your average spending of $200.00, consider setting a budget of $310.00 for Groceries.")
+        XCTAssertEqual(
+            insight.description,
+            "Based on your average spending of $200.00, consider setting a budget of $310.00 for Groceries."
+        )
         XCTAssertEqual(insight.priority, .medium)
         XCTAssertEqual(insight.type, .budgetRecommendation)
         XCTAssertEqual(insight.relatedAccountId, nil)

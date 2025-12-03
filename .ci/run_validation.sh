@@ -10,10 +10,11 @@ export CR_USE_OLLAMA=1
 
 if [[ -z "${OLLAMA_CLOUD_URL}" ]]; then
 	if command -v ollama >/dev/null 2>&1; then
-		PID_FILE="/tmp/ollama_ci_${RANDOM}.pid"
-		trap '[[ -f "$PID_FILE" ]] && kill "$(cat "$PID_FILE" 2>/dev/null)" 2>/dev/null || true' EXIT
+		PID_FILE="$(mktemp /tmp/ollama_ci.XXXXXX)"
+		mkdir -p "$(dirname "$PID_FILE")"
+		trap '[[ -f "${PID_FILE}" ]] && kill "$(cat "${PID_FILE}" 2>/dev/null)" 2>/dev/null || true' EXIT
 		nohup ollama serve >/dev/null 2>&1 &
-		echo $! >"$PID_FILE"
+		echo $! >"${PID_FILE}"
 		sleep 2
 	fi
 fi
@@ -23,6 +24,10 @@ command -v curl >/dev/null 2>&1 && curl -sS "${OLLAMA_ENDPOINT}/api/tags" >/dev/
 command -v swiftlint >/dev/null 2>&1 && swiftlint --strict || true
 command -v swiftformat >/dev/null 2>&1 && [ -f .swiftformat ] && swiftformat . --config .swiftformat --lint || true
 
+echo "DEBUG: PWD=$(pwd)"
+echo "DEBUG: Package.swift exists: $([ -f Package.swift ] && echo yes || echo no)"
+ls -la Package.swift || true
+
 if [ -x Tools/Automation/run_parallel_tests.sh ]; then
 	chmod +x Tools/Automation/run_parallel_tests.sh || true
 	Tools/Automation/run_parallel_tests.sh
@@ -30,14 +35,19 @@ else
 	if [ -f Package.swift ]; then
 		swift test --parallel
 	else
-		proj=$(ls -1 *.xcodeproj 2>/dev/null | head -n1)
+		proj=$(ls -1d *.xcodeproj 2>/dev/null | head -n1)
 		if [ -n "$proj" ]; then
 			scheme=${proj%.xcodeproj}
-			if command -v xcpretty >/dev/null 2>&1; then
-				xcodebuild -scheme "$scheme" -destination 'platform=macOS' build | xcpretty || xcodebuild -scheme "$scheme" -destination 'platform=macOS' build || true
-			else
-				xcodebuild -scheme "$scheme" -destination 'platform=macOS' build || true
+            DD_PATH=$(mktemp -d /tmp/dd.XXXXXX)
+			if [ "$scheme" == "MomentumFinance" ]; then
+				xcodebuild -scheme MomentumFinanceCore -destination 'platform=macOS' -derivedDataPath "$DD_PATH" build || true
 			fi
+			if command -v xcpretty >/dev/null 2>&1; then
+				xcodebuild -scheme "$scheme" -destination 'platform=macOS' -derivedDataPath "$DD_PATH" test | xcpretty || xcodebuild -scheme "$scheme" -destination 'platform=macOS' -derivedDataPath "$DD_PATH" test || true
+			else
+				xcodebuild -scheme "$scheme" -destination 'platform=macOS' -derivedDataPath "$DD_PATH" test || true
+			fi
+            rm -rf "$DD_PATH"
 		else
 			echo "No Package.swift or .xcodeproj found"
 		fi

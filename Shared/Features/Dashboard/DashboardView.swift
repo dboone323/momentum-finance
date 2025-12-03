@@ -1,6 +1,6 @@
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 // AppKit is only available on macOS
 #if canImport(AppKit)
@@ -178,8 +178,8 @@ extension Features.Dashboard {
         private var timeOfDayGreeting: String {
             let hour = Calendar.current.component(.hour, from: Date())
             switch hour {
-            case 0 ..< 12: return "Morning"
-            case 12 ..< 17: return "Afternoon"
+            case 0..<12: return "Morning"
+            case 12..<17: return "Afternoon"
             default: return "Evening"
             }
         }

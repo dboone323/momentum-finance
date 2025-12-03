@@ -1,14 +1,14 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class AccountsListViewTests: XCTestCase {
     var accounts: [FinancialAccount] = [
         FinancialAccount(name: "Checking", balance: 1000.50, iconName: "account.circle.fill"),
-        FinancialAccount(name: "Savings", balance: -200.75, iconName: "bank.circle.fill")
+        FinancialAccount(name: "Savings", balance: -200.75, iconName: "bank.circle.fill"),
     ]
     var categories: [ExpenseCategory] = [
         ExpenseCategory(name: "Food", color: .red),
-        ExpenseCategory(name: "Transportation", color: .blue)
+        ExpenseCategory(name: "Transportation", color: .blue),
     ]
 
     func testTotalBalance() {

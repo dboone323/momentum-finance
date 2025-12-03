@@ -1,6 +1,6 @@
-@testable import MomentumFinanceCore
 import SwiftData
 import XCTest
+@testable import MomentumFinanceCore
 
 @MainActor
 final class DataExporterContentTests: XCTestCase {
@@ -8,14 +8,14 @@ final class DataExporterContentTests: XCTestCase {
 
     override func setUp() async throws {
         let schema = Schema([
-            FinancialTransaction.self, FinancialAccount.self, ExpenseCategory.self
+            FinancialTransaction.self, FinancialAccount.self, ExpenseCategory.self,
         ])
         self.container = try ModelContainer(
             for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
         let context = ModelContext(container)
         // Seed 3 transactions (2 incomes, 1 expense)
-        for i in 0 ..< 3 {
+        for i in 0..<3 {
             let tx = FinancialTransaction(
                 title: "SeedTx\(i)",
                 amount: Double(100 + i),
@@ -54,7 +54,7 @@ final class DataExporterContentTests: XCTestCase {
     func testExporterWritesNoDataRowWhenEmpty() async throws {
         // Fresh container with no transactions
         let schema = Schema([
-            FinancialTransaction.self, FinancialAccount.self, ExpenseCategory.self
+            FinancialTransaction.self, FinancialAccount.self, ExpenseCategory.self,
         ])
         let emptyContainer = try ModelContainer(
             for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true)

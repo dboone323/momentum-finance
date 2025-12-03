@@ -5,12 +5,12 @@
 // Reusable chart components
 //
 
-import SwiftUI
 import Charts
+import SwiftUI
 
 struct SpendingPieChart: View {
     let data: [CategorySpending]
-    
+
     var body: some View {
         Chart(data, id: \.categoryId) { item in
             SectorMark(
@@ -26,7 +26,7 @@ struct SpendingPieChart: View {
 
 struct NetWorthLineChart: View {
     let data: [NetWorthPoint]
-    
+
     var body: some View {
         Chart(data) { item in
             LineMark(
@@ -34,7 +34,7 @@ struct NetWorthLineChart: View {
                 y: .value("Net Worth", item.netWorth)
             )
             .interpolationMethod(.catmullRom)
-            
+
             AreaMark(
                 x: .value("Date", item.date),
                 y: .value("Net Worth", item.netWorth)

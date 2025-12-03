@@ -2,9 +2,9 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 // MARK: - Account Types
 

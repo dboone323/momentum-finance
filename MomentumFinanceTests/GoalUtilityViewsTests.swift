@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class GoalUtilityViewsTests: XCTestCase {
     // Test the GoalHeaderView
@@ -11,7 +11,12 @@ class GoalUtilityViewsTests: XCTestCase {
         var showingAddGoal = false
 
         // When
-        let goalView = GoalHeaderView(title: title, subtitle: subtitle, selectedTab: $selectedTab, showingAddGoal: $showingAddGoal)
+        let goalView = GoalHeaderView(
+            title: title,
+            subtitle: subtitle,
+            selectedTab: $selectedTab,
+            showingAddGoal: $showingAddGoal
+        )
 
         // Then
         XCTAssertEqual(goalView.title, title)

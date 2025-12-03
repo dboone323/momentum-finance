@@ -30,11 +30,11 @@ struct RecurringTransaction: Identifiable, Codable {
 
 class RecurringTransactionService {
     static let shared = RecurringTransactionService()
-    
+
     func processRecurringTransactions(transactions: [RecurringTransaction]) -> [Transaction] {
         var newTransactions: [Transaction] = []
         let today = Date()
-        
+
         for var recurring in transactions where recurring.isActive {
             if recurring.nextDueDate <= today {
                 // Generate transaction
@@ -46,15 +46,15 @@ class RecurringTransactionService {
                     accountId: recurring.accountId
                 )
                 newTransactions.append(transaction)
-                
+
                 // Update next due date
                 recurring.nextDueDate = calculateNextDate(from: recurring.nextDueDate, interval: recurring.interval)
             }
         }
-        
+
         return newTransactions
     }
-    
+
     private func calculateNextDate(from date: Date, interval: RecurrenceInterval) -> Date {
         let calendar = Calendar.current
         switch interval {

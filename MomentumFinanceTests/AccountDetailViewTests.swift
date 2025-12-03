@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class AccountDetailViewTests: XCTestCase {
     var account: FinancialAccount!
@@ -8,7 +8,11 @@ class AccountDetailViewTests: XCTestCase {
 
     // Test the AccountDetailView constructor
     func testAccountDetailViewInitialization() {
-        let accountDetailView = AccountDetailView(account: self.account, categories: self.categories, accounts: self.accounts)
+        let accountDetailView = AccountDetailView(
+            account: self.account,
+            categories: self.categories,
+            accounts: self.accounts
+        )
 
         XCTAssertEqual(accountDetailView.account, self.account)
         XCTAssertEqual(accountDetailView.categories, self.categories)
@@ -17,7 +21,11 @@ class AccountDetailViewTests: XCTestCase {
 
     // Test the filteredTransactions property
     func testFilteredTransactions() {
-        let accountDetailView = AccountDetailView(account: self.account, categories: self.categories, accounts: self.accounts)
+        let accountDetailView = AccountDetailView(
+            account: self.account,
+            categories: self.categories,
+            accounts: self.accounts
+        )
 
         XCTAssertEqual(accountDetailView.filteredTransactions.count, 2)
         XCTAssertTrue(accountDetailView.filteredTransactions[0].date >= Date().addingTimeInterval(-7 * 24 * 60 * 60))
@@ -26,7 +34,11 @@ class AccountDetailViewTests: XCTestCase {
 
     // Test the formattedCurrency method
     func testFormattedCurrency() {
-        let accountDetailView = AccountDetailView(account: self.account, categories: self.categories, accounts: self.accounts)
+        let accountDetailView = AccountDetailView(
+            account: self.account,
+            categories: self.categories,
+            accounts: self.accounts
+        )
 
         XCTAssertEqual(accountDetailView.formattedCurrency(500.0), "$500.00")
         XCTAssertEqual(accountDetailView.formattedCurrency(-100.0), "-$100.00")
@@ -34,7 +46,11 @@ class AccountDetailViewTests: XCTestCase {
 
     // Test the ActivityChartView
     func testActivityChartView() {
-        let accountDetailView = AccountDetailView(account: self.account, categories: self.categories, accounts: self.accounts)
+        let accountDetailView = AccountDetailView(
+            account: self.account,
+            categories: self.categories,
+            accounts: self.accounts
+        )
 
         XCTAssertNil(accountDetailView.filteredTransactions.isEmpty)
         XCTAssertTrue(accountDetailView.filteredTransactions.count > 1)

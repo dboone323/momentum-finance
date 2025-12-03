@@ -1,14 +1,14 @@
 //
-//  SearchEngineService.swift
+//  RootSearchEngineService.swift
 //  MomentumFinance
 //
 //  Service for performing global search across financial data
 //
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 /// Service for performing global search across financial data
 public final class SearchEngineService: ObservableObject {

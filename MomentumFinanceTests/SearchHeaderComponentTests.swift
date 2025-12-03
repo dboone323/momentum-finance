@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class SearchHeaderComponentTests: XCTestCase {
     var sut: SearchHeaderComponent!

@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class SubscriptionsViewModelTests: XCTestCase {
     var viewModel: SubscriptionsViewModel!
@@ -15,9 +15,27 @@ class SubscriptionsViewModelTests: XCTestCase {
 
     // Test subscriptionsDueThisWeek method
     func testSubscriptionsDueThisWeek() {
-        let subscription1 = Subscription(id: UUID(), isActive: true, nextDueDate: Date().addingTimeInterval(7 * 24 * 60 * 60), billingCycle: .weekly, amount: 10.0)
-        let subscription2 = Subscription(id: UUID(), isActive: false, nextDueDate: Date().addingTimeInterval(3 * 24 * 60 * 60), billingCycle: .monthly, amount: 5.0)
-        let subscription3 = Subscription(id: UUID(), isActive: true, nextDueDate: Date().addingTimeInterval(10 * 24 * 60 * 60), billingCycle: .yearly, amount: 20.0)
+        let subscription1 = Subscription(
+            id: UUID(),
+            isActive: true,
+            nextDueDate: Date().addingTimeInterval(7 * 24 * 60 * 60),
+            billingCycle: .weekly,
+            amount: 10.0
+        )
+        let subscription2 = Subscription(
+            id: UUID(),
+            isActive: false,
+            nextDueDate: Date().addingTimeInterval(3 * 24 * 60 * 60),
+            billingCycle: .monthly,
+            amount: 5.0
+        )
+        let subscription3 = Subscription(
+            id: UUID(),
+            isActive: true,
+            nextDueDate: Date().addingTimeInterval(10 * 24 * 60 * 60),
+            billingCycle: .yearly,
+            amount: 20.0
+        )
 
         let subscriptions = [subscription1, subscription2, subscription3]
         let expectedSubscriptions = [subscription1, subscription3]
@@ -27,9 +45,27 @@ class SubscriptionsViewModelTests: XCTestCase {
 
     // Test subscriptionsDueToday method
     func testSubscriptionsDueToday() {
-        let subscription1 = Subscription(id: UUID(), isActive: true, nextDueDate: Date().addingTimeInterval(7 * 24 * 60 * 60), billingCycle: .weekly, amount: 10.0)
-        let subscription2 = Subscription(id: UUID(), isActive: false, nextDueDate: Date().addingTimeInterval(3 * 24 * 60 * 60), billingCycle: .monthly, amount: 5.0)
-        let subscription3 = Subscription(id: UUID(), isActive: true, nextDueDate: Date().addingTimeInterval(10 * 24 * 60 * 60), billingCycle: .yearly, amount: 20.0)
+        let subscription1 = Subscription(
+            id: UUID(),
+            isActive: true,
+            nextDueDate: Date().addingTimeInterval(7 * 24 * 60 * 60),
+            billingCycle: .weekly,
+            amount: 10.0
+        )
+        let subscription2 = Subscription(
+            id: UUID(),
+            isActive: false,
+            nextDueDate: Date().addingTimeInterval(3 * 24 * 60 * 60),
+            billingCycle: .monthly,
+            amount: 5.0
+        )
+        let subscription3 = Subscription(
+            id: UUID(),
+            isActive: true,
+            nextDueDate: Date().addingTimeInterval(10 * 24 * 60 * 60),
+            billingCycle: .yearly,
+            amount: 20.0
+        )
 
         let subscriptions = [subscription1, subscription2, subscription3]
         let expectedSubscriptions = [subscription1]
@@ -39,9 +75,27 @@ class SubscriptionsViewModelTests: XCTestCase {
 
     // Test overdueSubscriptions method
     func testOverdueSubscriptions() {
-        let subscription1 = Subscription(id: UUID(), isActive: true, nextDueDate: Date().addingTimeInterval(7 * 24 * 60 * 60), billingCycle: .weekly, amount: 10.0)
-        let subscription2 = Subscription(id: UUID(), isActive: false, nextDueDate: Date().addingTimeInterval(3 * 24 * 60 * 60), billingCycle: .monthly, amount: 5.0)
-        let subscription3 = Subscription(id: UUID(), isActive: true, nextDueDate: Date().addingTimeInterval(-1 * 24 * 60 * 60), billingCycle: .yearly, amount: 20.0)
+        let subscription1 = Subscription(
+            id: UUID(),
+            isActive: true,
+            nextDueDate: Date().addingTimeInterval(7 * 24 * 60 * 60),
+            billingCycle: .weekly,
+            amount: 10.0
+        )
+        let subscription2 = Subscription(
+            id: UUID(),
+            isActive: false,
+            nextDueDate: Date().addingTimeInterval(3 * 24 * 60 * 60),
+            billingCycle: .monthly,
+            amount: 5.0
+        )
+        let subscription3 = Subscription(
+            id: UUID(),
+            isActive: true,
+            nextDueDate: Date().addingTimeInterval(-1 * 24 * 60 * 60),
+            billingCycle: .yearly,
+            amount: 20.0
+        )
 
         let subscriptions = [subscription1, subscription2, subscription3]
         let expectedSubscriptions = [subscription3]
@@ -51,9 +105,27 @@ class SubscriptionsViewModelTests: XCTestCase {
 
     // Test totalMonthlyAmount method
     func testTotalMonthlyAmount() {
-        let subscription1 = Subscription(id: UUID(), isActive: true, nextDueDate: Date().addingTimeInterval(7 * 24 * 60 * 60), billingCycle: .weekly, amount: 10.0)
-        let subscription2 = Subscription(id: UUID(), isActive: false, nextDueDate: Date().addingTimeInterval(3 * 24 * 60 * 60), billingCycle: .monthly, amount: 5.0)
-        let subscription3 = Subscription(id: UUID(), isActive: true, nextDueDate: Date().addingTimeInterval(-1 * 24 * 60 * 60), billingCycle: .yearly, amount: 20.0)
+        let subscription1 = Subscription(
+            id: UUID(),
+            isActive: true,
+            nextDueDate: Date().addingTimeInterval(7 * 24 * 60 * 60),
+            billingCycle: .weekly,
+            amount: 10.0
+        )
+        let subscription2 = Subscription(
+            id: UUID(),
+            isActive: false,
+            nextDueDate: Date().addingTimeInterval(3 * 24 * 60 * 60),
+            billingCycle: .monthly,
+            amount: 5.0
+        )
+        let subscription3 = Subscription(
+            id: UUID(),
+            isActive: true,
+            nextDueDate: Date().addingTimeInterval(-1 * 24 * 60 * 60),
+            billingCycle: .yearly,
+            amount: 20.0
+        )
 
         let subscriptions = [subscription1, subscription2, subscription3]
         let expectedTotal = 35.0 // (10 + 20) / 4.33

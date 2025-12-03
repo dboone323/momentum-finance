@@ -1,6 +1,6 @@
 import Foundation
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 // Import transaction types removed
 
@@ -52,7 +52,7 @@ public struct TransactionListView: View {
 
     public var body: some View {
         LazyVStack(spacing: 8) {
-            ForEach(0 ..< self.transactions.count, id: \.self) { index in
+            ForEach(0..<self.transactions.count, id: \.self) { index in
                 TransactionRowView(
                     transaction: self.transactions[index],
                     onTap: { self.onTransactionTapped(self.transactions[index]) },
@@ -146,24 +146,24 @@ public struct AddTransactionView: View {
             }
             .padding()
             #if os(iOS)
-            .navigationBarTitleDisplayMode(.inline)
+                .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        self.dismiss()
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancel") {
+                            self.dismiss()
+                        }
+                        .accessibilityLabel("Cancel")
                     }
-                    .accessibilityLabel("Cancel")
-                }
 
-                ToolbarItem(placement: .primaryAction) {
-                    Button("Save") {
-                        self.dismiss()
+                    ToolbarItem(placement: .primaryAction) {
+                        Button("Save") {
+                            self.dismiss()
+                        }
+                        .fontWeight(.semibold)
+                        .accessibilityLabel("Save")
                     }
-                    .fontWeight(.semibold)
-                    .accessibilityLabel("Save")
                 }
-            }
         }
     }
 
@@ -318,7 +318,8 @@ public struct SearchAndFilterSection: View {
     }
 
     private func filterChip(_ title: String, _ isSelected: Bool, _ filter: TransactionFilter)
-    -> some View {
+        -> some View
+    {
         Button(action: {
             self.selectedFilter = filter
         }, label: {

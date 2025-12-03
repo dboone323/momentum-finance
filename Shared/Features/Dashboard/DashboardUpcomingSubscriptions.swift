@@ -5,9 +5,9 @@
 //  Created by GitHub Copilot on 2025-08-19.
 //
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 extension Features.Dashboard {
     struct DashboardUpcomingSubscriptions: View {
@@ -27,7 +27,9 @@ extension Features.Dashboard {
             self.themeComponents.cardWithHeader(title: "Upcoming Subscriptions") {
                 VStack(spacing: 16) {
                     if !self.subscriptions.isEmpty {
-                        ForEach(Array(self.subscriptions.prefix(3).enumerated()), id: \.element.id) { index, subscription in
+                        ForEach(Array(self.subscriptions.prefix(3).enumerated()),
+                                id: \.element.id)
+                        { index, subscription in
                             HStack {
                                 // Icon with colorful background
                                 ZStack {

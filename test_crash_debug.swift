@@ -13,7 +13,7 @@ do {
         Subscription.self,
         Budget.self,
         ExpenseCategory.self,
-        SavingsGoal.self
+        SavingsGoal.self,
     ])
 
     print("Schema created successfully")

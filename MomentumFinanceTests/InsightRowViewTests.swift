@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class InsightRowViewTests: XCTestCase {
     var insightRowView: InsightRowView!
@@ -7,7 +7,12 @@ class InsightRowViewTests: XCTestCase {
     // Test the body of the InsightRowView
     func testBody() {
         // GIVEN
-        let mockInsight = FinancialInsight(title: "Test Insight", description: "This is a test insight.", type: .critical, confidence: 0.85)
+        let mockInsight = FinancialInsight(
+            title: "Test Insight",
+            description: "This is a test insight.",
+            type: .critical,
+            confidence: 0.85
+        )
         let mockAction = { /* Mock action */ }
         insightRowView = InsightRowView(insight: mockInsight) { mockAction }
 
@@ -23,7 +28,12 @@ class InsightRowViewTests: XCTestCase {
     // Test the priorityColor method
     func testPriorityColor() {
         // GIVEN
-        let mockInsight = FinancialInsight(title: "Test Insight", description: "This is a test insight.", type: .critical, confidence: 0.85)
+        let mockInsight = FinancialInsight(
+            title: "Test Insight",
+            description: "This is a test insight.",
+            type: .critical,
+            confidence: 0.85
+        )
 
         // WHEN
         let color = insightRowView.priorityColor
@@ -35,7 +45,12 @@ class InsightRowViewTests: XCTestCase {
     // Test the action method
     func testAction() {
         // GIVEN
-        let mockInsight = FinancialInsight(title: "Test Insight", description: "This is a test insight.", type: .critical, confidence: 0.85)
+        let mockInsight = FinancialInsight(
+            title: "Test Insight",
+            description: "This is a test insight.",
+            type: .critical,
+            confidence: 0.85
+        )
         var called = false
 
         let mockAction = { called = true }

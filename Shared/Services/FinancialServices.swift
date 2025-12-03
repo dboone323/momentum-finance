@@ -6,12 +6,12 @@ import SwiftData
 
 public protocol EntityManager: Sendable {
     func save() async throws
-    func delete(_ entity: some Any) async throws
+    func delete(_ entity: some PersistentModel) async throws
     func fetch<T>(_ type: T.Type) async throws -> [T]
-    func getOrCreateAccount(from fields: [String], columnMapping: CSVColumnMapping) async throws
+    func getOrCreateAccount(from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping) async throws
         -> FinancialAccount?
     func getOrCreateCategory(
-        from fields: [String], columnMapping: CSVColumnMapping, transactionType: TransactionType
+        from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping, transactionType: TransactionType
     ) async throws -> ExpenseCategory?
 }
 
@@ -28,7 +28,7 @@ public final class SwiftDataEntityManager: EntityManager {
         try self.modelContext.save()
     }
 
-    public func delete(_ entity: some Any) async throws {
+    public func delete(_ entity: some PersistentModel) async throws {
         self.modelContext.delete(entity)
         try self.modelContext.save()
     }
@@ -38,8 +38,9 @@ public final class SwiftDataEntityManager: EntityManager {
         return try self.modelContext.fetch(descriptor)
     }
 
-    public func getOrCreateAccount(from fields: [String], columnMapping: CSVColumnMapping)
-        async throws -> FinancialAccount? {
+    public func getOrCreateAccount(from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping)
+        async throws -> FinancialAccount?
+    {
         // Extract account name from CSV fields
         guard let accountColumnIndex = getColumnIndex(for: columnMapping.accountColumn, in: fields) else {
             return nil
@@ -73,7 +74,7 @@ public final class SwiftDataEntityManager: EntityManager {
     }
 
     public func getOrCreateCategory(
-        from fields: [String], columnMapping: CSVColumnMapping, transactionType: TransactionType
+        from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping, transactionType: TransactionType
     ) async throws -> ExpenseCategory? {
         // Extract category name from CSV fields
         guard let categoryColumnIndex = getColumnIndex(for: columnMapping.categoryColumn, in: fields) else {
@@ -131,7 +132,7 @@ public final class SwiftDataEntityManager: EntityManager {
             "Health": "heart.fill",
             "Travel": "airplane",
             "Education": "book.fill",
-            "Income": "dollarsign.circle.fill"
+            "Income": "dollarsign.circle.fill",
         ]
         return iconMap[categoryName] ?? "circle"
     }
@@ -279,14 +280,12 @@ public final class SwiftDataFinancialMLService: Sendable {
             var anomalies: [TransactionAnomaly] = []
 
             // Simple anomaly detection based on amount thresholds
-            for transaction in transactions {
-                if transaction.amount > 1000 { // High amount threshold
-                    anomalies.append(TransactionAnomaly(
-                        transaction: transaction,
-                        type: .unusuallyHighAmount,
-                        severity: .medium
-                    ))
-                }
+            for transaction in transactions where transaction.amount > 1000 { // High amount threshold
+                anomalies.append(TransactionAnomaly(
+                    transaction: transaction,
+                    type: .unusuallyHighAmount,
+                    severity: .medium
+                ))
             }
 
             return anomalies
@@ -311,14 +310,14 @@ public struct TransactionAnomaly {
     public let transaction: FinancialTransaction
     public let type: AnomalyType
     public let severity: Severity
+}
 
-    public enum AnomalyType {
-        case unusuallyHighAmount, unusualCategory, potentialFraud
-    }
+public enum AnomalyType {
+    case unusuallyHighAmount, unusualCategory, potentialFraud
+}
 
-    public enum Severity {
-        case low, medium, high
-    }
+public enum Severity {
+    case low, medium, high
 }
 
 // MARK: - Transaction Pattern Analyzer

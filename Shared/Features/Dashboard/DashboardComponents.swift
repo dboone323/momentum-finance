@@ -1,5 +1,5 @@
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 public struct DashboardSubscriptionsSection: View {
     let subscriptions: [Subscription]
@@ -163,10 +163,10 @@ public struct DashboardBudgetProgress: View {
 }
 
 public struct DashboardInsights: View {
-    let insights: [IntelligenceFinancialInsight]
+    let insights: [FinancialInsight]
     let onDetailsTapped: () -> Void
 
-    public init(insights: [IntelligenceFinancialInsight], onDetailsTapped: @escaping () -> Void) {
+    public init(insights: [FinancialInsight], onDetailsTapped: @escaping () -> Void) {
         self.insights = insights
         self.onDetailsTapped = onDetailsTapped
     }
@@ -258,7 +258,8 @@ public struct DashboardQuickActions: View {
         .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
     }
 
-    @ViewBuilder private func quickAction(
+    @ViewBuilder
+    private func quickAction(
         icon: String, title: String, color: Color, action: @escaping () -> Void
     ) -> some View {
         VStack {
