@@ -4,7 +4,8 @@ import MomentumFinanceCore
 @MainActor
 extension FinancialIntelligenceService {
     func generateForecasts(transactions: [FinancialTransaction], accounts: [FinancialAccount])
-        -> [FinancialInsight] {
+        -> [FinancialInsight]
+    {
         var insights: [FinancialInsight] = []
 
         // Analyze cash flow trend
@@ -40,7 +41,8 @@ extension FinancialIntelligenceService {
                 var forecastLabels = lastMonths
 
                 if let lastDate = sortedMonths.last?.0,
-                   let nextMonth = calendar.date(byAdding: .month, value: 1, to: lastDate) {
+                   let nextMonth = calendar.date(byAdding: .month, value: 1, to: lastDate)
+                {
                     forecastLabels.append(fi_formatMonthAbbrev(nextMonth))
                 }
 
@@ -51,13 +53,13 @@ extension FinancialIntelligenceService {
                 let nextMonthFormatted = fi_formatCurrency(nextMonthForecast, code: "USD")
                 let descA = "Your cash flow is \(trendDirection)."
                 let descB = " Next month's estimated net flow is \(nextMonthFormatted)."
-                let insight = IntelligenceFinancialInsight(
+                let insight = FinancialInsight(
                     title: title,
                     description: descA + descB,
                     priority: priority,
                     type: .forecast,
                     visualizationType: .lineChart,
-                    data: chartData
+                    chartData: chartData.map { ChartDataPoint(label: $0.0, value: $0.1) }
                 )
                 insights.append(insight)
             }
@@ -141,14 +143,14 @@ extension FinancialIntelligenceService {
             description = "Your \(account.name) balance is stable."
         }
 
-        let insight = IntelligenceFinancialInsight(
+        let insight = FinancialInsight(
             title: title,
             description: description,
             priority: priority,
             type: .forecast,
             relatedAccountId: String(account.id.hashValue),
             visualizationType: .lineChart,
-            data: forecastData
+            chartData: forecastData.map { ChartDataPoint(label: $0.0, value: $0.1) }
         )
         return insight
     }

@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class DataImportHelpersTests: XCTestCase {
     // Test setup
@@ -12,7 +12,7 @@ class DataImportHelpersTests: XCTestCase {
         let testData = [
             // Define your test data here, ensuring it's specific and realistic
             ["key": "value1", "anotherKey": "anotherValue"],
-            ["key2": "value2", "anotherKey2": "anotherValue2"]
+            ["key2": "value2", "anotherKey2": "anotherValue2"],
         ]
 
         // WHEN
@@ -33,7 +33,7 @@ class DataImportHelpersTests: XCTestCase {
         // GIVEN
         let testData = [
             ["key": "value1", "anotherKey": "anotherValue"],
-            ["key2": "value2", "anotherKey2": "anotherValue2"]
+            ["key2": "value2", "anotherKey2": "anotherValue2"],
         ]
 
         // WHEN
@@ -54,7 +54,7 @@ class DataImportHelpersTests: XCTestCase {
         // GIVEN
         let testData = [
             ["key": "value1", "anotherKey": "anotherValue"],
-            ["key2": "value2", "anotherKey2": "anotherValue2"]
+            ["key2": "value2", "anotherKey2": "anotherValue2"],
         ]
 
         // WHEN
@@ -75,7 +75,7 @@ class DataImportHelpersTests: XCTestCase {
         // GIVEN
         let testData = [
             ["key": "value1", "anotherKey": "anotherValue"],
-            ["key2": "value2", "anotherKey2": "anotherValue2"]
+            ["key2": "value2", "anotherKey2": "anotherValue2"],
         ]
 
         // WHEN
@@ -96,7 +96,7 @@ class DataImportHelpersTests: XCTestCase {
         // GIVEN
         let testData = [
             ["key": "value1", "anotherKey": "anotherValue"],
-            ["key2": "value2", "anotherKey2": "anotherValue2"]
+            ["key2": "value2", "anotherKey2": "anotherValue2"],
         ]
 
         // WHEN
@@ -116,7 +116,7 @@ class DataImportHelpersTests: XCTestCase {
         // GIVEN
         let testData = [
             ["key": "value1", "anotherKey": "anotherValue"],
-            ["key2": "value2", "anotherKey2": "anotherValue2"]
+            ["key2": "value2", "anotherKey2": "anotherValue2"],
         ]
 
         // WHEN

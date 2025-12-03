@@ -5,7 +5,11 @@ public struct SearchHeaderComponent: View {
     @Binding var selectedFilter: SearchFilter
     var onSearchChanged: (() -> Void)?
 
-    public init(searchText: Binding<String>, selectedFilter: Binding<SearchFilter>, onSearchChanged: (() -> Void)? = nil) {
+    public init(
+        searchText: Binding<String>,
+        selectedFilter: Binding<SearchFilter>,
+        onSearchChanged: (() -> Void)? = nil
+    ) {
         _searchText = searchText
         _selectedFilter = selectedFilter
         self.onSearchChanged = onSearchChanged
@@ -17,7 +21,8 @@ public struct SearchHeaderComponent: View {
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.secondary)
-                TextField("Search...", text: self.$searchText).accessibilityLabel("Text Field").accessibilityLabel("Text Field")
+                TextField("Search...", text: self.$searchText).accessibilityLabel("Text Field")
+                    .accessibilityLabel("Text Field")
                     .textFieldStyle(.plain)
                     .onChange(of: self.searchText) { _ in
                         self.onSearchChanged?()

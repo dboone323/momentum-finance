@@ -32,7 +32,7 @@ final class FinancialMLModels {
             "mediumTransactionCount": mediumTransactions.count,
             "largeTransactionCount": largeTransactions.count,
             "averageTransactionSize": totalSpent / Double(expenses.count),
-            "transactionFrequency": Double(expenses.count) / 30.0
+            "transactionFrequency": Double(expenses.count) / 30.0,
         ]
     }
 
@@ -42,17 +42,17 @@ final class FinancialMLModels {
 
         // Simple linear regression for prediction
         let n = Double(historicalData.count)
-        let sumX = (0 ..< historicalData.count).reduce(0.0) { $0 + Double($1) }
+        let sumX = (0..<historicalData.count).reduce(0.0) { $0 + Double($1) }
         let sumY = historicalData.reduce(0.0, +)
-        let sumXY = (0 ..< historicalData.count).reduce(0.0) { $0 + Double($1) * historicalData[$1] }
-        let sumXX = (0 ..< historicalData.count).reduce(0.0) { $0 + Double($1 * $1) }
+        let sumXY = (0..<historicalData.count).reduce(0.0) { $0 + Double($1) * historicalData[$1] }
+        let sumXX = (0..<historicalData.count).reduce(0.0) { $0 + Double($1 * $1) }
 
         let slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX)
         let intercept = (sumY - slope * sumX) / n
 
         // Generate predictions
         var predictions: [Double] = []
-        for i in 1 ... months {
+        for i in 1...months {
             let prediction = slope * (n + Double(i)) + intercept
             predictions.append(max(0, prediction)) // Ensure non-negative
         }
@@ -74,7 +74,9 @@ final class FinancialMLModels {
             return "Housing"
         } else if description.contains("amazon") || description.contains("shopping") || amount > 100 {
             return "Shopping"
-        } else if description.contains("entertainment") || description.contains("movie") || description.contains("game") {
+        } else if description.contains("entertainment") || description.contains("movie") || description
+            .contains("game")
+        {
             return "Entertainment"
         } else {
             return "Other"

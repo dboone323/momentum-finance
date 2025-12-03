@@ -2,9 +2,9 @@
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 // Temporary placeholder views until namespace issues are resolved
 public struct DashboardView: View {
@@ -49,7 +49,8 @@ public struct ContentView: View {
             .tabItem {
                 Image(
                     systemName: self.navigationCoordinator.selectedTab == 1
-                        ? "creditcard.fill" : "creditcard"
+                        ? "creditcard.fill"
+                        : "creditcard"
                 )
                 Text("Transactions")
             }
@@ -66,7 +67,8 @@ public struct ContentView: View {
             .tabItem {
                 Image(
                     systemName: self.navigationCoordinator.selectedTab == 2
-                        ? "chart.pie.fill" : "chart.pie"
+                        ? "chart.pie.fill"
+                        : "chart.pie"
                 )
                 Text("Budgets")
             }
@@ -83,7 +85,8 @@ public struct ContentView: View {
             .tabItem {
                 Image(
                     systemName: self.navigationCoordinator.selectedTab == 3
-                        ? "calendar.badge.clock.fill" : "calendar.badge.clock"
+                        ? "calendar.badge.clock.fill"
+                        : "calendar.badge.clock"
                 )
                 Text("Subscriptions")
             }
@@ -100,7 +103,8 @@ public struct ContentView: View {
             .tabItem {
                 Image(
                     systemName: self.navigationCoordinator.selectedTab == 4
-                        ? "chart.bar.fill" : "chart.bar"
+                        ? "chart.bar.fill"
+                        : "chart.bar"
                 )
                 Text("Goals & Reports")
             }

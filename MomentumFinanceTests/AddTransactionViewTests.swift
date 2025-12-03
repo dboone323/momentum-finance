@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class AddTransactionViewTests: XCTestCase {
     var addTransactionView: AddTransactionView!
@@ -24,7 +24,7 @@ class AddTransactionViewTests: XCTestCase {
     func testCategoryPickerPopulated() {
         let expectedCategories = [
             ExpenseCategory(name: "Groceries", id: UUID()),
-            ExpenseCategory(name: "Entertainment", id: UUID())
+            ExpenseCategory(name: "Entertainment", id: UUID()),
         ]
 
         XCTAssertEqual(addTransactionView.selectedCategory, nil)
@@ -36,7 +36,7 @@ class AddTransactionViewTests: XCTestCase {
     func testAccountPickerPopulated() {
         let expectedAccounts = [
             FinancialAccount(name: "Checking Account", id: UUID(), balance: 1000),
-            FinancialAccount(name: "Savings Account", id: UUID(), balance: 500)
+            FinancialAccount(name: "Savings Account", id: UUID(), balance: 500),
         ]
 
         XCTAssertEqual(addTransactionView.selectedAccount, nil)

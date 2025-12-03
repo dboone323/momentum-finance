@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class FormattingUtilitiesTests: XCTestCase {
     // Test case for fi_formatCurrency with optional currency code
@@ -53,10 +53,14 @@ class FormattingUtilitiesTests: XCTestCase {
             "amount": abs(transaction.amount),
             "is_expense": true,
             "day_of_week": Calendar.current.component(.weekday, from: transaction.date),
-            "month": Calendar.current.component(.month, from: transaction.date)
+            "month": Calendar.current.component(.month, from: transaction.date),
         ]
 
-        XCTAssertEqual(fi_extractTransactionFeatures(transaction), expectedFeatures, "Expected extracted features to match the test data")
+        XCTAssertEqual(
+            fi_extractTransactionFeatures(transaction),
+            expectedFeatures,
+            "Expected extracted features to match the test data"
+        )
     }
 
     // Test case for formatCurrency with optional currency code

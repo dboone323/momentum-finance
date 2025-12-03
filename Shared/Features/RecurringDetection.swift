@@ -4,33 +4,33 @@ import SwiftData
 /// Detects recurring transactions and suggests subscriptions
 public final class RecurringTransactionDetector {
     private let modelContext: ModelContext
-    
+
     public init(modelContext: ModelContext) {
         self.modelContext = modelContext
     }
-    
+
     /// Detect recurring patterns in transactions
     public func detectRecurringTransactions() async -> [RecurringPattern] {
         do {
             let transactions = try modelContext.fetch(FetchDescriptor<FinancialTransaction>())
-            
+
             // Group by normalized title
             var titleGroups: [String: [FinancialTransaction]] = [:]
             for transaction in transactions {
                 let normalized = normalizeTitle(transaction.title)
                 titleGroups[normalized, default: []].append(transaction)
             }
-            
+
             // Find patterns (3+ occurrences)
             var patterns: [RecurringPattern] = []
             for (title, group) in titleGroups where group.count >= 3 {
-                let sortedDates = group.map { $0.date }.sorted()
+                let sortedDates = group.map(\.date).sorted()
                 let intervals = calculateIntervals(sortedDates)
-                
+
                 if let frequency = detectFrequency(intervals) {
                     patterns.append(RecurringPattern(
                         title: title,
-                        amount: group.map { $0.amount }.reduce(0, +) / Double(group.count),
+                        amount: group.map(\.amount).reduce(0, +) / Double(group.count),
                         frequency: frequency,
                         occurrences: group.count,
                         lastDate: sortedDates.last ?? Date(),
@@ -38,14 +38,14 @@ public final class RecurringTransactionDetector {
                     ))
                 }
             }
-            
+
             return patterns.sorted { $0.occurrences > $1.occurrences }
         } catch {
             print("Error detecting recurring transactions: \(error)")
             return []
         }
     }
-    
+
     private func normalizeTitle(_ title: String) -> String {
         // Remove numbers, dates, transaction IDs
         var normalized = title.lowercased()
@@ -53,22 +53,22 @@ public final class RecurringTransactionDetector {
         normalized = normalized.replacingOccurrences(of: #"#\w+"#, with: "", options: .regularExpression)
         return normalized.trimmingCharacters(in: .whitespacesAndNewlines)
     }
-    
+
     private func calculateIntervals(_ dates: [Date]) -> [TimeInterval] {
         guard dates.count > 1 else { return [] }
         var intervals: [TimeInterval] = []
         for i in 1..<dates.count {
-            intervals.append(dates[i].timeIntervalSince(dates[i-1]))
+            intervals.append(dates[i].timeIntervalSince(dates[i - 1]))
         }
         return intervals
     }
-    
+
     private func detectFrequency(_ intervals: [TimeInterval]) -> RecurringFrequency? {
         guard !intervals.isEmpty else { return nil }
-        
+
         let avgInterval = intervals.reduce(0, +) / Double(intervals.count)
         let dayInterval = avgInterval / 86400 // Convert to days
-        
+
         // Monthly (25-35 days)
         if dayInterval >= 25 && dayInterval <= 35 {
             return .monthly
@@ -89,7 +89,7 @@ public final class RecurringTransactionDetector {
         else if dayInterval >= 350 && dayInterval <= 380 {
             return .yearly
         }
-        
+
         return nil
     }
 }

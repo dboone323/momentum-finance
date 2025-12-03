@@ -1,9 +1,9 @@
 // Momentum Finance - Data Export View
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 import UniformTypeIdentifiers
 
 /// Comprehensive data export view with multiple format options
@@ -317,6 +317,6 @@ public struct DataExportView: View {
     DataExportView()
         .modelContainer(for: [
             FinancialTransaction.self, FinancialAccount.self, Budget.self, Subscription.self,
-            SavingsGoal.self
+            SavingsGoal.self,
         ])
 }

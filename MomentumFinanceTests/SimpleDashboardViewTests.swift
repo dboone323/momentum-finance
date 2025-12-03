@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class SimpleDashboardViewTests: XCTestCase {
     var sut: SimpleDashboardView!
@@ -15,7 +15,7 @@ class SimpleDashboardViewTests: XCTestCase {
     func test_accountBalances() {
         let accounts = [
             FinancialAccount(name: "Checking", balance: 1000.50),
-            FinancialAccount(name: "Savings", balance: -200.75)
+            FinancialAccount(name: "Savings", balance: -200.75),
         ]
         mockModelContext.accounts = accounts
 
@@ -26,18 +26,21 @@ class SimpleDashboardViewTests: XCTestCase {
     func test_subscriptions() {
         let subscriptions = [
             Subscription(name: "Monthly Rent", amount: 1500.00),
-            Subscription(name: "Electricity Bill", amount: 300.00)
+            Subscription(name: "Electricity Bill", amount: 300.00),
         ]
         mockModelContext.subscriptions = subscriptions
 
-        XCTAssertEqual(sut.body.description, "Upcoming Subscriptions\nMonthly Rent: $1,500.00\nElectricity Bill: $300.00")
+        XCTAssertEqual(
+            sut.body.description,
+            "Upcoming Subscriptions\nMonthly Rent: $1,500.00\nElectricity Bill: $300.00"
+        )
     }
 
     // Test that the budget progress section displays the correct data
     func test_budgetProgress() {
         let budgets = [
             Budget(name: "Rent", spentAmount: 800.00, limitAmount: 1200.00),
-            Budget(name: "Groceries", spentAmount: 300.00, limitAmount: 500.00)
+            Budget(name: "Groceries", spentAmount: 300.00, limitAmount: 500.00),
         ]
         mockModelContext.budgets = budgets
 

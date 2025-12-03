@@ -1,7 +1,7 @@
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 // MARK: - Core Financial Types
 

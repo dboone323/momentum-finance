@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class FinancialInsightModelsTests: XCTestCase {
     // Test setup
@@ -17,7 +17,7 @@ class FinancialInsightModelsTests: XCTestCase {
             .optimization,
             .cashManagement,
             .creditUtilization,
-            .duplicatePayment
+            .duplicatePayment,
         ]
 
         // WHEN: Enumerating over the FinancialInsightType enumeration

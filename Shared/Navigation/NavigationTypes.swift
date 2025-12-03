@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 // MARK: - Navigation Types
 
@@ -46,4 +46,5 @@ public struct NavigationContext {
 }
 
 // SearchResult is defined in Navigation/Components/NavigationTypes.swift to keep a single canonical definition
-// Please see Components/NavigationTypes.swift for the canonical SearchResult and SearchResultType definitions used by GlobalSearch.
+// Please see Components/NavigationTypes.swift for the canonical SearchResult and SearchResultType definitions used by
+// GlobalSearch.

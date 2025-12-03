@@ -1,6 +1,6 @@
 import Foundation
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 // MARK: - Theme Types
 
@@ -99,7 +99,7 @@ public struct SimpleColorDefinitions: Sendable {
         Color.red, // bills
         Color.mint, // income
         Color.teal, // savings
-        Color.gray
+        Color.gray,
     ]
 
     // Additional methods for complex color system

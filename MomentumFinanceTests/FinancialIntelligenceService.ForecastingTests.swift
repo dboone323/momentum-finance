@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class FinancialIntelligenceServiceTests: XCTestCase {
     var service: FinancialIntelligenceService!
@@ -8,10 +8,14 @@ class FinancialIntelligenceServiceTests: XCTestCase {
     func testGenerateForecasts() throws {
         let transactions = [
             FinancialTransaction(date: Date(), amount: 100.0, account: FinancialAccount(id: "1", name: "Checking")),
-            FinancialTransaction(date: Date().addingTimeInterval(30 * 24 * 60 * 60), amount: -50.0, account: FinancialAccount(id: "1", name: "Checking"))
+            FinancialTransaction(
+                date: Date().addingTimeInterval(30 * 24 * 60 * 60),
+                amount: -50.0,
+                account: FinancialAccount(id: "1", name: "Checking")
+            ),
         ]
         let accounts = [
-            FinancialAccount(id: "1", name: "Checking", currencyCode: "USD")
+            FinancialAccount(id: "1", name: "Checking", currencyCode: "USD"),
         ]
 
         let insights = service.generateForecasts(transactions: transactions, accounts: accounts)
@@ -26,11 +30,15 @@ class FinancialIntelligenceServiceTests: XCTestCase {
         let account = FinancialAccount(id: "1", name: "Checking", currencyCode: "USD")
         let transactions = [
             FinancialTransaction(date: Date(), amount: 100.0, account: account),
-            FinancialTransaction(date: Date().addingTimeInterval(30 * 24 * 60 * 60), amount: -50.0, account: account)
+            FinancialTransaction(date: Date().addingTimeInterval(30 * 24 * 60 * 60), amount: -50.0, account: account),
         ]
         let calendar = Calendar.current
 
-        let insight = service.generateAccountForecastInsight(account: account, transactions: transactions, calendar: calendar)
+        let insight = service.generateAccountForecastInsight(
+            account: account,
+            transactions: transactions,
+            calendar: calendar
+        )
 
         XCTAssertEqual(insight?.type, .forecast)
         XCTAssertTrue(insight?.priority == .medium)
@@ -40,7 +48,7 @@ class FinancialIntelligenceServiceTests: XCTestCase {
     func testGenerateForecastsNoTransactions() throws {
         let transactions = []
         let accounts = [
-            FinancialAccount(id: "1", name: "Checking", currencyCode: "USD")
+            FinancialAccount(id: "1", name: "Checking", currencyCode: "USD"),
         ]
 
         let insights = service.generateForecasts(transactions: transactions, accounts: accounts)
@@ -52,11 +60,15 @@ class FinancialIntelligenceServiceTests: XCTestCase {
     func testGenerateAccountForecastInsightNoAccount() throws {
         let account = FinancialAccount(id: "1", name: "Checking", currencyCode: "USD")
         let transactions = [
-            FinancialTransaction(date: Date(), amount: 100.0, account: account)
+            FinancialTransaction(date: Date(), amount: 100.0, account: account),
         ]
         let calendar = Calendar.current
 
-        let insight = service.generateAccountForecastInsight(account: nil, transactions: transactions, calendar: calendar)
+        let insight = service.generateAccountForecastInsight(
+            account: nil,
+            transactions: transactions,
+            calendar: calendar
+        )
 
         XCTAssertNil(insight)
     }

@@ -2,8 +2,8 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 import Charts
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 public struct AccountDetailView: View {
     @Environment(\.dismiss)
@@ -311,7 +311,7 @@ public struct ActivityChartView: View {
 
         // Create data for each day
         var result: [DailyTransactionData] = []
-        for dayOffset in (0 ..< numberOfDays).reversed() {
+        for dayOffset in (0..<numberOfDays).reversed() {
             if let date = calendar.date(byAdding: .day, value: -dayOffset, to: today) {
                 // Get start and end of day
                 let startOfDay = calendar.startOfDay(for: date)

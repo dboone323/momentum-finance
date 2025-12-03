@@ -68,7 +68,8 @@ public struct ThemeComponents: @unchecked Sendable {
 
     @MainActor
     func listRow(icon: String, title: String, @ViewBuilder trailing: @escaping () -> some View)
-        -> some View {
+        -> some View
+    {
         let theme = ColorTheme.shared
         return HStack {
             Image(systemName: icon)
@@ -88,30 +89,30 @@ public struct ThemeComponents: @unchecked Sendable {
     // MARK: - Button Components
 
     @MainActor
-    func primaryButton(@ViewBuilder label: ().accessibilityLabel("Button") -> some View) -> some View {
+    func primaryButton(@ViewBuilder label: @escaping () -> some View) -> some View {
         let theme = ColorTheme.shared
-        return Button(action: {}, label: label).accessibilityLabel("Button").accessibilityLabel("Button")
+        return Button(action: {}, label: label)
             .buttonStyle(PrimaryButtonStyle(theme: theme))
     }
 
     @MainActor
-    func secondaryButton(@ViewBuilder label: ().accessibilityLabel("Button") -> some View) -> some View {
+    func secondaryButton(@ViewBuilder label: @escaping () -> some View) -> some View {
         let theme = ColorTheme.shared
-        return Button(action: {}, label: label).accessibilityLabel("Button").accessibilityLabel("Button")
+        return Button(action: {}, label: label)
             .buttonStyle(SecondaryButtonStyle(theme: theme))
     }
 
     @MainActor
-    func textButton(@ViewBuilder label: ().accessibilityLabel("Button") -> some View) -> some View {
+    func textButton(@ViewBuilder label: @escaping () -> some View) -> some View {
         let theme = ColorTheme.shared
-        return Button(action: {}, label: label).accessibilityLabel("Button").accessibilityLabel("Button")
+        return Button(action: {}, label: label)
             .buttonStyle(TextButtonStyle(theme: theme))
     }
 
     @MainActor
-    func destructiveButton(@ViewBuilder label: ().accessibilityLabel("Button") -> some View) -> some View {
+    func destructiveButton(@ViewBuilder label: @escaping () -> some View) -> some View {
         let theme = ColorTheme.shared
-        return Button(action: {}, label: label).accessibilityLabel("Button").accessibilityLabel("Button")
+        return Button(action: {}, label: label)
             .buttonStyle(DestructiveButtonStyle(theme: theme))
     }
 
@@ -157,9 +158,9 @@ public struct ThemeComponents: @unchecked Sendable {
         let ratio = (total == 0) ? Decimal(0) : (spent / total)
         let progress = min(1.0, Double(NSDecimalNumber(decimal: ratio).doubleValue))
         let color: Color = switch progress {
-        case 0 ..< 0.8:
+        case 0..<0.8:
             theme.budgetUnder
-        case 0.8 ..< 1.0:
+        case 0.8..<1.0:
             theme.budgetNear
         default:
             theme.budgetOver

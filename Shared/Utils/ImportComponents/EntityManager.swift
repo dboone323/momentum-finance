@@ -20,7 +20,8 @@ struct EntityManager {
         columnMapping: CSVColumnMapping
     ) async throws -> FinancialAccount {
         let accountName: String = if let accountIndex = columnMapping.accountIndex,
-                                     accountIndex < fields.count {
+                                     accountIndex < fields.count
+        {
             fields[accountIndex].trimmingCharacters(in: .whitespacesAndNewlines)
         } else {
             "Imported Account"
@@ -55,7 +56,8 @@ struct EntityManager {
         transactionType: TransactionType
     ) async throws -> ExpenseCategory {
         let categoryName: String = if let categoryIndex = columnMapping.categoryIndex,
-                                      categoryIndex < fields.count {
+                                      categoryIndex < fields.count
+        {
             fields[categoryIndex].trimmingCharacters(in: .whitespacesAndNewlines)
         } else {
             transactionType == .income ? "Other Income" : "Other Expenses"

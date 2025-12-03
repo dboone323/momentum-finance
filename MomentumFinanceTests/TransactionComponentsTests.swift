@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class TransactionComponentsTests: XCTestCase {
     var viewModel: TransactionEmptyStateViewModel!
@@ -16,33 +16,33 @@ class TransactionComponentsTests: XCTestCase {
         XCTAssertEqual(view.searchText, "")
         XCTAssertNotNil(view.onAddTransaction)
         XCTAssertEqual(view.body.description, """
-VStack(spacing: 20) {
-    Image(systemName: self.searchText.isEmpty ? "doc.text.magnifyingglass" : "magnifyingglass")
-        .font(.system(size: 48))
-        .foregroundColor(.secondary)
-    Text(self.searchText.isEmpty ? "No transactions yet" : "No transactions found")
-        .font(.title2)
-        .foregroundColor(.primary)
-    Text(
-        self.searchText.isEmpty
-            ? "Add your first transaction to get started"
-            : "Try adjusting your search or filter"
-    )
-        .font(.body)
-        .foregroundColor(.secondary)
-        .multilineTextAlignment(.center)
-    if self.searchText.isEmpty {
-        Button(action: self.onAddTransaction, label: {
-            Label("Add Transaction", systemImage: "plus")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        })
-        .accessibilityLabel("Add Transaction")
-    }
-}
-""")
+        VStack(spacing: 20) {
+            Image(systemName: self.searchText.isEmpty ? "doc.text.magnifyingglass" : "magnifyingglass")
+                .font(.system(size: 48))
+                .foregroundColor(.secondary)
+            Text(self.searchText.isEmpty ? "No transactions yet" : "No transactions found")
+                .font(.title2)
+                .foregroundColor(.primary)
+            Text(
+                self.searchText.isEmpty
+                    ? "Add your first transaction to get started"
+                    : "Try adjusting your search or filter"
+            )
+                .font(.body)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+            if self.searchText.isEmpty {
+                Button(action: self.onAddTransaction, label: {
+                    Label("Add Transaction", systemImage: "plus")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                })
+                .accessibilityLabel("Add Transaction")
+            }
+        }
+        """)
     }
 
     // Test for the initial state of the view when searchText is not empty
@@ -52,33 +52,33 @@ VStack(spacing: 20) {
         XCTAssertEqual(view.searchText, searchText)
         XCTAssertNotNil(view.onAddTransaction)
         XCTAssertEqual(view.body.description, """
-VStack(spacing: 20) {
-    Image(systemName: self.searchText.isEmpty ? "doc.text.magnifyingglass" : "magnifyingglass")
-        .font(.system(size: 48))
-        .foregroundColor(.secondary)
-    Text(self.searchText.isEmpty ? "No transactions yet" : "No transactions found")
-        .font(.title2)
-        .foregroundColor(.primary)
-    Text(
-        self.searchText.isEmpty
-            ? "Add your first transaction to get started"
-            : "Try adjusting your search or filter"
-    )
-        .font(.body)
-        .foregroundColor(.secondary)
-        .multilineTextAlignment(.center)
-    if self.searchText.isEmpty {
-        Button(action: self.onAddTransaction, label: {
-            Label("Add Transaction", systemImage: "plus")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        })
-        .accessibilityLabel("Add Transaction")
-    }
-}
-""")
+        VStack(spacing: 20) {
+            Image(systemName: self.searchText.isEmpty ? "doc.text.magnifyingglass" : "magnifyingglass")
+                .font(.system(size: 48))
+                .foregroundColor(.secondary)
+            Text(self.searchText.isEmpty ? "No transactions yet" : "No transactions found")
+                .font(.title2)
+                .foregroundColor(.primary)
+            Text(
+                self.searchText.isEmpty
+                    ? "Add your first transaction to get started"
+                    : "Try adjusting your search or filter"
+            )
+                .font(.body)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+            if self.searchText.isEmpty {
+                Button(action: self.onAddTransaction, label: {
+                    Label("Add Transaction", systemImage: "plus")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                })
+                .accessibilityLabel("Add Transaction")
+            }
+        }
+        """)
     }
 
     // Test for the behavior of the onAddTransaction action

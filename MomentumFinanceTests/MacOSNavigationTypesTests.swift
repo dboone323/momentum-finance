@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class MacOSNavigationTypesTests: XCTestCase {
     // Test SidebarItem enum
@@ -10,7 +10,7 @@ class MacOSNavigationTypesTests: XCTestCase {
             .transactions,
             .budgets,
             .subscriptions,
-            .goalsAndReports
+            .goalsAndReports,
         ]
 
         // WHEN
@@ -29,7 +29,7 @@ class MacOSNavigationTypesTests: XCTestCase {
         let items = [
             ListableItem(id: "123", name: "Account 1", type: .account),
             ListableItem(id: nil, name: "Transaction 2", type: .transaction),
-            ListableItem(id: "456", name: "Budget 3", type: .budget)
+            ListableItem(id: "456", name: "Budget 3", type: .budget),
         ]
 
         // WHEN
@@ -50,7 +50,7 @@ class MacOSNavigationTypesTests: XCTestCase {
             .budget,
             .subscription,
             .goal,
-            .report
+            .report,
         ]
 
         // WHEN
@@ -71,7 +71,7 @@ class MacOSNavigationTypesTests: XCTestCase {
             .transactions,
             .budgets,
             .subscriptions,
-            .goalsAndReports
+            .goalsAndReports,
         ]
 
         // WHEN
@@ -86,7 +86,7 @@ class MacOSNavigationTypesTests: XCTestCase {
         let items = [
             ListableItem(id: "123", name: "Account 1", type: .account),
             ListableItem(id: nil, name: "Transaction 2", type: .transaction),
-            ListableItem(id: "456", name: "Budget 3", type: .budget)
+            ListableItem(id: "456", name: "Budget 3", type: .budget),
         ]
 
         // WHEN
@@ -106,7 +106,7 @@ class MacOSNavigationTypesTests: XCTestCase {
             .budget,
             .subscription,
             .goal,
-            .report
+            .report,
         ]
 
         // WHEN
@@ -126,7 +126,7 @@ class MacOSNavigationTypesTests: XCTestCase {
             .transactions,
             .budgets,
             .subscriptions,
-            .goalsAndReports
+            .goalsAndReports,
         ]
 
         // WHEN
@@ -140,7 +140,7 @@ class MacOSNavigationTypesTests: XCTestCase {
         // GIVEN
         let items = [
             ListableItem(id: nil, name: "Transaction 2", type: .transaction),
-            ListableItem(id: "456", name: "Budget 3", type: .budget)
+            ListableItem(id: "456", name: "Budget 3", type: .budget),
         ]
 
         // WHEN
@@ -159,7 +159,7 @@ class MacOSNavigationTypesTests: XCTestCase {
             .budget,
             .subscription,
             .goal,
-            .report
+            .report,
         ]
 
         // WHEN

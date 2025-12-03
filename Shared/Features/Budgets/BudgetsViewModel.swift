@@ -2,10 +2,10 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 import Foundation
+import MomentumFinanceCore
 import Observation
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 @MainActor
 @Observable
@@ -157,7 +157,7 @@ final class BudgetsViewModel {
         let now = Date()
         var trend: [MonthlySpending] = []
 
-        for i in 0 ..< months {
+        for i in 0..<months {
             guard let monthDate = calendar.date(byAdding: .month, value: -i, to: now) else {
                 continue
             }

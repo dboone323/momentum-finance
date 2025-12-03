@@ -5,9 +5,9 @@
 //  Created by GitHub Copilot on 2025-08-19.
 //
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 extension Features.Transactions {
     struct SimpleTransactionSectionHeader: View {
@@ -17,7 +17,8 @@ extension Features.Transactions {
             self.group.value.reduce(0) { result, transaction in
                 let transactionAmount =
                     transaction.transactionType == .income
-                        ? transaction.amount : -transaction.amount
+                        ? transaction.amount
+                        : -transaction.amount
                 return result + transactionAmount
             }
         }

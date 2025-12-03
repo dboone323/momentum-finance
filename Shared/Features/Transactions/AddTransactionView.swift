@@ -1,9 +1,9 @@
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 extension Features.Transactions {
     struct AddTransactionView: View {
@@ -31,9 +31,11 @@ extension Features.Transactions {
             NavigationView {
                 Form {
                     Section(header: Text("Transaction Details")) {
-                        TextField("Title", text: self.$title).accessibilityLabel("Text Field").accessibilityLabel("Text Field")
+                        TextField("Title", text: self.$title).accessibilityLabel("Text Field")
+                            .accessibilityLabel("Text Field")
 
-                        TextField("Amount", text: self.$amount).accessibilityLabel("Text Field").accessibilityLabel("Text Field")
+                        TextField("Amount", text: self.$amount).accessibilityLabel("Text Field")
+                            .accessibilityLabel("Text Field")
                         #if canImport(UIKit)
                             .keyboardType(.decimalPad)
                         #endif
@@ -67,7 +69,7 @@ extension Features.Transactions {
                     Section(header: Text("Notes (Optional)")) {
                         TextField("Add notes...", text: self.$notes, axis: .vertical).accessibilityLabel("Text Field")
                             .accessibilityLabel("Text Field")
-                            .lineLimit(3 ... 6)
+                            .lineLimit(3...6)
                     }
                 }
                 .navigationTitle("Add Transaction")

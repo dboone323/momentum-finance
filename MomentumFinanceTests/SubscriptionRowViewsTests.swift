@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class SubscriptionRowViewsTests: XCTestCase {
     var viewModel: Features.Subscriptions.EnhancedSubscriptionRowViewModel!
@@ -25,7 +25,12 @@ class SubscriptionRowViewsTests: XCTestCase {
     // Test the EnhancedSubscriptionRowView with an inactive subscription
     func testEnhancedSubscriptionRowViewWithInactiveSubscription() {
         // GIVEN
-        let subscription = Features.Subscriptions.Subscription(name: "Monthly Subscription", amount: 10.99, billingCycle: .monthly, isActive: false)
+        let subscription = Features.Subscriptions.Subscription(
+            name: "Monthly Subscription",
+            amount: 10.99,
+            billingCycle: .monthly,
+            isActive: false
+        )
         viewModel = Features.Subscriptions.EnhancedSubscriptionRowViewModel(subscription: subscription)
 
         // WHEN
@@ -40,7 +45,12 @@ class SubscriptionRowViewsTests: XCTestCase {
     // Test the EnhancedSubscriptionRowView with a subscription due soon
     func testEnhancedSubscriptionRowViewWithSubscriptionDueSoon() {
         // GIVEN
-        let subscription = Features.Subscriptions.Subscription(name: "Monthly Subscription", amount: 10.99, billingCycle: .monthly, nextDueDate: Date().addingTimeInterval(7 * 24 * 60 * 60))
+        let subscription = Features.Subscriptions.Subscription(
+            name: "Monthly Subscription",
+            amount: 10.99,
+            billingCycle: .monthly,
+            nextDueDate: Date().addingTimeInterval(7 * 24 * 60 * 60)
+        )
         viewModel = Features.Subscriptions.EnhancedSubscriptionRowViewModel(subscription: subscription)
 
         // WHEN
@@ -55,7 +65,12 @@ class SubscriptionRowViewsTests: XCTestCase {
     // Test the EnhancedSubscriptionRowView with a subscription overdue
     func testEnhancedSubscriptionRowViewWithSubscriptionOverdue() {
         // GIVEN
-        let subscription = Features.Subscriptions.Subscription(name: "Monthly Subscription", amount: 10.99, billingCycle: .monthly, nextDueDate: Date().addingTimeInterval(8 * 24 * 60 * 60))
+        let subscription = Features.Subscriptions.Subscription(
+            name: "Monthly Subscription",
+            amount: 10.99,
+            billingCycle: .monthly,
+            nextDueDate: Date().addingTimeInterval(8 * 24 * 60 * 60)
+        )
         viewModel = Features.Subscriptions.EnhancedSubscriptionRowViewModel(subscription: subscription)
 
         // WHEN

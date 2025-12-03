@@ -1,5 +1,5 @@
 //
-//  ThemeEnums.swift
+//  ComponentThemeEnums.swift
 //  MomentumFinance
 //
 //  Created by Daniel Stevens on 6/5/25.

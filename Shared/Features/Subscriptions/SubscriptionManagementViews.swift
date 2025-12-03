@@ -1,5 +1,5 @@
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 #if canImport(AppKit)
     import AppKit
@@ -60,13 +60,15 @@ extension Features.Subscriptions {
             NavigationView {
                 Form {
                     Section(header: Text("Subscription Details")) {
-                        TextField("Subscription Name", text: self.$name).accessibilityLabel("Text Field").accessibilityLabel(
-                            "Text Field"
-                        )
+                        TextField("Subscription Name", text: self.$name).accessibilityLabel("Text Field")
+                            .accessibilityLabel(
+                                "Text Field"
+                            )
 
                         HStack {
                             Text("$")
-                            TextField("Amount", text: self.$amount).accessibilityLabel("Text Field").accessibilityLabel("Text Field")
+                            TextField("Amount", text: self.$amount).accessibilityLabel("Text Field")
+                                .accessibilityLabel("Text Field")
                             #if canImport(UIKit)
                                 .keyboardType(.decimalPad)
                             #endif
@@ -103,9 +105,13 @@ extension Features.Subscriptions {
                     }
 
                     Section(header: Text("Notes")) {
-                        TextField("Notes (optional).accessibilityLabel("Text Field")", text: self.$notes, axis: .vertical)
-                            .lineLimit(3 ... 6)
-                            .accessibilityLabel("Text Field")
+                        TextField(
+                            "Notes (optional).accessibilityLabel("Text Field")",
+                            text: self.$notes,
+                            axis: .vertical
+                        )
+                        .lineLimit(3...6)
+                        .accessibilityLabel("Text Field")
                     }
                 }
                 .navigationTitle("Add Subscription")

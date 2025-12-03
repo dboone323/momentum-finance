@@ -1,9 +1,9 @@
 // Momentum Finance - Data Import View
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 import UniformTypeIdentifiers
 
 /// Data import view for CSV files
@@ -96,7 +96,8 @@ public struct DataImportView: View {
                                 .lineLimit(1)
 
                             if let fileSize = try? fileURL.resourceValues(forKeys: [.fileSizeKey])
-                                .fileSize {
+                                .fileSize
+                            {
                                 Text(
                                     "Size: \(ByteCountFormatter.string(fromByteCount: Int64(fileSize), countStyle: .file))"
                                 )
@@ -150,7 +151,7 @@ public struct DataImportView: View {
         do {
             let importer = DataImporter(modelContainer: modelContext.container)
 
-            for i in 1 ... 10 {
+            for i in 1...10 {
                 try await Task.sleep(nanoseconds: 100_000_000)
                 self.importProgress = Double(i) / 10.0
             }

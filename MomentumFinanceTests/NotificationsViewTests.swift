@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class NotificationsViewTests: XCTestCase {
     var notificationsView: NotificationsView!
@@ -11,7 +11,12 @@ class NotificationsViewTests: XCTestCase {
         let mockNotificationManager = MockNotificationManager()
         mockNotificationManager.scheduledNotifications = [
             ScheduledNotification(title: "Alert 1", body: "Your budget is low!", date: Date(), identifier: "alert1"),
-            ScheduledNotification(title: "Payment Due", body: "Pay your bill now!", date: Date().addingTimeInterval(3600), identifier: "paymentDue")
+            ScheduledNotification(
+                title: "Payment Due",
+                body: "Pay your bill now!",
+                date: Date().addingTimeInterval(3600),
+                identifier: "paymentDue"
+            ),
         ]
 
         // WHEN: The loadNotifications method is called
@@ -27,7 +32,12 @@ class NotificationsViewTests: XCTestCase {
         // GIVEN: A list of scheduled notifications and a selected filter
         let mockNotifications = [
             ScheduledNotification(title: "Alert 1", body: "Your budget is low!", date: Date(), identifier: "alert1"),
-            ScheduledNotification(title: "Payment Due", body: "Pay your bill now!", date: Date().addingTimeInterval(3600), identifier: "paymentDue")
+            ScheduledNotification(
+                title: "Payment Due",
+                body: "Pay your bill now!",
+                date: Date().addingTimeInterval(3600),
+                identifier: "paymentDue"
+            ),
         ]
         let selectedFilter = .all
 
@@ -45,7 +55,12 @@ class NotificationsViewTests: XCTestCase {
         let mockNotificationManager = MockNotificationManager()
         mockNotificationManager.scheduledNotifications = [
             ScheduledNotification(title: "Alert 1", body: "Your budget is low!", date: Date(), identifier: "alert1"),
-            ScheduledNotification(title: "Payment Due", body: "Pay your bill now!", date: Date().addingTimeInterval(3600), identifier: "paymentDue")
+            ScheduledNotification(
+                title: "Payment Due",
+                body: "Pay your bill now!",
+                date: Date().addingTimeInterval(3600),
+                identifier: "paymentDue"
+            ),
         ]
 
         // WHEN: The clearAllNotifications method is called
@@ -59,7 +74,12 @@ class NotificationsViewTests: XCTestCase {
 
     func testNotificationRow() {
         // GIVEN: A scheduled notification and a tap action
-        let mockNotification = ScheduledNotification(title: "Alert 1", body: "Your budget is low!", date: Date(), identifier: "alert1")
+        let mockNotification = ScheduledNotification(
+            title: "Alert 1",
+            body: "Your budget is low!",
+            date: Date(),
+            identifier: "alert1"
+        )
         let onTap = { () in }
         let onDismiss = { () in }
 
@@ -82,6 +102,9 @@ class NotificationsViewTests: XCTestCase {
 
         // THEN: The notification title and body should be displayed correctly
         XCTAssertEqual(emptyStateView.title, "No Notifications")
-        XCTAssertEqual(emptyStateView.body, "You're all caught up! Notifications will appear here when you have budget alerts, upcoming payments, or goal milestones.")
+        XCTAssertEqual(
+            emptyStateView.body,
+            "You're all caught up! Notifications will appear here when you have budget alerts, upcoming payments, or goal milestones."
+        )
     }
 }

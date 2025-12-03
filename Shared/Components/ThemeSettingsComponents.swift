@@ -1,6 +1,6 @@
 import Foundation
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 // MARK: - Theme Settings Components
 
@@ -72,7 +72,7 @@ public struct ThemeSettingsSheet: View {
         NavigationView {
             VStack {
                 Text("Theme Settings")
-                Slider(value: self.$sliderValue, in: 0 ... 1)
+                Slider(value: self.$sliderValue, in: 0...1)
                 Button("Close") {
                     self.showSheet = false
                 }

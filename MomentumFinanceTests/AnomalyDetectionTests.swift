@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class AnomalyDetectionTests: XCTestCase {
     var service: FinancialIntelligenceService!
@@ -10,7 +10,7 @@ class AnomalyDetectionTests: XCTestCase {
             FinancialTransaction(amount: -100, category: nil),
             FinancialTransaction(amount: -200, category: nil),
             FinancialTransaction(amount: 50, category: nil),
-            FinancialTransaction(amount: 150, category: nil)
+            FinancialTransaction(amount: 150, category: nil),
         ]
 
         let expectedInsights = [
@@ -24,15 +24,15 @@ class AnomalyDetectionTests: XCTestCase {
                 data: [
                     ("Average", 0),
                     ("This Transaction", 200),
-                    ("Typical Range", 0)
+                    ("Typical Range", 0),
                 ]
-            )
+            ),
         ]
 
         let insights = service.fi_detectCategoryOutliers(transactions)
 
         XCTAssertEqual(insights.count, expectedInsights.count)
-        for i in 0 ..< insights.count {
+        for i in 0..<insights.count {
             XCTAssertEqual(insights[i].title, expectedInsights[i].title)
             XCTAssertEqual(insights[i].description, expectedInsights[i].description)
             XCTAssertEqual(insights[i].priority, expectedInsights[i].priority)
@@ -49,7 +49,7 @@ class AnomalyDetectionTests: XCTestCase {
             FinancialTransaction(amount: -100, date: Date()),
             FinancialTransaction(amount: 50, date: Date()),
             FinancialTransaction(amount: 150, date: Date()),
-            FinancialTransaction(amount: 200, date: Date())
+            FinancialTransaction(amount: 200, date: Date()),
         ]
 
         let expectedInsights = [
@@ -62,15 +62,15 @@ class AnomalyDetectionTests: XCTestCase {
                 visualizationType: .barChart,
                 data: [
                     ("April 1st", 4),
-                    ("Average Daily Transactions", 0)
+                    ("Average Daily Transactions", 0),
                 ]
-            )
+            ),
         ]
 
         let insights = service.fi_detectRecentFrequencyAnomalies(transactions)
 
         XCTAssertEqual(insights.count, expectedInsights.count)
-        for i in 0 ..< insights.count {
+        for i in 0..<insights.count {
             XCTAssertEqual(insights[i].title, expectedInsights[i].title)
             XCTAssertEqual(insights[i].description, expectedInsights[i].description)
             XCTAssertEqual(insights[i].priority, expectedInsights[i].priority)

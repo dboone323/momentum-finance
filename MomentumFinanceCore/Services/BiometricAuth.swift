@@ -10,15 +10,15 @@ import LocalAuthentication
 class BiometricAuth: ObservableObject {
     static let shared = BiometricAuth()
     @Published var isUnlocked = false
-    
+
     func authenticate() {
         let context = LAContext()
         var error: NSError?
-        
+
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             let reason = "Unlock your financial data"
-            
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, _ in
                 DispatchQueue.main.async {
                     self.isUnlocked = success
                 }
@@ -28,7 +28,7 @@ class BiometricAuth: ObservableObject {
             self.isUnlocked = true // Fallback for simulator/testing
         }
     }
-    
+
     func lock() {
         isUnlocked = false
     }

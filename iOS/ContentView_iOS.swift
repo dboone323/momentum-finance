@@ -22,7 +22,7 @@ extension ContentView {
             appearance.backgroundColor = UIColor.systemBackground
             appearance.titleTextAttributes = [
                 .foregroundColor: UIColor.label,
-                .font: UIFont.systemFont(ofSize: 18, weight: .semibold)
+                .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
             ]
 
             UINavigationBar.appearance().standardAppearance = appearance

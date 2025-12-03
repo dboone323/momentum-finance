@@ -1,6 +1,6 @@
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 public struct ImportExportSection: View {
     @Environment(\.modelContext) private var modelContext
@@ -74,7 +74,8 @@ public struct ImportExportSection: View {
             let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                let window = windowScene.windows.first,
-               let rootVC = window.rootViewController {
+               let rootVC = window.rootViewController
+            {
                 rootVC.present(activityVC, animated: true)
             }
         #else

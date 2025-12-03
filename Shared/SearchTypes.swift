@@ -1,6 +1,6 @@
 import Foundation
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 // MARK: - Search Types
 

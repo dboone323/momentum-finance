@@ -5,9 +5,9 @@
 //  Created by GitHub Copilot on 2024-12-19.
 //
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 extension Features.Transactions {
     struct TransactionDetailView: View {

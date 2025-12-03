@@ -1,8 +1,8 @@
 import Charts
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 // Momentum Finance - Insights View
 // Copyright © 2025 Momentum Finance. All rights reserved.
@@ -131,7 +131,7 @@ public struct InsightsView: View {
                 FinancialAccount.self,
                 FinancialTransaction.self,
                 Budget.self,
-                ExpenseCategory.self
+                ExpenseCategory.self,
             ], inMemory: true
         )
 }

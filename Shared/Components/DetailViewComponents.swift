@@ -6,9 +6,9 @@
 //
 
 import Charts
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 #if os(macOS)
 
@@ -80,8 +80,8 @@ import MomentumFinanceCore
                 if self.showDeleteButton {
                     Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button") {
                         Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.red)
-                        .background(Color.white.clipShape(Circle()))
+                            .foregroundStyle(.red)
+                            .background(Color.white.clipShape(Circle()))
                     }
                     .buttonStyle(.borderless)
                     .offset(x: 5, y: -5)
@@ -171,7 +171,7 @@ import MomentumFinanceCore
             (month: "Mar", amount: 45.75),
             (month: "Apr", amount: 120.00),
             (month: "May", amount: 87.25),
-            (month: "Jun", amount: 95.50)
+            (month: "Jun", amount: 95.50),
         ]
 
         var body: some View {
@@ -237,7 +237,7 @@ import MomentumFinanceCore
             (date: "Mar 5", amount: 52.25),
             (date: "Apr 2", amount: 48.50),
             (date: "May 7", amount: 55.75),
-            (date: "Jun 4", amount: 50.30)
+            (date: "Jun 4", amount: 50.30),
         ]
 
         var body: some View {
@@ -314,7 +314,7 @@ import MomentumFinanceCore
             "February Grocery Shopping",
             "March Grocery Shopping",
             "April Grocery Shopping",
-            "May Grocery Shopping"
+            "May Grocery Shopping",
         ]
 
         var body: some View {
@@ -327,7 +327,7 @@ import MomentumFinanceCore
                     HStack {
                         Text(name)
                         Spacer()
-                        Text("$\(Int.random(in: 45 ... 95)).\(Int.random(in: 10 ... 99))")
+                        Text("$\(Int.random(in: 45...95)).\(Int.random(in: 10...99))")
                             .foregroundStyle(.red)
                     }
                 }

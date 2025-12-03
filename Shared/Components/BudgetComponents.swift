@@ -5,8 +5,8 @@
 //  Extracted components from BudgetsView for SwiftLint compliance
 //
 
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 // MARK: - Budget Row Component
 
@@ -21,11 +21,11 @@ struct BudgetRow: View {
 
     var progressColor: Color {
         if progress >= 1.0 {
-            return .red
+            .red
         } else if progress >= 0.8 {
-            return .orange
+            .orange
         } else {
-            return .green
+            .green
         }
     }
 

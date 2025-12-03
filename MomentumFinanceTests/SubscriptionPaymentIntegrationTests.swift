@@ -1,6 +1,6 @@
-@testable import MomentumFinance
-import XCTest
 import SwiftData
+import XCTest
+@testable import MomentumFinance
 
 @MainActor
 final class SubscriptionPaymentIntegrationTests: XCTestCase {
@@ -13,7 +13,7 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
             FinancialAccount.self,
             FinancialTransaction.self,
             SubscriptionPayment.self,
-            ExpenseCategory.self
+            ExpenseCategory.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -54,7 +54,12 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
 
         // 2. Next due date should be 1 month later
         let expectedDate = Calendar.current.date(byAdding: .month, value: 1, to: startDate)!
-        XCTAssertEqual(subscription.nextDueDate.timeIntervalSince1970, expectedDate.timeIntervalSince1970, accuracy: 1.0, "Next due date should be advanced by 1 month")
+        XCTAssertEqual(
+            subscription.nextDueDate.timeIntervalSince1970,
+            expectedDate.timeIntervalSince1970,
+            accuracy: 1.0,
+            "Next due date should be advanced by 1 month"
+        )
 
         // 3. Transaction should be created
         let descriptor = FetchDescriptor<FinancialTransaction>()
@@ -80,7 +85,12 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
 
         // Then
         let expectedDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: startDate)!
-        XCTAssertEqual(subscription.nextDueDate.timeIntervalSince1970, expectedDate.timeIntervalSince1970, accuracy: 1.0, "Next due date should be advanced by 1 week")
+        XCTAssertEqual(
+            subscription.nextDueDate.timeIntervalSince1970,
+            expectedDate.timeIntervalSince1970,
+            accuracy: 1.0,
+            "Next due date should be advanced by 1 week"
+        )
     }
 
     func testProcessPayment_YearlyCycle() throws {
@@ -99,6 +109,11 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
 
         // Then
         let expectedDate = Calendar.current.date(byAdding: .year, value: 1, to: startDate)!
-        XCTAssertEqual(subscription.nextDueDate.timeIntervalSince1970, expectedDate.timeIntervalSince1970, accuracy: 1.0, "Next due date should be advanced by 1 year")
+        XCTAssertEqual(
+            subscription.nextDueDate.timeIntervalSince1970,
+            expectedDate.timeIntervalSince1970,
+            accuracy: 1.0,
+            "Next due date should be advanced by 1 year"
+        )
     }
 }

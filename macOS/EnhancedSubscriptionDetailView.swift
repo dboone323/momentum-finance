@@ -77,29 +77,40 @@ import SwiftUI
                         }
                         .frame(width: 150)
 
-                        Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }, label: {
-                            Text(self.isEditing ? "Done" : "Edit")
-                        })
+                        Button(
+                            action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button")
+                            },
+                            label: {
+                                Text(self.isEditing ? "Done" : "Edit")
+                            }
+                        )
                         .keyboardShortcut("e", modifiers: .command)
 
                         Menu {
-                            Button("Mark as Paid", action: self.markAsPaid).accessibilityLabel("Button").accessibilityLabel("Button")
-                            Button("Skip Next Payment", action: self.skipNextPayment).accessibilityLabel("Button").accessibilityLabel("Button")
+                            Button("Mark as Paid", action: self.markAsPaid).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
+                            Button("Skip Next Payment", action: self.skipNextPayment).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
                             Divider()
                             Button("Pause Subscription", action: self.pauseSubscription).accessibilityLabel("Button")
                                 .accessibilityLabel("Button")
-                            Button("Cancel Subscription...", action: { self.showingCancelFlow = true }).accessibilityLabel("Button")
+                            Button("Cancel Subscription...", action: { self.showingCancelFlow = true })
+                                .accessibilityLabel("Button")
                                 .accessibilityLabel("Button")
                             Divider()
-                            Button("Find Alternatives...", action: { self.showingShoppingAlternatives = true }).accessibilityLabel("Button")
+                            Button("Find Alternatives...", action: { self.showingShoppingAlternatives = true })
+                                .accessibilityLabel("Button")
                                 .accessibilityLabel("Button")
                             Divider()
-                            Button("Export as PDF", action: self.exportAsPDF).accessibilityLabel("Button").accessibilityLabel("Button")
-                            Button("Print", action: self.printSubscription).accessibilityLabel("Button").accessibilityLabel("Button")
+                            Button("Export as PDF", action: self.exportAsPDF).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
+                            Button("Print", action: self.printSubscription).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
                             Divider()
-                            Button("Delete", role: .destructive).accessibilityLabel("Button").accessibilityLabel("Button") {
-                                self.showingDeleteConfirmation = true
-                            }
+                            Button("Delete", role: .destructive).accessibilityLabel("Button")
+                                .accessibilityLabel("Button") {
+                                    self.showingDeleteConfirmation = true
+                                }
                         } label: {
                             Image(systemName: "ellipsis.circle")
                         }
@@ -191,7 +202,8 @@ import SwiftUI
                                         Spacer()
 
                                         VStack(alignment: .trailing, spacing: 4) {
-                                            Text(subscription.amount.formatted(.currency(code: subscription.currencyCode)))
+                                            Text(subscription.amount
+                                                .formatted(.currency(code: subscription.currencyCode)))
                                                 .font(.system(size: 28, weight: .bold))
 
                                             Text(self.formatBillingCycle(subscription.billingCycle))
@@ -229,7 +241,10 @@ import SwiftUI
                                             }
 
                                             if let startDate = subscription.startDate {
-                                                SubscriptionDetailField(label: "Started On", value: startDate.formatted(date: .abbreviated, time: .omitted))
+                                                SubscriptionDetailField(
+                                                    label: "Started On",
+                                                    value: startDate.formatted(date: .abbreviated, time: .omitted)
+                                                )
                                             }
                                         }
 
@@ -259,7 +274,8 @@ import SwiftUI
                                             Text("Total Spent")
                                                 .font(.caption)
                                                 .foregroundStyle(.secondary)
-                                            Text(self.calculateTotalSpent(subscription).formatted(.currency(code: subscription.currencyCode)))
+                                            Text(self.calculateTotalSpent(subscription)
+                                                .formatted(.currency(code: subscription.currencyCode)))
                                                 .font(.headline)
                                         }
 
@@ -269,7 +285,8 @@ import SwiftUI
                                             Text("Average Monthly")
                                                 .font(.caption)
                                                 .foregroundStyle(.secondary)
-                                            Text(self.calculateMonthlyCost(subscription).formatted(.currency(code: subscription.currencyCode)))
+                                            Text(self.calculateMonthlyCost(subscription)
+                                                .formatted(.currency(code: subscription.currencyCode)))
                                                 .font(.headline)
                                         }
 
@@ -316,7 +333,7 @@ import SwiftUI
                                             .font(.headline)
 
                                         VStack(spacing: 10) {
-                                            ForEach(0 ..< 4) { i in
+                                            ForEach(0..<4) { i in
                                                 HStack {
                                                     if i == 0 {
                                                         Text(nextDate.formatted(date: .abbreviated, time: .omitted))
@@ -332,7 +349,8 @@ import SwiftUI
 
                                                     Spacer()
 
-                                                    Text(subscription.amount.formatted(.currency(code: subscription.currencyCode)))
+                                                    Text(subscription.amount
+                                                        .formatted(.currency(code: subscription.currencyCode)))
                                                         .foregroundStyle(i == 0 ? .primary : .secondary)
                                                 }
                                                 .padding(.vertical, 4)
@@ -366,10 +384,11 @@ import SwiftUI
 
                                 Spacer()
 
-                                Button(action: self.addTransaction).accessibilityLabel("Button").accessibilityLabel("Button") {
-                                    Label("Add", systemImage: "plus")
-                                }
-                                .buttonStyle(.bordered)
+                                Button(action: self.addTransaction).accessibilityLabel("Button")
+                                    .accessibilityLabel("Button") {
+                                        Label("Add", systemImage: "plus")
+                                    }
+                                    .buttonStyle(.bordered)
                             }
                             .padding()
                             .background(Color(.windowBackgroundColor).opacity(0.5))
@@ -383,10 +402,11 @@ import SwiftUI
                                 } description: {
                                     Text("No payment records found for this subscription.")
                                 } actions: {
-                                    Button("Add Payment Record").accessibilityLabel("Button").accessibilityLabel("Button") {
-                                        self.addTransaction()
-                                    }
-                                    .buttonStyle(.bordered)
+                                    Button("Add Payment Record").accessibilityLabel("Button")
+                                        .accessibilityLabel("Button") {
+                                            self.addTransaction()
+                                        }
+                                        .buttonStyle(.bordered)
                                 }
                                 .frame(maxHeight: .infinity)
                             } else {
@@ -493,7 +513,9 @@ import SwiftUI
                                 .gridColumnAlignment(.trailing)
 
                             DatePicker("Next Payment", selection: Binding(
-                                get: { self.editedSubscription?.nextPaymentDate ?? subscription.nextPaymentDate ?? Date() },
+                                get: {
+                                    self.editedSubscription?.nextPaymentDate ?? subscription.nextPaymentDate ?? Date()
+                                },
                                 set: { self.editedSubscription?.nextPaymentDate = $0 }
                             ), displayedComponents: .date)
                                 .labelsHidden()
@@ -620,7 +642,6 @@ import SwiftUI
                 }
             }
 
-
             // MARK: - Helper Methods
 
             private func formatBillingCycle(_ cycle: String) -> String {
@@ -744,7 +765,11 @@ import SwiftUI
                 transaction.subscriptionId = subscription.id
 
                 // Calculate next payment date based on billing cycle
-                if let newNextDate = calculateFuturePaymentDate(from: nextDate, offset: 1, cycle: subscription.billingCycle) {
+                if let newNextDate = calculateFuturePaymentDate(
+                    from: nextDate,
+                    offset: 1,
+                    cycle: subscription.billingCycle
+                ) {
                     subscription.nextPaymentDate = newNextDate
                 }
 
@@ -757,7 +782,11 @@ import SwiftUI
                 guard let subscription, let nextDate = subscription.nextPaymentDate else { return }
 
                 // Calculate next payment date based on billing cycle and skip one period
-                if let newNextDate = calculateFuturePaymentDate(from: nextDate, offset: 1, cycle: subscription.billingCycle) {
+                if let newNextDate = calculateFuturePaymentDate(
+                    from: nextDate,
+                    offset: 1,
+                    cycle: subscription.billingCycle
+                ) {
                     subscription.nextPaymentDate = newNextDate
                     try? self.modelContext.save()
                 }

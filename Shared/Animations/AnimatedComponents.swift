@@ -2,7 +2,6 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 import SwiftUI
-import MomentumFinanceCore
 
 // MARK: - Animation Components Coordinator
 

@@ -1,5 +1,5 @@
-@testable import MomentumFinanceCore
 import XCTest
+@testable import MomentumFinanceCore
 
 final class CSVParserEdgeCasesTests: XCTestCase {
     func testMalformedRowExtraCommas() {
@@ -23,7 +23,15 @@ final class CSVParserEdgeCasesTests: XCTestCase {
     }
 
     func testHeaderMappingAlternateNames() {
-        let headers = ["Transaction Date", "Description", "Value", "Transaction Type", "Comments", "Account Name", "Category Name"]
+        let headers = [
+            "Transaction Date",
+            "Description",
+            "Value",
+            "Transaction Type",
+            "Comments",
+            "Account Name",
+            "Category Name",
+        ]
         let mapping = CSVParser.mapColumns(headers: headers)
         XCTAssertNotNil(mapping.dateIndex)
         XCTAssertNotNil(mapping.titleIndex)

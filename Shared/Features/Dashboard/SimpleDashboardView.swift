@@ -1,9 +1,9 @@
 // Temporary Simple Dashboard View
 // This is a simplified version to get the build working
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 public struct SimpleDashboardView: View {
     @Environment(\.modelContext)

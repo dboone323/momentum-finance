@@ -5,9 +5,9 @@
 //  Created by GitHub Copilot on 2025-08-19.
 //
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 extension Features.Transactions {
     struct TransactionListView: View {
@@ -34,9 +34,10 @@ extension Features.Transactions {
                                 self.onTransactionTapped(transaction)
                             }
                             .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                Button("Delete", role: .destructive).accessibilityLabel("Button").accessibilityLabel("Button") {
-                                    self.onDeleteTransaction(transaction)
-                                }
+                                Button("Delete", role: .destructive).accessibilityLabel("Button")
+                                    .accessibilityLabel("Button") {
+                                        self.onDeleteTransaction(transaction)
+                                    }
                             }
                         }
                     } header: {

@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class CategoryTransactionsViewTests: XCTestCase {
     var viewModel: Features.Transactions.CategoryTransactionsViewModel!
@@ -14,7 +14,11 @@ class CategoryTransactionsViewTests: XCTestCase {
         // Mock data for transactions and categories
         let expenseTransaction = FinancialTransaction(
             id: UUID(uuidString: "12345678-90ab-cdef-1234-567890abcdef"),
-            account: Account(id: UUID(uuidString: "12345678-90ab-cdef-1234-567890abcdef"), name: "Checking", balance: 0.0),
+            account: Account(
+                id: UUID(uuidString: "12345678-90ab-cdef-1234-567890abcdef"),
+                name: "Checking",
+                balance: 0.0
+            ),
             category: ExpenseCategory(
                 id: UUID(uuidString: "12345678-90ab-cdef-1234-567890abcdef"),
                 name: expectedName,

@@ -1,14 +1,14 @@
 //
-//  DashboardComponents.swift
+//  DashboardUIComponents.swift
 //  MomentumFinance
 //
 //  Created by GitHub Copilot on 2025-09-05.
 //  Copyright © 2025 Daniel Stevens. All rights reserved.
 //
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 // Import the models
 // Note: FinancialAccount should be available from the Models folder

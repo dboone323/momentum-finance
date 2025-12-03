@@ -1,9 +1,9 @@
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 /// A view that shows transactions filtered by a specific category
 extension Features.Transactions {

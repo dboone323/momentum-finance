@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class DependenciesTests: XCTestCase {
     var dependencies: Dependencies!
@@ -22,7 +22,10 @@ class DependenciesTests: XCTestCase {
 
         // Assert that the log message is printed to the console
         XCTAssertEqual(dependencies.logger.outputHandler.mockCalls.count, 1)
-        XCTAssertEqual(dependencies.logger.outputHandler.mockCalls[0].message, "[\(dependencies.logger.isoFormatter.string(from: Date()))] [INFO] \(message)")
+        XCTAssertEqual(
+            dependencies.logger.outputHandler.mockCalls[0].message,
+            "[\(dependencies.logger.isoFormatter.string(from: Date()))] [INFO] \(message)"
+        )
     }
 
     // Test the setOutputHandler method
@@ -33,7 +36,10 @@ class DependenciesTests: XCTestCase {
         dependencies.log("Test Log Message")
 
         XCTAssertEqual(mockHandler.outputHandler.mockCalls.count, 1)
-        XCTAssertEqual(mockHandler.outputHandler.mockCalls[0].message, "[\(dependencies.logger.isoFormatter.string(from: Date()))] [INFO] Test Log Message")
+        XCTAssertEqual(
+            mockHandler.outputHandler.mockCalls[0].message,
+            "[\(dependencies.logger.isoFormatter.string(from: Date()))] [INFO] Test Log Message"
+        )
     }
 
     // Test the resetOutputHandler method

@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class SearchTypesTests: XCTestCase {
     // MARK: - Test Cases for SearchFilter enum

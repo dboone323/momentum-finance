@@ -1,6 +1,6 @@
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 import UniformTypeIdentifiers
 
 public struct ImportDataView: View {
@@ -96,7 +96,8 @@ public struct ImportDataView: View {
 
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                let window = windowScene.windows.first,
-               let rootVC = window.rootViewController {
+               let rootVC = window.rootViewController
+            {
                 rootVC.present(picker, animated: true)
             }
         #else

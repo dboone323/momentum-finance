@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class SearchEngineServiceTests: XCTestCase {
     var service: SearchEngineService!
@@ -73,6 +73,10 @@ class SearchEngineServiceTests: XCTestCase {
         let normalizedQuery = query.lowercased()
         let normalizedText = text.lowercased()
 
-        return Double(normalizedText.contains(normalizedQuery)) * 0.5 + Double(normalizedText.contains(normalizedQuery.replacingOccurrences(of: " ", with: ""))) * 0.3
+        return Double(normalizedText.contains(normalizedQuery)) * 0.5 +
+            Double(normalizedText.contains(normalizedQuery.replacingOccurrences(
+                of: " ",
+                with: ""
+            ))) * 0.3
     }
 }

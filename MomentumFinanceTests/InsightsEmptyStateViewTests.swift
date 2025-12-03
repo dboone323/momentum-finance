@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class InsightsEmptyStateViewTests: XCTestCase {
     // Mocks for dependencies if needed

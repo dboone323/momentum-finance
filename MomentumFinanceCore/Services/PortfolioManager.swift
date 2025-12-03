@@ -19,12 +19,12 @@ struct Holding: Identifiable {
 
 class PortfolioManager {
     static let shared = PortfolioManager()
-    
+
     func calculatePortfolioValue(holdings: [Holding]) -> Decimal {
-        return holdings.reduce(0) { $0 + $1.marketValue }
+        holdings.reduce(0) { $0 + $1.marketValue }
     }
-    
+
     func calculateTotalReturn(holdings: [Holding]) -> Decimal {
-        return holdings.reduce(0) { $0 + $1.gainLoss }
+        holdings.reduce(0) { $0 + $1.gainLoss }
     }
 }

@@ -4,7 +4,9 @@ import MomentumFinanceCore
 // MARK: - Financial Forecasting
 
 /// Generate financial forecasts based on historical data
-func fi_generateFinancialForecasts(transactions: [FinancialTransaction], accounts _: [FinancialAccount]) -> [FinancialInsight] {
+func fi_generateFinancialForecasts(transactions: [FinancialTransaction],
+                                   accounts _: [FinancialAccount]) -> [FinancialInsight]
+{
     var insights: [FinancialInsight] = []
 
     let calendar = Calendar.current
@@ -29,18 +31,18 @@ func fi_generateFinancialForecasts(transactions: [FinancialTransaction], account
         let avgMonthlyIncome = recentMonthlyIncomes.reduce(0, +) / Double(recentMonthlyIncomes.count)
         let forecastDescription = [
             "Based on recent trends, your estimated monthly income is \(fi_formatCurrency(avgMonthlyIncome)).",
-            "This forecast helps with budgeting and financial planning."
+            "This forecast helps with budgeting and financial planning.",
         ].joined(separator: " ")
 
-        let insight = IntelligenceFinancialInsight(
+        let insight = FinancialInsight(
             title: "Income Forecast",
             description: forecastDescription,
             priority: InsightPriority.low,
             type: InsightType.forecast,
             visualizationType: VisualizationType.lineChart,
-            data: [
-                ("Estimated Monthly Income", avgMonthlyIncome),
-                ("Data Points", Double(recentMonthlyIncomes.count))
+            chartData: [
+                ChartDataPoint(label: "Estimated Monthly Income", value: avgMonthlyIncome),
+                ChartDataPoint(label: "Data Points", value: Double(recentMonthlyIncomes.count)),
             ]
         )
         insights.append(insight)
@@ -65,18 +67,18 @@ func fi_generateFinancialForecasts(transactions: [FinancialTransaction], account
         let avgMonthlyExpenses = recentMonthlyExpenses.reduce(0, +) / Double(recentMonthlyExpenses.count)
         let forecastDescription = [
             "Your estimated monthly expenses are \(fi_formatCurrency(avgMonthlyExpenses)).",
-            "Use this to plan your budget and savings goals."
+            "Use this to plan your budget and savings goals.",
         ].joined(separator: " ")
 
-        let insight = IntelligenceFinancialInsight(
+        let insight = FinancialInsight(
             title: "Expense Forecast",
             description: forecastDescription,
             priority: InsightPriority.low,
             type: InsightType.forecast,
             visualizationType: VisualizationType.lineChart,
-            data: [
-                ("Estimated Monthly Expenses", avgMonthlyExpenses),
-                ("Data Points", Double(recentMonthlyExpenses.count))
+            chartData: [
+                ChartDataPoint(label: "Estimated Monthly Expenses", value: avgMonthlyExpenses),
+                ChartDataPoint(label: "Data Points", value: Double(recentMonthlyExpenses.count)),
             ]
         )
         insights.append(insight)
@@ -94,27 +96,27 @@ func fi_generateFinancialForecasts(transactions: [FinancialTransaction], account
         if netCashFlow > 0 {
             flowDescription = [
                 "Your projected monthly cash flow is positive at \(fi_formatCurrency(netCashFlow)).",
-                "Consider increasing your savings or investments."
+                "Consider increasing your savings or investments.",
             ].joined(separator: " ")
             priority = InsightPriority.low
         } else {
             flowDescription = [
                 "Your projected monthly cash flow is negative at \(fi_formatCurrency(netCashFlow)).",
-                "Review your expenses to improve your financial position."
+                "Review your expenses to improve your financial position.",
             ].joined(separator: " ")
             priority = InsightPriority.high
         }
 
-        let insight = IntelligenceFinancialInsight(
+        let insight = FinancialInsight(
             title: "Cash Flow Forecast",
             description: flowDescription,
             priority: priority,
             type: .forecast,
             visualizationType: .barChart,
-            data: [
-                ("Projected Income", avgIncome),
-                ("Projected Expenses", avgExpenses),
-                ("Net Cash Flow", netCashFlow)
+            chartData: [
+                ChartDataPoint(label: "Projected Income", value: avgIncome),
+                ChartDataPoint(label: "Projected Expenses", value: avgExpenses),
+                ChartDataPoint(label: "Net Cash Flow", value: netCashFlow),
             ]
         )
         insights.append(insight)
@@ -136,8 +138,9 @@ func fi_projectedBalances(
 ) -> [(String, Double)] {
     var projected: [(String, Double)] = []
     var projectedBalance = startingBalance
-    guard let currentMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: Date())) else { return [] }
-    for monthIndex in 0 ..< months {
+    guard let currentMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: Date()))
+    else { return [] }
+    for monthIndex in 0..<months {
         guard
             let futureMonth = calendar.date(
                 byAdding: .month, value: monthIndex + 1, to: currentMonth
@@ -155,7 +158,8 @@ func fi_monthlyNetCashFlow(_ transactions: [FinancialTransaction], monthsAgo: In
     var monthlyNetCashFlow: [Date: Double] = [:]
 
     for transaction in transactions where transaction.date >= since {
-        guard let month = calendar.date(from: calendar.dateComponents([.year, .month], from: transaction.date)) else { continue }
+        guard let month = calendar.date(from: calendar.dateComponents([.year, .month], from: transaction.date))
+        else { continue }
         monthlyNetCashFlow[month] = (monthlyNetCashFlow[month] ?? 0) + transaction.amount
     }
 
@@ -163,7 +167,8 @@ func fi_monthlyNetCashFlow(_ transactions: [FinancialTransaction], monthsAgo: In
 }
 
 func fi_trendAndForecast(values: [Double]) -> TrendForecast {
-    guard values.count >= 2 else { return TrendForecast(trendDirection: "stable", trendPercentage: 0, nextForecast: nil) }
+    guard values.count >= 2
+    else { return TrendForecast(trendDirection: "stable", trendPercentage: 0, nextForecast: nil) }
 
     let latest = values.last ?? 0
     let previous = values[values.count - 2]

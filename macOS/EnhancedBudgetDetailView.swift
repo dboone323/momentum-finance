@@ -67,16 +67,23 @@ import SwiftUI
                         }
                         .frame(width: 180)
 
-                        Button(action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") }, label: { Text(self.isEditing ? "Done" : "Edit") })
-                            .keyboardShortcut("e", modifiers: .command)
+                        Button(
+                            action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button")
+                            },
+                            label: { Text(self.isEditing ? "Done" : "Edit") }
+                        )
+                        .keyboardShortcut("e", modifiers: .command)
 
                         Menu {
-                            Button("Export as PDF", action: self.exportAsPDF).accessibilityLabel("Button").accessibilityLabel("Button")
-                            Button("Print", action: self.printBudget).accessibilityLabel("Button").accessibilityLabel("Button")
+                            Button("Export as PDF", action: self.exportAsPDF).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
+                            Button("Print", action: self.printBudget).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
                             Divider()
-                            Button("Delete", role: .destructive).accessibilityLabel("Button").accessibilityLabel("Button") {
-                                self.showingDeleteConfirmation = true
-                            }
+                            Button("Delete", role: .destructive).accessibilityLabel("Button")
+                                .accessibilityLabel("Button") {
+                                    self.showingDeleteConfirmation = true
+                                }
                         } label: {
                             Image(systemName: "ellipsis.circle")
                         }
@@ -177,13 +184,18 @@ import SwiftUI
                                             .padding(.vertical, 8)
 
                                         HStack {
-                                            Text("Remaining: \((budget.amount - budget.spent).formatted(.currency(code: "USD")))")
-                                                .foregroundStyle(.secondary)
+                                            Text(
+                                                "Remaining: \((budget.amount - budget.spent).formatted(.currency(code: "USD")))"
+                                            )
+                                            .foregroundStyle(.secondary)
 
                                             Spacer()
 
                                             Text("\(Int((budget.spent / budget.amount) * 100))%")
-                                                .foregroundStyle(self.getBudgetColor(spent: budget.spent, total: budget.amount))
+                                                .foregroundStyle(self.getBudgetColor(
+                                                    spent: budget.spent,
+                                                    total: budget.amount
+                                                ))
                                                 .bold()
                                         }
                                     }
@@ -267,10 +279,11 @@ import SwiftUI
 
                                 Spacer()
 
-                                Button(action: self.addTransaction).accessibilityLabel("Button").accessibilityLabel("Button") {
-                                    Label("Add", systemImage: "plus")
-                                }
-                                .buttonStyle(.bordered)
+                                Button(action: self.addTransaction).accessibilityLabel("Button")
+                                    .accessibilityLabel("Button") {
+                                        Label("Add", systemImage: "plus")
+                                    }
+                                    .buttonStyle(.bordered)
                             }
                             .padding()
                             .background(Color(.windowBackgroundColor).opacity(0.5))
@@ -284,10 +297,11 @@ import SwiftUI
                                 } description: {
                                     Text("No transactions found in this category for the selected time period.")
                                 } actions: {
-                                    Button("Add Transaction").accessibilityLabel("Button").accessibilityLabel("Button") {
-                                        self.addTransaction()
-                                    }
-                                    .buttonStyle(.bordered)
+                                    Button("Add Transaction").accessibilityLabel("Button")
+                                        .accessibilityLabel("Button") {
+                                            self.addTransaction()
+                                        }
+                                        .buttonStyle(.bordered)
                                 }
                                 .frame(maxHeight: .infinity)
                             } else {
@@ -469,9 +483,10 @@ import SwiftUI
 
                     Divider()
 
-                    Button("Exclude from Budget", role: .destructive).accessibilityLabel("Button").accessibilityLabel("Button") {
-                        // Remove from budget calculations
-                    }
+                    Button("Exclude from Budget", role: .destructive).accessibilityLabel("Button")
+                        .accessibilityLabel("Button") {
+                            // Remove from budget calculations
+                        }
                 }
             }
 
@@ -585,7 +600,7 @@ import SwiftUI
                     (day: "15", amount: 120.00),
                     (day: "20", amount: 87.25),
                     (day: "25", amount: 25.50),
-                    (day: "30", amount: 15.20)
+                    (day: "30", amount: 15.20),
                 ]
 
                 var body: some View {
@@ -605,9 +620,11 @@ import SwiftUI
                                 .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 5]))
                                 .foregroundStyle(.red)
                                 .annotation(position: .top, alignment: .trailing) {
-                                    Text("Daily Budget: \((self.budget.amount / 30.0).formatted(.currency(code: "USD")))")
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                    Text(
+                                        "Daily Budget: \((self.budget.amount / 30.0).formatted(.currency(code: "USD")))"
+                                    )
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
                                 }
                         }
 
@@ -655,7 +672,7 @@ import SwiftUI
                     (month: "Mar", amount: 295.75),
                     (month: "Apr", amount: 420.00),
                     (month: "May", amount: 387.25),
-                    (month: "Jun", amount: 345.50)
+                    (month: "Jun", amount: 345.50),
                 ]
 
                 var body: some View {
@@ -740,7 +757,8 @@ import SwiftUI
                     guard let lastMonth = calendar.date(byAdding: .month, value: -1, to: today) else { return false }
                     return calendar.isDate(date, equalTo: lastMonth, toGranularity: .month)
                 case .last3Months:
-                    guard let threeMonthsAgo = calendar.date(byAdding: .month, value: -3, to: today) else { return false }
+                    guard let threeMonthsAgo = calendar.date(byAdding: .month, value: -3, to: today)
+                    else { return false }
                     return date >= threeMonthsAgo && date <= today
                 case .last6Months:
                     guard let sixMonthsAgo = calendar.date(byAdding: .month, value: -6, to: today) else { return false }

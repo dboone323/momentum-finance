@@ -1,13 +1,13 @@
 //
-//  ColorDefinitions.swift
+//  ComponentColorDefinitions.swift
 //  MomentumFinance
 //
 //  Created by Daniel Stevens on 6/5/25.
 //  Copyright © 2025 Daniel Stevens. All rights reserved.
 //
 
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 /// Static color definitions for light and dark theme schemes
 enum ComponentColorDefinitions {
@@ -143,7 +143,7 @@ enum ComponentColorDefinitions {
             Color(hex: "D81B60"), // Pink
             Color(hex: "5C6BC0"), // Indigo
             Color(hex: "607D8B"), // Blue Grey
-            Color(hex: "C5E1A5")
+            Color(hex: "C5E1A5"),
         ]
     }
 }

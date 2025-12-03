@@ -6,17 +6,31 @@
 //  Copyright © 2025 Daniel Stevens. All rights reserved.
 //
 
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 // MARK: - Theme Demo Components
+
+/// Account data model for demo
+public struct AccountData: Hashable {
+    let name: String
+    let iconName: String
+    let balance: Double
+}
+
+/// Budget data model for demo
+public struct BudgetData: Hashable {
+    let name: String
+    let spent: Double
+    let total: Double
+}
 
 /// Theme selector card for the demo view
 public struct ThemeSelectorCard: View {
     @Binding var selectedThemeMode: ThemeMode
     let theme: ColorTheme
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Theme Selector")
                 .font(.headline)
@@ -43,7 +57,7 @@ public struct ThemeSelectorCard: View {
 public struct ThemeFinancialSummaryCard: View {
     let theme: ColorTheme
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Financial Summary")
                 .font(.headline)
@@ -84,7 +98,7 @@ public struct ThemeAccountsList: View {
     let accounts: [AccountData]
     let theme: ColorTheme
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Accounts")
                 .font(.headline)
@@ -120,11 +134,11 @@ public struct ThemeAccountsList: View {
 }
 
 /// Budget progress section for the demo view
-public struct ThemeBudgetProgress: View {
+public struct ThemeDemoBudgetProgress: View {
     let budgets: [BudgetData]
     let theme: ColorTheme
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Budget Progress")
                 .font(.headline)
@@ -178,11 +192,11 @@ public struct SubscriptionItem: Hashable {
 }
 
 /// Subscriptions list for the demo view
-public struct ThemeSubscriptionsList: View {
+public struct ThemeDemoSubscriptionsList: View {
     let subscriptions: [SubscriptionItem]
     let theme: ColorTheme
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Subscriptions")
                 .font(.headline)
@@ -222,10 +236,10 @@ public struct ThemeSubscriptionsList: View {
 }
 
 /// Typography showcase for the demo view
-public struct ThemeTypographyShowcase: View {
+public struct ThemeDemoTypographyShowcase: View {
     let theme: ColorTheme
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Typography")
                 .font(.headline)
@@ -281,10 +295,10 @@ public struct ThemeTypographyShowcase: View {
 }
 
 /// Button styles showcase for the demo view
-public struct ThemeButtonStylesShowcase: View {
+public struct ThemeDemoButtonStylesShowcase: View {
     let theme: ColorTheme
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Button Styles")
                 .font(.headline)
@@ -314,13 +328,13 @@ public struct ThemeButtonStylesShowcase: View {
 }
 
 /// Theme settings sheet for the demo view
-public struct ThemeSettingsSheet: View {
+public struct ThemeDemoSettingsSheet: View {
     @Binding var selectedThemeMode: ThemeMode
     @Binding var sliderValue: Double
     @Binding var showSheet: Bool
     let theme: ColorTheme
 
-    var body: some View {
+    public var body: some View {
         NavigationStack {
             Form {
                 Section("Theme Mode") {
@@ -336,7 +350,7 @@ public struct ThemeSettingsSheet: View {
                 }
 
                 Section("Accent Adjustment") {
-                    Slider(value: self.$sliderValue, in: 0 ... 1) {
+                    Slider(value: self.$sliderValue, in: 0...1) {
                         Text("Accent Intensity")
                     }
                     Text("Value: \(String(format: "%.2f", self.sliderValue))")

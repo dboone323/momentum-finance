@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class NavigationTypesTests: XCTestCase {
     // Test setup method to ensure all dependencies are properly initialized
@@ -62,7 +62,11 @@ class NavigationTypesTests: XCTestCase {
         let metadata = ["userId": "12345"]
 
         // WHEN: Creating a NavigationContext instance with the provided values
-        let context = NavigationContext(breadcrumbTitle: breadcrumbTitle, sourceModule: sourceModule, metadata: metadata)
+        let context = NavigationContext(
+            breadcrumbTitle: breadcrumbTitle,
+            sourceModule: sourceModule,
+            metadata: metadata
+        )
 
         // THEN: The context should be of type NavigationContext and have the correct values
         XCTAssertEqual(context.breadcrumbTitle, breadcrumbTitle)

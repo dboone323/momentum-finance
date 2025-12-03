@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class SubscriptionsViewTests: XCTestCase {
     var subscriptions: [Subscription]!
@@ -9,7 +9,11 @@ class SubscriptionsViewTests: XCTestCase {
 
     func testSubscriptionHeaderView() {
         // GIVEN
-        let view = SubscriptionHeaderView(subscriptions: subscriptions, selectedFilter: $selectedFilter, showingAddSubscription: $showingAddSubscription)
+        let view = SubscriptionHeaderView(
+            subscriptions: subscriptions,
+            selectedFilter: $selectedFilter,
+            showingAddSubscription: $showingAddSubscription
+        )
 
         // WHEN
         // No actions needed for this test

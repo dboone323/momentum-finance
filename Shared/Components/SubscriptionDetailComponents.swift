@@ -6,10 +6,10 @@
 //
 
 import Charts
+import MomentumFinanceCore
 import Shared
 import SwiftData
 import SwiftUI
-import MomentumFinanceCore
 
 #if os(macOS)
 
@@ -102,7 +102,7 @@ import MomentumFinanceCore
                 (month: "Aug", amount: self.subscription.amount),
                 (month: "Sep", amount: self.subscription.amount),
                 (month: "Oct", amount: self.subscription.amount),
-                (month: "Nov", amount: self.subscription.amount)
+                (month: "Nov", amount: self.subscription.amount),
             ]
         }
 
@@ -120,9 +120,11 @@ import MomentumFinanceCore
                     RuleMark(y: .value("Average", self.subscription.amount))
                         .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 5]))
                         .annotation(position: .top, alignment: .trailing) {
-                            Text("Monthly: \(self.subscription.amount.formatted(.currency(code: self.subscription.currencyCode)))")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            Text(
+                                "Monthly: \(self.subscription.amount.formatted(.currency(code: self.subscription.currencyCode)))"
+                            )
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                         }
                 }
             }
@@ -241,8 +243,10 @@ import MomentumFinanceCore
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
 
-                            let lowerBound = (self.subscription.amount * 0.9).formatted(.currency(code: self.subscription.currencyCode))
-                            let upperBound = (self.subscription.amount * 1.1).formatted(.currency(code: self.subscription.currencyCode))
+                            let lowerBound = (self.subscription.amount * 0.9)
+                                .formatted(.currency(code: self.subscription.currencyCode))
+                            let upperBound = (self.subscription.amount * 1.1)
+                                .formatted(.currency(code: self.subscription.currencyCode))
                             Text(
                                 "\(lowerBound) - \(upperBound)"
                             )
@@ -409,7 +413,7 @@ import MomentumFinanceCore
                 name: "CompetitorC",
                 price: 12.99,
                 features: ["4K Streaming", "Unlimited devices", "Full library", "Downloads", "Live TV"]
-            )
+            ),
         ]
 
         var body: some View {
@@ -438,7 +442,8 @@ import MomentumFinanceCore
 
                         Divider()
 
-                        Text(self.subscription?.amount.formatted(.currency(code: self.subscription?.currencyCode ?? "USD")) ?? "$0.00")
+                        Text(self.subscription?.amount
+                            .formatted(.currency(code: self.subscription?.currencyCode ?? "USD")) ?? "$0.00")
                             .font(.title3)
                             .bold()
                             .padding()

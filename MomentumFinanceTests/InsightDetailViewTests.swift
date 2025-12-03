@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class InsightDetailViewTests: XCTestCase {
     var insight: FinancialInsight!
@@ -51,7 +51,10 @@ class InsightDetailViewTests: XCTestCase {
         let result = sut.body
 
         XCTAssertEqual(result, expectation(for: "InsightDetailView body view", predicate: { $0 is VStack }))
-        XCTAssertEqual(result as! VStack, expectation(for: "VStack in InsightDetailView body view", predicate: { $0.count == 2 }))
+        XCTAssertEqual(
+            result as! VStack,
+            expectation(for: "VStack in InsightDetailView body view", predicate: { $0.count == 2 })
+        )
     }
 
     // Test the priority badge
