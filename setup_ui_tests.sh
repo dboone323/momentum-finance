@@ -3,8 +3,8 @@
 # Script to add UI Test target to MomentumFinance Xcode project
 # This script adds the necessary configuration for UI testing
 
-PROJECT_PATH="/Users/danielstevens/Desktop/Quantum-workspace/Projects/MomentumFinance/MomentumFinance.xcodeproj"
-UITESTS_DIR="/Users/danielstevens/Desktop/Quantum-workspace/Projects/MomentumFinance/MomentumFinanceUITests"
+PROJECT_PATH="/Users/danielstevens/Desktop/github-projects/tools-automation/Projects/MomentumFinance/MomentumFinance.xcodeproj"
+UITESTS_DIR="/Users/danielstevens/Desktop/github-projects/tools-automation/Projects/MomentumFinance/MomentumFinanceUITests"
 
 echo "Adding UI Test target to MomentumFinance project..."
 

@@ -32,13 +32,13 @@ class JWTAuthManager:
 
                 result = subprocess.run(
                     [
-                        "/Users/danielstevens/Desktop/Quantum-workspace/Tools/secure_config.sh",
+                        "/Users/danielstevens/Desktop/github-projects/tools-automation/Tools/secure_config.sh",
                         "get",
                         "JWT_SECRET",
                     ],
                     capture_output=True,
                     text=True,
-                    cwd="/Users/danielstevens/Desktop/Quantum-workspace/Tools",
+                    cwd="/Users/danielstevens/Desktop/github-projects/tools-automation/Tools",
                 )
                 if result.returncode == 0 and result.stdout.strip():
                     self.secret_key = result.stdout.strip()

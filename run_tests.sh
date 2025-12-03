@@ -4,7 +4,7 @@
 # Test Runner Script for MomentumFinance
 # This script provides alternative ways to run tests
 
-PROJECT_DIR="/Users/danielstevens/Desktop/Quantum-workspace/Projects/MomentumFinance"
+PROJECT_DIR="/Users/danielstevens/Desktop/github-projects/tools-automation/Projects/MomentumFinance"
 UITESTS_DIR="${PROJECT_DIR}/MomentumFinanceUITests"
 
 echo "=== MomentumFinance Test Runner ==="
