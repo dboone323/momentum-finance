@@ -66,7 +66,7 @@ public struct DashboardAccountsSummary: View {
     let accounts: [FinancialAccount]
     let onAccountTap: (String) -> Void
     let onViewAllTap: () -> Void
-    
+
     public init(
         accounts: [FinancialAccount], onAccountTap: @escaping (String) -> Void,
         onViewAllTap: @escaping () -> Void
@@ -87,7 +87,7 @@ public struct DashboardAccountsSummary: View {
                     .font(.subheadline)
                     .foregroundColor(.blue)
             }
-            
+
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
                     ForEach(self.accounts) { account in
@@ -103,13 +103,13 @@ public struct DashboardAccountsSummary: View {
                                 }
                                 Spacer()
                             }
-                            
+
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(account.name)
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                     .lineLimit(1)
-                                
+
                                 Text(account.balance.formatted(.currency(code: "USD")))
                                     .font(.headline)
                                     .foregroundColor(.primary)

@@ -260,19 +260,19 @@ extension Features.Dashboard {
 struct BudgetWidgetView: View {
     let totalSpent: Double
     let totalBudget: Double
-    
+
     var progress: Double {
         guard totalBudget > 0 else { return 0 }
         return min(totalSpent / totalBudget, 1.0)
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Monthly Budget")
                 .font(.caption)
                 .fontWeight(.medium)
                 .foregroundColor(.secondary)
-            
+
             VStack(alignment: .leading, spacing: 4) {
                 Text(NumberFormatter.currency.string(from: NSNumber(value: totalBudget - totalSpent)) ?? "$0")
                     .font(.title3)
@@ -281,19 +281,19 @@ struct BudgetWidgetView: View {
                     .font(.caption2)
                     .foregroundColor(.secondary)
             }
-            
+
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     Capsule()
                         .fill(Color.secondary.opacity(0.2))
-                    
+
                     Capsule()
                         .fill(progress > 0.9 ? Color.red : Color.blue)
                         .frame(width: geometry.size.width * progress)
                 }
             }
             .frame(height: 8)
-            
+
             HStack {
                 Text(NumberFormatter.currency.string(from: NSNumber(value: totalSpent)) ?? "$0")
                 Spacer()

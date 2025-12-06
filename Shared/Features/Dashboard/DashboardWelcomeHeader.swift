@@ -50,12 +50,12 @@ extension Features.Dashboard {
                                 .font(.caption)
                                 .fontWeight(.medium)
                                 .foregroundColor(.white.opacity(0.8))
-                            
+
                             Text(totalBalance, format: .currency(code: "USD"))
                                 .font(.system(size: 34, weight: .bold, design: .rounded))
                                 .foregroundColor(.white)
                         }
-                        
+
                         HStack(spacing: 20) {
                             // Income
                             HStack(spacing: 8) {
@@ -67,7 +67,7 @@ extension Features.Dashboard {
                                             .font(.caption.bold())
                                             .foregroundColor(.green.opacity(0.9))
                                     )
-                                
+
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text("Income")
                                         .font(.caption2)
@@ -78,9 +78,9 @@ extension Features.Dashboard {
                                         .foregroundColor(.white)
                                 }
                             }
-                            
+
                             Spacer()
-                            
+
                             // Expenses
                             HStack(spacing: 8) {
                                 Circle()
@@ -91,7 +91,7 @@ extension Features.Dashboard {
                                             .font(.caption.bold())
                                             .foregroundColor(.red.opacity(0.9))
                                     )
-                                
+
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text("Expenses")
                                         .font(.caption2)

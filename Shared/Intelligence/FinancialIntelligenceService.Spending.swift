@@ -51,7 +51,8 @@ func fi_generateSpendingInsightsFromMonthlyData(
                     chartData: sorted.map { ChartDataPoint(
                         label: $0.key.formatted(.dateTime.month(.abbreviated)),
                         value: $0.value
-                    ) }
+                    )
+                    }
                 )
             )
         } else if last < average * 0.8, last < prev * 0.9 {
@@ -68,7 +69,8 @@ func fi_generateSpendingInsightsFromMonthlyData(
                     chartData: sorted.map { ChartDataPoint(
                         label: $0.key.formatted(.dateTime.month(.abbreviated)),
                         value: $0.value
-                    ) }
+                    )
+                    }
                 )
             )
         }

@@ -38,7 +38,7 @@ extension Features.Transactions {
                                     // Debounce
                                     try? await Task.sleep(nanoseconds: 600_000_000)
                                     guard !Task.isCancelled, newValue == self.title else { return }
-                                    
+
                                     // Only auto-categorize if not already selected
                                     if self.selectedCategory == nil {
                                         if let predicted = AICategorizationService.predictCategory(for: newValue, categories: self.categories) {
