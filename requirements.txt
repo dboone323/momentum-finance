@@ -7,7 +7,7 @@ numpy==1.26.3
 
 # Network requests for financial data APIs
 requests==2.31.0
-urllib3==2.1.0
+urllib3==2.6.0
 
 # JSON handling and data serialization
 jsonschema==4.21.1
