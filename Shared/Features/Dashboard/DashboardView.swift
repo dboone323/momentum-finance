@@ -303,7 +303,11 @@ struct BudgetWidgetView: View {
             .foregroundColor(.secondary)
         }
         .padding()
-        .background(Color(UIColor.systemBackground))
+        #if os(iOS)
+        .background(Color(uiColor: .systemBackground))
+        #else
+        .background(Color(nsColor: .windowBackgroundColor))
+        #endif
     }
 }
 
