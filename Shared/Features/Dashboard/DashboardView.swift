@@ -254,3 +254,70 @@ extension Features.Dashboard {
     Features.Dashboard.DashboardView()
         .modelContainer(for: [FinancialAccount.self, Subscription.self, Budget.self])
 }
+
+// MARK: - Widget Support (Verification)
+
+struct BudgetWidgetView: View {
+    let totalSpent: Double
+    let totalBudget: Double
+    
+    var progress: Double {
+        guard totalBudget > 0 else { return 0 }
+        return min(totalSpent / totalBudget, 1.0)
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Monthly Budget")
+                .font(.caption)
+                .fontWeight(.medium)
+                .foregroundColor(.secondary)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(NumberFormatter.currency.string(from: NSNumber(value: totalBudget - totalSpent)) ?? "$0")
+                    .font(.title3)
+                    .fontWeight(.bold)
+                Text("Left to spend")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+            
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(Color.secondary.opacity(0.2))
+                    
+                    Capsule()
+                        .fill(progress > 0.9 ? Color.red : Color.blue)
+                        .frame(width: geometry.size.width * progress)
+                }
+            }
+            .frame(height: 8)
+            
+            HStack {
+                Text(NumberFormatter.currency.string(from: NSNumber(value: totalSpent)) ?? "$0")
+                Spacer()
+                Text(NumberFormatter.currency.string(from: NSNumber(value: totalBudget)) ?? "$0")
+            }
+            .font(.caption2)
+            .foregroundColor(.secondary)
+        }
+        .padding()
+        .background(Color(UIColor.systemBackground))
+    }
+}
+
+extension NumberFormatter {
+    static var currency: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }
+}
+
+#Preview("Widget") {
+    BudgetWidgetView(totalSpent: 1250, totalBudget: 2000)
+        .frame(width: 170, height: 170)
+        .cornerRadius(20)
+}

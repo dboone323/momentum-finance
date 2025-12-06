@@ -2,7 +2,7 @@ import Foundation
 import Intents
 
 /// Siri Shortcuts integration for Momentum Finance
-@available(iOS 12.0, *)
+
 class FinanceIntentsHandler: NSObject {
 
     static let shared = FinanceIntentsHandler()

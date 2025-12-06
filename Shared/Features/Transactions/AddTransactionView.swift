@@ -33,6 +33,24 @@ extension Features.Transactions {
                     Section(header: Text("Transaction Details")) {
                         TextField("Title", text: self.$title).accessibilityLabel("Text Field")
                             .accessibilityLabel("Text Field")
+                            .onChange(of: self.title) { newValue in
+                                Task {
+                                    // Debounce
+                                    try? await Task.sleep(nanoseconds: 600_000_000)
+                                    guard !Task.isCancelled, newValue == self.title else { return }
+                                    
+                                    // Only auto-categorize if not already selected
+                                    if self.selectedCategory == nil {
+                                        if let predicted = AICategorizationService.predictCategory(for: newValue, categories: self.categories) {
+                                            await MainActor.run {
+                                                withAnimation {
+                                                    self.selectedCategory = predicted
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
 
                         TextField("Amount", text: self.$amount).accessibilityLabel("Text Field")
                             .accessibilityLabel("Text Field")
