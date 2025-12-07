@@ -1,0 +1,141 @@
+/* 
+  Localizable.strings (English)
+  MomentumFinance
+  
+  Base localization file for MomentumFinance app
+  Add new languages by duplicating this file into {lang}.lproj directories
+*/
+
+/* App Title */
+"app.name" = "Momentum Finance";
+"app.tagline" = "Take Control of Your Finances";
+
+/* Tab Bar */
+"tab.dashboard" = "Dashboard";
+"tab.accounts" = "Accounts";
+"tab.transactions" = "Transactions";
+"tab.budgets" = "Budgets";
+"tab.goals" = "Goals";
+"tab.insights" = "Insights";
+"tab.settings" = "Settings";
+
+/* Dashboard */
+"dashboard.title" = "Dashboard";
+"dashboard.netWorth" = "Net Worth";
+"dashboard.totalBalance" = "Total Balance";
+"dashboard.monthlySpending" = "Monthly Spending";
+"dashboard.monthlyIncome" = "Monthly Income";
+"dashboard.recentTransactions" = "Recent Transactions";
+
+/* Accounts */
+"account.title" = "Accounts";
+"account.add" = "Add Account";
+"account.edit" = "Edit Account";
+"account.delete" = "Delete Account";
+"account.name" = "Account Name";
+"account.type" = "Account Type";
+"account.type.checking" = "Checking";
+"account.type.savings" = "Savings";
+"account.type.credit" = "Credit Card";
+"account.type.investment" = "Investment";
+"account.type.cash" = "Cash";
+"account.balance" = "Balance";
+"account.currency" = "Currency";
+
+/* Transactions */
+"transaction.title" = "Transactions";
+"transaction.add" = "Add Transaction";
+"transaction.edit" = "Edit Transaction";
+"transaction.delete" = "Delete Transaction";
+"transaction.amount" = "Amount";
+"transaction.date" = "Date";
+"transaction.category" = "Category";
+"transaction.note" = "Note";
+"transaction.type.income" = "Income";
+"transaction.type.expense" = "Expense";
+"transaction.type.transfer" = "Transfer";
+
+/* Budgets */
+"budget.title" = "Budgets";
+"budget.create" = "Create Budget";
+"budget.edit" = "Edit Budget";
+"budget.delete" = "Delete Budget";
+"budget.name" = "Budget Name";
+"budget.amount" = "Budget Amount";
+"budget.spent" = "Spent";
+"budget.remaining" = "Remaining";
+"budget.period" = "Period";
+"budget.period.weekly" = "Weekly";
+"budget.period.monthly" = "Monthly";
+"budget.period.yearly" = "Yearly";
+"budget.progress" = "%d%% used";
+"budget.overBudget" = "Over Budget";
+
+/* Goals */
+"goal.title" = "Savings Goals";
+"goal.create" = "Create Goal";
+"goal.edit" = "Edit Goal";
+"goal.delete" = "Delete Goal";
+"goal.name" = "Goal Name";
+"goal.target" = "Target Amount";
+"goal.current" = "Current Amount";
+"goal.deadline" = "Target Date";
+"goal.progress" = "%d%% complete";
+
+/* Categories */
+"category.groceries" = "Groceries";
+"category.dining" = "Dining Out";
+"category.transport" = "Transportation";
+"category.utilities" = "Utilities";
+"category.entertainment" = "Entertainment";
+"category.shopping" = "Shopping";
+"category.health" = "Healthcare";
+"category.travel" = "Travel";
+"category.education" = "Education";
+"category.subscriptions" = "Subscriptions";
+"category.other" = "Other";
+
+/* Insights */
+"insights.title" = "Insights";
+"insights.spending" = "Spending Analysis";
+"insights.patterns" = "Spending Patterns";
+"insights.forecasts" = "Forecasts";
+"insights.anomalies" = "Unusual Activity";
+"insights.recommendations" = "Recommendations";
+
+/* AI Analysis */
+"ai.analyzing" = "Analyzing your finances...";
+"ai.insightsReady" = "New insights available";
+"ai.suggestion" = "Suggestion";
+"ai.warning" = "Alert";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.notifications" = "Notifications";
+"settings.currency" = "Default Currency";
+"settings.theme" = "Theme";
+"settings.theme.light" = "Light";
+"settings.theme.dark" = "Dark";
+"settings.theme.system" = "System";
+"settings.security" = "Security";
+"settings.biometrics" = "Use Face ID / Touch ID";
+"settings.export" = "Export Data";
+"settings.about" = "About";
+
+/* Common Actions */
+"action.save" = "Save";
+"action.cancel" = "Cancel";
+"action.delete" = "Delete";
+"action.edit" = "Edit";
+"action.done" = "Done";
+"action.ok" = "OK";
+"action.add" = "Add";
+
+/* Currency Formatting */
+"currency.format" = "%@ %@";
+
+/* Errors */
+"error.generic" = "Something went wrong. Please try again.";
+"error.network" = "Network error. Please check your connection.";
+"error.loadFailed" = "Failed to load data.";
+"error.saveFailed" = "Failed to save changes.";
