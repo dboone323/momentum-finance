@@ -8,10 +8,11 @@
 import XCTest
 
 final class AccountUITests: XCTestCase {
-    let app = XCUIApplication()
+    var app: XCUIApplication!
 
     override func setUpWithError() throws {
         continueAfterFailure = false
+        app = XCUIApplication()
         self.app.launch()
     }
 

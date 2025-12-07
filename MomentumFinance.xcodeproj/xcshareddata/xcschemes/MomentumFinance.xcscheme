@@ -38,6 +38,16 @@
                ReferencedContainer = "container:MomentumFinance.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "63292F885ECCB953E9ABA700"
+               BuildableName = "MomentumFinanceUITests.xctest"
+               BlueprintName = "MomentumFinanceUITests"
+               ReferencedContainer = "container:MomentumFinance.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
