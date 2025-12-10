@@ -2,7 +2,6 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 import Foundation
-import MomentumFinanceCore
 import SwiftData
 
 /// Represents a savings goal (e.g., "Vacation Fund") in the app.

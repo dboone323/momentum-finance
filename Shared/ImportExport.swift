@@ -1,5 +1,4 @@
 import Foundation
-import MomentumFinanceCore
 import SwiftData
 
 public enum ImportError: Error {

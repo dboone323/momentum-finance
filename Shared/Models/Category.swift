@@ -2,7 +2,6 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 import Foundation
-import MomentumFinanceCore
 import SwiftData
 
 // Category is an alias for ExpenseCategory to maintain compatibility

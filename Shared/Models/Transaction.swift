@@ -2,7 +2,6 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 // #-hidden-code
 import CoreData
-import MomentumFinanceCore
 import SwiftUI
 
 /// Represents a simple transaction record for legacy or compatibility use.
