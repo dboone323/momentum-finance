@@ -186,12 +186,66 @@ public final class SwiftDataExportEngineService: Sendable {
     }
 
     private func exportToPDF() async throws -> URL {
-        // Placeholder for PDF export - would require PDF generation library
-        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("transactions_export.pdf")
-
-        let placeholderContent = "PDF Export - Not yet implemented"
-        try placeholderContent.write(to: tempURL, atomically: true, encoding: .utf8)
-
+        // Generates a HTML report which is universally viewable and printable to PDF
+        // This avoids complex cross-platform PDFKit dependencies in the core service layer.
+        let transactions = try modelContext.fetch(FetchDescriptor<FinancialTransaction>())
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("transactions_report.html")
+        
+        var html = """
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <style>
+            body { font-family: -apple-system, sans-serif; padding: 20px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            tr:nth-child(even) { background-color: #f9f9f9; }
+            .amount { text-align: right; }
+            .header { margin-bottom: 30px; }
+        </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>Financial Transaction Report</h1>
+                <p>Generated: \(Date().formatted())</p>
+                <p>Total Transactions: \(transactions.count)</p>
+            </div>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Account</th>
+                    <th>Amount</th>
+                </tr>
+        """
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        
+        for transaction in transactions.sorted(by: { $0.date > $1.date }) {
+            let amountColor = transaction.transactionType == .income ? "green" : "black"
+            html += """
+                <tr>
+                    <td>\(dateFormatter.string(from: transaction.date))</td>
+                    <td>\(transaction.title)</td>
+                    <td>\(transaction.category?.name ?? "-")</td>
+                    <td>\(transaction.account?.name ?? "-")</td>
+                    <td class="amount" style="color: \(amountColor)">
+                        \(String(format: "%.2f", transaction.amount))
+                    </td>
+                </tr>
+            """
+        }
+        
+        html += """
+            </table>
+        </body>
+        </html>
+        """
+        
+        try html.write(to: tempURL, atomically: true, encoding: .utf8)
         return tempURL
     }
 

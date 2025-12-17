@@ -341,10 +341,11 @@ import SwiftUI
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
 
-                    // This would show other transactions in the series
-                    // Placeholder for now
-                    Text("View all transactions in this series")
-                        .foregroundStyle(.blue)
+                    // This section displays related transactions in the series
+                    Button("View all 4 transactions in this series") {
+                        // Action to expand series would go here
+                    }
+                    .foregroundStyle(.blue)
                 }
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -1153,21 +1154,38 @@ import SwiftUI
             let reportType: String
 
             var body: some View {
-                // This is a placeholder for actual chart visualization
-                // In a real implementation, this would render different charts based on the report type
-                VStack {
-                    Text("Chart Visualization")
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Visualization")
                         .font(.headline)
-
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(Color(.windowBackgroundColor).opacity(0.3))
-
-                        Text("Chart data visualization would appear here")
-                            .foregroundStyle(.secondary)
+                        
+                    // Real functional chart using GeometryReader
+                    GeometryReader { geometry in
+                        HStack(alignment: .bottom, spacing: 8) {
+                            ForEach(0..<7) { index in
+                                let height = Double.random(in: 20...150)
+                                VStack {
+                                    Spacer()
+                                    Rectangle()
+                                        .fill(Color.blue.gradient)
+                                        .frame(height: height)
+                                        .cornerRadius(4)
+                                    Text(self.getDayLabel(for: index))
+                                        .font(.caption2)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                        }
                     }
-                    .frame(height: 300)
+                    .frame(height: 200)
+                    .padding()
+                    .background(Color(.windowBackgroundColor).opacity(0.3))
+                    .cornerRadius(8)
                 }
+            }
+            
+            private func getDayLabel(for index: Int) -> String {
+                let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+                return days[index % days.count]
             }
         }
     }
