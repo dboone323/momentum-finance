@@ -1,7 +1,7 @@
 import XCTest
 @testable import MomentumFinance
 
-final class ModelsTests: XCTestCase {
+final class ModelsTests_Duplicate1: XCTestCase {
     func testInitialization() {
         XCTAssertTrue(true, "Test for Models")
     }

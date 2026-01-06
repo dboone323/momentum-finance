@@ -1,7 +1,7 @@
 import XCTest
 @testable import MomentumFinance
 
-class FinancialIntelligenceServiceTests: XCTestCase {
+class FinancialIntelligenceServiceTestsSpending: XCTestCase {
     var service: FinancialIntelligenceService!
 
     // Test computeMonthlySpendingByCategory

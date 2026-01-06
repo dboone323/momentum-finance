@@ -1,3 +1,4 @@
+#if os(macOS)
 import XCTest
 @testable import MomentumFinance
 
@@ -173,3 +174,5 @@ class MacOSNavigationTypesTests: XCTestCase {
     }
 
 }
+
+#endif

@@ -62,7 +62,7 @@ final class FinancialMLModels {
 
     /// Classify transactions into categories using simple rules
     func classifyTransaction(_ transaction: FinancialTransaction) -> String {
-        let description = transaction.description.lowercased()
+        let description = transaction.title.lowercased()
         let amount = abs(transaction.amount)
 
         // Simple rule-based classification

@@ -1,7 +1,7 @@
 import XCTest
 @testable import MomentumFinance
 
-class MomentumFinanceAppTests: XCTestCase {
+class MomentumFinanceAppTests_Duplicate1: XCTestCase {
     var sharedModelContainer: ModelContainer!
 
     // Test the sharedModelContainer creation

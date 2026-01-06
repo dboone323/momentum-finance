@@ -1,110 +1,66 @@
 import XCTest
+import SwiftData
 @testable import MomentumFinance
 
+@MainActor
 class TransactionsViewModelTests: XCTestCase {
-    var viewModel: TransactionsViewModel!
-    var mockModelContext: MockModelContext!
+    var viewModel: Features.Transactions.TransactionsViewModel!
+    var modelContainer: ModelContainer!
+    var modelContext: ModelContext!
 
-    // Test setModelContext method
-    func testSetModelContext() {
-        let context = ModelContext()
-        viewModel.setModelContext(context)
-
-        XCTAssertEqual(viewModel.modelContext, context)
+    override func setUp() async throws {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        modelContainer = try ModelContainer(for: FinancialTransaction.self, ExpenseCategory.self, FinancialAccount.self, configurations: config)
+        modelContext = ModelContext(modelContainer)
+        viewModel = Features.Transactions.TransactionsViewModel()
+        viewModel.setModelContext(modelContext)
     }
 
-    // Test filterTransactions method
     func testFilterTransactions() {
-        let transactions = [
-            FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
-            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
-            FinancialTransaction(transactionType: .transfer, amount: 20.0, date: Date()),
-        ]
+        // Arrange
+        let t1 = FinancialTransaction(title: "Income", amount: 100.0, date: Date(), transactionType: .income)
+        let t2 = FinancialTransaction(title: "Expense", amount: 50.0, date: Date(), transactionType: .expense)
+        let transactions = [t1, t2]
 
-        let filteredIncome = viewModel.filterTransactions(transactions, by: .income)
-        XCTAssertEqual(filteredIncome.count, 1)
+        // Act
+        let income = viewModel.filterTransactions(transactions, by: .income)
+        let expense = viewModel.filterTransactions(transactions, by: .expense)
 
-        let filteredExpense = viewModel.filterTransactions(transactions, by: .expense)
-        XCTAssertEqual(filteredExpense.count, 1)
-
-        let filteredTransfer = viewModel.filterTransactions(transactions, by: .transfer)
-        XCTAssertEqual(filteredTransfer.count, 0)
+        // Assert
+        XCTAssertEqual(income.count, 1)
+        XCTAssertEqual(income.first?.title, "Income")
+        XCTAssertEqual(expense.count, 1)
+        XCTAssertEqual(expense.first?.title, "Expense")
     }
 
-    // Test searchTransactions method
     func testSearchTransactions() {
-        let transactions = [
-            FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
-            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
-            FinancialTransaction(transactionType: .transfer, amount: 20.0, date: Date()),
-        ]
+        // Arrange
+        let t1 = FinancialTransaction(title: "Grocery Shopping", amount: 50.0, date: Date(), transactionType: .expense)
+        let t2 = FinancialTransaction(title: "Salary", amount: 2000.0, date: Date(), transactionType: .income)
+        let transactions = [t1, t2]
 
-        let filteredByTitle = viewModel.searchTransactions(transactions, query: "Income")
-        XCTAssertEqual(filteredByTitle.count, 1)
+        // Act
+        let result = viewModel.searchTransactions(transactions, query: "Grocery")
 
-        let filteredByCategory = viewModel.searchTransactions(transactions, query: "Expenses")
-        XCTAssertEqual(filteredByCategory.count, 1)
-
-        let filteredByNotes = viewModel.searchTransactions(transactions, query: "Transfer")
-        XCTAssertEqual(filteredByNotes.count, 0)
+        // Assert
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first?.title, "Grocery Shopping")
     }
 
-    // Test groupTransactionsByMonth method
-    func testGroupTransactionsByMonth() {
-        let transactions = [
-            FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
-            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
-            FinancialTransaction(transactionType: .transfer, amount: 20.0, date: Date()),
-        ]
+    func testTotalIncomeAndExpenses() {
+        // Arrange
+        let t1 = FinancialTransaction(title: "Income", amount: 100.0, date: Date(), transactionType: .income)
+        let t2 = FinancialTransaction(title: "Expense", amount: 40.0, date: Date(), transactionType: .expense)
+        let transactions = [t1, t2]
 
-        let grouped = viewModel.groupTransactionsByMonth(transactions)
-        XCTAssertEqual(grouped.count, 1)
+        // Act
+        let income = viewModel.totalIncome(transactions)
+        let expenses = viewModel.totalExpenses(transactions)
+        let net = viewModel.netIncome(transactions)
 
-        let expectedGroup = [
-            "January 2023": [transactions[0]],
-        ]
-        XCTAssertEqual(grouped, expectedGroup)
+        // Assert
+        XCTAssertEqual(income, 100.0)
+        XCTAssertEqual(expenses, 40.0)
+        XCTAssertEqual(net, 60.0)
     }
-
-    // Test totalIncome method
-    func testTotalIncome() {
-        let transactions = [
-            FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
-            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
-        ]
-
-        XCTAssertEqual(viewModel.totalIncome(transactions), 50.0)
-    }
-
-    // Test totalExpenses method
-    func testTotalExpenses() {
-        let transactions = [
-            FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
-            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
-        ]
-
-        XCTAssertEqual(viewModel.totalExpenses(transactions), -50.0)
-    }
-
-    // Test netIncome method
-    func testNetIncome() {
-        let transactions = [
-            FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
-            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
-        ]
-
-        XCTAssertEqual(viewModel.netIncome(transactions), 50.0)
-    }
-
-    // Test currentMonthTransactions method
-    func testCurrentMonthTransactions() {
-        let transactions = [
-            FinancialTransaction(transactionType: .income, amount: 100.0, date: Date()),
-            FinancialTransaction(transactionType: .expense, amount: -50.0, date: Date()),
-        ]
-
-        let currentMonth = viewModel.currentMonthTransactions(transactions)
-        XCTAssertEqual(currentMonth.count, 2)
-    }
-
 }

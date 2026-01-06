@@ -19,7 +19,7 @@ class JWTAuthManager:
     def __init__(self, secret_key: str = None):
         # Instance-level lock for user operations
         self._user_lock = threading.RLock()
-        
+
         # Use provided key, environment variable, or load from secure config
         if secret_key:
             self.secret_key = secret_key
@@ -126,7 +126,7 @@ _auth_manager_lock = threading.Lock()
 
 def get_auth_manager():
     global _auth_manager
-    
+
     # First check (without lock for performance)
     if _auth_manager is None:
         # Acquire lock for initialization
@@ -134,7 +134,7 @@ def get_auth_manager():
             # Second check (with lock to prevent race)
             if _auth_manager is None:
                 _auth_manager = JWTAuthManager()
-    
+
     return _auth_manager
 
 

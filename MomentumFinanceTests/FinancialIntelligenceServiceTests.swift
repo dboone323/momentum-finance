@@ -1,7 +1,8 @@
 import XCTest
+import SwiftData
 @testable import MomentumFinance
 
-class FinancialIntelligenceServiceTests: XCTestCase {
+class FinancialIntelligenceServiceTests_Duplicate2: XCTestCase {
     var service: FinancialIntelligenceService!
     var mockModelContext: MockModelContext!
 

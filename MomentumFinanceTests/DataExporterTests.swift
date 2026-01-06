@@ -1,7 +1,7 @@
 import XCTest
 @testable import MomentumFinance
 
-final class DataExporterTests: XCTestCase {
+final class DataExporterTests_Duplicate1: XCTestCase {
     func testInitialization() {
         XCTAssertTrue(true, "Test for DataExporter")
     }

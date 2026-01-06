@@ -1,7 +1,7 @@
 import SwiftData
 import XCTest
 
-@testable import MomentumFinanceCore
+@testable import MomentumFinance
 
 @MainActor
 final class DataExporterDateRangeTests: XCTestCase {

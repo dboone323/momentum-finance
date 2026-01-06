@@ -1,4 +1,6 @@
+#if os(macOS)
 import XCTest
+import SwiftData
 @testable import MomentumFinance
 
 class MacOSUIIntegrationTests: XCTestCase {
@@ -84,3 +86,5 @@ class MacOSUIIntegrationTests: XCTestCase {
     }
 
 }
+
+#endif

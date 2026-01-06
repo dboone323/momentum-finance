@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import MomentumFinanceCore
+@testable import MomentumFinance
 
 final class CSVParserTests: XCTestCase {
     func testParseSimpleRow() {

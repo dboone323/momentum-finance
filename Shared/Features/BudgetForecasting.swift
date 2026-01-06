@@ -2,6 +2,7 @@ import Foundation
 import SwiftData
 
 /// Budget forecasting using trend analysis
+@MainActor
 public final class BudgetForecastingService {
     private let modelContext: ModelContext
 
@@ -62,7 +63,8 @@ public final class BudgetForecastingService {
             monthlyTotals[monthKey, default: 0] += abs(transaction.amount)
         }
 
-        return Array(monthlyTotals.values)
+        let sortedKeys = monthlyTotals.keys.sorted()
+        return sortedKeys.map { monthlyTotals[$0]! }
     }
 
     private func calculateTrend(_ values: [Double]) -> Double {
