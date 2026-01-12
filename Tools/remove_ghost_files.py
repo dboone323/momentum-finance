@@ -1,6 +1,5 @@
-import sys
-import re
 import os
+import re
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
 target_name = "MomentumFinanceTests"
@@ -8,7 +7,7 @@ target_name = "MomentumFinanceTests"
 
 def remove_ghost_files():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         # 1. Find Sources Build Phase ID

@@ -1,8 +1,8 @@
-import time
 import concurrent.futures
-import sys
 import os
 import statistics
+import sys
+import time
 
 # Add src directory to path
 sys.path.append(os.path.join(os.path.dirname(__file__), "../src"))

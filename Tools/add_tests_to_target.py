@@ -1,4 +1,3 @@
-import sys
 import re
 import uuid
 
@@ -12,7 +11,7 @@ def generate_id():
 
 def add_tests_to_target():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         # 1. Find the Sources Build Phase ID for the Target

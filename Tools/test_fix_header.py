@@ -1,11 +1,10 @@
-import sys
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
 
 
 def wipe_header():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             lines = f.readlines()
 
         # Replace line 0 with empty

@@ -3,7 +3,6 @@ Tests for quality_gates_validator
 Auto-generated on 2025-12-05
 """
 
-import pytest
 
 # from MomentumFinance.quality_gates_validator import *  # Uncomment after fixing imports
 

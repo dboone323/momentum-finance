@@ -1,4 +1,3 @@
-import sys
 import re
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
@@ -9,7 +8,7 @@ ui_target_dependency_id = ""  # Need to find PBXTargetDependency ID pointing to 
 
 def remove_ui():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         # 1. Remove NativeTarget Definition

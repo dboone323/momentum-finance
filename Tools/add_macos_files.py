@@ -30,7 +30,7 @@ def add_macos_files():
     for f in swift_files:
         print(f"  - {f}")
 
-    with open(project_path, "r") as f:
+    with open(project_path) as f:
         content = f.read()
 
     # Check which files are already in project

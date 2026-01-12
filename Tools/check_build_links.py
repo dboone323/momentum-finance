@@ -1,4 +1,3 @@
-import sys
 import re
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
@@ -12,7 +11,7 @@ files_to_check = {
 
 def check_links():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         # Extract Phase Block

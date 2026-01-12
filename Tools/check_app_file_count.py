@@ -1,4 +1,3 @@
-import sys
 import re
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
@@ -7,7 +6,7 @@ target_name = "MomentumFinance"
 
 def check_count():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         # Find Target

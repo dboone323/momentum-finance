@@ -13,7 +13,7 @@ def remove_phantom_files(project_file):
         "ColorDefinitions.swift",
     ]
 
-    with open(project_file, "r") as f:
+    with open(project_file) as f:
         content = f.read()
 
     original_content = content

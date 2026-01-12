@@ -9,7 +9,7 @@ def wrap_files():
             if "MacOS" in file and file.endswith(".swift"):
                 path = os.path.join(root, file)
                 try:
-                    with open(path, "r") as f:
+                    with open(path) as f:
                         content = f.read()
 
                     if "#if os(macOS)" in content:

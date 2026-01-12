@@ -1,4 +1,3 @@
-import sys
 import re
 import uuid
 
@@ -12,7 +11,7 @@ def generate_id():
 
 def clone_configs():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         # Get existing config IDs from UI List

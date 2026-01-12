@@ -1,4 +1,3 @@
-import sys
 import re
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
@@ -7,7 +6,7 @@ target_id = "C5629EBF403F3E1586134C6F"
 
 def cleanup():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         # Split content into definitions

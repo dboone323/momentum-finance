@@ -3,10 +3,10 @@
 AI Workflow Recovery System - Basic Version
 Scans for .bak files and offers restoration if originals are missing.
 """
-import sys
+import glob
 import os
 import shutil
-import glob
+import sys
 
 
 def restore_backups(root_dir, dry_run=False):

@@ -1,10 +1,9 @@
-import sys
-import re
-import os
 import json
-import uuid
+import os
+import re
 import shutil
 import subprocess
+import uuid
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
 backup_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj.import_backup"
@@ -34,11 +33,11 @@ def batch_import():
         print("missing_files.json not found.")
         return
 
-    with open(missing_json, "r") as f:
+    with open(missing_json) as f:
         all_missing = json.load(f)
 
     # Check current project state to filter valid "missing"
-    with open(project_path, "r") as f:
+    with open(project_path) as f:
         current_content = f.read()
 
     existing_refs = set(re.findall(r"/\* (.*?) \*/", current_content))

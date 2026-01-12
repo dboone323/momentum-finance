@@ -11,7 +11,7 @@ def fix_tests():
 
     for f in files:
         path = os.path.join(test_dir, f)
-        with open(path, "r") as file:
+        with open(path) as file:
             content = file.read()
 
         # 1. Fix Missing SwiftData import
@@ -55,7 +55,7 @@ def fix_tests():
                 print(f"Renaming {class_name} to {new_class_name} in {duplicate_file}")
 
                 path = os.path.join(test_dir, duplicate_file)
-                with open(path, "r") as file:
+                with open(path) as file:
                     content = file.read()
 
                 new_content = re.sub(

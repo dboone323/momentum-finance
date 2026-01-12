@@ -1,5 +1,3 @@
-import sys
-import re
 import os
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
@@ -8,7 +6,7 @@ shared_dir = "MomentumFinance/Shared"
 
 def revert_import():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
             lines = content.split("\n")
 

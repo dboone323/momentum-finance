@@ -1,6 +1,5 @@
-import sys
-import re
 import os
+import re
 import uuid
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
@@ -13,7 +12,7 @@ def generate_id():
 
 def force_add_app_files():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         # 1. Find Target ID and Sources Phase ID

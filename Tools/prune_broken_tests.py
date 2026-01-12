@@ -1,4 +1,3 @@
-import sys
 import re
 
 log_path = "/tmp/mom_test_macos_3.txt"
@@ -9,7 +8,7 @@ def prune():
     try:
         # 1. Parse Log for Filenames
         broken_files = set()
-        with open(log_path, "r") as f:
+        with open(log_path) as f:
             for line in f:
                 if "error:" in line and "MomentumFinanceTests/" in line:
                     # Extract filename
@@ -30,7 +29,7 @@ def prune():
         if not broken_files:
             return
 
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         # 2. Iterate Broken Files and Remove from Sources

@@ -1,7 +1,6 @@
-import sys
+import json
 import os
 import re
-import json
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
 shared_dir = "MomentumFinance/Shared"
@@ -9,7 +8,7 @@ shared_dir = "MomentumFinance/Shared"
 
 def get_missing():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         existing_filenames = set()

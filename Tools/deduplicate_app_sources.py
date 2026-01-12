@@ -1,4 +1,3 @@
-import sys
 import re
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
@@ -8,7 +7,7 @@ core_sources_id = "A0CORE142F0ABCDE00000001"
 
 def deduplicate():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         # Helper to get file refs from sources block

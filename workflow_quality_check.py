@@ -3,9 +3,9 @@
 Workflow Quality Check - Basic Version
 Scans for large files and basic syntax errors in Python files.
 """
-import sys
-import os
 import ast
+import os
+import sys
 
 MAX_FILE_SIZE_MB = 10
 
@@ -37,7 +37,7 @@ def check_quality(root_dir):
             # Check 2: Python Syntax
             if file.endswith(".py"):
                 try:
-                    with open(file_path, "r", encoding="utf-8") as f:
+                    with open(file_path, encoding="utf-8") as f:
                         source = f.read()
                     ast.parse(source)
                 except SyntaxError as e:

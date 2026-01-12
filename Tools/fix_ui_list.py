@@ -1,4 +1,3 @@
-import sys
 import re
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
@@ -8,7 +7,7 @@ new_ids = ["9A2F66387F4C492088E0091C", "C6C11F75ABD4490AA1B72114"]
 
 def fix_list():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         # Find Definition

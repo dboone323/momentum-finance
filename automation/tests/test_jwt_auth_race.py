@@ -1,12 +1,11 @@
-import threading
-import pytest
-import sys
 import os
+import sys
+import threading
 
 # Add src directory to path
 sys.path.append(os.path.join(os.path.dirname(__file__), "../src"))
 
-from jwt_auth import get_auth_manager, JWTAuthManager
+from jwt_auth import get_auth_manager
 
 
 def test_concurrent_singleton_creation():

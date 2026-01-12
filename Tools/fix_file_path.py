@@ -1,12 +1,10 @@
-import sys
-import re
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
 
 
 def fix_path():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         old_path = "MomentumFinance/Shared/Intelligence/FinancialMLModels.swift"

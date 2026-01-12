@@ -1,4 +1,3 @@
-import sys
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
 start_line = 892
@@ -6,7 +5,7 @@ start_line = 892
 
 def inspect():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             lines = f.readlines()
 
         # 0-indexed

@@ -10,7 +10,7 @@ project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
 
 
 def fix():
-    with open(project_path, "r") as f:
+    with open(project_path) as f:
         content = f.read()
 
     # Find TEST_HOST lines and add macOS-specific override after each one
@@ -58,7 +58,7 @@ def fix():
         indent = match.group(1)
         ios_line = match.group(2)
         # Add macOS conditional on the next line
-        macos_line = f'"TEST_HOST[sdk=macosx*]" = "$(BUILT_PRODUCTS_DIR)/MomentumFinance.app/Contents/MacOS/MomentumFinance";'
+        macos_line = '"TEST_HOST[sdk=macosx*]" = "$(BUILT_PRODUCTS_DIR)/MomentumFinance.app/Contents/MacOS/MomentumFinance";'
         return f"{indent}{ios_line}\n{indent}{macos_line}"
 
     new_content = re.sub(pattern, add_macos_override, content)

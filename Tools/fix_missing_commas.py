@@ -1,4 +1,3 @@
-import sys
 import re
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
@@ -6,7 +5,7 @@ project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
 
 def fix_commas():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             lines = f.readlines()
 
         new_lines = []

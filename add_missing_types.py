@@ -7,7 +7,7 @@ import uuid
 def add_file_to_project(project_file, file_path, group_name="MomentumFinance"):
     """Add a Swift file to the Xcode project"""
 
-    with open(project_file, "r") as f:
+    with open(project_file) as f:
         content = f.read()
 
     # Generate UUIDs for the file

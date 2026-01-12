@@ -1,4 +1,3 @@
-import sys
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
 

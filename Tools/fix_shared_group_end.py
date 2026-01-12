@@ -1,11 +1,10 @@
-import sys
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
 
 
 def fix_shared_end():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             lines = f.readlines()
 
         # Locate Shared Group

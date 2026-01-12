@@ -1,4 +1,3 @@
-import sys
 import re
 import uuid
 
@@ -13,7 +12,7 @@ def generate_id():
 
 def add_ref():
     try:
-        with open(project_path, "r") as f:
+        with open(project_path) as f:
             content = f.read()
 
         # 1. Create File Ref

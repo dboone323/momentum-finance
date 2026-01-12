@@ -7,14 +7,13 @@ Now implements REAL logic instead of mocks.
 
 import json
 import logging
+import re
 import subprocess
 import sys
-import re
-import os
+import xml.etree.ElementTree as ET
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Tuple, Optional
-import xml.etree.ElementTree as ET
+from typing import Any
 
 # Setup logging
 logging.basicConfig(
@@ -36,14 +35,14 @@ class QualityGatesValidator:
             "max_score": 0,
         }
 
-    def _find_file(self, pattern: str) -> Optional[Path]:
+    def _find_file(self, pattern: str) -> Path | None:
         """Helper to find a file in the project"""
         try:
             return next(self.project_root.rglob(pattern))
         except StopIteration:
             return None
 
-    def gate_code_coverage(self) -> Tuple[bool, Dict[str, Any]]:
+    def gate_code_coverage(self) -> tuple[bool, dict[str, Any]]:
         """Validate code coverage meets minimum threshold"""
         logger.info("📊 Checking code coverage gate...")
 
@@ -136,7 +135,7 @@ class QualityGatesValidator:
             )
             return False, gate_result
 
-    def gate_quality_score(self) -> Tuple[bool, Dict[str, Any]]:
+    def gate_quality_score(self) -> tuple[bool, dict[str, Any]]:
         """Validate quality score logic using SwiftLint"""
         logger.info("🎯 Checking quality score gate...")
 
@@ -219,7 +218,7 @@ class QualityGatesValidator:
             logger.error(f"❌ Quality check failed: {e}")
             return False, gate_result
 
-    def gate_security_scan(self) -> Tuple[bool, Dict[str, Any]]:
+    def gate_security_scan(self) -> tuple[bool, dict[str, Any]]:
         """Validate security scan results (Basic keyword scan + Package analysis)"""
         logger.info("🔒 Checking security scan gate...")
 
@@ -286,7 +285,7 @@ class QualityGatesValidator:
             logger.error(f"❌ Security scan failed: {e}")
             return True, gate_result
 
-    def gate_dependency_check(self) -> Tuple[bool, Dict[str, Any]]:
+    def gate_dependency_check(self) -> tuple[bool, dict[str, Any]]:
         """Validate dependencies"""
         logger.info("📦 Checking dependency gate...")
 
@@ -329,7 +328,7 @@ class QualityGatesValidator:
             gate_result.update({"status": "WARNING", "score": 5})
             return True, gate_result
 
-    def gate_performance_metrics(self) -> Tuple[bool, Dict[str, Any]]:
+    def gate_performance_metrics(self) -> tuple[bool, dict[str, Any]]:
         """Validate performance metrics (Build status & Artifact size)"""
         logger.info("⚡ Checking performance metrics gate...")
 

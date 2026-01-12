@@ -3,7 +3,6 @@ Tests for resolve_conflicts
 Auto-generated on 2025-12-05
 """
 
-import pytest
 
 # from MomentumFinance.resolve_conflicts import *  # Uncomment after fixing imports
 
