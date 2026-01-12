@@ -23,7 +23,7 @@ def run_plutil():
             stderr=subprocess.DEVNULL,
         )
         return True
-    except:
+    except subprocess.CalledProcessError:
         return False
 
 
