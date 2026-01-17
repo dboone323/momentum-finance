@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 
 test_dir = "MomentumFinance/MomentumFinanceTests"

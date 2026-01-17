@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import re
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"

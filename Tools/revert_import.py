@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 
 project_path = "MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"

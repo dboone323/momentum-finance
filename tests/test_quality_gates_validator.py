@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Tests for quality_gates_validator
 Auto-generated on 2025-12-05

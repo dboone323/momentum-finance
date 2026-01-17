@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import re
 
 log_path = "/tmp/mom_test_macos_3.txt"

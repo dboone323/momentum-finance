@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import concurrent.futures
 import os
 import statistics

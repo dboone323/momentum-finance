@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Tests for resolve_conflicts
 Auto-generated on 2025-12-05
