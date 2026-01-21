@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class EnhancedReportsSectionViewsTests: XCTestCase {
     var viewModel: Features.GoalsAndReports.EnhancedReportsSectionViewModel!

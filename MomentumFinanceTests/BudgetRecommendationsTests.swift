@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class BudgetRecommendationsTests: XCTestCase {
     var budgetRecommendations: BudgetRecommendations!
@@ -83,5 +83,4 @@ class BudgetRecommendationsTests: XCTestCase {
         XCTAssertEqual(data[1].key, "Recommended Budget")
         XCTAssertEqual(data[1].value, 310.00)
     }
-
 }

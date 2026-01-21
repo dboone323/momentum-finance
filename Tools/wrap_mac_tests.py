@@ -5,7 +5,7 @@ test_dir = "MomentumFinance/MomentumFinanceTests"
 
 
 def wrap_files():
-    for root, dirs, files in os.walk(test_dir):
+    for root, _, files in os.walk(test_dir):
         for file in files:
             if "MacOS" in file and file.endswith(".swift"):
                 path = os.path.join(root, file)

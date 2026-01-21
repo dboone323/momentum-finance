@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class AnomalyDetectionTests: XCTestCase {
     var service: FinancialIntelligenceService!
@@ -80,5 +80,4 @@ class AnomalyDetectionTests: XCTestCase {
             XCTAssertEqual(insights[i].data.count, expectedInsights[i].data.count)
         }
     }
-
 }

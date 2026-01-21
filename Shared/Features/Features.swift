@@ -40,7 +40,8 @@ public extension Features {
 // Global Search namespace
 public extension Features {
     enum GlobalSearch {
-        /// Global search coordinator with advanced filtering and navigation
+        // Global search coordinator with advanced filtering and navigation
+        // swiftlint:disable:next nesting
         public struct GlobalSearchView: View {
             @Environment(\.modelContext) private var modelContext
             @Environment(\.dismiss) private var dismiss

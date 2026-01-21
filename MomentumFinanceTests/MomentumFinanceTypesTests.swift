@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class MomentumFinanceTypesTests: XCTestCase {
     // Test setup method to ensure all dependencies are properly mocked or provided

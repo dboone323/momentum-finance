@@ -1,8 +1,7 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 final class DataImportModelsTests: XCTestCase {
-
     // MARK: - Setup & Teardown
 
     // MARK: - Initialization Tests

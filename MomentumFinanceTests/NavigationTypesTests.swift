@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class NavigationTypesTests: XCTestCase {
     // Test setup method to ensure all dependencies are properly initialized

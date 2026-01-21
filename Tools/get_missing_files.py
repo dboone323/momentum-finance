@@ -18,7 +18,7 @@ def get_missing():
             existing_filenames.add(os.path.basename(p.replace('"', "")))
 
         files_on_disk = []
-        for root, dirs, files in os.walk(shared_dir):
+        for root, _, files in os.walk(shared_dir):
             for file in files:
                 if file.endswith(".swift"):
                     rel_dir = os.path.relpath(root, shared_dir)

@@ -703,6 +703,7 @@ import SwiftUI
 
             // MARK: - Supporting Models
 
+            // swiftlint:disable:next nesting
             private struct TransactionEditModel {
                 var name: String
                 var amount: Double

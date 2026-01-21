@@ -1,6 +1,6 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
 class GlobalSearchViewTests: XCTestCase {
     var sut: GlobalSearchView!
@@ -93,5 +93,4 @@ class GlobalSearchViewTests: XCTestCase {
         }
         self.waitForExpectations(timeout: 2.0)
     }
-
 }

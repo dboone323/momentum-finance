@@ -1,8 +1,8 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
-class FinancialIntelligenceServiceTests_Duplicate2: XCTestCase {
+class FISTestsDuplicate2: XCTestCase {
     var service: FinancialIntelligenceService!
     var mockModelContext: MockModelContext!
 
@@ -110,5 +110,4 @@ class FinancialIntelligenceServiceTests_Duplicate2: XCTestCase {
             XCTAssertEqual(service.insights.count, 2) // Two insights should be present after analysis
         }
     }
-
 }

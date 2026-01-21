@@ -1,7 +1,7 @@
 import Foundation
 import MomentumFinanceCore
 
-struct AICategorizationService {
+enum AICategorizationService {
     /// Predicts a category based on the transaction title
     static func predictCategory(for title: String, categories: [ExpenseCategory]) -> ExpenseCategory? {
         let normalizedTitle = title.lowercased()
@@ -9,7 +9,11 @@ struct AICategorizationService {
         // Comprehensive keyword mapping for categorization
         let keywords: [String: [String]] = [
             // Food & Dining
-            "food": ["grocer", "market", "food", "restaurant", "cafe", "coffee", "starbucks", "pizza", "burger", "sushi", "pub", "bar", "taco", "chipotle", "eats", "dash", "dinner", "lunch", "breakfast"],
+            "food": [
+                "grocer", "market", "food", "restaurant", "cafe", "coffee",
+                "starbucks", "pizza", "burger", "sushi", "pub", "bar",
+                "taco", "chipotle", "eats", "dash", "dinner", "lunch", "breakfast"
+            ],
 
             // Transport
             "transportation": ["uber", "lyft", "taxi", "bus", "train", "gas", "fuel", "shell", "bp", "chevron", "wawa", "parking", "auto", "car", "toyota", "ford", "tesla", "subway", "metro"],
@@ -30,7 +34,7 @@ struct AICategorizationService {
             "housing": ["rent", "mortgage", "home", "apartment", "depot", "lowe's", "ikea", "repair", "maintenance"],
 
             // Travel
-            "travel": ["hotel", "airbnb", "flight", "airline", "delta", "united", "american", "expedia", "booking", "resort", "vacation"]
+            "travel": ["hotel", "airbnb", "flight", "airline", "delta", "united", "american", "expedia", "booking", "resort", "vacation"],
         ]
 
         // 1. Check heuristics against available categories
@@ -39,7 +43,23 @@ struct AICategorizationService {
             var matchedKey: String?
 
             // Map category name to rule key
-            if catName.contains("food") || catName.contains("grocer") || catName.contains("dining") { matchedKey = "food" } else if catName.contains("transport") || catName.contains("car") || catName.contains("auto") { matchedKey = "transportation" } else if catName.contains("util") || catName.contains("bill") { matchedKey = "utilities" } else if catName.contains("entertain") || catName.contains("fun") { matchedKey = "entertainment" } else if catName.contains("shop") { matchedKey = "shopping" } else if catName.contains("health") || catName.contains("med") || catName.contains("well") { matchedKey = "health" } else if catName.contains("home") || catName.contains("hous") { matchedKey = "housing" } else if catName.contains("travel") || catName.contains("trip") { matchedKey = "travel" }
+            if catName.contains("food") || catName.contains("grocer") || catName.contains("dining") {
+                matchedKey = "food"
+            } else if catName.contains("transport") || catName.contains("car") || catName.contains("auto") {
+                matchedKey = "transportation"
+            } else if catName.contains("util") || catName.contains("bill") {
+                matchedKey = "utilities"
+            } else if catName.contains("entertain") || catName.contains("fun") {
+                matchedKey = "entertainment"
+            } else if catName.contains("shop") {
+                matchedKey = "shopping"
+            } else if catName.contains("health") || catName.contains("med") || catName.contains("well") {
+                matchedKey = "health"
+            } else if catName.contains("home") || catName.contains("hous") {
+                matchedKey = "housing"
+            } else if catName.contains("travel") || catName.contains("trip") {
+                matchedKey = "travel"
+            }
 
             // Check if ANY keywords for this category type are present in title
             if let key = matchedKey, let words = keywords[key] {

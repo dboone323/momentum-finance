@@ -16,7 +16,7 @@ def revert_import():
         # heuristic: any PBXFileReference with path matching file in Shared/
 
         files_on_disk = []
-        for root, dirs, files in os.walk(shared_dir):
+        for _, _, files in os.walk(shared_dir):
             for file in files:
                 if file.endswith(".swift"):
                     files_on_disk.append(file)

@@ -1,9 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 @MainActor
 class BiometricAuthManagerTests: XCTestCase {
-
     var biometricAuthManager: BiometricAuthManager!
     var mockLAContextProtocol: MockLAContextProtocol!
 
@@ -71,7 +70,7 @@ class BiometricAuthManagerTests: XCTestCase {
     func testMockLAContextProtocol() {
         // Arrange
         let mockLAContextProtocol = MockLAContextProtocol()
-        
+
         // Assert
         XCTAssertTrue(mockLAContextProtocol is LAContextProtocol)
     }
@@ -79,9 +78,9 @@ class BiometricAuthManagerTests: XCTestCase {
 
 class MockLAContextProtocol: NSObject, LAContextProtocol {
     var canEvaluatePolicyReturnValue: Bool = true
-    
+
     func canEvaluatePolicy(_ policy: LAPolicy, error: NSErrorPointer) -> Bool {
-        return canEvaluatePolicyReturnValue
+        canEvaluatePolicyReturnValue
     }
 
     func evaluatePolicy(_ policy: LAPolicy, localizedReason: String, reply: @escaping @Sendable (Bool, Error?) -> Void) {

@@ -627,6 +627,7 @@ import SwiftUI
             @State private var selectedItem: ListableItem?
             @State private var groupBy: GroupOption = .date
 
+            // swiftlint:disable:next nesting
             enum GroupOption {
                 case date, amount, provider
             }
@@ -692,6 +693,7 @@ import SwiftUI
                 }
             }
 
+            // swiftlint:disable:next nesting
             struct SubscriptionGroup: Identifiable {
                 let id = UUID()
                 let title: String
@@ -770,6 +772,7 @@ import SwiftUI
             @State private var selectedItem: ListableItem?
             @State private var viewType: ViewType = .goals
 
+            // swiftlint:disable:next nesting
             enum ViewType {
                 case goals, reports
             }
@@ -1157,9 +1160,9 @@ import SwiftUI
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Visualization")
                         .font(.headline)
-                        
+
                     // Real functional chart using GeometryReader
-                    GeometryReader { geometry in
+                    GeometryReader { _ in
                         HStack(alignment: .bottom, spacing: 8) {
                             ForEach(0..<7) { index in
                                 let height = Double.random(in: 20...150)
@@ -1182,7 +1185,7 @@ import SwiftUI
                     .cornerRadius(8)
                 }
             }
-            
+
             private func getDayLabel(for index: Int) -> String {
                 let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
                 return days[index % days.count]

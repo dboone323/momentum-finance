@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SavingsGoalsSectionTests: XCTestCase {
     var goals: [SavingsGoal]

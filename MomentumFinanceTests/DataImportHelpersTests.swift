@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DataImportHelpersTests: XCTestCase {
     // Test setup
@@ -131,5 +131,4 @@ class DataImportHelpersTests: XCTestCase {
             XCTFail("Test failed with error: \(error)")
         }
     }
-
 }

@@ -1,6 +1,6 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
 class CategoryTransactionsViewTests: XCTestCase {
     var viewModel: Features.Transactions.CategoryTransactionsViewModel!
@@ -44,5 +44,4 @@ class CategoryTransactionsViewTests: XCTestCase {
         XCTAssertEqual(viewModel.category?.name, expectedName)
         XCTAssertEqual(viewModel.totalAmount, expectedTotalAmount)
     }
-
 }

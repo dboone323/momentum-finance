@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class EnhancedBudgetDetailViewTests: XCTestCase {
     var sut: EnhancedBudgetDetailView!

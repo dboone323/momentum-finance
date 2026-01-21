@@ -29,7 +29,7 @@ def check_links():
 
         # Check files from logic
         # First find BuildID for the files
-        for key, fname in files_to_check.items():
+        for _, fname in files_to_check.items():
             # Find BuildID
             # Search for: ID /* fname in Sources */ = { isa = PBXBuildFile ...
             # Regex for definition

@@ -1,6 +1,6 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
 @MainActor
 final class BudgetForecastingServiceTests: XCTestCase {
@@ -15,7 +15,7 @@ final class BudgetForecastingServiceTests: XCTestCase {
         modelContext = modelContainer.mainContext
         forecastingService = BudgetForecastingService(modelContext: modelContext)
     }
-    
+
     func testForecastNextMonth_Empty() async {
         let forecast = await forecastingService.forecastNextMonth()
         XCTAssertEqual(forecast.amount, 0)
@@ -27,9 +27,9 @@ final class BudgetForecastingServiceTests: XCTestCase {
         let dates = [
             Calendar.current.date(byAdding: .month, value: -1, to: Date())!,
             Calendar.current.date(byAdding: .month, value: -2, to: Date())!,
-            Calendar.current.date(byAdding: .month, value: -3, to: Date())!
+            Calendar.current.date(byAdding: .month, value: -3, to: Date())!,
         ]
-        
+
         for date in dates {
             let transaction = FinancialTransaction(
                 title: "Grocery",
@@ -40,17 +40,17 @@ final class BudgetForecastingServiceTests: XCTestCase {
             transaction.category = category
             modelContext.insert(transaction)
         }
-        
+
         // When
         let forecast = await forecastingService.forecastNextMonth()
-        
+
         // Then
         // Baseline is 100. Trend is stable (0).
         // Seasonal factor might apply depending on current month, but roughly 100.
         XCTAssertEqual(forecast.trend, .stable)
         XCTAssertEqual(forecast.amount, 100.0 * seasonalFactor(), accuracy: 5.0)
     }
-    
+
     func testForecastNextMonth_IncreasingTrend() async throws {
         // Given: Spending increasing over 3 months (50 -> 100 -> 150)
         let today = Date()
@@ -64,19 +64,19 @@ final class BudgetForecastingServiceTests: XCTestCase {
         t2.category = category
         let t3 = FinancialTransaction(title: "T3", amount: -150, date: oneMonthAgo, transactionType: .expense)
         t3.category = category
-        
+
         modelContext.insert(t1)
         modelContext.insert(t2)
         modelContext.insert(t3)
-        
+
         // When
         let forecast = await forecastingService.forecastNextMonth()
-        
+
         // Then
         XCTAssertEqual(forecast.trend, .increasing)
         XCTAssertGreaterThan(forecast.amount, 100) // Expectation is it continues rising
     }
-    
+
     // Helper to match service logic
     private func seasonalFactor() -> Double {
         let month = Calendar.current.component(.month, from: Date())

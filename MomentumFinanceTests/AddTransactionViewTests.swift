@@ -1,6 +1,6 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
 class AddTransactionViewTests: XCTestCase {
     var addTransactionView: AddTransactionView!
@@ -97,5 +97,4 @@ class AddTransactionViewTests: XCTestCase {
 
         XCTAssertFalse(addTransactionView.isFormValid)
     }
-
 }

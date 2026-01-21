@@ -48,6 +48,7 @@ import SwiftUI
                 }.sorted { $0.date > $1.date }
             }
 
+            // swiftlint:disable:next nesting
             enum Timespan: String, CaseIterable, Identifiable {
                 case threeMonths = "3 Months"
                 case sixMonths = "6 Months"

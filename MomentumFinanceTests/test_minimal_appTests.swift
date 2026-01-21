@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class TestAppTests: XCTestCase {
     // Setup method to initialize the app before each test case

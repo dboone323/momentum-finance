@@ -1,4 +1,3 @@
-
 import LocalAuthentication
 import SwiftUI
 
@@ -16,18 +15,18 @@ extension LAContext: LAContextProtocol {}
 class BiometricAuthManager: ObservableObject {
     @Published var isAuthenticated = false
     private let context: LAContextProtocol
-    
+
     init(context: LAContextProtocol = LAContext()) {
         self.context = context
     }
-    
+
     func authenticate() {
         var error: NSError?
 
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             let reason = "Identify yourself!"
 
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, authenticationError in
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, _ in
                 DispatchQueue.main.async {
                     if success {
                         self?.isAuthenticated = true

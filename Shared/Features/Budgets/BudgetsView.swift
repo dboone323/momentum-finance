@@ -38,6 +38,7 @@ extension Features.Budgets {
         @State private var showingSearch = false
         @EnvironmentObject private var navigationCoordinator: NavigationCoordinator
 
+        // swiftlint:disable:next nesting
         private enum TimeFrame: String, CaseIterable {
             case thisMonth = "This Month"
             case lastMonth = "Last Month"

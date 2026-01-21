@@ -1,8 +1,7 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class FinancialIntelligenceServiceAnomalyTests: XCTestCase {
-
     // MARK: - Setup
 
     // MARK: - Teardown
@@ -92,5 +91,4 @@ class FinancialIntelligenceServiceAnomalyTests: XCTestCase {
         let result = service.detectAnomaly(date)
         XCTAssertTrue(result, "Expected to detect an anomaly on the given date with multiple data points")
     }
-
 }

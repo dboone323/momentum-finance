@@ -184,7 +184,7 @@ def add_app_files():
 
             found_on_disk = False
             for d in search_dirs:
-                for root, dirs, files in os.walk(d):
+                for root, _, files in os.walk(d):
                     if fname in files:
                         found_on_disk = True
                         if "BudgetsView.swift" in comment_name:

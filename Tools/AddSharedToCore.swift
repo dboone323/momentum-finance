@@ -26,7 +26,7 @@ func run() {
         print("Error: Could not find MomentumFinanceCore target")
         exit(1)
     }
-    
+
     // Find the Sources build phase ID for Core
     let buildPhasesBlock = String(content[coreTargetRange])
     // 082010CC617947138385A238 /* Sources */,
@@ -35,16 +35,16 @@ func run() {
         exit(1)
     }
     let sourcesBuildPhaseId = String(buildPhasesBlock[sourcesPhaseMatch]).components(separatedBy: " ")[0]
-    
+
     print("Found Core Sources Build Phase ID: \(sourcesBuildPhaseId)")
 
     // Find all PBXBuildFile entries for Shared files
     // We need to duplicate these entries but make sure we don't duplicate file references
     // Or simpler: just find all file references in 'Shared' group and add them to Core sources build phase
-    
-    // Strategy: Manual xcodebuild manipulation is hard via regex. 
+
+    // Strategy: Manual xcodebuild manipulation is hard via regex.
     // Better strategy: Use 'ruby xcodeproj' if available, otherwise just use xcodebuild to add them? No xcodebuild can't add files.
-    
+
     print("This script is complex to implement safely with regex. Aborting manual pbxproj edit.")
 }
 

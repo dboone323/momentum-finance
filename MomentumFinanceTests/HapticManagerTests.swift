@@ -1,12 +1,11 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 #if os(iOS)
     import UIKit
 #endif
 
 final class HapticManagerTests: XCTestCase {
-
     var manager: HapticManager!
 
     @MainActor

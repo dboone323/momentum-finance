@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DashboardWelcomeHeaderTests: XCTestCase {
     var viewModel: Features.Dashboard.DashboardWelcomeHeader!

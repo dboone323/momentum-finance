@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DashboardUpcomingSubscriptionsTests: XCTestCase {
     var subscriptions: [Subscription]!

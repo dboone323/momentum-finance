@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class EnhancedGoalsSectionViewsTests: XCTestCase {
     var viewModel: Features.GoalsAndReports.EnhancedSavingsGoalsSection!
@@ -164,5 +164,4 @@ class EnhancedGoalsSectionViewsTests: XCTestCase {
             }
         """)
     }
-
 }

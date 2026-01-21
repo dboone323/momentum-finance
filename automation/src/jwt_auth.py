@@ -12,6 +12,8 @@ import jwt
 
 
 class JWTAuthManager:
+    """Manager for JWT-based authentication and token handling."""
+
     # Class-level lock for any shared resources if needed in future
     _lock = threading.Lock()
 
@@ -27,7 +29,7 @@ class JWTAuthManager:
         else:
             # Try to load from secure config
             try:
-                import subprocess
+                import subprocess  # pylint: disable=import-outside-toplevel
 
                 result = subprocess.run(
                     [
@@ -38,17 +40,18 @@ class JWTAuthManager:
                     capture_output=True,
                     text=True,
                     cwd="/Users/danielstevens/Desktop/github-projects/tools-automation/Tools",
+                    check=False,
                 )
                 if result.returncode == 0 and result.stdout.strip():
                     self.secret_key = result.stdout.strip()
                 else:
                     # Fallback to secure random key
-                    import secrets
+                    import secrets  # pylint: disable=import-outside-toplevel
 
                     self.secret_key = secrets.token_hex(32)
-            except Exception:
+            except Exception:  # pylint: disable=broad-exception-caught
                 # Final fallback
-                import secrets
+                import secrets  # pylint: disable=import-outside-toplevel
 
                 self.secret_key = secrets.token_hex(32)
 
@@ -73,6 +76,7 @@ class JWTAuthManager:
         return hashlib.sha256(password.encode()).hexdigest()
 
     def authenticate_user(self, username: str, password: str) -> dict | None:
+        """Authenticate a user by username and password."""
         with self._user_lock:
             user = self.users.get(username)
             if user and user["password_hash"] == self._hash_password(password):
@@ -84,6 +88,7 @@ class JWTAuthManager:
         return None
 
     def generate_token(self, username: str, role: str, permissions: list[str]) -> str:
+        """Generate a JWT token for an authenticated user."""
         payload = {
             "username": username,
             "role": role,
@@ -94,6 +99,7 @@ class JWTAuthManager:
         return jwt.encode(payload, self.secret_key, algorithm=self.algorithm)
 
     def verify_token(self, token: str) -> dict | None:
+        """Verify and decode a JWT token."""
         try:
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
             return payload
@@ -103,6 +109,7 @@ class JWTAuthManager:
             return None
 
     def login(self, username: str, password: str) -> str | None:
+        """Authenticate user and return a JWT token if successful."""
         user = self.authenticate_user(username, password)
         if user:
             return self.generate_token(
@@ -111,6 +118,7 @@ class JWTAuthManager:
         return None
 
     def get_status(self):
+        """Return the current authentication manager status."""
         return {
             "total_users": len(self.users),
             "algorithm": self.algorithm,
@@ -124,7 +132,8 @@ _auth_manager_lock = threading.Lock()
 
 
 def get_auth_manager():
-    global _auth_manager
+    """Get or create the global JWTAuthManager singleton instance."""
+    global _auth_manager  # pylint: disable=global-statement
 
     # First check (without lock for performance)
     if _auth_manager is None:
@@ -138,6 +147,7 @@ def get_auth_manager():
 
 
 def main():
+    """Main entry point for JWT authentication testing."""
     auth = get_auth_manager()
 
     # Test login

@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class TransactionListViewTests: XCTestCase {
     var viewModel: Features.Transactions.TransactionListViewModel!

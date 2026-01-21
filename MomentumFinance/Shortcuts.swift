@@ -1,4 +1,3 @@
-
 import AppIntents
 
 // Enhancement #78: Siri Shortcuts
@@ -7,7 +6,7 @@ struct OpenMomentumFinanceIntent: AppIntent {
     static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
-        return .result()
+        .result()
     }
 }
 

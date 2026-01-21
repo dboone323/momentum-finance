@@ -1,9 +1,8 @@
+@testable import MomentumFinance
 import UserNotifications
 import XCTest
-@testable import MomentumFinance
 
 final class NotificationManagerTests: XCTestCase {
-
     var manager: NotificationManager!
 
     @MainActor

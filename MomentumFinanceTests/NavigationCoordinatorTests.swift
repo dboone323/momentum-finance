@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class NavigationCoordinatorTests: XCTestCase {
     var coordinator: NavigationCoordinator!
@@ -119,5 +119,4 @@ class NavigationCoordinatorTests: XCTestCase {
         // THEN requiresAuthentication should be false
         XCTAssertFalse(coordinator.requiresAuthentication, "requiresAuthentication should be false after setting it.")
     }
-
 }

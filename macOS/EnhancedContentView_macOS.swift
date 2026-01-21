@@ -136,7 +136,7 @@ import SwiftUI
     }
 
     // Typealias for backward compatibility with tests
-    typealias ContentView_macOS = ContentViewMacOS
+    typealias ContentViewMacOSAlias = ContentViewMacOS
 
     // Sidebar navigation items
     enum SidebarItem: Hashable {

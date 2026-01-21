@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class DataParserTests: XCTestCase {
     // Test parsing date strings
@@ -135,5 +135,4 @@ class DataParserTests: XCTestCase {
             XCTFail("Failed to parse transaction type for negative amount")
         }
     }
-
 }

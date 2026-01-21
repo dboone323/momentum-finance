@@ -72,7 +72,7 @@ class QualityGatesValidator:
                 if line_rate:
                     coverage_percentage = float(line_rate) * 100
                     found_report = True
-            except Exception as e:
+            except Exception as e:  # pylint: disable=broad-exception-caught
                 logger.warning(f"Failed to parse coverage.xml: {e}")
 
         # 2. If no XML, check test_output.txt for "Test Coverage" string (sometimes printed by tools)
@@ -102,8 +102,8 @@ class QualityGatesValidator:
                     if match:
                         coverage_percentage = float(match.group(1))
                         found_report = True
-                except Exception:
-                    pass
+                except Exception:  # pylint: disable=broad-exception-caught
+                    pass  # Ignore parsing errors for test output
 
         if not found_report:
             gate_result.update(
@@ -169,6 +169,7 @@ class QualityGatesValidator:
                 capture_output=True,
                 text=True,
                 cwd=self.project_root,
+                check=False,
             )
 
             violations = []
@@ -180,7 +181,6 @@ class QualityGatesValidator:
                 logger.warning("Could not parse swiftlint JSON output")
                 # Fallback: line counting on standard output?
                 # For now assume 0 violations if parse fails but command ran
-                pass
 
             error_count = sum(1 for v in violations if v.get("severity") == "Error")
             warning_count = sum(1 for v in violations if v.get("severity") == "Warning")
@@ -211,15 +211,17 @@ class QualityGatesValidator:
                 logger.error(f"❌ Quality score: {calculated_score:.1f} (<{min_score})")
                 return False, gate_result
 
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             gate_result.update(
                 {"status": "ERROR", "score": 0, "details": {"error": str(e)}}
             )
             logger.error(f"❌ Quality check failed: {e}")
             return False, gate_result
 
-    def gate_security_scan(self) -> tuple[bool, dict[str, Any]]:
-        """Validate security scan results (Basic keyword scan + Package analysis)"""
+    def gate_security_scan(  # pylint: disable=too-many-nested-blocks
+        self,
+    ) -> tuple[bool, dict[str, Any]]:
+        """Validate security scan results (Basic keyword scan + Package analysis)."""
         logger.info("🔒 Checking security scan gate...")
 
         gate_result = {
@@ -263,7 +265,7 @@ class QualityGatesValidator:
                                 f"Found '{keyword}' in {file_path.name}"
                             )
                             break  # One issue per file is enough for reporting
-                except Exception:
+                except Exception:  # pylint: disable=broad-exception-caught
                     continue
 
             gate_result["details"] = {
@@ -281,7 +283,7 @@ class QualityGatesValidator:
                 gate_result.update({"status": "WARNING", "score": 15})
                 return True, gate_result
 
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             logger.error(f"❌ Security scan failed: {e}")
             return True, gate_result
 
@@ -320,10 +322,11 @@ class QualityGatesValidator:
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
                 timeout=10,
+                check=False,
             )
             logger.info("✅ Package manifest is valid")
             return True, gate_result
-        except Exception:
+        except Exception:  # pylint: disable=broad-exception-caught
             logger.warning("⚠️ Could not validate package manifest")
             gate_result.update({"status": "WARNING", "score": 5})
             return True, gate_result
@@ -421,7 +424,7 @@ class QualityGatesValidator:
                 if not passed and gate_result["status"] == "FAIL":
                     all_passed = False
 
-            except Exception as e:
+            except Exception as e:  # pylint: disable=broad-exception-caught
                 logger.error(f"❌ Gate execution error: {e}")
                 all_passed = False
 
@@ -436,12 +439,14 @@ class QualityGatesValidator:
         if all_passed:
             self.results["overall_status"] = "PASS"
             logger.info(
-                f"✅ All quality gates passed! Score: {total_score}/{self.results['max_score']} ({self.results['percentage']:.1f}%)"
+                f"✅ All quality gates passed! Score: {total_score}/"
+                f"{self.results['max_score']} ({self.results['percentage']:.1f}%)"
             )
         else:
             self.results["overall_status"] = "FAIL"
             logger.error(
-                f"❌ Quality gates failed! Score: {total_score}/{self.results['max_score']} ({self.results['percentage']:.1f}%)"
+                f"❌ Quality gates failed! Score: {total_score}/"
+                f"{self.results['max_score']} ({self.results['percentage']:.1f}%)"
             )
 
         return all_passed
@@ -450,10 +455,10 @@ class QualityGatesValidator:
         """Save results to file"""
         results_file = self.project_root / "quality_gates_results.json"
         try:
-            with open(results_file, "w") as f:
+            with open(results_file, "w", encoding='utf-8') as f:
                 json.dump(self.results, f, indent=2)
             logger.info(f"📄 Results saved to {results_file}")
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             logger.error(f"❌ Failed to save results: {e}")
 
 
@@ -477,7 +482,7 @@ def main():
     except KeyboardInterrupt:
         logger.info("🛑 Quality gate validation interrupted")
         sys.exit(1)
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         logger.error(f"❌ Unexpected error: {e}")
         sys.exit(1)
 

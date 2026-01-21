@@ -1,6 +1,6 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
 @MainActor
 class DashboardViewModelTests: XCTestCase {
@@ -23,7 +23,7 @@ class DashboardViewModelTests: XCTestCase {
         s1.isActive = true
         let s2 = Subscription(name: "Sub 2", amount: 10.0, billingCycle: .monthly, nextDueDate: Date().addingTimeInterval(-3600 * 24))
         s2.isActive = false
-        
+
         let subscriptions = [s1, s2]
 
         // Act
@@ -39,7 +39,7 @@ class DashboardViewModelTests: XCTestCase {
         // Arrange
         let b1 = Budget(name: "Budget 1", limitAmount: 100.0, month: Date())
         let b2 = Budget(name: "Budget 2", limitAmount: 50.0, month: Date().addingTimeInterval(3600 * 24 * 40)) // Next month approx
-        
+
         let budgets = [b1, b2]
 
         // Act
@@ -58,7 +58,7 @@ class DashboardViewModelTests: XCTestCase {
         // Arrange
         let a1 = FinancialAccount(name: "Acc 1", balance: 500.0, iconName: "bank", accountType: .checking)
         let a2 = FinancialAccount(name: "Acc 2", balance: -300.0, iconName: "creditcard", accountType: .credit)
-        
+
         let accounts = [a1, a2]
 
         // Act
@@ -73,7 +73,7 @@ class DashboardViewModelTests: XCTestCase {
         // Arrange
         let t1 = FinancialTransaction(title: "Old T1", amount: 50.0, date: Date().addingTimeInterval(-3600 * 24), transactionType: .expense)
         let t2 = FinancialTransaction(title: "New T2", amount: 100.0, date: Date(), transactionType: .income)
-        
+
         // Order in array doesn't matter, view model sorts them
         let transactions = [t1, t2]
 
@@ -92,18 +92,18 @@ class DashboardViewModelTests: XCTestCase {
         let s1 = Subscription(name: "Overdue", amount: 10.0, billingCycle: .monthly, nextDueDate: Date().addingTimeInterval(-3600))
         s1.isActive = true
         modelContext.insert(s1)
-        
+
         // Act
         await viewModel.processOverdueSubscriptions([s1])
 
         // Assert
-        // Subscription should be processed? 
+        // Subscription should be processed?
         // DashboardViewModel processOverdueSubscriptions calls processSubscription
         // processSubscription calls subscription.processPayment
         // Assuming processPayment updates nextDueDate or logs transaction.
         // But this test needs to assume Subscription logic works.
         // We verify integration.
-        
+
         // If Logic updates nextDueDate, then it won't be overdue.
         // Or checks if payment transaction created?
         // Let's just check if it runs without error for now as logic is in Model.
@@ -114,38 +114,38 @@ class DashboardViewModelTests: XCTestCase {
     func testSpendingByCategory() {
         // Arrange
         let category = ExpenseCategory(name: "Food", iconName: "carrot")
-        
+
         let t1 = FinancialTransaction(title: "T1", amount: 50.0, date: Date(), transactionType: .expense)
         t1.category = category
-        
+
         let t2 = FinancialTransaction(title: "T2", amount: 30.0, date: Date(), transactionType: .expense)
         t2.category = category
-        
+
         let t3 = FinancialTransaction(title: "Income", amount: 100.0, date: Date(), transactionType: .income)
-        
+
         let transactions = [t1, t2, t3]
-        
+
         // Act
         let result = viewModel.spendingByCategory(transactions)
-        
+
         // Assert
         XCTAssertEqual(result["Food"], 80.0)
     }
-    
+
     /// Test netIncomeThisMonth method
     func testNetIncomeThisMonth() {
         // Arrange
         let t1 = FinancialTransaction(title: "Income", amount: 2000.0, date: Date(), transactionType: .income)
         let t2 = FinancialTransaction(title: "Expense", amount: 500.0, date: Date(), transactionType: .expense)
-        
+
         let lastMonth = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
         let t3 = FinancialTransaction(title: "Old Income", amount: 1000.0, date: lastMonth, transactionType: .income)
-        
+
         let transactions = [t1, t2, t3]
-        
+
         // Act
         let result = viewModel.netIncomeThisMonth(transactions)
-        
+
         // Assert
         XCTAssertEqual(result, 1500.0)
     }

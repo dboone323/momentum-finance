@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class OptimizationSuggestionsTests: XCTestCase {
     func testPlaceholder() {
@@ -10,5 +10,4 @@ class OptimizationSuggestionsTests: XCTestCase {
 class OptimizationSuggestionsTests: XCTestCase {
     var transactions: [FinancialTransaction] = []
     var accounts: [FinancialAccount] = []
-
 }

@@ -5,8 +5,8 @@
 // Step 24: SwiftUI Charts for financial trends.
 //
 
-import SwiftUI
 import Charts
+import SwiftUI
 
 /// Data point for financial chart.
 struct FinancialDataPoint: Identifiable {
@@ -20,13 +20,13 @@ struct FinancialDataPoint: Identifiable {
 struct SpendingTrendsChart: View {
     let data: [FinancialDataPoint]
     let title: String
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title)
                 .font(.headline)
                 .foregroundColor(.secondary)
-            
+
             Chart(data) { point in
                 LineMark(
                     x: .value("Date", point.date),
@@ -34,7 +34,7 @@ struct SpendingTrendsChart: View {
                 )
                 .foregroundStyle(by: .value("Category", point.category))
                 .interpolationMethod(.catmullRom)
-                
+
                 AreaMark(
                     x: .value("Date", point.date),
                     y: .value("Amount", point.value)
@@ -43,7 +43,7 @@ struct SpendingTrendsChart: View {
                 .opacity(0.1)
             }
             .chartXAxis {
-                AxisMarks(values: .stride(by: .day, count: 7)) { value in
+                AxisMarks(values: .stride(by: .day, count: 7)) { _ in
                     AxisGridLine()
                     AxisValueLabel(format: .dateTime.month(.abbreviated).day())
                 }
@@ -69,20 +69,20 @@ struct SpendingTrendsChart: View {
 /// Category breakdown pie chart.
 struct CategoryBreakdownChart: View {
     let data: [FinancialDataPoint]
-    
+
     private var categoryTotals: [(category: String, total: Double)] {
         Dictionary(grouping: data, by: { $0.category })
             .mapValues { $0.reduce(0) { $0 + $1.value } }
             .map { (category: $0.key, total: $0.value) }
             .sorted { $0.total > $1.total }
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Spending by Category")
                 .font(.headline)
                 .foregroundColor(.secondary)
-            
+
             Chart(categoryTotals, id: \.category) { item in
                 SectorMark(
                     angle: .value("Amount", item.total),
@@ -93,7 +93,7 @@ struct CategoryBreakdownChart: View {
                 .foregroundStyle(by: .value("Category", item.category))
             }
             .frame(height: 200)
-            
+
             // Legend
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 8) {
                 ForEach(categoryTotals, id: \.category) { item in
@@ -120,13 +120,13 @@ struct CategoryBreakdownChart: View {
 /// Net worth trend chart.
 struct NetWorthChart: View {
     let data: [FinancialDataPoint]
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Net Worth Trend")
                 .font(.headline)
                 .foregroundColor(.secondary)
-            
+
             Chart(data) { point in
                 BarMark(
                     x: .value("Date", point.date, unit: .month),
@@ -158,7 +158,7 @@ struct NetWorthChart: View {
         var data: [FinancialDataPoint] = []
         let calendar = Calendar.current
         let categories = ["Food", "Transport", "Shopping", "Bills"]
-        
+
         for i in 0..<30 {
             let date = calendar.date(byAdding: .day, value: -i, to: Date())!
             for category in categories {
@@ -171,7 +171,7 @@ struct NetWorthChart: View {
         }
         return data
     }()
-    
+
     ScrollView {
         VStack(spacing: 20) {
             SpendingTrendsChart(data: sampleData, title: "Daily Spending")

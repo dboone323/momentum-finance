@@ -1,7 +1,7 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
-class FinancialIntelligenceServiceTestsSpending: XCTestCase {
+class FISSpendingTests: XCTestCase {
     var service: FinancialIntelligenceService!
 
     // Test computeMonthlySpendingByCategory
@@ -105,5 +105,4 @@ class FinancialIntelligenceServiceTestsSpending: XCTestCase {
 
         XCTAssertEqual(service.fi_topCategoriesInsight(transactions, categories), expectedInsight)
     }
-
 }

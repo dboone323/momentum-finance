@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class TransactionPatternDetectionTests: XCTestCase {
     var transactions: [FinancialTransaction]!

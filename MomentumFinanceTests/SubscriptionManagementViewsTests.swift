@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SubscriptionManagementViewsTests: XCTestCase {
     var subscriptionViewModel: SubscriptionViewModel!
@@ -130,5 +130,4 @@ class SubscriptionManagementViewsTests: XCTestCase {
         // THEN
         XCTAssertTrue(actualIsValidForm)
     }
-
 }

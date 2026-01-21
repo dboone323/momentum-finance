@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SearchAndFilterSectionTests: XCTestCase {
     var viewModel: Features.Transactions.SearchAndFilterSection!

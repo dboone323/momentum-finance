@@ -14,12 +14,16 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AutomationScript:
+    """Represents an automation script with metadata."""
+
     name: str
     path: str
     category: str
 
 
 class AutomationEngine:
+    """Engine for discovering and managing automation scripts."""
+
     def __init__(self):
         self.scripts: dict[str, AutomationScript] = {}
         self.workspace_path = Path(os.getcwd())
@@ -50,6 +54,7 @@ class AutomationEngine:
         logger.info(f"Discovered {script_count} scripts")
 
     def get_status(self):
+        """Return current engine status including script count and workspace path."""
         return {
             "total_scripts": len(self.scripts),
             "workspace": str(self.workspace_path),
@@ -61,13 +66,15 @@ _engine = None
 
 
 def get_engine():
-    global _engine
+    """Get or create the global AutomationEngine instance."""
+    global _engine  # pylint: disable=global-statement
     if _engine is None:
         _engine = AutomationEngine()
     return _engine
 
 
 def main():
+    """Main entry point for the automation engine."""
     engine = get_engine()
     print(f"Working! Found {len(engine.scripts)} scripts")
     status = engine.get_status()

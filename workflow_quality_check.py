@@ -11,6 +11,7 @@ MAX_FILE_SIZE_MB = 10
 
 
 def check_quality(root_dir):
+    """Scan directory for large files and Python syntax errors."""
     issues = 0
     print(f"Running quality check on {root_dir}...")
 
@@ -43,13 +44,14 @@ def check_quality(root_dir):
                 except SyntaxError as e:
                     print(f"[ERROR] Syntax Error in {file_path}: {e}")
                     issues += 1
-                except Exception:
+                except Exception:  # pylint: disable=broad-exception-caught
                     pass  # Ignore read errors
 
     return issues
 
 
 def main():
+    """Run quality check on current working directory."""
     root_dir = os.getcwd()
     issues = check_quality(root_dir)
     print(f"\nQuality check complete. Found {issues} potential issues.")

@@ -11,7 +11,7 @@ def repair():
             lines = f.readlines()
 
         new_lines = []
-        for i, line in enumerate(lines):
+        for _, line in enumerate(lines):
             new_lines.append(line)
             # Check if this line is the END of one of our target definitions.
             # My logic in clone_configs wrote `new_def` as a single string?

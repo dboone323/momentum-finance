@@ -1,6 +1,6 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
 class DashboardViewTests: XCTestCase {
     var dashboardView: DashboardView!
@@ -100,5 +100,4 @@ class DashboardViewTests: XCTestCase {
         // THEN
         XCTAssertEqual(self.dashboardView.navigationPath.count, 2)
     }
-
 }

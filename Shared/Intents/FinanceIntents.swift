@@ -4,7 +4,6 @@ import Intents
 /// Siri Shortcuts integration for Momentum Finance
 
 class FinanceIntentsHandler: NSObject {
-
     static let shared = FinanceIntentsHandler()
 
     // MARK: - Donate Shortcuts

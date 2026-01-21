@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class FinancialIntelligenceServiceTests: XCTestCase {
     var service: FinancialIntelligenceService!

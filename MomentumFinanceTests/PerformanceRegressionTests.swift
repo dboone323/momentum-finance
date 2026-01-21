@@ -1,10 +1,9 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
 /// Performance regression tests to track app performance over time
 final class PerformanceRegressionTests: XCTestCase {
-
     var modelContext: ModelContext!
 
     override func setUp() {

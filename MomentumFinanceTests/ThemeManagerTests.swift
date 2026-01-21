@@ -1,9 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 @MainActor
 final class ThemeManagerTests: XCTestCase {
-
     var manager: ThemeManager!
 
     override func setUp() async throws {

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
+"""Remove phantom file references from Xcode project files."""
 
 import re
 
 
-def remove_phantom_files(project_file):
+def remove_phantom_files(proj_file):
     """Remove references to phantom Swift files from Xcode project"""
 
     phantom_files = [
@@ -13,7 +14,7 @@ def remove_phantom_files(project_file):
         "ColorDefinitions.swift",
     ]
 
-    with open(project_file) as f:
+    with open(proj_file, encoding='utf-8') as f:
         content = f.read()
 
     original_content = content
@@ -51,7 +52,7 @@ def remove_phantom_files(project_file):
             removals.append(f"Removed from sources build phase: {phantom_file}")
 
     if content != original_content:
-        with open(project_file, "w") as f:
+        with open(proj_file, "w", encoding='utf-8') as f:
             f.write(content)
 
         print("Successfully removed phantom file references:")
@@ -64,6 +65,7 @@ def remove_phantom_files(project_file):
 
 
 if __name__ == "__main__":
+    # pylint: disable=invalid-name
     project_file = "MomentumFinance.xcodeproj/project.pbxproj"
     if remove_phantom_files(project_file):
         print(f"\nProject file updated: {project_file}")

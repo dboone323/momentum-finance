@@ -3,6 +3,7 @@
 Tests for resolve_conflicts
 Auto-generated on 2025-12-05
 """
+import pytest
 
 
 # from MomentumFinance.resolve_conflicts import *  # Uncomment after fixing imports
@@ -11,4 +12,4 @@ Auto-generated on 2025-12-05
 def test_resolve_git_conflicts():
     """Test resolve_git_conflicts function."""
     # DONE: Implement test
-    pass
+    pytest.skip("Not implemented")

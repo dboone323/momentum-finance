@@ -91,7 +91,7 @@ def clone_configs():
         # Standard format: "\nID1 /* Name1 */,\nID2 /* Name2 */,\n"
 
         new_list_str = "\n"
-        for i, nid in enumerate(new_config_ids):
+        for _, nid in enumerate(new_config_ids):
             # Try to get comment from old ones?
             # Or assume Debug/Release order matches?
             # Old IDs list order matches.

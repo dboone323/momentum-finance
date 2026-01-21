@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class FinancialSummaryCardTests: XCTestCase {
     var viewModel: Features.GoalsAndReports.EnhancedFinancialSummaryCard!

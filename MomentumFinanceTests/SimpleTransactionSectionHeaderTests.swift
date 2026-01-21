@@ -1,8 +1,7 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SimpleTransactionSectionHeaderTests: XCTestCase {
-
     func testSimpleTransactionSectionHeader() {
         // GIVEN: A group with a key and an array of financial transactions
         let group = (key: "2025-08", value: [

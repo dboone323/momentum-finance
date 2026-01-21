@@ -1,6 +1,6 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
 class SubscriptionDetailViewTests: XCTestCase {
     var subscriptionViewModel: SubscriptionViewModel!
@@ -107,5 +107,4 @@ class SubscriptionDetailViewTests: XCTestCase {
         XCTAssertEqual(subscriptionViewModel.isPaymentOverdue(.dueSoon), false)
         XCTAssertEqual(subscriptionViewModel.isPaymentOverdue(.overdue), true)
     }
-
 }

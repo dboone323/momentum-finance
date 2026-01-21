@@ -195,10 +195,8 @@ public final class SearchEngineService: ObservableObject {
 
         // Word boundary match gets lower score
         let words = normalizedText.split(separator: " ")
-        for word in words {
-            if word.hasPrefix(query) {
-                return 0.4
-            }
+        for word in words where word.hasPrefix(query) {
+            return 0.4
         }
 
         return 0.2

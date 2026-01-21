@@ -207,7 +207,6 @@ public struct DataExportView: View {
 
     private func getDateRange() -> (start: Date, end: Date) {
         switch self.dateRange {
-
         case .lastMonth:
             let start = Calendar.current.date(byAdding: .month, value: -1, to: Date()) ?? Date()
             return (start, Date())

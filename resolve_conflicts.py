@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
+"""Git conflict resolution utility for MomentumFinance project."""
 
 
 def resolve_git_conflicts(file_path):
     """Resolve Git merge conflicts by keeping HEAD version"""
 
-    with open(file_path) as f:
+    with open(file_path, encoding='utf-8') as f:
         content = f.read()
 
     lines = content.split("\n")
@@ -17,10 +18,10 @@ def resolve_git_conflicts(file_path):
             in_conflict = True
             in_head_section = True
             continue
-        elif line.startswith("=======") and in_conflict:
+        if line.startswith("=======") and in_conflict:
             in_head_section = False
             continue
-        elif line.startswith(">>>>>>>") and in_conflict:
+        if line.startswith(">>>>>>>") and in_conflict:
             in_conflict = False
             in_head_section = False
             continue
@@ -30,7 +31,7 @@ def resolve_git_conflicts(file_path):
             resolved_lines.append(line)
 
     # Write resolved content back
-    with open(file_path, "w") as f:
+    with open(file_path, "w", encoding='utf-8') as f:
         f.write("\n".join(resolved_lines))
 
     print(f"Resolved conflicts in {file_path}")

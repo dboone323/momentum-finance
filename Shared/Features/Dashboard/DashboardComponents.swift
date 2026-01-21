@@ -1,7 +1,7 @@
-import MomentumFinanceCore
-import SwiftUI
-import SwiftData
 import Foundation
+import MomentumFinanceCore
+import SwiftData
+import SwiftUI
 
 public struct DashboardSubscriptionsSection: View {
     let subscriptions: [Subscription]

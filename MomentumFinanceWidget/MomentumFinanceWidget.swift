@@ -1,7 +1,6 @@
-
-import WidgetKit
-import SwiftUI
 import Intents
+import SwiftUI
+import WidgetKit
 
 // Enhancement #76: Widget Support
 struct MomentumFinanceWidget: Widget {
@@ -21,12 +20,12 @@ struct Provider: TimelineProvider {
         SimpleEntry(date: Date())
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
         let entry = SimpleEntry(date: Date())
         completion(entry)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         let entries = [SimpleEntry(date: Date())]
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
@@ -37,7 +36,7 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
 }
 
-struct MomentumFinanceWidgetEntryView : View {
+struct MomentumFinanceWidgetEntryView: View {
     var entry: Provider.Entry
 
     var body: some View {

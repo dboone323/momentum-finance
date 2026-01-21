@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class SearchResultsComponentTests: XCTestCase {
     var component: SearchResultsComponent!

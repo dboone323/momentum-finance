@@ -339,10 +339,10 @@ import UniformTypeIdentifiers
                     return true
                 }
                 .onChange(of: self.isDraggingOver.wrappedValue) { _, _ in
-                        // Apply visual state changes when drag enters/exits
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            // Visual feedback can be applied in the calling code using the isTargeted binding
-                        }
+                    // Apply visual state changes when drag enters/exits
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        // Visual feedback can be applied in the calling code using the isTargeted binding
+                    }
                 }
         }
     }
@@ -456,14 +456,9 @@ import UniformTypeIdentifiers
                                     .animation(.easeInOut, value: self.isDraggingOver)
                             )
                             .contentShape(Rectangle())
-                            .droppable(acceptedTypes: [.transaction], isTargeted: self.$isDraggingOver) { (
-                                items: [FinancialTransaction],
-                                _
-                            ) in
-                                for transaction in items {
-                                    if !self.associatedTransactionIds.contains(transaction.id) {
-                                        self.associatedTransactionIds.append(transaction.id)
-                                    }
+                            .droppable(acceptedTypes: [.transaction], isTargeted: self.$isDraggingOver) { (items: [FinancialTransaction], _) in
+                                for transaction in items where !self.associatedTransactionIds.contains(transaction.id) {
+                                    self.associatedTransactionIds.append(transaction.id)
                                 }
                                 return true
                             }
@@ -482,14 +477,9 @@ import UniformTypeIdentifiers
                                 .onDelete(perform: self.deleteTransactions)
                             }
                             .frame(minHeight: 200)
-                            .droppable(acceptedTypes: [.transaction], isTargeted: self.$isDraggingOver) { (
-                                items: [FinancialTransaction],
-                                _
-                            ) in
-                                for transaction in items {
-                                    if !self.associatedTransactionIds.contains(transaction.id) {
-                                        self.associatedTransactionIds.append(transaction.id)
-                                    }
+                            .droppable(acceptedTypes: [.transaction], isTargeted: self.$isDraggingOver) { (items: [FinancialTransaction], _) in
+                                for transaction in items where !self.associatedTransactionIds.contains(transaction.id) {
+                                    self.associatedTransactionIds.append(transaction.id)
                                 }
                                 return true
                             }

@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 final class SettingsSectionStubsTests: XCTestCase {
     func testInitialization() {

@@ -1,9 +1,8 @@
+@testable import MomentumFinance
 import SwiftData
 import XCTest
-@testable import MomentumFinance
 
 final class ExportEngineServiceTests: XCTestCase {
-
     var modelContext: ModelContext!
     var service: ExportEngineService!
 

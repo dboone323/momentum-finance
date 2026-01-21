@@ -1,6 +1,6 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
 class SimpleDashboardViewTests: XCTestCase {
     var sut: SimpleDashboardView!

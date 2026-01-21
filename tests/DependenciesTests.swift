@@ -32,7 +32,7 @@ class DependenciesTests: XCTestCase {
         dependencies.logger.setOutputHandler { message in
             XCTAssertEqual(message, "[2023-10-05T12:34:56.789Z] [INFO] Test log message")
         }
-        
+
         dependencies.logger.info("Test log message")
     }
 
@@ -48,9 +48,9 @@ class DependenciesTests: XCTestCase {
         dependencies.logger.setOutputHandler { message in
             XCTAssertEqual(message, "Test log message")
         }
-        
+
         dependencies.logger.resetOutputHandler()
-        
+
         // This should not cause any assertion failure
         dependencies.logger.log("This is a reset test")
     }

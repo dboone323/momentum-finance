@@ -190,7 +190,7 @@ public final class SwiftDataExportEngineService: Sendable {
         // This avoids complex cross-platform PDFKit dependencies in the core service layer.
         let transactions = try modelContext.fetch(FetchDescriptor<FinancialTransaction>())
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("transactions_report.html")
-        
+
         var html = """
         <!DOCTYPE html>
         <html>
@@ -220,10 +220,10 @@ public final class SwiftDataExportEngineService: Sendable {
                     <th>Amount</th>
                 </tr>
         """
-        
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
-        
+
         for transaction in transactions.sorted(by: { $0.date > $1.date }) {
             let amountColor = transaction.transactionType == .income ? "green" : "black"
             html += """
@@ -238,13 +238,13 @@ public final class SwiftDataExportEngineService: Sendable {
                 </tr>
             """
         }
-        
+
         html += """
             </table>
         </body>
         </html>
         """
-        
+
         try html.write(to: tempURL, atomically: true, encoding: .utf8)
         return tempURL
     }

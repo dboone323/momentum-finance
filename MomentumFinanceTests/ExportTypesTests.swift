@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 final class ExportTypesTests: XCTestCase {
     func testInitialization() {

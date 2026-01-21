@@ -31,6 +31,7 @@ extension Features.GoalsAndReports {
             #endif
         }
 
+        // swiftlint:disable:next nesting
         enum TimeFrame: String, CaseIterable {
             case thisWeek = "This Week"
             case thisMonth = "This Month"
@@ -327,6 +328,7 @@ extension Features.GoalsAndReports {
         let budgets: [Budget]
         let transactions: [FinancialTransaction]
 
+        // swiftlint:disable:next nesting
         struct BudgetPerformanceData {
             let budget: Budget
             let spent: Double

@@ -1,6 +1,6 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
 class InsightsWidgetTests: XCTestCase {
     var insightsService: FinancialIntelligenceService!

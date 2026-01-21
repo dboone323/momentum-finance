@@ -1,8 +1,7 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class FinancialIntelligenceServiceHelpersTests: XCTestCase {
-
     // MARK: - FormattingUtilities Tests
 
     func testFormatCurrency() {

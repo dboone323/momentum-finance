@@ -70,7 +70,7 @@ def import_missing_files():
         # 3. Scan Disk for Files
         files_on_disk = []  # (filename, full_path, relative_to_shared)
 
-        for root, dirs, files in os.walk(shared_dir):
+        for root, _, files in os.walk(shared_dir):
             for file in files:
                 if file.endswith(".swift"):
                     # relative path involves subdirectories

@@ -5,6 +5,8 @@ Auto-generated on 2025-12-05
 """
 
 
+import pytest
+
 # from MomentumFinance.quality_gates_validator import *  # Uncomment after fixing imports
 
 
@@ -13,11 +15,9 @@ class TestQualityGatesValidator:
 
     def test_initialization(self):
         """Test QualityGatesValidator can be initialized."""
-        # DONE: Implement test
-        pass
+        pytest.skip("Not implemented")
 
 
 def test_main():
     """Test main function."""
-    # DONE: Implement test
-    pass
+    pytest.skip("Not implemented")

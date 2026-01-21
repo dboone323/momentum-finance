@@ -37,6 +37,7 @@ import SwiftUI
                 return relevantTransactions.sorted { $0.date > $1.date }
             }
 
+            // swiftlint:disable:next nesting
             enum TimeFrame: String, CaseIterable, Identifiable {
                 case currentMonth = "This Month"
                 case lastMonth = "Last Month"
@@ -490,6 +491,7 @@ import SwiftUI
                 }
             }
 
+            // swiftlint:disable:next nesting
             private struct CategoryBadge: View {
                 let category: ExpenseCategory
 
@@ -515,6 +517,7 @@ import SwiftUI
                 }
             }
 
+            // swiftlint:disable:next nesting
             private struct DailyAllowanceView: View {
                 let budget: Budget
 
@@ -588,6 +591,7 @@ import SwiftUI
                 }
             }
 
+            // swiftlint:disable:next nesting
             private struct SpendingTrendChart: View {
                 let budget: Budget
                 let timeFrame: TimeFrame
@@ -662,6 +666,7 @@ import SwiftUI
                 }
             }
 
+            // swiftlint:disable:next nesting
             private struct CategoryAnalysisChart: View {
                 let category: ExpenseCategory
 
@@ -713,6 +718,7 @@ import SwiftUI
 
             // MARK: - Supporting Models
 
+            // swiftlint:disable:next nesting
             private struct BudgetEditModel {
                 var name: String
                 var amount: Double

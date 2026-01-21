@@ -1,6 +1,6 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
 class EnhancedAccountDetailViewTests: XCTestCase {
     var enhancedAccountDetailView: EnhancedAccountDetailView!
@@ -67,5 +67,4 @@ class EnhancedAccountDetailViewTests: XCTestCase {
         XCTAssertEqual(enhancedAccountDetailView.filteredTransactions.count, 1)
         XCTAssertEqual(enhancedAccountDetailView.filteredTransactions[0].amount, 100)
     }
-
 }

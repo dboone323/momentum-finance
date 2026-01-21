@@ -1,6 +1,6 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
 class EnhancedDetailViewsTests: XCTestCase {
     var transactionId: String = "12345"

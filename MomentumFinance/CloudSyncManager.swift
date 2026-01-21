@@ -1,4 +1,3 @@
-
 import CloudKit
 import Combine
 
@@ -24,8 +23,8 @@ class CloudSyncManager: ObservableObject {
 
     func fetchRecords() {
         let query = CKQuery(recordType: "Transaction", predicate: NSPredicate(value: true))
-        database.perform(query, inZoneWith: nil) { [weak self] records, error in
-            if let records = records {
+        database.perform(query, inZoneWith: nil) { [weak self] records, _ in
+            if let records {
                 DispatchQueue.main.async {
                     self?.records = records
                 }
@@ -34,8 +33,8 @@ class CloudSyncManager: ObservableObject {
     }
 
     func saveRecord(record: CKRecord) {
-        database.save(record) { record, error in
-            if let error = error {
+        database.save(record) { _, error in
+            if let error {
                 print("Error saving record: \(error)")
             } else {
                 print("Record saved successfully")

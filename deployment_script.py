@@ -43,6 +43,7 @@ class MomentumFinanceDeployer:
                 capture_output=True,
                 text=True,
                 cwd=self.project_root,
+                check=False,
             )
             current_branch = result.stdout.strip()
 
@@ -81,6 +82,7 @@ class MomentumFinanceDeployer:
                 capture_output=True,
                 text=True,
                 cwd=self.project_root,
+                check=False,
             )
 
             if result.returncode != 0:
@@ -94,7 +96,7 @@ class MomentumFinanceDeployer:
         except FileNotFoundError:
             logger.warning("⚠️ Quality check script not found, skipping...")
             return True
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             logger.error(f"❌ Quality check error: {e}")
             return False
 
@@ -120,6 +122,7 @@ class MomentumFinanceDeployer:
                 capture_output=True,
                 text=True,
                 cwd=self.project_root,
+                check=False,
             )
 
             if result.returncode != 0:
@@ -133,7 +136,7 @@ class MomentumFinanceDeployer:
         except FileNotFoundError:
             logger.warning("⚠️ Xcode not found, skipping iOS build...")
             return True
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             logger.error(f"❌ Build error: {e}")
             return False
 
@@ -191,7 +194,7 @@ def main():
     except KeyboardInterrupt:
         logger.info("🛑 Deployment interrupted by user")
         sys.exit(1)
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         logger.error(f"❌ Unexpected error during deployment: {e}")
         sys.exit(1)
 

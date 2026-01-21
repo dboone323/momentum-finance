@@ -116,6 +116,7 @@ extension Features.GoalsAndReports {
 
         // MARK: - Header Section
 
+        // swiftlint:disable:next nesting
         private struct HeaderSection: View {
             @Binding var selectedTab: Int
             @Binding var showingAddGoal: Bool
@@ -245,6 +246,7 @@ extension Features.GoalsAndReports {
 
         // MARK: - Tab Views
 
+        // swiftlint:disable:next nesting
         private struct SavingsGoalsTab: View {
             let goals: [SavingsGoal]
             @Binding var showingAddGoal: Bool
@@ -291,6 +293,7 @@ extension Features.GoalsAndReports {
             }
         }
 
+        // swiftlint:disable:next nesting
         private struct ReportsTab: View {
             let transactions: [FinancialTransaction]
             let budgets: [Budget]

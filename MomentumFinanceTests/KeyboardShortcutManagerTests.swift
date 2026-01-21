@@ -1,9 +1,8 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 #if os(macOS)
     final class KeyboardShortcutManagerTests: XCTestCase {
-
         var manager: KeyboardShortcutManager!
 
         override func setUp() {

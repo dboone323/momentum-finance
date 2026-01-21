@@ -1,6 +1,6 @@
-import XCTest
-import SwiftData
 @testable import MomentumFinance
+import SwiftData
+import XCTest
 
 @MainActor
 class SubscriptionsViewModelTests: XCTestCase {
@@ -21,7 +21,7 @@ class SubscriptionsViewModelTests: XCTestCase {
         s1.isActive = true
         let s2 = Subscription(name: "Inactive", amount: 10, billingCycle: .monthly, nextDueDate: Date())
         s2.isActive = false
-        
+
         // Use logic verification if possible, or just build pass for this stage
         XCTAssertTrue(true)
     }

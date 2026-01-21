@@ -1,10 +1,9 @@
+@testable import MomentumFinance
 import SwiftUI
 import XCTest
-@testable import MomentumFinance
 
 @MainActor
 final class AnimationManagerTests: XCTestCase {
-
     var manager: AnimationManager!
 
     override func setUp() async throws {

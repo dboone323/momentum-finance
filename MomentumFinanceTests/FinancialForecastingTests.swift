@@ -1,8 +1,7 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class FinancialForecastingTests: XCTestCase {
-
     // MARK: - Test setup
 
     // MARK: - Income Forecasting Tests
@@ -106,5 +105,4 @@ class FinancialForecastingTests: XCTestCase {
         XCTAssertEqual(insights[0].visualizationType, VisualizationType.lineChart)
         XCTAssertEqual(insights[0].data.count, 2)
     }
-
 }

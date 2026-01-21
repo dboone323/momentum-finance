@@ -25,7 +25,7 @@ public struct AuditEvent: Codable {
     public let userId: String?
     public let ipAddress: String?
     public let deviceId: String?
-    
+
     public init(
         id: UUID = UUID(),
         timestamp: Date = Date(),
@@ -49,20 +49,19 @@ public struct AuditEvent: Codable {
 
 /// Manager for audit logging of sensitive operations.
 public final class AuditLogger {
-    
     public static let shared = AuditLogger()
-    
+
     private let logger = Logger(subsystem: "com.momentumfinance", category: "Audit")
     private let queue = DispatchQueue(label: "com.momentumfinance.auditlogger")
     private var auditLog: [AuditEvent] = []
     private let maxLogSize = 10000
-    
+
     private init() {
         loadPersistedLog()
     }
-    
+
     // MARK: - Logging
-    
+
     /// Logs a sensitive operation.
     public func log(
         action: String,
@@ -77,11 +76,11 @@ public final class AuditLogger {
             userId: userId,
             deviceId: getDeviceId()
         )
-        
+
         queue.async { [weak self] in
             self?.appendEvent(event)
         }
-        
+
         // Also log to system
         switch severity {
         case .info:
@@ -92,7 +91,7 @@ public final class AuditLogger {
             logger.critical("[\(action)] \(details)")
         }
     }
-    
+
     /// Logs authentication attempts.
     public func logAuthentication(success: Bool, method: String, userId: String?) {
         log(
@@ -102,7 +101,7 @@ public final class AuditLogger {
             userId: userId
         )
     }
-    
+
     /// Logs data access events.
     public func logDataAccess(dataType: String, operation: String, userId: String?) {
         log(
@@ -112,7 +111,7 @@ public final class AuditLogger {
             userId: userId
         )
     }
-    
+
     /// Logs financial transactions.
     public func logTransaction(type: String, amount: Double, currency: String, userId: String?) {
         log(
@@ -122,7 +121,7 @@ public final class AuditLogger {
             userId: userId
         )
     }
-    
+
     /// Logs security events.
     public func logSecurityEvent(event: String, details: String) {
         log(
@@ -131,64 +130,65 @@ public final class AuditLogger {
             severity: .critical
         )
     }
-    
+
     // MARK: - Retrieval
-    
+
     /// Gets recent audit events.
     public func getRecentEvents(count: Int = 100) -> [AuditEvent] {
         queue.sync {
             Array(auditLog.suffix(count))
         }
     }
-    
+
     /// Gets events by severity.
     public func getEvents(severity: AuditSeverity) -> [AuditEvent] {
         queue.sync {
             auditLog.filter { $0.severity == severity }
         }
     }
-    
+
     /// Exports audit log.
     public func exportLog() -> Data? {
         queue.sync {
             try? JSONEncoder().encode(auditLog)
         }
     }
-    
+
     // MARK: - Private
-    
+
     private func appendEvent(_ event: AuditEvent) {
         auditLog.append(event)
-        
+
         // Trim if too large
         if auditLog.count > maxLogSize {
             auditLog = Array(auditLog.suffix(maxLogSize / 2))
         }
-        
+
         persistLog()
     }
-    
+
     private func getDeviceId() -> String {
         #if os(iOS)
-        return UIDevice.current.identifierForVendor?.uuidString ?? "unknown"
+            return UIDevice.current.identifierForVendor?.uuidString ?? "unknown"
         #else
-        return Host.current().localizedName ?? "unknown"
+            return Host.current().localizedName ?? "unknown"
         #endif
     }
-    
+
     private var logFileURL: URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0].appendingPathComponent("audit_log.json")
     }
-    
+
     private func persistLog() {
         guard let data = try? JSONEncoder().encode(auditLog) else { return }
         try? data.write(to: logFileURL)
     }
-    
+
     private func loadPersistedLog() {
         guard let data = try? Data(contentsOf: logFileURL),
-              let log = try? JSONDecoder().decode([AuditEvent].self, from: data) else {
+              let log = try? JSONDecoder().decode([AuditEvent].self, from: data)
+        else {
             return
         }
         auditLog = log

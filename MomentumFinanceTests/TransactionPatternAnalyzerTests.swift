@@ -1,5 +1,5 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 class TransactionPatternAnalyzerTests: XCTestCase {
     var analyzer: TransactionPatternAnalyzer!
@@ -62,5 +62,4 @@ class TransactionPatternAnalyzerTests: XCTestCase {
         XCTAssertTrue(insights[1].visualizationType == .lineChart)
         XCTAssertEqual(insights[1].data.count, 2)
     }
-
 }

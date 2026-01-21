@@ -1,8 +1,7 @@
-import XCTest
 @testable import MomentumFinance
+import XCTest
 
 final class PerformanceManagerTests: XCTestCase {
-
     var performanceManager: PerformanceManager!
 
     override func setUp() {
