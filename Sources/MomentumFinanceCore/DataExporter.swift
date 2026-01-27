@@ -1,6 +1,9 @@
 import Foundation
+#if canImport(SwiftData)
 import SwiftData
+#endif
 
+#if canImport(SwiftData)
 @MainActor
 public final class DataExporter {
     private let modelContainer: ModelContainer
@@ -56,3 +59,4 @@ public final class DataExporter {
         value.replacingOccurrences(of: ",", with: " ")
     }
 }
+#endif
