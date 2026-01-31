@@ -58,7 +58,7 @@ name: 🧠 AI Quality Analysis
           cat quality_output.txt
           echo "recovery-plan=$(base64 -w 0 quality_output.txt)" >> $GITHUB_OUTPUT
           fi
-  uses: actions/upload-artifact@v3
+  uses: actions/upload-artifact@v5
     if: always()
       with:
 name: quality-report
@@ -154,7 +154,7 @@ if: always()
           # Store in learning system
             mkdir -p .ai_learning_system/reports
               cp recovery_report.json .ai_learning_system/reports/recovery_$(date +%Y%m%d_%H%M%S).json
-  uses: actions/upload-artifact@v3
+  uses: actions/upload-artifact@v5
     if: always()
       with:
 name: recovery-report
