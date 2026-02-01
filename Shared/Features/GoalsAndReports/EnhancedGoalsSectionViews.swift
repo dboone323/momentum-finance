@@ -205,12 +205,13 @@ extension Features.GoalsAndReports {
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
 
-                    ForEach(self.activeGoals, id: \.name) { goal in
+                    ForEach(self.activeGoals) { goal in
                         EnhancedSavingsGoalCard(goal: goal)
                             .onTapGesture {
                                 self.selectedGoal = goal
                             }
                     }
+
                 }
             }
         }
@@ -223,12 +224,13 @@ extension Features.GoalsAndReports {
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
 
-                    ForEach(self.completedGoals, id: \.name) { goal in
+                    ForEach(self.completedGoals) { goal in
                         EnhancedSavingsGoalCard(goal: goal)
                             .onTapGesture {
                                 self.selectedGoal = goal
                             }
                     }
+
                 }
             }
         }
@@ -258,18 +260,16 @@ extension Features.GoalsAndReports {
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
 
-                        if let targetDate = goal.targetDate {
-                            HStack(spacing: 4) {
-                                Image(systemName: "calendar")
-                                    .font(.caption2)
-                                    .foregroundColor(.secondary)
-
-                                Text(
-                                    "Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))"
-                                )
-                                .font(.caption)
+                        let targetDate = goal.targetDate
+                        HStack(spacing: 4) {
+                            Image(systemName: "calendar")
+                                .font(.caption2)
                                 .foregroundColor(.secondary)
-                            }
+
+                            Text(
+                                "Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))"
+                            )
+                            .font(.caption)
                         }
                     }
 
@@ -305,6 +305,7 @@ extension Features.GoalsAndReports {
                 }
 
                 // Progress Section
+
                 VStack(spacing: 12) {
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {

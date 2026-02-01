@@ -285,7 +285,8 @@ public struct BudgetNotificationScheduler {
                     error.localizedDescription
                 )
             } else {
-                os_log("Scheduled rollover opportunity for %@", log: logger, type: .info, categoryName)
+                os_log(
+                    "Scheduled rollover opportunity for %@", log: logger, type: .info, categoryName)
             }
         }
     }
@@ -293,7 +294,8 @@ public struct BudgetNotificationScheduler {
     /// Schedules spending prediction alerts based on current spending patterns
     private func scheduleSpendingPredictionAlerts(budget: Budget) {
         let spentPercentage = budget.spentAmount / budget.effectiveLimit
-        let daysInMonth = Calendar.current.range(of: .day, in: .month, for: budget.month)?.count ?? 30
+        let daysInMonth =
+            Calendar.current.range(of: .day, in: .month, for: budget.month)?.count ?? 30
         let currentDay = Calendar.current.component(.day, from: Date())
         let daysRemaining = max(1, daysInMonth - currentDay)
         let dailySpendingRate = budget.spentAmount / Double(currentDay)
@@ -359,7 +361,8 @@ public struct BudgetNotificationScheduler {
                     error.localizedDescription
                 )
             } else {
-                os_log("Scheduled spending prediction for %@", log: logger, type: .info, categoryName)
+                os_log(
+                    "Scheduled spending prediction for %@", log: logger, type: .info, categoryName)
             }
         }
     }
@@ -397,7 +400,8 @@ public struct BudgetNotificationScheduler {
                     error.localizedDescription
                 )
             } else {
-                os_log("Scheduled spending spike alert for %@", log: logger, type: .info, categoryName)
+                os_log(
+                    "Scheduled spending spike alert for %@", log: logger, type: .info, categoryName)
             }
         }
     }
@@ -425,8 +429,8 @@ public struct BudgetNotificationScheduler {
         let overspendFormatted = overspend.formatted(.currency(code: "USD"))
 
         return
-            "Based on your current spending, you may overspend your \(categoryName) budget by " +
-            "\(overspendFormatted) in \(daysRemaining) days. Predicted total: \(predictedFormatted) of \(limitFormatted)."
+            "Based on your current spending, you may overspend your \(categoryName) budget by "
+            + "\(overspendFormatted) in \(daysRemaining) days. Predicted total: \(predictedFormatted) of \(limitFormatted)."
     }
 
     /// Creates a spending spike alert message
@@ -440,13 +444,14 @@ public struct BudgetNotificationScheduler {
     private func detectSpendingSpike(budget: Budget) -> Bool {
         // Simple spike detection - in a real app, this would use more sophisticated analysis
         // For now, just check if spending is significantly above average daily spending
-        let daysInMonth = Calendar.current.range(of: .day, in: .month, for: budget.month)?.count ?? 30
+        let daysInMonth =
+            Calendar.current.range(of: .day, in: .month, for: budget.month)?.count ?? 30
         let currentDay = Calendar.current.component(.day, from: Date())
         let averageDailySpending = budget.spentAmount / Double(max(1, currentDay))
 
         // Check recent transactions for spikes (simplified logic)
         // This would need access to transaction data to implement properly
-        return false // Placeholder - would need transaction analysis
+        return false  // Placeholder - would need transaction analysis
     }
 
     /// Schedules rollover opportunity notifications for multiple budgets
@@ -497,15 +502,10 @@ public struct SubscriptionNotificationScheduler {
         self.center.removePendingNotificationRequests(withIdentifiers: [identifier])
 
         // Calculate next due date
-        guard let nextDueDate = subscription.nextBillingDate else {
-            os_log(
-                "No next billing date for subscription %@", log: self.logger, type: .info,
-                subscription.name
-            )
-            return
-        }
+        let nextDueDate = subscription.nextDueDate
 
         // Schedule notification 1 day before due date
+
         let reminderDate = Calendar.current.date(byAdding: .day, value: -1, to: nextDueDate)
 
         guard let reminderDate, reminderDate > Date() else {
@@ -593,7 +593,8 @@ public struct GoalNotificationScheduler {
         let content = UNMutableNotificationContent()
         content.title = "Goal Progress Update"
         content.body =
-            "You're \(progressPercent)% of the way to your \(goal.title) goal! Keep going!"
+            "You're \(progressPercent)% of the way to your \(goal.name) goal! Keep going!"
+
         content.sound = .default
         content.categoryIdentifier = "GOAL_PROGRESS"
         content.userInfo = [
@@ -610,8 +611,8 @@ public struct GoalNotificationScheduler {
             identifier: identifier, content: content, trigger: trigger
         )
 
-        // Extract goal title before the closure
-        let goalTitle = goal.title
+        // Extract goal name before the closure
+        let goalName = goal.name
 
         self.center.add(request) { [logger] error in
             if let error {
@@ -621,9 +622,10 @@ public struct GoalNotificationScheduler {
                 )
             } else {
                 os_log(
-                    "Scheduled goal progress reminder for %@", log: logger, type: .info, goalTitle
+                    "Scheduled goal progress reminder for %@", log: logger, type: .info, goalName
                 )
             }
+
         }
     }
 }

@@ -46,7 +46,8 @@ public final class SearchEngineService: ObservableObject {
 
         return accounts.compactMap { account in
             let titleScore = self.calculateRelevance(account.name, query: query)
-            let balanceScore = self.calculateRelevance(String(format: "%.2f", account.balance), query: query)
+            let balanceScore = self.calculateRelevance(
+                String(format: "%.2f", account.balance), query: query)
 
             let score = max(titleScore, balanceScore)
             if score > 0 {
@@ -69,14 +70,16 @@ public final class SearchEngineService: ObservableObject {
 
         return transactions.compactMap { transaction in
             let titleScore = self.calculateRelevance(transaction.title, query: query)
-            let amountScore = self.calculateRelevance(String(format: "%.2f", transaction.amount), query: query)
+            let amountScore = self.calculateRelevance(
+                String(format: "%.2f", transaction.amount), query: query)
 
             let score = max(titleScore, amountScore)
             if score > 0 {
                 return SearchResult(
                     id: String(describing: transaction.id),
                     title: transaction.title,
-                    subtitle: String(format: "$%.2f • %@", transaction.amount, transaction.date.formatted()),
+                    subtitle: String(
+                        format: "$%.2f • %@", transaction.amount, transaction.date.formatted()),
                     type: .transactions,
                     iconName: "arrow.left.arrow.right",
                     relevanceScore: score
@@ -87,19 +90,22 @@ public final class SearchEngineService: ObservableObject {
     }
 
     private func searchSubscriptions(_ query: String) -> [SearchResult] {
-        let descriptor = FetchDescriptor<Subscription>()
+        let descriptor = FetchDescriptor<MomentumFinanceCore.Subscription>()
         guard let subscriptions = try? modelContext.fetch(descriptor) else { return [] }
 
         return subscriptions.compactMap { subscription in
             let titleScore = self.calculateRelevance(subscription.name, query: query)
-            let amountScore = self.calculateRelevance(String(format: "%.2f", subscription.amount), query: query)
+            let amountScore = self.calculateRelevance(
+                String(format: "%.2f", subscription.amount), query: query)
 
             let score = max(titleScore, amountScore)
             if score > 0 {
                 return SearchResult(
                     id: String(describing: subscription.id),
                     title: subscription.name,
-                    subtitle: String(format: "$%.2f • %@", subscription.amount, subscription.billingCycle.rawValue),
+                    subtitle: String(
+                        format: "$%.2f • %@", subscription.amount,
+                        subscription.billingCycle.rawValue),
                     type: .subscriptions,
                     iconName: "calendar",
                     relevanceScore: score
@@ -115,7 +121,8 @@ public final class SearchEngineService: ObservableObject {
 
         return budgets.compactMap { budget in
             let titleScore = self.calculateRelevance(budget.name, query: query)
-            let amountScore = self.calculateRelevance(String(format: "%.2f", budget.limitAmount), query: query)
+            let amountScore = self.calculateRelevance(
+                String(format: "%.2f", budget.limitAmount), query: query)
 
             let score = max(titleScore, amountScore)
             if score > 0 {

@@ -35,9 +35,12 @@ import SwiftUI
                 .navigationTitle("Goals & Reports")
                 .toolbar {
                     ToolbarItem {
-                        Button(action: {}, label: {
-                            Image(systemName: "plus")
-                        })
+                        Button(
+                            action: {},
+                            label: {
+                                Image(systemName: "plus")
+                            }
+                        )
                         .help("Add New Goal")
                         .accessibilityLabel("Add New Goal Button")
                     }
@@ -47,7 +50,9 @@ import SwiftUI
             var goalsList: some View {
                 List(selection: self.$selectedItem) {
                     ForEach(self.goals) { goal in
-                        NavigationLink(value: ListableItem(id: goal.id, name: goal.name, type: .goal)) {
+                        NavigationLink(
+                            value: ListableItem(id: goal.id, name: goal.name, type: .goal)
+                        ) {
                             VStack(alignment: .leading, spacing: 8) {
                                 HStack {
                                     Text(goal.name)
@@ -65,15 +70,17 @@ import SwiftUI
                                     .tint(.blue)
 
                                 HStack {
-                                    if let targetDate = goal.targetDate {
-                                        Text("Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))")
-                                            .font(.caption)
-                                            .foregroundStyle(.secondary)
-                                    }
+                                    let targetDate = goal.targetDate
+                                    Text(
+                                        "Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))"
+                                    )
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
 
                                     Spacer()
 
-                                    let percentage = Int((goal.currentAmount / goal.targetAmount) * 100)
+                                    let percentage = Int(
+                                        (goal.currentAmount / goal.targetAmount) * 100)
                                     Text("\(percentage)%")
                                         .font(.caption)
                                         .bold()
@@ -88,7 +95,10 @@ import SwiftUI
 
             var reportsList: some View {
                 List(selection: self.$selectedItem) {
-                    NavigationLink(value: ListableItem(id: "spending", name: "Spending by Category", type: .report)) {
+                    NavigationLink(
+                        value: ListableItem(
+                            id: "spending", name: "Spending by Category", type: .report)
+                    ) {
                         HStack {
                             Image(systemName: "chart.pie")
                                 .foregroundStyle(.orange)
@@ -98,7 +108,9 @@ import SwiftUI
                     }
                     .tag(ListableItem(id: "spending", name: "Spending by Category", type: .report))
 
-                    NavigationLink(value: ListableItem(id: "income", name: "Income vs Expenses", type: .report)) {
+                    NavigationLink(
+                        value: ListableItem(id: "income", name: "Income vs Expenses", type: .report)
+                    ) {
                         HStack {
                             Image(systemName: "chart.bar")
                                 .foregroundStyle(.green)
@@ -108,7 +120,10 @@ import SwiftUI
                     }
                     .tag(ListableItem(id: "income", name: "Income vs Expenses", type: .report))
 
-                    NavigationLink(value: ListableItem(id: "trends", name: "Monthly Spending Trends", type: .report)) {
+                    NavigationLink(
+                        value: ListableItem(
+                            id: "trends", name: "Monthly Spending Trends", type: .report)
+                    ) {
                         HStack {
                             Image(systemName: "chart.line.uptrend.xyaxis")
                                 .foregroundStyle(.blue)
@@ -118,7 +133,10 @@ import SwiftUI
                     }
                     .tag(ListableItem(id: "trends", name: "Monthly Spending Trends", type: .report))
 
-                    NavigationLink(value: ListableItem(id: "cashflow", name: "Cash Flow Analysis", type: .report)) {
+                    NavigationLink(
+                        value: ListableItem(
+                            id: "cashflow", name: "Cash Flow Analysis", type: .report)
+                    ) {
                         HStack {
                             Image(systemName: "arrow.left.arrow.right")
                                 .foregroundStyle(.purple)
@@ -152,16 +170,16 @@ import SwiftUI
                                             .font(.largeTitle)
                                             .bold()
 
-                                        if let targetDate = goal.targetDate {
-                                            HStack {
-                                                Image(systemName: "calendar")
-                                                Text(
-                                                    "Target Date: \(targetDate.formatted(date: .long, time: .omitted))"
-                                                )
-                                                .font(.headline)
-                                            }
-                                            .foregroundStyle(.secondary)
+                                        let targetDate = goal.targetDate
+                                        HStack {
+                                            Image(systemName: "calendar")
+                                            Text(
+                                                "Target Date: \(targetDate.formatted(date: .long, time: .omitted))"
+                                            )
+                                            .font(.headline)
                                         }
+                                        .foregroundStyle(.secondary)
+
                                     }
 
                                     Spacer()
@@ -188,10 +206,12 @@ import SwiftUI
                                         )
                                     }
 
-                                    ProgressView(value: goal.currentAmount, total: goal.targetAmount)
-                                        .tint(.blue)
-                                        .scaleEffect(y: 2.0)
-                                        .padding(.vertical, 8)
+                                    ProgressView(
+                                        value: goal.currentAmount, total: goal.targetAmount
+                                    )
+                                    .tint(.blue)
+                                    .scaleEffect(y: 2.0)
+                                    .padding(.vertical, 8)
 
                                     HStack {
                                         Text(
@@ -201,7 +221,8 @@ import SwiftUI
 
                                         Spacer()
 
-                                        let percentage = Int((goal.currentAmount / goal.targetAmount) * 100)
+                                        let percentage = Int(
+                                            (goal.currentAmount / goal.targetAmount) * 100)
                                         Text("\(percentage)% Complete")
                                             .foregroundStyle(.blue)
                                             .bold()
@@ -211,20 +232,22 @@ import SwiftUI
                                 .background(Color(.windowBackgroundColor).opacity(0.3))
                                 .cornerRadius(8)
 
-                                if let targetDate = goal.targetDate {
-                                    TimeRemainingView(goal: goal, targetDate: targetDate)
-                                }
+                                TimeRemainingView(goal: goal, targetDate: goal.targetDate)
 
                                 Spacer()
                             }
                             .padding()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                            .frame(
+                                maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                         }
                         .toolbar {
                             ToolbarItem {
-                                Button(action: { self.isEditing.toggle() }, label: {
-                                    Text(self.isEditing ? "Done" : "Edit")
-                                })
+                                Button(
+                                    action: { self.isEditing.toggle() },
+                                    label: {
+                                        Text(self.isEditing ? "Done" : "Edit")
+                                    }
+                                )
                                 .accessibilityLabel("Edit Goal Button")
                             }
                         }
@@ -249,11 +272,12 @@ import SwiftUI
                     Text("Time Remaining")
                         .font(.headline)
 
-                    let daysRemaining = Calendar.current.dateComponents(
-                        [.day],
-                        from: Date(),
-                        to: targetDate
-                    ).day ?? 0
+                    let daysRemaining =
+                        Calendar.current.dateComponents(
+                            [.day],
+                            from: Date(),
+                            to: targetDate
+                        ).day ?? 0
 
                     if daysRemaining > 0 {
                         Text("\(daysRemaining) days until target date")

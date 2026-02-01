@@ -12,54 +12,53 @@ public struct ImportExportSection: View {
     @State private var isExporting = false
     @State private var isImporting = false
 
-    var body: some View {
-        Section(header: Text("Import & Export")) {
-            Button(action: {
-                self.showingExportSheet = true
-            }, label: {
-                HStack {
-                    Image(systemName: "square.and.arrow.up")
-                    Text("Export Data")
-                    Spacer()
-                    if self.isExporting {
-                        ProgressView()
+    public var body: some View {
+        Section {
+            Button(
+                action: {
+                    self.showingExportSheet = true
+                },
+                label: {
+                    HStack {
+                        Image(systemName: "square.and.arrow.up")
+                        Text("Export Data")
+                        Spacer()
+                        if self.isExporting {
+                            ProgressView()
+                        }
                     }
                 }
-            })
+            )
             .disabled(self.isExporting)
 
-            Button(action: {
-                self.showingImportPicker = true
-            }, label: {
-                HStack {
-                    Image(systemName: "square.and.arrow.down")
-                    Text("Import Data")
-                    Spacer()
-                    if self.isImporting {
-                        ProgressView()
+            Button(
+                action: {
+                    self.showingImportPicker = true
+                },
+                label: {
+                    HStack {
+                        Image(systemName: "square.and.arrow.down")
+                        Text("Import Data")
+                        Spacer()
+                        if self.isImporting {
+                            ProgressView()
+                        }
                     }
                 }
-            })
+            )
             .disabled(self.isImporting)
+        } header: {
+            Text("Import & Export")
         }
         .sheet(isPresented: self.$showingExportSheet) {
-            ExportDataView(
-                isPresented: self.$showingExportSheet,
-                exportURL: self.$exportURL,
-                isExporting: self.$isExporting
-            )
+            DataExportView()
         }
         .sheet(isPresented: self.$showingImportPicker) {
-            ImportDataView(
-                isPresented: self.$showingImportPicker,
-                importResult: self.$importResult,
-                showingResult: self.$showingImportResult,
-                isImporting: self.$isImporting
-            )
+            DataImportView()
         }
         .sheet(isPresented: self.$showingImportResult) {
             if let result = importResult {
-                ImportResultView(result: result, isPresented: self.$showingImportResult)
+                ImportResultView(result: result) { self.showingImportResult = false }
             }
         }
         .onChange(of: self.exportURL) { _, newURL in
@@ -71,10 +70,11 @@ public struct ImportExportSection: View {
 
     private func shareExportedFile(_ url: URL) {
         #if os(iOS)
-            let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            let activityVC = UIActivityViewController(
+                activityItems: [url], applicationActivities: nil)
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-               let window = windowScene.windows.first,
-               let rootVC = window.rootViewController
+                let window = windowScene.windows.first,
+                let rootVC = window.rootViewController
             {
                 rootVC.present(activityVC, animated: true)
             }

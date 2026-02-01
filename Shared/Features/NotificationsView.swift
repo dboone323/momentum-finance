@@ -20,7 +20,7 @@ public struct NotificationsView: View {
     @State private var selectedFilter: NotificationFilter = .all
     @State private var isLoading = true
 
-    var body: some View {
+    public var body: some View {
         NavigationView {
             VStack(spacing: 0) {
                 // Filter Header
@@ -40,54 +40,54 @@ public struct NotificationsView: View {
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-                .toolbar {
-                    #if os(iOS)
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button(
-                                "Clear All",
-                                action: {
-                                    self.clearAllNotifications()
-                                }
-                            )
-                            .accessibilityLabel("Button")
-                            .foregroundColor(.red)
-                        }
+            .toolbar {
+                #if os(iOS)
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(
+                            "Clear All",
+                            action: {
+                                self.clearAllNotifications()
+                            }
+                        )
+                        .accessibilityLabel("Button")
+                        .foregroundColor(.red)
+                    }
 
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(
-                                "Done",
-                                action: {
-                                    self.dismiss()
-                                }
-                            )
-                            .accessibilityLabel("Button")
-                        }
-                    #else
-                        ToolbarItem {
-                            Button(
-                                "Clear All",
-                                action: {
-                                    self.clearAllNotifications()
-                                }
-                            )
-                            .accessibilityLabel("Button")
-                            .foregroundColor(.red)
-                        }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(
+                            "Done",
+                            action: {
+                                self.dismiss()
+                            }
+                        )
+                        .accessibilityLabel("Button")
+                    }
+                #else
+                    ToolbarItem {
+                        Button(
+                            "Clear All",
+                            action: {
+                                self.clearAllNotifications()
+                            }
+                        )
+                        .accessibilityLabel("Button")
+                        .foregroundColor(.red)
+                    }
 
-                        ToolbarItem {
-                            Button(
-                                "Done",
-                                action: {
-                                    self.dismiss()
-                                }
-                            )
-                            .accessibilityLabel("Button")
-                        }
-                    #endif
-                }
-                .task {
-                    await self.loadNotifications()
-                }
+                    ToolbarItem {
+                        Button(
+                            "Done",
+                            action: {
+                                self.dismiss()
+                            }
+                        )
+                        .accessibilityLabel("Button")
+                    }
+                #endif
+            }
+            .task {
+                await self.loadNotifications()
+            }
         }
     }
 
@@ -97,7 +97,7 @@ public struct NotificationsView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
                 ForEach(NotificationFilter.allCases, id: \.self) { filter in
-                    FilterButton(
+                    NotificationFilterButton(
                         filter: filter,
                         isSelected: self.selectedFilter == filter,
                         count: self.getNotificationCount(for: filter)
@@ -105,6 +105,7 @@ public struct NotificationsView: View {
                         self.selectedFilter = filter
                     }
                 }
+
             }
             .padding(.horizontal, 16)
         }
@@ -179,12 +180,13 @@ public struct NotificationsView: View {
         case .all:
             self.pendingNotifications.count
         case .budgets:
-            self.pendingNotifications.count(where: { $0.type.contains("budget") })
+            self.pendingNotifications.filter { $0.type.contains("budget") }.count
         case .subscriptions:
-            self.pendingNotifications.count(where: { $0.type.contains("subscription") })
+            self.pendingNotifications.filter { $0.type.contains("subscription") }.count
         case .goals:
-            self.pendingNotifications.count(where: { $0.type.contains("goal") })
+            self.pendingNotifications.filter { $0.type.contains("goal") }.count
         }
+
     }
 
     private func loadNotifications() async {
@@ -219,7 +221,7 @@ public struct NotificationsView: View {
 
         // Remove from system
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [
-            notification.id,
+            notification.id
         ])
     }
 
@@ -249,18 +251,19 @@ public enum NotificationFilter: String, CaseIterable {
 
 // MARK: - Filter Button
 
-public struct FilterButton: View {
+public struct NotificationFilterButton: View {
     let filter: NotificationFilter
     let isSelected: Bool
     let count: Int
     let action: () -> Void
 
     private var isEmpty: Bool {
-        isEmpty
+        count == 0
     }
 
-    var body: some View {
-        Button(action: self.action).accessibilityLabel("Button") {
+    public var body: some View {
+
+        Button(action: self.action) {
             HStack(spacing: 8) {
                 Image(systemName: self.filter.icon)
                     .font(.caption)
@@ -298,7 +301,8 @@ public struct NotificationRow: View {
     let onTap: () -> Void
     let onDismiss: () -> Void
 
-    var body: some View {
+    public var body: some View {
+
         HStack(spacing: 12) {
             // Type Icon
             Circle()

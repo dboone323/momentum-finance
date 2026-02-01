@@ -16,7 +16,7 @@ public struct AddSavingsGoalView: View {
 
     @State private var name = ""
     @State private var targetAmountString = ""
-    @State private var targetDate: Date?
+    @State private var targetDate = Date()
     @State private var hasTargetDate = false
     @State private var notes = ""
 
@@ -32,10 +32,12 @@ public struct AddSavingsGoalView: View {
                     TextField("Goal Name", text: self.$name).accessibilityLabel("Text Field")
                         .accessibilityLabel("Text Field")
 
-                    TextField("Target Amount", text: self.$targetAmountString).accessibilityLabel("Text Field")
-                        .accessibilityLabel(
-                            "Text Field"
-                        )
+                    TextField("Target Amount", text: self.$targetAmountString).accessibilityLabel(
+                        "Text Field"
+                    )
+                    .accessibilityLabel(
+                        "Text Field"
+                    )
                     #if canImport(UIKit)
                         .keyboardType(.decimalPad)
                     #endif
@@ -45,13 +47,11 @@ public struct AddSavingsGoalView: View {
                     if self.hasTargetDate {
                         DatePicker(
                             "Target Date",
-                            selection: Binding(
-                                get: { self.targetDate ?? Date() },
-                                set: { self.targetDate = $0 }
-                            ),
+                            selection: self.$targetDate,
                             displayedComponents: .date
                         )
                     }
+
                 }
 
                 Section(header: Text("Notes (Optional)")) {
@@ -65,38 +65,38 @@ public struct AddSavingsGoalView: View {
             #if canImport(UIKit)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-                .toolbar(content: {
-                    ToolbarItem(
-                        placement: {
-                            #if canImport(UIKit)
-                                return .navigationBarLeading
-                            #else
-                                return .cancellationAction
-                            #endif
-                        }()
-                    ) {
-                        Button("Cancel") {
-                            self.dismiss()
-                        }
-                        .accessibilityLabel("Cancel")
+            .toolbar(content: {
+                ToolbarItem(
+                    placement: {
+                        #if canImport(UIKit)
+                            return .navigationBarLeading
+                        #else
+                            return .cancellationAction
+                        #endif
+                    }()
+                ) {
+                    Button("Cancel") {
+                        self.dismiss()
                     }
+                    .accessibilityLabel("Cancel")
+                }
 
-                    ToolbarItem(
-                        placement: {
-                            #if canImport(UIKit)
-                                return .navigationBarTrailing
-                            #else
-                                return .primaryAction
-                            #endif
-                        }()
-                    ) {
-                        Button("Save") {
-                            self.saveSavingsGoal()
-                        }
-                        .disabled(!self.isFormValid)
-                        .accessibilityLabel("Save")
+                ToolbarItem(
+                    placement: {
+                        #if canImport(UIKit)
+                            return .navigationBarTrailing
+                        #else
+                            return .primaryAction
+                        #endif
+                    }()
+                ) {
+                    Button("Save") {
+                        self.saveSavingsGoal()
                     }
-                })
+                    .disabled(!self.isFormValid)
+                    .accessibilityLabel("Save")
+                }
+            })
         }
     }
 
@@ -106,8 +106,7 @@ public struct AddSavingsGoalView: View {
         let goal = SavingsGoal(
             name: name,
             targetAmount: targetAmount,
-            targetDate: hasTargetDate ? self.targetDate : nil,
-            notes: self.notes.isEmpty ? nil : self.notes
+            targetDate: hasTargetDate ? self.targetDate : Date()
         )
 
         self.modelContext.insert(goal)
@@ -202,26 +201,26 @@ public struct SavingsGoalDetailView: View {
                             .foregroundColor(self.goal.isCompleted ? .green : .blue)
                     }
 
-                    if let targetDate = goal.targetDate {
-                        HStack {
-                            Text("Target Date")
-                            Spacer()
-                            Text(targetDate.formatted(date: .long, time: .omitted))
-                                .foregroundColor(.secondary)
-                        }
+                    let targetDate = goal.targetDate
+                    HStack {
+                        Text("Target Date")
+                        Spacer()
+                        Text(targetDate.formatted(date: .long, time: .omitted))
+                            .foregroundColor(.secondary)
+                    }
 
-                        if let daysRemaining = goal.daysRemaining {
-                            HStack {
-                                Text("Days Remaining")
-                                Spacer()
-                                Text("\(daysRemaining)")
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(daysRemaining <= 30 ? .red : .secondary)
-                            }
+                    if let daysRemaining = goal.daysRemaining {
+                        HStack {
+                            Text("Days Remaining")
+                            Spacer()
+                            Text("\(daysRemaining)")
+                                .fontWeight(.semibold)
+                                .foregroundColor(daysRemaining <= 30 ? .red : .secondary)
                         }
                     }
 
                     if let notes = goal.notes, !notes.isEmpty {
+
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Notes")
                                 .font(.caption)
@@ -306,43 +305,43 @@ public struct SavingsGoalDetailView: View {
             #if canImport(UIKit)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-                .toolbar(content: {
-                    ToolbarItem(
-                        placement: {
-                            #if canImport(UIKit)
-                                return .navigationBarTrailing
-                            #else
-                                return .primaryAction
-                            #endif
-                        }()
-                    ) {
-                        Button("Done") {
-                            self.dismiss()
-                        }
-                        .accessibilityLabel("Done")
+            .toolbar(content: {
+                ToolbarItem(
+                    placement: {
+                        #if canImport(UIKit)
+                            return .navigationBarTrailing
+                        #else
+                            return .primaryAction
+                        #endif
+                    }()
+                ) {
+                    Button("Done") {
+                        self.dismiss()
                     }
-                })
-                .alert("Add Funds", isPresented: self.$showingAddFunds) {
-                    TextField("Amount", text: self.$amountToAdd)
-                        .accessibilityLabel("Amount")
+                    .accessibilityLabel("Done")
+                }
+            })
+            .alert("Add Funds", isPresented: self.$showingAddFunds) {
+                TextField("Amount", text: self.$amountToAdd)
+                    .accessibilityLabel("Amount")
                     #if canImport(UIKit)
                         .keyboardType(.decimalPad)
                     #endif
-                    Button("Cancel", role: .cancel) {
-                        self.amountToAdd = ""
-                    }
-                    .accessibilityLabel("Cancel")
-                    Button("Add") {
-                        if let amount = Double(amountToAdd) {
-                            self.goal.addFunds(amount)
-                            try? self.modelContext.save()
-                        }
-                        self.amountToAdd = ""
-                    }
-                    .accessibilityLabel("Add Funds")
-                } message: {
-                    Text("Enter the amount you want to add to this savings goal.")
+                Button("Cancel", role: .cancel) {
+                    self.amountToAdd = ""
                 }
+                .accessibilityLabel("Cancel")
+                Button("Add") {
+                    if let amount = Double(amountToAdd) {
+                        self.goal.addFunds(amount)
+                        try? self.modelContext.save()
+                    }
+                    self.amountToAdd = ""
+                }
+                .accessibilityLabel("Add Funds")
+            } message: {
+                Text("Enter the amount you want to add to this savings goal.")
+            }
         }
     }
 }

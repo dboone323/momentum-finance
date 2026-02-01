@@ -38,32 +38,32 @@ public struct DataExportView: View {
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.large)
             #endif
-                .toolbar {
-                    #if os(iOS)
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button("Cancel") { self.dismiss() }
-                                .accessibilityLabel("Cancel Button")
-                        }
-                    #else
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Cancel") { self.dismiss() }
-                                .accessibilityLabel("Cancel Button")
-                        }
-                    #endif
-                }
-                .sheet(isPresented: self.$showingShareSheet) {
-                    if let url = exportedFileURL {
-                        ShareSheet(activityItems: [url])
+            .toolbar {
+                #if os(iOS)
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button("Cancel") { self.dismiss() }
+                            .accessibilityLabel("Cancel Button")
                     }
-                }
-                .alert("Export Error", isPresented: .constant(self.exportError != nil)) {
-                    Button("OK") { self.exportError = nil }
-                        .accessibilityLabel("Dismiss Error Button")
-                } message: {
-                    if let error = exportError {
-                        Text(error)
+                #else
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancel") { self.dismiss() }
+                            .accessibilityLabel("Cancel Button")
                     }
+                #endif
+            }
+            .sheet(isPresented: self.$showingShareSheet) {
+                if let url = exportedFileURL {
+                    ShareSheet(activityItems: [url])
                 }
+            }
+            .alert("Export Error", isPresented: .constant(self.exportError != nil)) {
+                Button("OK") { self.exportError = nil }
+                    .accessibilityLabel("Dismiss Error Button")
+            } message: {
+                if let error = exportError {
+                    Text(error)
+                }
+            }
         }
     }
 
@@ -163,22 +163,25 @@ public struct DataExportView: View {
 
     private var exportSection: some View {
         Section {
-            Button(action: {
-                Task {
-                    await self.exportData()
-                }
-            }, label: {
-                HStack {
-                    if self.isExporting {
-                        ProgressView()
-                            .scaleEffect(0.8)
-                    } else {
-                        Image(systemName: "square.and.arrow.up")
+            Button(
+                action: {
+                    Task {
+                        await self.exportData()
                     }
+                },
+                label: {
+                    HStack {
+                        if self.isExporting {
+                            ProgressView()
+                                .scaleEffect(0.8)
+                        } else {
+                            Image(systemName: "square.and.arrow.up")
+                        }
 
-                    Text(self.isExporting ? "Exporting..." : "Export Data")
+                        Text(self.isExporting ? "Exporting..." : "Export Data")
+                    }
                 }
-            })
+            )
             .disabled(self.isExporting || !self.hasDataSelected)
             #if os(iOS)
                 .hapticFeedback(.medium, trigger: self.isExporting)
@@ -207,6 +210,9 @@ public struct DataExportView: View {
 
     private func getDateRange() -> (start: Date, end: Date) {
         switch self.dateRange {
+        case .lastWeek:
+            let start = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
+            return (start, Date())
         case .lastMonth:
             let start = Calendar.current.date(byAdding: .month, value: -1, to: Date()) ?? Date()
             return (start, Date())
@@ -234,11 +240,12 @@ public struct DataExportView: View {
         #endif
 
         do {
-            let exporter = DataExporter(modelContainer: modelContext.container)
+            let exporter = MomentumFinanceCore.DataExporter(modelContainer: modelContext.container)
             let (start, end) = self.getDateRange()
 
-            let exportSettings = ExportSettings(
+            let exportSettings = MomentumFinanceCore.ExportSettings(
                 format: exportFormat,
+                dateRange: dateRange,
                 startDate: start,
                 endDate: end,
                 includeTransactions: includeTransactions,
@@ -249,6 +256,7 @@ public struct DataExportView: View {
             )
 
             let fileURL = try await exporter.exportData(settings: exportSettings)
+
             self.exportedFileURL = fileURL
             self.showingShareSheet = true
             #if os(iOS)

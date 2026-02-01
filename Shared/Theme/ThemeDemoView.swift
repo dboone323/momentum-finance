@@ -36,7 +36,7 @@ public struct ThemeDemoView: View {
         ("iCloud+", "cloud", "2025-07-01", 2.99),
     ]
 
-    var body: some View {
+    public var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
@@ -50,19 +50,35 @@ public struct ThemeDemoView: View {
                     ThemeFinancialSummaryCard(theme: self.theme)
 
                     // Account cards
-                    ThemeAccountsList()
+                    ThemeAccountsList(
+                        accounts: self.accounts.map {
+                            AccountData(name: $0.0, iconName: $0.1, balance: $0.2)
+                        },
+                        theme: self.theme
+                    )
 
                     // Budget progress section
-                    ThemeBudgetProgress()
+                    ThemeDemoBudgetProgress(
+                        budgets: self.budgets.map {
+                            BudgetData(name: $0.0, spent: $0.1, total: $0.2)
+                        },
+                        theme: self.theme
+                    )
 
                     // Subscriptions section
-                    ThemeSubscriptionsList()
+                    ThemeDemoSubscriptionsList(
+                        subscriptions: self.subscriptions.map {
+                            SubscriptionItem(
+                                name: $0.0, icon: $0.1, renewalDate: $0.2, amount: $0.3)
+                        },
+                        theme: self.theme
+                    )
 
                     // Typography showcase
-                    ThemeTypographyShowcase(theme: self.theme)
+                    ThemeDemoTypographyShowcase(theme: self.theme)
 
                     // Button styles showcase
-                    ThemeButtonStylesShowcase(theme: self.theme)
+                    ThemeDemoButtonStylesShowcase(theme: self.theme)
                 }
                 .padding()
             }
@@ -70,16 +86,16 @@ public struct ThemeDemoView: View {
             .navigationTitle("Theme Showcase")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: { self.showSheet = true }).accessibilityLabel("Button") {
+                    Button(action: { self.showSheet = true }) {
                         Image(systemName: "gear")
                             .symbolRenderingMode(.hierarchical)
                             .foregroundStyle(self.theme.accentPrimary)
                     }
-                    .accessibilityLabel("Button")
+                    .accessibilityLabel("Settings")
                 }
             }
             .sheet(isPresented: self.$showSheet) {
-                ThemeSettingsSheet(
+                ThemeDemoSettingsSheet(
                     selectedThemeMode: self.$selectedThemeMode,
                     sliderValue: self.$sliderValue,
                     showSheet: self.$showSheet,

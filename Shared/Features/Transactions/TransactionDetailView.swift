@@ -23,7 +23,8 @@ extension Features.Transactions {
                         Text(self.transaction.formattedAmount)
                             .font(.largeTitle)
                             .fontWeight(.bold)
-                            .foregroundColor(self.transaction.transactionType == .income ? .green : .red)
+                            .foregroundColor(
+                                self.transaction.transactionType == .income ? .green : .red)
 
                         Text(self.transaction.transactionType.rawValue)
                             .font(.headline)
@@ -55,9 +56,10 @@ extension Features.Transactions {
                 .navigationTitle("Transaction Details")
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
-                        Button("Done").accessibilityLabel("Button").accessibilityLabel("Button") {
+                        Button("Done") {
                             self.dismiss()
                         }
+                        .accessibilityLabel("Done")
                     }
                 }
             }

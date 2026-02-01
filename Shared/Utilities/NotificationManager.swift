@@ -1,10 +1,9 @@
 import Foundation
 import MomentumFinanceCore
-import os
 import OSLog
 import SwiftData
-
 @preconcurrency import UserNotifications
+import os
 
 //
 //  NotificationManager.swift
@@ -109,10 +108,10 @@ public class NotificationManager: ObservableObject {
             let requests = await center.pendingNotificationRequests()
             let identifiersToRemove =
                 requests
-                    .filter { request in
-                        (request.content.userInfo["type"] as? String) == type
-                    }
-                    .map(\.identifier)
+                .filter { request in
+                    (request.content.userInfo["type"] as? String) == type
+                }
+                .map(\.identifier)
 
             self.center.removePendingNotificationRequests(withIdentifiers: identifiersToRemove)
         }
@@ -161,10 +160,11 @@ public class NotificationManager: ObservableObject {
 // MARK: - Object Pooling
 
 /// Object pool for performance optimization
-private var objectPool: [Any] = []
+@MainActor private var objectPool: [Any] = []
 private let maxPoolSize = 50
 
 /// Get an object from the pool or create new one
+@MainActor
 private func getPooledObject<T>() -> T? {
     if let pooled = objectPool.popLast() as? T {
         return pooled
@@ -173,6 +173,7 @@ private func getPooledObject<T>() -> T? {
 }
 
 /// Return an object to the pool
+@MainActor
 private func returnToPool(_ object: Any) {
     if objectPool.count < maxPoolSize {
         objectPool.append(object)

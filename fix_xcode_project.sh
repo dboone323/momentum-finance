@@ -3,6 +3,7 @@
 # Script to properly add all Shared files to Xcode project build target
 
 PROJECT_FILE="/Users/danielstevens/Desktop/MomentumFinaceApp/MomentumFinance.xcodeproj/project.pbxproj"
+# shellcheck disable=SC2034
 SHARED_DIR="/Users/danielstevens/Desktop/MomentumFinaceApp/Shared"
 
 # Create backup

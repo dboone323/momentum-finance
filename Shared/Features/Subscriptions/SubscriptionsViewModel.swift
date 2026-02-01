@@ -26,7 +26,8 @@ final class SubscriptionsViewModel {
         let endOfWeek = calendar.date(byAdding: .weekOfYear, value: 1, to: now) ?? now
 
         return subscriptions.filter { subscription in
-            subscription.isActive && subscription.nextDueDate >= now && subscription.nextDueDate <= endOfWeek
+            subscription.isActive && subscription.nextDueDate >= now
+                && subscription.nextDueDate <= endOfWeek
         }
     }
 
@@ -60,14 +61,20 @@ final class SubscriptionsViewModel {
             .filter(\.isActive)
             .reduce(0.0) { total, subscription in
                 // Convert subscription amount to monthly equivalent
-                let monthlyAmount: Double = switch subscription.billingCycle {
-                case .weekly:
-                    subscription.amount * 4.33 // Average weeks per month
-                case .monthly:
-                    subscription.amount
-                case .yearly:
-                    subscription.amount / 12.0
-                }
+                let monthlyAmount: Double =
+                    switch subscription.billingCycle {
+                    case .daily:
+                        subscription.amount * 30.0
+                    case .weekly:
+                        subscription.amount * 4.33  // Average weeks per month
+                    case .monthly:
+                        subscription.amount
+                    case .quarterly:
+                        subscription.amount / 3.0
+                    case .yearly:
+                        subscription.amount / 12.0
+                    }
+
                 return total + monthlyAmount
             }
     }
@@ -98,7 +105,9 @@ final class SubscriptionsViewModel {
     /// Get subscriptions grouped by frequency
     /// <#Description#>
     /// - Returns: <#description#>
-    func subscriptionsGroupedByFrequency(_ subscriptions: [Subscription]) -> [String: [Subscription]] {
+    func subscriptionsGroupedByFrequency(_ subscriptions: [Subscription]) -> [String:
+        [Subscription]]
+    {
         var grouped: [String: [Subscription]] = [:]
 
         for subscription in subscriptions {

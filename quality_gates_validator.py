@@ -455,7 +455,7 @@ class QualityGatesValidator:
         """Save results to file"""
         results_file = self.project_root / "quality_gates_results.json"
         try:
-            with open(results_file, "w", encoding='utf-8') as f:
+            with open(results_file, "w", encoding="utf-8") as f:
                 json.dump(self.results, f, indent=2)
             logger.info(f"📄 Results saved to {results_file}")
         except Exception as e:  # pylint: disable=broad-exception-caught

@@ -8,7 +8,7 @@ actor DataExporter {
 
     /// Initialize engine asynchronously when a ModelContext is available
     func configure(with modelContext: ModelContext) async {
-        self.engine = ExportEngineService(modelContext: modelContext)
+        self.engine = ExportEngineService(modelContainer: modelContext.container)
     }
 
     func export(with settings: ExportSettings) async throws -> URL {

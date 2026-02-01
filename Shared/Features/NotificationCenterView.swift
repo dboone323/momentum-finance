@@ -34,7 +34,7 @@ public struct NotificationCenterView: View {
         private var accounts: [FinancialAccount] = []
     #endif
 
-    var body: some View {
+    public var body: some View {
         NavigationView {
             VStack(spacing: 0) {
                 if self.notificationManager.pendingNotifications.isEmpty {
@@ -46,7 +46,7 @@ public struct NotificationCenterView: View {
             .navigationTitle("Notifications")
             .toolbar {
                 ToolbarItem(placement: .automatic) {
-                    Button("Done").accessibilityLabel("Button") {
+                    Button("Done") {
                         self.dismiss()
                     }
                     .accessibilityLabel("Done")
@@ -54,7 +54,7 @@ public struct NotificationCenterView: View {
 
                 if !self.notificationManager.pendingNotifications.isEmpty {
                     ToolbarItem(placement: .automatic) {
-                        Button("Clear All").accessibilityLabel("Button") {
+                        Button("Clear All") {
                             self.notificationManager.clearAllNotifications()
                         }
                         .accessibilityLabel("Clear All")
@@ -90,7 +90,7 @@ public struct NotificationCenterView: View {
     private func dismissNotification(_ notification: ScheduledNotification) {
         self.notificationManager.pendingNotifications.removeAll { $0.id == notification.id }
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [
-            notification.id,
+            notification.id
         ])
     }
 }
@@ -98,7 +98,7 @@ public struct NotificationCenterView: View {
 // MARK: - Empty Notifications View
 
 public struct EmptyNotificationsView: View {
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 20) {
             Image(systemName: "bell.slash")
                 .font(.system(size: 64))
@@ -124,7 +124,7 @@ public struct ScheduledNotificationRow: View {
     let notification: ScheduledNotification
     let onDismiss: () -> Void
 
-    var body: some View {
+    public var body: some View {
         HStack(spacing: 12) {
             // Notification Type Icon
             Image(systemName: self.iconForType(self.notification.type))
@@ -159,7 +159,7 @@ public struct ScheduledNotificationRow: View {
             }
 
             // Dismiss Button
-            Button(action: self.onDismiss).accessibilityLabel("Button") {
+            Button(action: self.onDismiss) {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)
                     .foregroundColor(.secondary)

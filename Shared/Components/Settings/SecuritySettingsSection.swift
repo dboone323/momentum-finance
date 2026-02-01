@@ -4,8 +4,8 @@ public struct SecuritySettingsSection: View {
     @Binding var biometricEnabled: Bool
     @Binding var authenticationTimeout: Int
 
-    var body: some View {
-        Section(header: Text("Security")) {
+    public var body: some View {
+        Section {
             Toggle("Enable Biometric Authentication", isOn: self.$biometricEnabled)
 
             if self.biometricEnabled {
@@ -17,6 +17,8 @@ public struct SecuritySettingsSection: View {
                     Text("Never").tag(0)
                 }
             }
+        } header: {
+            Text("Security")
         }
     }
 }

@@ -27,17 +27,17 @@ extension Features.Transactions {
 
         var body: some View {
             List {
-                ForEach(Array(self.groupedTransactions.enumerated()), id: \.element.key) { _, group in
+                ForEach(self.groupedTransactions, id: \.key) { group in
                     Section {
                         ForEach(group.value, id: \.persistentModelID) { transaction in
                             Features.Transactions.TransactionRowView(transaction: transaction) {
                                 self.onTransactionTapped(transaction)
                             }
                             .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                Button("Delete", role: .destructive).accessibilityLabel("Button")
-                                    .accessibilityLabel("Button") {
-                                        self.onDeleteTransaction(transaction)
-                                    }
+                                Button("Delete", role: .destructive) {
+                                    self.onDeleteTransaction(transaction)
+                                }
+                                .accessibilityLabel("Delete")
                             }
                         }
                     } header: {

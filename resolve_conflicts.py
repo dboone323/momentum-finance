@@ -5,7 +5,7 @@
 def resolve_git_conflicts(file_path):
     """Resolve Git merge conflicts by keeping HEAD version"""
 
-    with open(file_path, encoding='utf-8') as f:
+    with open(file_path, encoding="utf-8") as f:
         content = f.read()
 
     lines = content.split("\n")
@@ -31,7 +31,7 @@ def resolve_git_conflicts(file_path):
             resolved_lines.append(line)
 
     # Write resolved content back
-    with open(file_path, "w", encoding='utf-8') as f:
+    with open(file_path, "w", encoding="utf-8") as f:
         f.write("\n".join(resolved_lines))
 
     print(f"Resolved conflicts in {file_path}")

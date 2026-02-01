@@ -5,10 +5,15 @@
 # This script integrates all macOS UI enhancements into the Momentum Finance app
 
 # Color definitions
+# shellcheck disable=SC2034
 RED='\033[0;31m'
+# shellcheck disable=SC2034
 GREEN='\033[0;32m'
+# shellcheck disable=SC2034
 YELLOW='\033[0;33m'
+# shellcheck disable=SC2034
 BLUE='\033[0;34m'
+# shellcheck disable=SC2034
 NC='\033[0m' # No Color
 
 echo -e "${BLUE}=== Momentum Finance - macOS UI Enhancement Integration ===${NC}"

@@ -24,111 +24,144 @@ extension Features.Transactions {
         @State private var notes = ""
 
         private var isFormValid: Bool {
-            !self.title.isEmpty && !self.amount.isEmpty && Double(self.amount) != nil && self.selectedAccount != nil
+            !self.title.isEmpty && !self.amount.isEmpty && Double(self.amount) != nil
+                && self.selectedAccount != nil
         }
 
         var body: some View {
             NavigationView {
                 Form {
-                    Section(header: Text("Transaction Details")) {
-                        TextField("Title", text: self.$title).accessibilityLabel("Text Field")
-                            .accessibilityLabel("Text Field")
-                            .onChange(of: self.title) { newValue in
-                                Task {
-                                    // Debounce
-                                    try? await Task.sleep(nanoseconds: 600_000_000)
-                                    guard !Task.isCancelled, newValue == self.title else { return }
-
-                                    // Only auto-categorize if not already selected
-                                    if self.selectedCategory == nil {
-                                        if let predicted = AICategorizationService.predictCategory(for: newValue, categories: self.categories) {
-                                            await MainActor.run {
-                                                withAnimation {
-                                                    self.selectedCategory = predicted
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                        TextField("Amount", text: self.$amount).accessibilityLabel("Text Field")
-                            .accessibilityLabel("Text Field")
-                        #if canImport(UIKit)
-                            .keyboardType(.decimalPad)
-                        #endif
-
-                        Picker("Type", selection: self.$selectedTransactionType) {
-                            ForEach(TransactionType.allCases, id: \.self) { type in
-                                Text(type.rawValue).tag(type)
-                            }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-
-                        DatePicker("Date", selection: self.$date, displayedComponents: .date)
-                    }
-
-                    Section(header: Text("Category & Account")) {
-                        Picker("Category", selection: self.$selectedCategory) {
-                            Text("None").tag(nil as ExpenseCategory?)
-                            ForEach(self.categories, id: \.name) { category in
-                                Text(category.name).tag(category as ExpenseCategory?)
-                            }
-                        }
-
-                        Picker("Account", selection: self.$selectedAccount) {
-                            Text("Select Account").tag(nil as FinancialAccount?)
-                            ForEach(self.accounts, id: \.name) { account in
-                                Text(account.name).tag(account as FinancialAccount?)
-                            }
-                        }
-                    }
-
-                    Section(header: Text("Notes (Optional)")) {
-                        TextField("Add notes...", text: self.$notes, axis: .vertical).accessibilityLabel("Text Field")
-                            .accessibilityLabel("Text Field")
-                            .lineLimit(3...6)
-                    }
+                    self.detailsSection
+                    self.classificationSection
+                    self.notesSection
                 }
                 .navigationTitle("Add Transaction")
+
                 #if canImport(UIKit)
                     .navigationBarTitleDisplayMode(.inline)
                 #endif
+                #if canImport(UIKit)
                     .toolbar {
-                        #if canImport(UIKit)
-                            ToolbarItem(placement: .navigationBarLeading) {
-                                Button("Cancel").accessibilityLabel("Button").accessibilityLabel("Button") {
-                                    self.dismiss()
-                                }
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button("Cancel") {
+                                self.dismiss()
                             }
+                            .accessibilityLabel("Button")
+                        }
 
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Button("Save").accessibilityLabel("Button").accessibilityLabel("Button") {
-                                    self.saveTransaction()
-                                }
-                                .disabled(!self.isFormValid)
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("Save") {
+                                self.saveTransaction()
                             }
-                        #else
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button("Cancel").accessibilityLabel("Button").accessibilityLabel("Button") {
-                                    self.dismiss()
-                                }
-                            }
-
-                            ToolbarItem(placement: .primaryAction) {
-                                Button("Save").accessibilityLabel("Button").accessibilityLabel("Button") {
-                                    self.saveTransaction()
-                                }
-                                .disabled(!self.isFormValid)
-                            }
-                        #endif
+                            .accessibilityLabel("Button")
+                            .disabled(!self.isFormValid)
+                        }
                     }
+                #else
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Cancel") {
+                                self.dismiss()
+                            }
+                            .accessibilityLabel("Button")
+                        }
+
+                        ToolbarItem(placement: .primaryAction) {
+                            Button("Save") {
+                                self.saveTransaction()
+                            }
+                            .accessibilityLabel("Button")
+                            .disabled(!self.isFormValid)
+                        }
+                    }
+                #endif
+            }
+        }
+
+        @ViewBuilder
+        private var detailsSection: some View {
+            Section(header: Text("Transaction Details")) {
+                TextField("Title", text: self.$title)
+                    .onChange(of: self.title) { _ in
+                        self.handleTitleChange()
+                    }
+
+                TextField("Amount", text: self.$amount)
+                    #if os(iOS)
+                        .keyboardType(.decimalPad)
+                    #endif
+
+                Picker("Type", selection: self.$selectedTransactionType) {
+                    ForEach(TransactionType.allCases, id: \.self) { type in
+                        Text(type.rawValue).tag(type)
+                    }
+                }
+                .pickerStyle(.segmented)
+
+                DatePicker("Date", selection: self.$date, displayedComponents: .date)
+            }
+        }
+
+        @ViewBuilder
+        private var classificationSection: some View {
+            Section(header: Text("Category & Account")) {
+                Picker("Category", selection: self.$selectedCategory) {
+                    exportableCategoryRow(nil)
+                    ForEach(self.categories, id: \.id) { category in
+                        exportableCategoryRow(category)
+                    }
+                }
+
+                Picker("Account", selection: self.$selectedAccount) {
+                    exportableAccountRow(nil)
+                    ForEach(self.accounts, id: \.id) { account in
+                        exportableAccountRow(account)
+                    }
+                }
+            }
+        }
+
+        @ViewBuilder
+        private var notesSection: some View {
+            Section(header: Text("Notes (Optional)")) {
+                TextField("Add notes...", text: self.$notes, axis: .vertical)
+                    .lineLimit(3...6)
+            }
+        }
+
+        private func exportableCategoryRow(_ category: ExpenseCategory?) -> some View {
+            Text(category?.name ?? "None").tag(category as ExpenseCategory?)
+        }
+
+        private func exportableAccountRow(_ account: FinancialAccount?) -> some View {
+            Text(account?.name ?? "Select Account").tag(account as FinancialAccount?)
+        }
+
+        private func handleTitleChange() {
+            let newValue = self.title
+            Task {
+                // Debounce
+                try? await Task.sleep(nanoseconds: 600_000_000)
+                guard !Task.isCancelled, newValue == self.title else { return }
+
+                // Only auto-categorize if not already selected
+                if self.selectedCategory == nil {
+                    if let predicted = AICategorizationService.predictCategory(
+                        for: newValue, categories: self.categories
+                    ) {
+                        await MainActor.run {
+                            withAnimation {
+                                self.selectedCategory = predicted
+                            }
+                        }
+                    }
+                }
             }
         }
 
         private func saveTransaction() {
             guard let amountValue = Double(amount),
-                  let account = selectedAccount
+                let account = selectedAccount
             else { return }
 
             let transaction = FinancialTransaction(

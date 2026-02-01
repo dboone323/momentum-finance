@@ -14,7 +14,7 @@ def remove_phantom_files(proj_file):
         "ColorDefinitions.swift",
     ]
 
-    with open(proj_file, encoding='utf-8') as f:
+    with open(proj_file, encoding="utf-8") as f:
         content = f.read()
 
     original_content = content
@@ -52,7 +52,7 @@ def remove_phantom_files(proj_file):
             removals.append(f"Removed from sources build phase: {phantom_file}")
 
     if content != original_content:
-        with open(proj_file, "w", encoding='utf-8') as f:
+        with open(proj_file, "w", encoding="utf-8") as f:
             f.write(content)
 
         print("Successfully removed phantom file references:")

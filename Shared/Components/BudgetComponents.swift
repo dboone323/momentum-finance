@@ -37,9 +37,11 @@ struct BudgetRow: View {
 
                 Spacer()
 
-                Text("$\(budget.spentAmount, specifier: "%.2f") / $\(budget.limitAmount, specifier: "%.2f")")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                Text(
+                    "$\(budget.spentAmount, specifier: "%.2f") / $\(budget.limitAmount, specifier: "%.2f")"
+                )
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
             }
 
             ProgressView(value: progress)
@@ -50,7 +52,7 @@ struct BudgetRow: View {
                 .foregroundStyle(progressColor)
         }
         .padding()
-        .background(Color(.systemBackground))
+        .background(Color.gray.opacity(0.1))
         .cornerRadius(10)
         .shadow(radius: 2)
     }

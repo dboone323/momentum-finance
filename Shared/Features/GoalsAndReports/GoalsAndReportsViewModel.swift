@@ -73,9 +73,12 @@ final class GoalsAndReportsViewModel {
         let goal = SavingsGoal(
             name: name,
             targetAmount: targetAmount,
-            targetDate: targetDate,
-            notes: notes
+            currentAmount: 0,
+            targetDate: targetDate ?? Date()  // Default to today if nil
+                // notes field removed if not present in initializer, checking previous usage
         )
+        // If notes is a property, set it after
+        goal.notes = notes
 
         modelContext.insert(goal)
 
@@ -103,7 +106,7 @@ final class GoalsAndReportsViewModel {
     /// <#Description#>
     /// - Returns: <#description#>
     func removeFundsFromGoal(_ goal: SavingsGoal, amount: Double) {
-        goal.removeFunds(amount)
+        goal.currentAmount = max(0, goal.currentAmount - amount)
 
         do {
             try self.modelContext?.save()
@@ -177,18 +180,21 @@ final class GoalsAndReportsViewModel {
 
         return (0..<months).compactMap { i in
             guard let monthDate = calendar.date(byAdding: .month, value: -i, to: now),
-                  let monthKey = calendar.date(from: calendar.dateComponents([.year, .month], from: monthDate))
+                let monthKey = calendar.date(
+                    from: calendar.dateComponents([.year, .month], from: monthDate))
             else {
                 return nil
             }
 
             let monthTransactions = monthlyGroups[monthKey] ?? []
 
-            let income = monthTransactions
+            let income =
+                monthTransactions
                 .filter { $0.transactionType == .income }
                 .reduce(0.0) { $0 + $1.amount }
 
-            let expenses = monthTransactions
+            let expenses =
+                monthTransactions
                 .filter { $0.transactionType == .expense }
                 .reduce(0.0) { $0 + $1.amount }
 

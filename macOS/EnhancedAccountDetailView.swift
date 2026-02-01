@@ -31,7 +31,10 @@ import SwiftUI
             guard let account else { return [] }
 
             return self.transactions
-                .filter { $0.account?.id == self.accountId && self.isTransactionInSelectedTimeFrame($0.date) }
+                .filter {
+                    $0.account?.id == self.accountId
+                        && self.isTransactionInSelectedTimeFrame($0.date)
+                }
                 .sorted { $0.date > $1.date }
         }
 
@@ -41,9 +44,12 @@ import SwiftUI
                 HStack {
                     if let account {
                         HStack(spacing: 8) {
-                            Image(systemName: account.type == .checking ? "banknote" : "creditcard.fill")
-                                .font(.title)
-                                .foregroundStyle(account.type == .checking ? .green : .blue)
+                            Image(
+                                systemName: account.type == .checking
+                                    ? "banknote" : "creditcard.fill"
+                            )
+                            .font(.title)
+                            .foregroundStyle(account.type == .checking ? .green : .blue)
 
                             Text(account.name)
                                 .font(.title)
@@ -61,7 +67,10 @@ import SwiftUI
                     .frame(width: 150)
 
                     Button(
-                        action: { self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel("Button") },
+                        action: {
+                            self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel(
+                                "Button")
+                        },
                         label: {
                             Text(self.isEditing ? "Done" : "Edit")
                         }
@@ -69,13 +78,18 @@ import SwiftUI
                     .keyboardShortcut("e", modifiers: .command)
 
                     Menu {
-                        Button("Add Transaction", action: self.addTransaction).accessibilityLabel("Button")
-                            .accessibilityLabel("Button")
+                        Button("Add Transaction", action: self.addTransaction).accessibilityLabel(
+                            "Button"
+                        )
+                        .accessibilityLabel("Button")
                         Divider()
-                        Button("Export Transactions...", action: { self.showingExportOptions = true })
+                        Button(
+                            "Export Transactions...", action: { self.showingExportOptions = true }
+                        )
+                        .accessibilityLabel("Button")
+                        .accessibilityLabel("Button")
+                        Button("Print Account Summary", action: self.printAccountSummary)
                             .accessibilityLabel("Button")
-                            .accessibilityLabel("Button")
-                        Button("Print Account Summary", action: self.printAccountSummary).accessibilityLabel("Button")
                             .accessibilityLabel("Button")
                         Divider()
                         Button("Delete Account", role: .destructive).accessibilityLabel("Button")
@@ -102,10 +116,13 @@ import SwiftUI
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .alert("Delete Account", isPresented: self.$showingDeleteConfirmation) {
-                Button("Cancel", role: .cancel).accessibilityLabel("Button").accessibilityLabel("Button") {}
-                Button("Delete", role: .destructive).accessibilityLabel("Button").accessibilityLabel("Button") {
-                    self.deleteAccount()
-                }
+                Button("Cancel", role: .cancel).accessibilityLabel("Button").accessibilityLabel(
+                    "Button"
+                ) {}
+                Button("Delete", role: .destructive).accessibilityLabel("Button")
+                    .accessibilityLabel("Button") {
+                        self.deleteAccount()
+                    }
             } message: {
                 Text(
                     "Are you sure you want to delete this account? This will also delete all associated transactions and cannot be undone."
@@ -117,8 +134,10 @@ import SwiftUI
                 Text("Please fix the validation errors before saving.")
             }
             .sheet(isPresented: self.$showingExportOptions) {
-                AccountExportOptionsView(account: self.account, transactions: self.filteredTransactions)
-                    .frame(width: 500, height: 400)
+                AccountExportOptionsView(
+                    account: self.account, transactions: self.filteredTransactions
+                )
+                .frame(width: 500, height: 400)
             }
             .onAppear {
                 // Initialize edit model if needed
@@ -167,9 +186,12 @@ import SwiftUI
                                     Spacer()
 
                                     VStack(alignment: .trailing, spacing: 4) {
-                                        Text(account.balance.formatted(.currency(code: account.currencyCode)))
-                                            .font(.system(size: 36, weight: .bold))
-                                            .foregroundStyle(account.balance >= 0 ? .green : .red)
+                                        Text(
+                                            account.balance.formatted(
+                                                .currency(code: account.currencyCode))
+                                        )
+                                        .font(.system(size: 36, weight: .bold))
+                                        .foregroundStyle(account.balance >= 0 ? .green : .red)
 
                                         Text("Current Balance")
                                             .font(.subheadline)
@@ -180,7 +202,9 @@ import SwiftUI
                                 Divider()
 
                                 // Quick stats
-                                Grid(alignment: .leading, horizontalSpacing: 40, verticalSpacing: 12) {
+                                Grid(
+                                    alignment: .leading, horizontalSpacing: 40, verticalSpacing: 12
+                                ) {
                                     GridRow {
                                         DetailField(
                                             label: "Income",
@@ -205,7 +229,9 @@ import SwiftUI
                                         )
                                         .foregroundStyle(self.getNetCashFlow() >= 0 ? .green : .red)
 
-                                        DetailField(label: "Transactions", value: "\(self.filteredTransactions.count)")
+                                        DetailField(
+                                            label: "Transactions",
+                                            value: "\(self.filteredTransactions.count)")
                                     }
 
                                     if let interestRate = account.interestRate, interestRate > 0 {
@@ -229,8 +255,10 @@ import SwiftUI
                                 Text("Balance Trend")
                                     .font(.headline)
 
-                                BalanceTrendChart(account: account, timeFrame: self.selectedTimeFrame)
-                                    .frame(height: 220)
+                                BalanceTrendChart(
+                                    account: account, timeFrame: self.selectedTimeFrame
+                                )
+                                .frame(height: 220)
                             }
                             .padding()
                             .background(Color(.windowBackgroundColor).opacity(0.3))
@@ -282,6 +310,15 @@ import SwiftUI
                         HStack {
                             Text("Transactions")
                                 .font(.headline)
+                                .toolbar {
+                                    ToolbarItem(placement: .automatic) {
+                                        Button(action: self.toggleSidebar) {
+                                            Image(systemName: "sidebar.left")
+                                        }
+                                        .accessibilityLabel("Toggle Sidebar")
+                                        .help("Toggle Sidebar")
+                                    }
+                                }
 
                             Spacer()
 
@@ -301,16 +338,20 @@ import SwiftUI
                             ContentUnavailableView {
                                 Label("No Transactions", systemImage: "list.bullet")
                             } description: {
-                                Text("No transactions found for this account in the selected time period.")
+                                Text(
+                                    "No transactions found for this account in the selected time period."
+                                )
                             } actions: {
-                                Button("Add Transaction").accessibilityLabel("Button").accessibilityLabel("Button") {
-                                    self.addTransaction()
-                                }
-                                .buttonStyle(.bordered)
+                                Button("Add Transaction").accessibilityLabel("Button")
+                                    .accessibilityLabel("Button") {
+                                        self.addTransaction()
+                                    }
+                                    .buttonStyle(.bordered)
                             }
                             .frame(maxHeight: .infinity)
                         } else {
-                            List(self.filteredTransactions, selection: self.$selectedTransactionIds) {
+                            List(self.filteredTransactions, selection: self.$selectedTransactionIds)
+                            {
                                 self.transactionRow(for: $0)
                             }
                             .listStyle(.inset)
@@ -335,13 +376,16 @@ import SwiftUI
                             .gridColumnAlignment(.trailing)
 
                         VStack(alignment: .leading) {
-                            TextField("Account name", text: Binding(
-                                get: { self.editedAccount?.name ?? account.name },
-                                set: { newValue in
-                                    self.editedAccount?.name = newValue
-                                    self.validateAccountName(newValue)
-                                }
-                            ))
+                            TextField(
+                                "Account name",
+                                text: Binding(
+                                    get: { self.editedAccount?.name ?? account.name },
+                                    set: { newValue in
+                                        self.editedAccount?.name = newValue
+                                        self.validateAccountName(newValue)
+                                    }
+                                )
+                            )
                             .textFieldStyle(.roundedBorder)
 
                             if let error = self.validationErrors["name"] {
@@ -357,10 +401,13 @@ import SwiftUI
                         Text("Type:")
                             .gridColumnAlignment(.trailing)
 
-                        Picker("Type", selection: Binding(
-                            get: { self.editedAccount?.type ?? account.type },
-                            set: { self.editedAccount?.type = $0 }
-                        )) {
+                        Picker(
+                            "Type",
+                            selection: Binding(
+                                get: { self.editedAccount?.type ?? account.type },
+                                set: { self.editedAccount?.type = $0 }
+                            )
+                        ) {
                             Text("Checking").tag(FinancialAccount.AccountType.checking)
                             Text("Savings").tag(FinancialAccount.AccountType.savings)
                             Text("Credit").tag(FinancialAccount.AccountType.credit)
@@ -376,17 +423,25 @@ import SwiftUI
                             .gridColumnAlignment(.trailing)
 
                         HStack {
-                            TextField("Balance", value: Binding(
-                                get: { self.editedAccount?.balance ?? account.balance },
-                                set: { self.editedAccount?.balance = $0 }
-                            ), format: .currency(code: account.currencyCode))
-                                .textFieldStyle(.roundedBorder)
-                                .frame(width: 150)
+                            TextField(
+                                "Balance",
+                                value: Binding(
+                                    get: { self.editedAccount?.balance ?? account.balance },
+                                    set: { self.editedAccount?.balance = $0 }
+                                ), format: .currency(code: account.currencyCode)
+                            )
+                            .textFieldStyle(.roundedBorder)
+                            .frame(width: 150)
 
-                            Picker("Currency", selection: Binding(
-                                get: { self.editedAccount?.currencyCode ?? account.currencyCode },
-                                set: { self.editedAccount?.currencyCode = $0 }
-                            )) {
+                            Picker(
+                                "Currency",
+                                selection: Binding(
+                                    get: {
+                                        self.editedAccount?.currencyCode ?? account.currencyCode
+                                    },
+                                    set: { self.editedAccount?.currencyCode = $0 }
+                                )
+                            ) {
                                 Text("USD").tag("USD")
                                 Text("EUR").tag("EUR")
                                 Text("GBP").tag("GBP")
@@ -401,13 +456,18 @@ import SwiftUI
                             .gridColumnAlignment(.trailing)
 
                         VStack(alignment: .leading) {
-                            TextField("Bank or financial institution", text: Binding(
-                                get: { self.editedAccount?.institution ?? account.institution ?? "" },
-                                set: { newValue in
-                                    self.editedAccount?.institution = newValue
-                                    self.validateInstitution(newValue)
-                                }
-                            ))
+                            TextField(
+                                "Bank or financial institution",
+                                text: Binding(
+                                    get: {
+                                        self.editedAccount?.institution ?? account.institution ?? ""
+                                    },
+                                    set: { newValue in
+                                        self.editedAccount?.institution = newValue
+                                        self.validateInstitution(newValue)
+                                    }
+                                )
+                            )
                             .textFieldStyle(.roundedBorder)
 
                             if let error = self.validationErrors["institution"] {
@@ -424,13 +484,19 @@ import SwiftUI
                             .gridColumnAlignment(.trailing)
 
                         VStack(alignment: .leading) {
-                            TextField("Account number", text: Binding(
-                                get: { self.editedAccount?.accountNumber ?? account.accountNumber ?? "" },
-                                set: { newValue in
-                                    self.editedAccount?.accountNumber = newValue
-                                    self.validateAccountNumber(newValue)
-                                }
-                            ))
+                            TextField(
+                                "Account number",
+                                text: Binding(
+                                    get: {
+                                        self.editedAccount?.accountNumber ?? account.accountNumber
+                                            ?? ""
+                                    },
+                                    set: { newValue in
+                                        self.editedAccount?.accountNumber = newValue
+                                        self.validateAccountNumber(newValue)
+                                    }
+                                )
+                            )
                             .textFieldStyle(.roundedBorder)
 
                             if let error = self.validationErrors["accountNumber"] {
@@ -447,12 +513,18 @@ import SwiftUI
                             Text("Interest Rate (%):")
                                 .gridColumnAlignment(.trailing)
 
-                            TextField("Interest rate", value: Binding(
-                                get: { ((self.editedAccount?.interestRate ?? account.interestRate) ?? 0) * 100 },
-                                set: { self.editedAccount?.interestRate = $0 / 100 }
-                            ), format: .number)
-                                .textFieldStyle(.roundedBorder)
-                                .frame(width: 100)
+                            TextField(
+                                "Interest rate",
+                                value: Binding(
+                                    get: {
+                                        ((self.editedAccount?.interestRate ?? account.interestRate)
+                                            ?? 0) * 100
+                                    },
+                                    set: { self.editedAccount?.interestRate = $0 / 100 }
+                                ), format: .number
+                            )
+                            .textFieldStyle(.roundedBorder)
+                            .frame(width: 100)
                         }
                     }
 
@@ -462,22 +534,30 @@ import SwiftUI
                             Text("Credit Limit:")
                                 .gridColumnAlignment(.trailing)
 
-                            TextField("Credit limit", value: Binding(
-                                get: { self.editedAccount?.creditLimit ?? account.creditLimit ?? 0 },
-                                set: { self.editedAccount?.creditLimit = $0 }
-                            ), format: .currency(code: account.currencyCode))
-                                .textFieldStyle(.roundedBorder)
-                                .frame(width: 150)
+                            TextField(
+                                "Credit limit",
+                                value: Binding(
+                                    get: {
+                                        self.editedAccount?.creditLimit ?? account.creditLimit ?? 0
+                                    },
+                                    set: { self.editedAccount?.creditLimit = $0 }
+                                ), format: .currency(code: account.currencyCode)
+                            )
+                            .textFieldStyle(.roundedBorder)
+                            .frame(width: 150)
                         }
 
                         GridRow {
                             Text("Due Date:")
                                 .gridColumnAlignment(.trailing)
 
-                            Picker("Due Date", selection: Binding(
-                                get: { self.editedAccount?.dueDate ?? account.dueDate ?? 1 },
-                                set: { self.editedAccount?.dueDate = $0 }
-                            )) {
+                            Picker(
+                                "Due Date",
+                                selection: Binding(
+                                    get: { self.editedAccount?.dueDate ?? account.dueDate ?? 1 },
+                                    set: { self.editedAccount?.dueDate = $0 }
+                                )
+                            ) {
                                 ForEach(1...31, id: \.self) { day in
                                     Text("\(day)").tag(day)
                                 }
@@ -490,10 +570,14 @@ import SwiftUI
                         Text("Include in Totals:")
                             .gridColumnAlignment(.trailing)
 
-                        Toggle("Include this account in dashboard totals", isOn: Binding(
-                            get: { self.editedAccount?.includeInTotal ?? account.includeInTotal },
-                            set: { self.editedAccount?.includeInTotal = $0 }
-                        ))
+                        Toggle(
+                            "Include this account in dashboard totals",
+                            isOn: Binding(
+                                get: {
+                                    self.editedAccount?.includeInTotal ?? account.includeInTotal
+                                },
+                                set: { self.editedAccount?.includeInTotal = $0 }
+                            ))
                     }
 
                     // Active/Inactive
@@ -501,10 +585,12 @@ import SwiftUI
                         Text("Status:")
                             .gridColumnAlignment(.trailing)
 
-                        Toggle("Account is active", isOn: Binding(
-                            get: { self.editedAccount?.isActive ?? account.isActive },
-                            set: { self.editedAccount?.isActive = $0 }
-                        ))
+                        Toggle(
+                            "Account is active",
+                            isOn: Binding(
+                                get: { self.editedAccount?.isActive ?? account.isActive },
+                                set: { self.editedAccount?.isActive = $0 }
+                            ))
                     }
                 }
                 .padding(.bottom, 20)
@@ -512,13 +598,15 @@ import SwiftUI
                 Text("Notes:")
                     .padding(.top, 10)
 
-                TextEditor(text: Binding(
-                    get: { self.editedAccount?.notes ?? account.notes ?? "" },
-                    set: { newValue in
-                        self.editedAccount?.notes = newValue
-                        self.validateNotes(newValue)
-                    }
-                ))
+                TextEditor(
+                    text: Binding(
+                        get: { self.editedAccount?.notes ?? account.notes ?? "" },
+                        set: { newValue in
+                            self.editedAccount?.notes = newValue
+                            self.validateNotes(newValue)
+                        }
+                    )
+                )
                 .font(.body)
                 .frame(minHeight: 100)
                 .padding(4)
@@ -565,7 +653,7 @@ import SwiftUI
         private func transactionRow(for transaction: FinancialTransaction) -> some View {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(transaction.name)
+                    Text(transaction.title)
                         .font(.headline)
 
                     Text(transaction.date.formatted(date: .abbreviated, time: .omitted))
@@ -590,17 +678,12 @@ import SwiftUI
                     // Edit transaction
                 }
 
-                Button(
-                    "Mark as \(transaction.isReconciled ? "Unreconciled" : "Reconciled").accessibilityLabel("Button").accessibilityLabel("Button")"
-                ) {
-                    self.toggleTransactionStatus(transaction)
-                }
-
                 Divider()
 
-                Button("Delete", role: .destructive).accessibilityLabel("Button").accessibilityLabel("Button") {
-                    self.deleteTransaction(transaction)
-                }
+                Button("Delete", role: .destructive).accessibilityLabel("Button")
+                    .accessibilityLabel("Button") {
+                        self.deleteTransaction(transaction)
+                    }
             }
         }
 
@@ -614,10 +697,12 @@ import SwiftUI
 
             switch self.selectedTimeFrame {
             case .last30Days:
-                guard let thirtyDaysAgo = calendar.date(byAdding: .day, value: -30, to: today) else { return false }
+                guard let thirtyDaysAgo = calendar.date(byAdding: .day, value: -30, to: today)
+                else { return false }
                 return date >= thirtyDaysAgo && date <= today
             case .last90Days:
-                guard let ninetyDaysAgo = calendar.date(byAdding: .day, value: -90, to: today) else { return false }
+                guard let ninetyDaysAgo = calendar.date(byAdding: .day, value: -90, to: today)
+                else { return false }
                 return date >= ninetyDaysAgo && date <= today
             case .thisYear:
                 var components = calendar.dateComponents([.year], from: today)
@@ -626,8 +711,10 @@ import SwiftUI
             case .lastYear:
                 var componentsThisYear = calendar.dateComponents([.year], from: today)
                 guard let startOfThisYear = calendar.date(from: componentsThisYear),
-                      let startOfLastYear = calendar.date(byAdding: .year, value: -1, to: startOfThisYear),
-                      let endOfLastYear = calendar.date(byAdding: .day, value: -1, to: startOfThisYear)
+                    let startOfLastYear = calendar.date(
+                        byAdding: .year, value: -1, to: startOfThisYear),
+                    let endOfLastYear = calendar.date(
+                        byAdding: .day, value: -1, to: startOfThisYear)
                 else { return false }
                 return date >= startOfLastYear && date <= endOfLastYear
             case .allTime:
@@ -695,11 +782,11 @@ import SwiftUI
 
             // Create a new transaction
             let transaction = FinancialTransaction(
-                name: "New Transaction",
+                title: "New Transaction",
                 amount: 0,
                 date: Date(),
-                notes: "",
-                isReconciled: false
+                transactionType: .expense,
+                notes: ""
             )
 
             // Set the account relationship

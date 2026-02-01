@@ -36,7 +36,7 @@ import SwiftUI
         var body: some View {
             HStack(spacing: 4) {
                 Circle()
-                    .fill(self.getCategoryColor(self.category.colorHex))
+                    .fill(self.getCategoryColor(self.category.name))
                     .frame(width: 10, height: 10)
 
                 Text(self.category.name)
@@ -44,14 +44,15 @@ import SwiftUI
             }
             .padding(.horizontal, 8)
             .padding(.vertical, 2)
-            .background(self.getCategoryColor(self.category.colorHex).opacity(0.1))
+            .background(self.getCategoryColor(self.category.name).opacity(0.1))
             .cornerRadius(4)
         }
 
-        private func getCategoryColor(_ hex: String?) -> Color {
-            guard let hex else { return .gray }
-            // This would parse the hex color string
-            return .blue
+        private func getCategoryColor(_ name: String) -> Color {
+            // Simple deterministic color based on name length/hash
+            let colors: [Color] = [.blue, .red, .green, .orange, .purple, .pink, .yellow]
+            let index = abs(name.hashValue) % colors.count
+            return colors[index]
         }
     }
 
@@ -78,11 +79,12 @@ import SwiftUI
                 .cornerRadius(8)
 
                 if self.showDeleteButton {
-                    Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button") {
+                    Button(action: {}) {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(.red)
                             .background(Color.white.clipShape(Circle()))
                     }
+                    .accessibilityLabel("Button")
                     .buttonStyle(.borderless)
                     .offset(x: 5, y: -5)
                 }
@@ -126,7 +128,8 @@ import SwiftUI
 
                         Text("\(Int((self.budgetSpent / self.budgetTotal) * 100))% Used")
                             .font(.caption)
-                            .foregroundStyle(self.getBudgetColor(self.budgetSpent / self.budgetTotal))
+                            .foregroundStyle(
+                                self.getBudgetColor(self.budgetSpent / self.budgetTotal))
                     }
                 }
 
@@ -134,15 +137,19 @@ import SwiftUI
                     .tint(self.getBudgetColor(self.budgetSpent / self.budgetTotal))
 
                 HStack {
-                    Text("This transaction: \(self.transactionAmount.formatted(.currency(code: "USD")))")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                    Text(
+                        "This transaction: \(self.transactionAmount.formatted(.currency(code: "USD")))"
+                    )
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
 
                     Spacer()
 
-                    Text("\(Int((self.transactionAmount / self.budgetTotal) * 100))% of monthly budget")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                    Text(
+                        "\(Int((self.transactionAmount / self.budgetTotal) * 100))% of monthly budget"
+                    )
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
                 }
             }
             .padding()
@@ -284,18 +291,20 @@ import SwiftUI
                 // Export options and controls would go here
 
                 HStack {
-                    Button("Cancel").accessibilityLabel("Button").accessibilityLabel("Button") {
+                    Button("Cancel") {
                         self.dismiss()
                     }
+                    .accessibilityLabel("Button")
                     .buttonStyle(.bordered)
 
                     Spacer()
 
-                    Button("Export").accessibilityLabel("Button").accessibilityLabel("Button") {
+                    Button("Export") {
                         // Export logic
                         self.dismiss()
                     }
                     .buttonStyle(.borderedProminent)
+                    .accessibilityLabel("Button")
                 }
                 .padding(.top)
             }
@@ -319,7 +328,7 @@ import SwiftUI
 
         var body: some View {
             VStack {
-                Text("Transactions Similar to '\(self.transaction.name)'")
+                Text("Transactions Similar to '\(self.transaction.title)'")
                     .font(.headline)
                     .padding()
 
@@ -332,9 +341,10 @@ import SwiftUI
                     }
                 }
 
-                Button("Close").accessibilityLabel("Button").accessibilityLabel("Button") {
+                Button("Close") {
                     self.dismiss()
                 }
+                .accessibilityLabel("Button")
                 .buttonStyle(.bordered)
                 .padding()
             }
@@ -355,12 +365,12 @@ import SwiftUI
         var subcategory: String?
 
         init(from transaction: FinancialTransaction) {
-            self.name = transaction.name
+            self.name = transaction.title
             self.amount = transaction.amount
             self.date = transaction.date
-            self.notes = transaction.notes
-            self.categoryId = transaction.category?.id ?? ""
-            self.accountId = transaction.account?.id ?? ""
+            self.notes = transaction.notes ?? ""
+            self.categoryId = transaction.category?.id.uuidString ?? ""
+            self.accountId = transaction.account?.name ?? ""  // Using account name as ID for now
             self.isReconciled = transaction.isReconciled
             self.isRecurring = transaction.isRecurring
             self.location = transaction.location

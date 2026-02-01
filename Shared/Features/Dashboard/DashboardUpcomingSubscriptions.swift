@@ -27,9 +27,10 @@ extension Features.Dashboard {
             self.themeComponents.cardWithHeader(title: "Upcoming Subscriptions") {
                 VStack(spacing: 16) {
                     if !self.subscriptions.isEmpty {
-                        ForEach(Array(self.subscriptions.prefix(3).enumerated()),
-                                id: \.element.id)
-                        { index, subscription in
+                        ForEach(
+                            Array(self.subscriptions.prefix(3).enumerated()),
+                            id: \.element.id
+                        ) { index, subscription in
                             HStack {
                                 // Icon with colorful background
                                 ZStack {
@@ -41,7 +42,7 @@ extension Features.Dashboard {
                                         )
                                         .frame(width: 36, height: 36)
 
-                                    Image(systemName: subscription.icon)
+                                    Image(systemName: subscription.provider)
                                         .font(.caption)
                                         .foregroundStyle(.white)
                                 }
@@ -51,7 +52,7 @@ extension Features.Dashboard {
                                         .font(.subheadline)
                                         .foregroundStyle(self.colorTheme.primaryText)
 
-                                    Text(subscription.nextBillingDate.map(self.formattedDateString) ?? "No date set")
+                                    Text(self.formattedDateString(subscription.nextDueDate))
                                         .font(.caption)
                                         .foregroundStyle(self.colorTheme.secondaryText)
                                 }

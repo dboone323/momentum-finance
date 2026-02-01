@@ -35,7 +35,7 @@ extension Features.Subscriptions {
         }
 
         private var monthlyTotal: Double {
-            self.subscriptions.reduce(0) { total, subscription in
+            self.subscriptions.reduce(0.0) { total, subscription in
                 total + subscription.monthlyEquivalent
             }
         }

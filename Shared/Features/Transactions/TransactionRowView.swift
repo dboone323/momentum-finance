@@ -15,7 +15,7 @@ extension Features.Transactions {
         let onTapped: () -> Void
 
         var body: some View {
-            Button(action: self.onTapped).accessibilityLabel("Button").accessibilityLabel("Button") {
+            Button(action: self.onTapped) {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(self.transaction.title)
@@ -33,7 +33,8 @@ extension Features.Transactions {
                     VStack(alignment: .trailing) {
                         Text(self.transaction.formattedAmount)
                             .font(.headline)
-                            .foregroundColor(self.transaction.transactionType == .income ? .green : .red)
+                            .foregroundColor(
+                                self.transaction.transactionType == .income ? .green : .red)
 
                         Text(self.transaction.formattedDate)
                             .font(.caption)
@@ -42,6 +43,7 @@ extension Features.Transactions {
                 }
                 .padding(.vertical, 4)
             }
+            .accessibilityLabel("Transaction")
             .buttonStyle(PlainButtonStyle())
         }
     }

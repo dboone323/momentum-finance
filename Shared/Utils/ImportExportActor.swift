@@ -12,7 +12,7 @@ actor ImportExportService {
 
     // MARK: - CSV Import (Background)
 
-    func importCSVAsync(from url: URL) async throws -> ImportResult {
+    func importCSVAsync(from url: URL) async throws -> InternalImportResult {
         // Read file on background
         let csvContent = try await readFileAsync(url)
 
@@ -22,7 +22,7 @@ actor ImportExportService {
         // Create entities on main actor
         let transactions = try await createTransactionsAsync(from: rows)
 
-        return ImportResult(
+        return InternalImportResult(
             successCount: transactions.count,
             failureCount: 0,
             errors: []
@@ -62,7 +62,9 @@ actor ImportExportService {
         return fields
     }
 
-    private func createTransactionsAsync(from rows: [[String]]) async throws -> [FinancialTransaction] {
+    private func createTransactionsAsync(from rows: [[String]]) async throws
+        -> [FinancialTransaction]
+    {
         var transactions: [FinancialTransaction] = []
 
         // Skip header row
@@ -156,20 +158,20 @@ actor ImportExportService {
 
     func importWithProgress(
         from url: URL,
-        progressHandler: @escaping (Double) -> Void
-    ) async throws -> ImportResult {
+        progressHandler: @escaping @Sendable (Double) -> Void
+    ) async throws -> InternalImportResult {
         let content = try await readFileAsync(url)
         let rows = await parseCSVAsync(content)
 
         var successCount = 0
-        var errors: [ImportError] = []
+        var errors: [RowImportError] = []
 
         for (index, row) in rows.enumerated() {
             do {
                 _ = try await createTransactionsAsync(from: [row])
                 successCount += 1
             } catch {
-                errors.append(ImportError(row: index, error: error))
+                errors.append(RowImportError(row: index, error: error))
             }
 
             // Report progress
@@ -179,7 +181,7 @@ actor ImportExportService {
             }
         }
 
-        return ImportResult(
+        return InternalImportResult(
             successCount: successCount,
             failureCount: errors.count,
             errors: errors
@@ -189,13 +191,13 @@ actor ImportExportService {
 
 // MARK: - Supporting Types
 
-struct ImportResult {
+struct InternalImportResult {
     let successCount: Int
     let failureCount: Int
-    let errors: [ImportError]
+    let errors: [RowImportError]
 }
 
-struct ImportError {
+struct RowImportError {
     let row: Int
     let error: Error
 }

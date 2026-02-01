@@ -1,6 +1,5 @@
 import sys
 import os
-import pytest
 from unittest.mock import patch, mock_open
 
 # Add root to path
@@ -15,6 +14,7 @@ except ImportError:
     sys.path.append(os.path.abspath(os.path.join(current_dir, "..")))
     import add_missing_types
 
+
 def test_add_file_to_project():
     """Test add_file_to_project function."""
     mock_content = """
@@ -28,11 +28,13 @@ isa = PBXSourcesBuildPhase;
 files = (
 );
 """
-    with patch("builtins.open", mock_open(read_data=mock_content)) as mock_file, \
-         patch("builtins.print"):
-        
+    with (
+        patch("builtins.open", mock_open(read_data=mock_content)) as mock_file,
+        patch("builtins.print"),
+    ):
+
         add_missing_types.add_file_to_project("dummy.pbxproj", "TestFile.swift")
-        
+
         # Verify write occurred
         mock_file().write.assert_called()
         written_content = mock_file().write.call_args[0][0]

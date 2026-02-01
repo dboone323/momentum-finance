@@ -38,22 +38,23 @@ public class AdvancedFinancialIntelligence: ObservableObject {
 
     // MARK: - Public Methods
 
-    /// Generate comprehensive financial insights
     public func generateInsights(
-        from transactions: [Transaction],
-        accounts: [Account],
-        budgets: [AIBudget]
+        from transactions: [FinancialTransaction],
+        accounts: [FinancialAccount],
+        budgets: [Budget]
     ) async {
+
         self.isAnalyzing = true
 
         // Generate multiple types of insights concurrently
-        async let spendingInsights = self.analyzeSpendingPatterns(transactions)
-        async let savingsInsights = self.analyzeSavingsOpportunities(transactions, accounts)
-        async let budgetInsights = self.analyzeBudgetPerformance(transactions, budgets)
-        async let riskInsights = self.assessFinancialRisk(transactions, accounts)
-        async let predictiveInsights = self.generatePredictions(transactions, accounts)
+        // Generate insights sequentially (MainActor enforces serial execution)
+        let spendingInsights = await self.analyzeSpendingPatterns(transactions)
+        let savingsInsights = await self.analyzeSavingsOpportunities(transactions, accounts)
+        let budgetInsights = await self.analyzeBudgetPerformance(transactions, budgets)
+        let riskInsights = await self.assessFinancialRisk(transactions, accounts)
+        let predictiveInsights = await self.generatePredictions(transactions, accounts)
 
-        let allInsights = await [
+        let allInsights = [
             spendingInsights,
             savingsInsights,
             budgetInsights,
@@ -87,11 +88,11 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         )
     }
 
-    /// Predict future cash flow
     public func predictCashFlow(
-        transactions: [Transaction],
+        transactions: [FinancialTransaction],
         months: Int = 12
     ) -> [CashFlowPrediction] {
+
         self.predictionEngine.predictCashFlow(
             transactions: transactions,
             monthsAhead: months
@@ -99,13 +100,15 @@ public class AdvancedFinancialIntelligence: ObservableObject {
     }
 
     /// Detect anomalous transactions (fraud detection)
-    public func detectAnomalies(in transactions: [Transaction]) -> [TransactionAnomaly] {
+    public func detectAnomalies(in transactions: [FinancialTransaction]) -> [TransactionAnomaly] {
+
         self.analyticsEngine.detectAnomalies(in: transactions)
     }
 
     // MARK: - Private Analysis Methods
 
-    private func analyzeSpendingPatterns(_ transactions: [Transaction]) async
+    private func analyzeSpendingPatterns(_ transactions: [FinancialTransaction]) async
+
         -> [EnhancedFinancialInsight]
     {
         var insights: [EnhancedFinancialInsight] = []
@@ -117,7 +120,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                 EnhancedFinancialInsight(
                     title: "Accelerating Spending Detected",
                     description:
-                    "Your spending has increased by \(Int(spendingVelocity.percentageIncrease))% this month. Consider reviewing your recent purchases.",
+                        "Your spending has increased by \(Int(spendingVelocity.percentageIncrease))% this month. Consider reviewing your recent purchases.",
                     priority: .high,
                     type: .spendingAlert,
                     confidence: 0.9,
@@ -152,9 +155,10 @@ public class AdvancedFinancialIntelligence: ObservableObject {
     }
 
     private func analyzeSavingsOpportunities(
-        _ transactions: [Transaction],
-        _ accounts: [Account]
+        _ transactions: [FinancialTransaction],
+        _ accounts: [FinancialAccount]
     ) async -> [EnhancedFinancialInsight] {
+
         var insights: [EnhancedFinancialInsight] = []
 
         // Identify subscription optimization opportunities
@@ -167,7 +171,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                 EnhancedFinancialInsight(
                     title: "Subscription Optimization Opportunity",
                     description:
-                    "You could save $\(potentialSavings)/month by canceling \(unusedSubscriptions.count) unused subscriptions.",
+                        "You could save $\(potentialSavings)/month by canceling \(unusedSubscriptions.count) unused subscriptions.",
                     priority: .medium,
                     type: .savingsOpportunity,
                     confidence: 0.85,
@@ -176,21 +180,21 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                         "Cancel unused subscriptions",
                         "Set usage reminders",
                     ],
-                    potentialSavings: potentialSavings * 12, // Annual savings
+                    potentialSavings: potentialSavings * 12,  // Annual savings
                     impactScore: 7.2
                 )
             )
         }
 
         // High-yield savings opportunities
-        let cashBalance = accounts.filter { $0.type == .checking || $0.type == .savings }
-            .reduce(0) { $0 + $1.balance }
+        let cashBalance = accounts.reduce(0) { $0 + $1.balance }
+
         if cashBalance > 10000 {
             insights.append(
                 EnhancedFinancialInsight(
                     title: "High-Yield Savings Opportunity",
                     description:
-                    "Consider moving excess cash to high-yield savings to earn up to 4.5% APY.",
+                        "Consider moving excess cash to high-yield savings to earn up to 4.5% APY.",
                     priority: .medium,
                     type: .savingsOpportunity,
                     confidence: 0.95,
@@ -199,7 +203,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                         "Compare interest rates",
                         "Consider CDs for longer terms",
                     ],
-                    potentialSavings: cashBalance * 0.045, // Potential annual earnings
+                    potentialSavings: cashBalance * 0.045,  // Potential annual earnings
                     impactScore: 6.8
                 )
             )
@@ -209,25 +213,25 @@ public class AdvancedFinancialIntelligence: ObservableObject {
     }
 
     private func analyzeBudgetPerformance(
-        _ transactions: [Transaction],
-        _ budgets: [AIBudget]
+        _ transactions: [FinancialTransaction],
+        _ budgets: [Budget]
     ) async -> [EnhancedFinancialInsight] {
         var insights: [EnhancedFinancialInsight] = []
 
         for budget in budgets {
             let spent = self.calculateSpentAmount(transactions, for: budget)
-            let percentageUsed = spent / budget.amount * 100
+            let percentageUsed = spent / budget.limitAmount * 100
 
             if percentageUsed > 90 {
                 insights.append(
                     EnhancedFinancialInsight(
                         title: "\(budget.category) Budget Alert",
                         description:
-                        "You've used \(Int(percentageUsed))% of your \(budget.category) budget. $\(budget.amount - spent) remaining.",
+                            "You've used \(Int(percentageUsed))% of your \(budget.category) budget. $\(budget.limitAmount - spent) remaining.",
                         priority: percentageUsed > 100 ? .critical : .high,
                         type: .budgetAlert,
                         confidence: 0.95,
-                        relatedBudgetId: budget.id,
+                        relatedBudgetId: budget.id.uuidString,
                         actionRecommendations: [
                             "Reduce spending in this category",
                             "Consider increasing budget if necessary",
@@ -243,14 +247,15 @@ public class AdvancedFinancialIntelligence: ObservableObject {
     }
 
     private func assessFinancialRisk(
-        _ transactions: [Transaction],
-        _ accounts: [Account]
+        _ transactions: [FinancialTransaction],
+        _ accounts: [FinancialAccount]
     ) async -> [EnhancedFinancialInsight] {
+
         var insights: [EnhancedFinancialInsight] = []
 
         // Emergency fund assessment
         let monthlyExpenses = self.calculateMonthlyExpenses(transactions)
-        let emergencyFund = accounts.filter { $0.type == .savings }
+        let emergencyFund = accounts.filter { $0.accountType == .savings }
             .reduce(0) { $0 + $1.balance }
         let monthsCovered = emergencyFund / monthlyExpenses
 
@@ -259,7 +264,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                 EnhancedFinancialInsight(
                     title: "Emergency Fund Below Recommended Level",
                     description:
-                    "Your emergency fund covers \(monthsCovered, specifier: "%.1f") months of expenses. Experts recommend 3-6 months.",
+                        "Your emergency fund covers \(String(format: "%.1f", monthsCovered)) months of expenses. Experts recommend 3-6 months.",
                     priority: monthsCovered < 1 ? .critical : .high,
                     type: .riskAlert,
                     confidence: 0.9,
@@ -277,9 +282,10 @@ public class AdvancedFinancialIntelligence: ObservableObject {
     }
 
     private func generatePredictions(
-        _ transactions: [Transaction],
-        _: [Account]
+        _ transactions: [FinancialTransaction],
+        _: [FinancialAccount]
     ) async -> [EnhancedFinancialInsight] {
+
         var insights: [EnhancedFinancialInsight] = []
 
         // Cash flow prediction
@@ -293,7 +299,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                 EnhancedFinancialInsight(
                     title: "Potential Cash Flow Issues Ahead",
                     description:
-                    "Predicted negative cash flow in \(negativeMonths.count) of the next 3 months.",
+                        "Predicted negative cash flow in \(negativeMonths.count) of the next 3 months.",
                     priority: .high,
                     type: .prediction,
                     confidence: 0.75,
@@ -341,40 +347,46 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         }
     }
 
-    private func calculateSpendingVelocity(_: [Transaction]) -> SpendingVelocity {
+    private func calculateSpendingVelocity(_: [FinancialTransaction]) -> SpendingVelocity {
+
         // Implementation for spending velocity calculation
-        SpendingVelocity(percentageIncrease: 15.0) // Placeholder
+        SpendingVelocity(percentageIncrease: 15.0)  // Placeholder
     }
 
-    private func analyzeCategoryTrends(_: [Transaction]) -> [CategoryTrend] {
+    private func analyzeCategoryTrends(_: [FinancialTransaction]) -> [CategoryTrend] {
+
         // Implementation for category trend analysis
-        [] // Placeholder
+        []  // Placeholder
     }
 
-    private func identifySubscriptions(_: [Transaction]) -> [Subscription] {
+    private func identifySubscriptions(_: [FinancialTransaction]) -> [Subscription] {
+
         // Implementation for subscription identification
-        [] // Placeholder
+        []  // Placeholder
     }
 
     private func findUnusedSubscriptions(_: [Subscription]) -> [Subscription] {
         // Implementation for finding unused subscriptions
-        [] // Placeholder
+        []  // Placeholder
     }
 
-    private func calculateSpentAmount(_: [Transaction], for _: Budget) -> Double {
+    private func calculateSpentAmount(_: [FinancialTransaction], for _: Budget) -> Double {
+
         // Implementation for calculating spent amount against budget
-        0.0 // Placeholder
+        0.0  // Placeholder
     }
 
-    private func calculateMonthlyExpenses(_: [Transaction]) -> Double {
+    private func calculateMonthlyExpenses(_: [FinancialTransaction]) -> Double {
+
         // Implementation for calculating monthly expenses
-        5000.0 // Placeholder
+        5000.0  // Placeholder
     }
 
     private func generateRiskAssessment(
-        _: [Transaction],
-        _: [Account]
+        _: [FinancialTransaction],
+        _: [FinancialAccount]
     ) async -> RiskAssessment {
+
         RiskAssessment(
             overallRiskLevel: .moderate,
             emergencyFundRisk: .high,
@@ -385,9 +397,10 @@ public class AdvancedFinancialIntelligence: ObservableObject {
     }
 
     private func generatePredictiveAnalytics(
-        _: [Transaction],
-        _: [Account]
+        _: [FinancialTransaction],
+        _: [FinancialAccount]
     ) async -> PredictiveAnalytics {
+
         PredictiveAnalytics(
             nextMonthSpending: 4200,
             nextMonthIncome: 6500,
@@ -400,7 +413,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
 
     // MARK: - Enhanced Financial Insight Model
 
-    public struct EnhancedFinancialInsight: Identifiable, Hashable {
+    public struct EnhancedFinancialInsight: Identifiable, Hashable, Sendable {
         public let id = UUID()
         public let title: String
         public let description: String
@@ -413,7 +426,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         public let relatedBudgetId: String?
         public let actionRecommendations: [String]
         public let potentialSavings: Double?
-        public let impactScore: Double // 0-10 scale
+        public let impactScore: Double  // 0-10 scale
         public let createdAt: Date
 
         public init(
@@ -448,14 +461,14 @@ public class AdvancedFinancialIntelligence: ObservableObject {
 
     // MARK: - Supporting Types
 
-    public enum InsightPriority: Int, CaseIterable, Hashable {
+    public enum InsightPriority: Int, CaseIterable, Hashable, Sendable {
         case low = 1
         case medium = 2
         case high = 3
         case critical = 4
     }
 
-    public enum InsightType: Hashable {
+    public enum InsightType: Hashable, Sendable {
         case spendingAlert
         case savingsOpportunity
         case budgetAlert
@@ -465,7 +478,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         case recommendation
     }
 
-    public struct RiskAssessment {
+    public struct RiskAssessment: Sendable {
         let overallRiskLevel: RiskLevel
         let emergencyFundRisk: RiskLevel
         let debtRisk: RiskLevel
@@ -473,22 +486,22 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         let cashFlowRisk: RiskLevel
     }
 
-    public enum RiskLevel {
+    public enum RiskLevel: Sendable {
         case low, medium, moderate, high, critical
     }
 
-    public struct PredictiveAnalytics {
+    public struct PredictiveAnalytics: Sendable {
         let nextMonthSpending: Double
         let nextMonthIncome: Double
         let savingsProjection: Double
-        let budgetVarianceProjection: Double // 0-1 scale
+        let budgetVarianceProjection: Double  // 0-1 scale
     }
 
-    public struct SpendingVelocity {
+    public struct SpendingVelocity: Sendable {
         let percentageIncrease: Double
     }
 
-    public struct CategoryTrend {
+    public struct CategoryTrend: Sendable {
         let category: String
         let categoryId: String
         let isSignificant: Bool
@@ -499,20 +512,20 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         let impactScore: Double
     }
 
-    public struct Subscription {
+    public struct Subscription: Sendable {
         let name: String
         let monthlyAmount: Double
         let lastUsed: Date?
     }
 
-    public struct InvestmentRecommendation {
+    public struct InvestmentRecommendation: Sendable {
         let type: String
         let allocation: Double
         let riskLevel: RiskLevel
         let expectedReturn: Double
     }
 
-    public struct CashFlowPrediction {
+    public struct CashFlowPrediction: Sendable {
         let month: Date
         let predictedIncome: Double
         let predictedExpenses: Double
@@ -520,7 +533,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
     }
 
     public struct TransactionAnomaly {
-        let transaction: Transaction
+        let transaction: FinancialTransaction
         let anomalyType: AnomalyType
         let confidence: Double
     }
@@ -533,86 +546,36 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         case possibleFraud
     }
 
-    // MARK: - Placeholder Types (these should exist in your actual models)
-
-    public struct Transaction {
-        let id: String
-        let amount: Double
-        let date: Date
-        let category: String
-        let merchant: String?
+    public enum TimeHorizon: Sendable {
+        case shortTerm, mediumTerm, longTerm
     }
 
-    public struct Account {
-        let id: String
-        let name: String
-        let type: AccountType
-        let balance: Double
+    private class FinancialAnalyticsEngine {
+        func generateInvestmentRecommendations(
+            riskTolerance _: RiskTolerance,
+            timeHorizon _: TimeHorizon,
+            currentPortfolio _: [Investment]
+        ) -> [InvestmentRecommendation] {
+            // Implementation would go here
+            []
+        }
+
+        func detectAnomalies(in _: [FinancialTransaction]) -> [TransactionAnomaly] {
+            // Implementation would go here
+            []
+        }
     }
 
-    public enum AccountType {
-        case checking, savings, investment, credit
+    private class PredictionEngine {
+        func predictCashFlow(transactions _: [FinancialTransaction], monthsAhead _: Int)
+            -> [CashFlowPrediction]
+        {
+            // Implementation would go here
+            []
+        }
     }
 
-    public struct Budget {
-        let id: String
-        let category: String
-        let amount: Double
-        let period: BudgetPeriod
-    }
-
-    /// Lightweight struct for AI budget analysis (not the main Budget model).
-    public struct AIBudget {
-        let id: String
-        let category: String
-        let amount: Double
-        let period: BudgetPeriod
-    }
-}
-
-public enum BudgetPeriod {
-    case monthly, yearly
-}
-
-public struct Investment {
-    let symbol: String
-    let shares: Double
-    let currentValue: Double
-}
-
-public enum RiskTolerance {
-    case conservative, moderate, aggressive
-}
-
-public enum TimeHorizon {
-    case shortTerm, mediumTerm, longTerm
-}
-
-// MARK: - Supporting Engines
-
-private class FinancialAnalyticsEngine {
-    func generateInvestmentRecommendations(
-        riskTolerance _: RiskTolerance,
-        timeHorizon _: TimeHorizon,
-        currentPortfolio _: [Investment]
-    ) -> [InvestmentRecommendation] {
+    private class RiskAssessmentEngine {
         // Implementation would go here
-        []
     }
-
-    func detectAnomalies(in _: [Transaction]) -> [TransactionAnomaly] {
-        // Implementation would go here
-        []
-    }
-}
-
-private class PredictionEngine {
-    func predictCashFlow(transactions _: [Transaction], monthsAhead _: Int) -> [CashFlowPrediction] {
-        // Implementation would go here
-        []
-    }
-}
-
-private class RiskAssessmentEngine {
-    // Implementation would go here
 }

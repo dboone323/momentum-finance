@@ -22,9 +22,8 @@ struct ImportValidator {
 
         let descriptor = FetchDescriptor<FinancialTransaction>(
             predicate: #Predicate { existingTransaction in
-                existingTransaction.title == title &&
-                    existingTransaction.amount == amount &&
-                    existingTransaction.date == date
+                existingTransaction.title == title && existingTransaction.amount == amount
+                    && existingTransaction.date == date
             }
         )
 
@@ -38,14 +37,14 @@ struct ImportValidator {
     ) throws {
         // Validate date field
         guard let dateIndex = columnMapping.dateIndex,
-              dateIndex < fields.count
+            dateIndex < fields.count
         else {
             throw ImportError.missingRequiredField("date")
         }
 
         // Validate title field
         guard let titleIndex = columnMapping.titleIndex,
-              titleIndex < fields.count
+            titleIndex < fields.count
         else {
             throw ImportError.missingRequiredField("title/description")
         }
@@ -57,7 +56,7 @@ struct ImportValidator {
 
         // Validate amount field
         guard let amountIndex = columnMapping.amountIndex,
-              amountIndex < fields.count
+            amountIndex < fields.count
         else {
             throw ImportError.missingRequiredField("amount")
         }

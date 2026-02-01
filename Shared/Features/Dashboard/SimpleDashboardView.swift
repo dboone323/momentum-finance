@@ -30,7 +30,7 @@ public struct SimpleDashboardView: View {
         private var budgets: [Budget] = []
     #endif
 
-    var body: some View {
+    public var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {

@@ -41,7 +41,7 @@ extension Features.Subscriptions {
         // Initialize with subscription ID (for cross-module navigation)
         init(subscriptionId: PersistentIdentifier) {
             self.subscriptionId = subscriptionId
-            self.subscription = nil // Will be resolved in the resolvedSubscription property
+            self.subscription = nil  // Will be resolved in the resolvedSubscription property
         }
 
         // Resolve the subscription from ID if needed
@@ -211,7 +211,8 @@ extension Features.Subscriptions {
                     }
                     .padding()
                     .navigationTitle("Subscription Details")
-                    .alert("Process Payment", isPresented: self.$showingProcessPaymentConfirmation) {
+                    .alert("Process Payment", isPresented: self.$showingProcessPaymentConfirmation)
+                    {
                         Button("Cancel", role: .cancel) {
                             self.showingProcessPaymentConfirmation = false
                         }
@@ -244,6 +245,10 @@ extension Features.Subscriptions {
                 "Billed Monthly"
             case .yearly:
                 "Billed Yearly"
+            case .daily:
+                "Billed Daily"
+            case .quarterly:
+                "Billed Quarterly"
             }
         }
 

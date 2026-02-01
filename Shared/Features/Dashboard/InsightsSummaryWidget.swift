@@ -38,7 +38,7 @@ public struct InsightsSummaryWidget: View {
 
     @State private var isLoading = true
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Label("Insights", systemImage: "chart.line.uptrend.xyaxis")
@@ -176,7 +176,7 @@ public struct InsightsSummaryWidget: View {
 
     private func calculateMonthlyChange() -> Double {
         // Simplified implementation - would typically use data from multiple months
-        2.5 // Example: 2.5% growth
+        2.5  // Example: 2.5% growth
     }
 
     private func calculateRecentSpending() -> Double {
@@ -185,13 +185,13 @@ public struct InsightsSummaryWidget: View {
 
         return
             self.transactions
-                .filter { $0.date > lastWeek && $0.transactionType == .expense }
-                .reduce(0) { $0 + $1.amount }
+            .filter { $0.date > lastWeek && $0.transactionType == .expense }
+            .reduce(0) { $0 + $1.amount }
     }
 
     private func calculateMonthComparisonRatio() -> Double {
         // Simplified implementation - would typically compare current month vs previous month
-        0.9 // Example: spending is 90% of previous month (good)
+        0.9  // Example: spending is 90% of previous month (good)
     }
 
     private func insightBackgroundColor() -> some View {

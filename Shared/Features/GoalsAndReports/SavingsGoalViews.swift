@@ -64,11 +64,10 @@ public struct SavingsGoalCard: View {
                         .font(.headline)
                         .fontWeight(.semibold)
 
-                    if let targetDate = goal.targetDate {
-                        Text("Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
+                    let targetDate = goal.targetDate
+                    Text("Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
                 }
 
                 Spacer()
@@ -81,6 +80,7 @@ public struct SavingsGoalCard: View {
             }
 
             // Progress Section
+
             VStack(spacing: 8) {
                 HStack {
                     Text(self.goal.formattedCurrentAmount)

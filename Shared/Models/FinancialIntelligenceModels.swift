@@ -7,7 +7,7 @@ import SwiftUI
 /// Represents the type of financial insight
 public enum SimpleInsightType: Sendable {
     case spendingPattern, anomaly, budgetAlert, forecast, optimization, budgetRecommendation,
-         positiveSpendingTrend
+        positiveSpendingTrend
 
     public var displayName: String {
         switch self {
@@ -102,5 +102,59 @@ public struct ForecastData: Identifiable, Sendable {
         self.date = date
         self.predictedBalance = predictedBalance
         self.confidence = confidence
+    }
+}
+
+/// Represents an investment recommendation
+public struct InvestmentRecommendation: Identifiable, Sendable {
+    public let id = UUID()
+    public let assetName: String
+    public let action: String
+    public let reasoning: String
+    public let riskLevel: String
+
+    public init(assetName: String, action: String, reasoning: String, riskLevel: String) {
+        self.assetName = assetName
+        self.action = action
+        self.reasoning = reasoning
+        self.riskLevel = riskLevel
+    }
+}
+
+/// Represents a cash flow prediction
+public struct CashFlowPrediction: Identifiable, Sendable {
+    public let id = UUID()
+    public let month: Date
+    public let predictedIncome: Double
+    public let predictedExpenses: Double
+
+    public init(month: Date, predictedIncome: Double, predictedExpenses: Double) {
+        self.month = month
+        self.predictedIncome = predictedIncome
+        self.predictedExpenses = predictedExpenses
+    }
+}
+
+/// Represents a data point for charts
+/// Represents a data point for charts
+public struct ChartDataPoint: Identifiable, Sendable, Codable {
+    public let id: UUID
+    public let label: String
+    public let value: Double
+    public let colorHex: String?
+
+    public var color: Color? {
+        guard let colorHex else { return nil }
+        // Simplified stub: return .blue if hex not empty.
+        // In real app, parse hex.
+        return .blue
+    }
+
+    public init(label: String, value: Double, color: Color? = nil) {
+        self.id = UUID()
+        self.label = label
+        self.value = value
+        // Convert color to hex not implemented in this stub, identifying by nil for now
+        self.colorHex = nil
     }
 }

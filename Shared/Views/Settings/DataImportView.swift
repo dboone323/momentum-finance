@@ -47,35 +47,28 @@ public struct DataImportView: View {
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.large)
             #endif
-                .toolbar(content: {
-                    #if os(iOS)
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button("Cancel") { self.dismiss() }
-                                .accessibilityLabel("Cancel")
-                        }
-                    #else
-                        ToolbarItem {
-                            Button("Cancel") { self.dismiss() }
-                                .accessibilityLabel("Cancel")
-                        }
-                    #endif
-                })
-                .fileImporter(
-                    isPresented: self.$showingFilePicker,
-                    allowedContentTypes: [.commaSeparatedText, .plainText],
-                    allowsMultipleSelection: false
-                ) { result in
-                    self.handleFileSelection(result)
+            .toolbar(content: {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { self.dismiss() }
+                        .accessibilityLabel("Cancel")
                 }
-                .alert("Import Error", isPresented: .constant(self.importError != nil)) {
-                    Button("OK") { self.importError = nil }
-                        .accessibilityLabel("OK")
-                } message: {
-                    if let error = importError { Text(error) }
-                }
-                .sheet(isPresented: self.$showingResult) {
-                    if let result = importResult { ImportResultView(result: result) { self.dismiss() } }
-                }
+            })
+            .fileImporter(
+                isPresented: self.$showingFilePicker,
+                allowedContentTypes: [.commaSeparatedText, .plainText],
+                allowsMultipleSelection: false
+            ) { result in
+                self.handleFileSelection(result)
+            }
+            .alert("Import Error", isPresented: .constant(self.importError != nil)) {
+                Button("OK") { self.importError = nil }
+                    .accessibilityLabel("OK")
+            } message: {
+                if let error = importError { Text(error) }
+            }
+            .sheet(isPresented: self.$showingResult) {
+                if let result = importResult { ImportResultView(result: result) { self.dismiss() } }
+            }
         }
     }
 
@@ -123,14 +116,14 @@ public struct DataImportView: View {
 
     private func handleFileSelection(_ result: Result<[URL], Error>) {
         switch result {
-        case let .success(urls):
+        case .success(let urls):
             if let url = urls.first {
                 self.selectedFileURL = url
                 #if os(iOS)
                     HapticManager.shared.success()
                 #endif
             }
-        case let .failure(error):
+        case .failure(let error):
             self.importError = "Failed to select file: \(error.localizedDescription)"
             #if os(iOS)
                 HapticManager.shared.error()

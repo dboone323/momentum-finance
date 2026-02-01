@@ -86,7 +86,8 @@ extension Features.Transactions {
                     // Transactions list
                     List {
                         ForEach(self.filteredTransactions) { transaction in
-                            TransactionRowView(transaction: transaction, onTap: {})
+                            TransactionRowView(transaction: transaction, onTapped: {})
+
                                 .swipeActions {
                                     Button(role: .destructive) {
                                         self.deleteTransaction(transaction)

@@ -4,19 +4,24 @@ import SwiftData
 
 // MARK: - Service Protocols
 
+@MainActor
 public protocol EntityManager: Sendable {
-    func save() async throws
-    func delete(_ entity: some PersistentModel) async throws
-    func fetch<T>(_ type: T.Type) async throws -> [T]
-    func getOrCreateAccount(from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping) async throws
+    func save() throws
+    func delete(_ entity: some PersistentModel) throws
+    func fetch<T>(_ type: T.Type) throws -> [T] where T: PersistentModel
+    func getOrCreateAccount(
+        from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping
+    ) throws
         -> FinancialAccount?
     func getOrCreateCategory(
-        from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping, transactionType: TransactionType
-    ) async throws -> ExpenseCategory?
+        from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping,
+        transactionType: TransactionType
+    ) throws -> ExpenseCategory?
 }
 
 // MARK: - Service Implementations
 
+@MainActor
 public final class SwiftDataEntityManager: EntityManager {
     private let modelContext: ModelContext
 
@@ -24,25 +29,28 @@ public final class SwiftDataEntityManager: EntityManager {
         self.modelContext = modelContext
     }
 
-    public func save() async throws {
+    public func save() throws {
         try self.modelContext.save()
     }
 
-    public func delete(_ entity: some PersistentModel) async throws {
+    public func delete(_ entity: some PersistentModel) throws {
         self.modelContext.delete(entity)
         try self.modelContext.save()
     }
 
-    public func fetch<T>(_: T.Type) async throws -> [T] {
+    public func fetch<T>(_: T.Type) throws -> [T] where T: PersistentModel {
         let descriptor = FetchDescriptor<T>()
         return try self.modelContext.fetch(descriptor)
     }
 
-    public func getOrCreateAccount(from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping)
-        async throws -> FinancialAccount?
+    public func getOrCreateAccount(
+        from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping
+    )
+        throws -> FinancialAccount?
     {
         // Extract account name from CSV fields
-        guard let accountColumnIndex = getColumnIndex(for: columnMapping.accountColumn, in: fields) else {
+        guard let accountColumnIndex = columnMapping.accountIndex, accountColumnIndex < fields.count
+        else {
             return nil
         }
 
@@ -74,15 +82,19 @@ public final class SwiftDataEntityManager: EntityManager {
     }
 
     public func getOrCreateCategory(
-        from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping, transactionType: TransactionType
-    ) async throws -> ExpenseCategory? {
+        from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping,
+        transactionType: TransactionType
+    ) throws -> ExpenseCategory? {
         // Extract category name from CSV fields
-        guard let categoryColumnIndex = getColumnIndex(for: columnMapping.categoryColumn, in: fields) else {
+        guard let categoryColumnIndex = columnMapping.categoryIndex,
+            categoryColumnIndex < fields.count
+        else {
             // Use default category based on transaction type
             return self.getDefaultCategory(for: transactionType)
         }
 
-        let categoryName = fields[categoryColumnIndex].trimmingCharacters(in: .whitespacesAndNewlines)
+        let categoryName = fields[categoryColumnIndex].trimmingCharacters(
+            in: .whitespacesAndNewlines)
         if categoryName.isEmpty {
             return self.getDefaultCategory(for: transactionType)
         }
@@ -110,7 +122,7 @@ public final class SwiftDataEntityManager: EntityManager {
     private func getColumnIndex(for columnName: String?, in _: [String]) -> Int? {
         guard let columnName else { return nil }
         // This is a simplified implementation - in a real app you'd have proper CSV parsing
-        return 0 // Placeholder
+        return 0  // Placeholder
     }
 
     private func getDefaultCategory(for transactionType: TransactionType) -> ExpenseCategory? {
@@ -140,6 +152,7 @@ public final class SwiftDataEntityManager: EntityManager {
 
 // MARK: - Export Engine Service
 
+@MainActor
 public final class SwiftDataExportEngineService: Sendable {
     private let modelContext: ModelContext
 
@@ -151,7 +164,8 @@ public final class SwiftDataExportEngineService: Sendable {
         let transactions = try modelContext.fetch(FetchDescriptor<FinancialTransaction>())
 
         let csvString = self.createCSVString(from: transactions)
-        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("transactions_export.csv")
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
+            "transactions_export.csv")
 
         try csvString.write(to: tempURL, atomically: true, encoding: .utf8)
         return tempURL
@@ -179,7 +193,8 @@ public final class SwiftDataExportEngineService: Sendable {
         encoder.outputFormatting = .prettyPrinted
 
         let jsonData = try encoder.encode(transactions)
-        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("transactions_export.json")
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
+            "transactions_export.json")
 
         try jsonData.write(to: tempURL)
         return tempURL
@@ -189,37 +204,38 @@ public final class SwiftDataExportEngineService: Sendable {
         // Generates a HTML report which is universally viewable and printable to PDF
         // This avoids complex cross-platform PDFKit dependencies in the core service layer.
         let transactions = try modelContext.fetch(FetchDescriptor<FinancialTransaction>())
-        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("transactions_report.html")
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
+            "transactions_report.html")
 
         var html = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-        <style>
-            body { font-family: -apple-system, sans-serif; padding: 20px; }
-            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-            th { background-color: #f2f2f2; }
-            tr:nth-child(even) { background-color: #f9f9f9; }
-            .amount { text-align: right; }
-            .header { margin-bottom: 30px; }
-        </style>
-        </head>
-        <body>
-            <div class="header">
-                <h1>Financial Transaction Report</h1>
-                <p>Generated: \(Date().formatted())</p>
-                <p>Total Transactions: \(transactions.count)</p>
-            </div>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Account</th>
-                    <th>Amount</th>
-                </tr>
-        """
+            <!DOCTYPE html>
+            <html>
+            <head>
+            <style>
+                body { font-family: -apple-system, sans-serif; padding: 20px; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                tr:nth-child(even) { background-color: #f9f9f9; }
+                .amount { text-align: right; }
+                .header { margin-bottom: 30px; }
+            </style>
+            </head>
+            <body>
+                <div class="header">
+                    <h1>Financial Transaction Report</h1>
+                    <p>Generated: \(Date().formatted())</p>
+                    <p>Total Transactions: \(transactions.count)</p>
+                </div>
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Account</th>
+                        <th>Amount</th>
+                    </tr>
+            """
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -227,23 +243,23 @@ public final class SwiftDataExportEngineService: Sendable {
         for transaction in transactions.sorted(by: { $0.date > $1.date }) {
             let amountColor = transaction.transactionType == .income ? "green" : "black"
             html += """
-                <tr>
-                    <td>\(dateFormatter.string(from: transaction.date))</td>
-                    <td>\(transaction.title)</td>
-                    <td>\(transaction.category?.name ?? "-")</td>
-                    <td>\(transaction.account?.name ?? "-")</td>
-                    <td class="amount" style="color: \(amountColor)">
-                        \(String(format: "%.2f", transaction.amount))
-                    </td>
-                </tr>
-            """
+                    <tr>
+                        <td>\(dateFormatter.string(from: transaction.date))</td>
+                        <td>\(transaction.title)</td>
+                        <td>\(transaction.category?.name ?? "-")</td>
+                        <td>\(transaction.account?.name ?? "-")</td>
+                        <td class="amount" style="color: \(amountColor)">
+                            \(String(format: "%.2f", transaction.amount))
+                        </td>
+                    </tr>
+                """
         }
 
         html += """
-            </table>
-        </body>
-        </html>
-        """
+                </table>
+            </body>
+            </html>
+            """
 
         try html.write(to: tempURL, atomically: true, encoding: .utf8)
         return tempURL
@@ -273,6 +289,7 @@ public final class SwiftDataExportEngineService: Sendable {
 
 // MARK: - Financial ML and Analysis Services
 
+@MainActor
 public final class SwiftDataFinancialMLService: Sendable {
     private let modelContext: ModelContext
 
@@ -280,13 +297,15 @@ public final class SwiftDataFinancialMLService: Sendable {
         self.modelContext = modelContext
     }
 
-    public func predictSpending(for category: ExpenseCategory? = nil, daysAhead: Int = 30) async -> Double {
+    public func predictSpending(for category: ExpenseCategory? = nil, daysAhead: Int = 30) async
+        -> Double
+    {
         do {
             let transactions = try modelContext.fetch(FetchDescriptor<FinancialTransaction>())
 
             let relevantTransactions = transactions.filter { transaction in
-                transaction.transactionType == .expense &&
-                    (category == nil || transaction.category == category)
+                transaction.transactionType == .expense
+                    && (category == nil || transaction.category == category)
             }
 
             if relevantTransactions.isEmpty {
@@ -334,12 +353,13 @@ public final class SwiftDataFinancialMLService: Sendable {
             var anomalies: [TransactionAnomaly] = []
 
             // Simple anomaly detection based on amount thresholds
-            for transaction in transactions where transaction.amount > 1000 { // High amount threshold
-                anomalies.append(TransactionAnomaly(
-                    transaction: transaction,
-                    type: .unusuallyHighAmount,
-                    severity: .medium
-                ))
+            for transaction in transactions where transaction.amount > 1000 {  // High amount threshold
+                anomalies.append(
+                    TransactionAnomaly(
+                        transaction: transaction,
+                        type: .unusuallyHighAmount,
+                        severity: .medium
+                    ))
             }
 
             return anomalies
@@ -376,6 +396,7 @@ public enum Severity {
 
 // MARK: - Transaction Pattern Analyzer
 
+@MainActor
 public final class SwiftDataTransactionPatternAnalyzer: Sendable {
     private let modelContext: ModelContext
 
@@ -442,9 +463,13 @@ public final class SwiftDataTransactionPatternAnalyzer: Sendable {
             return "Food & Dining"
         } else if title.contains("gas") || title.contains("fuel") || title.contains("uber") {
             return "Transportation"
-        } else if title.contains("electric") || title.contains("water") || title.contains("internet") {
+        } else if title.contains("electric") || title.contains("water")
+            || title.contains("internet")
+        {
             return "Utilities"
-        } else if title.contains("netflix") || title.contains("movie") || title.contains("entertainment") {
+        } else if title.contains("netflix") || title.contains("movie")
+            || title.contains("entertainment")
+        {
             return "Entertainment"
         } else if title.contains("amazon") || title.contains("shopping") {
             return "Shopping"

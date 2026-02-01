@@ -54,7 +54,7 @@ final class FinancialMLModels {
         var predictions: [Double] = []
         for i in 1...months {
             let prediction = slope * (n + Double(i)) + intercept
-            predictions.append(max(0, prediction)) // Ensure non-negative
+            predictions.append(max(0, prediction))  // Ensure non-negative
         }
 
         return predictions
@@ -66,20 +66,36 @@ final class FinancialMLModels {
         let amount = abs(transaction.amount)
 
         // Simple rule-based classification
-        if description.contains("grocery") || description.contains("food") || description.contains("restaurant") {
+        if description.contains("grocery") || description.contains("food")
+            || description.contains("restaurant")
+        {
             return "Food & Dining"
-        } else if description.contains("gas") || description.contains("fuel") || description.contains("transport") {
+        } else if description.contains("gas") || description.contains("fuel")
+            || description.contains("transport")
+        {
             return "Transportation"
-        } else if description.contains("rent") || description.contains("mortgage") || description.contains("utility") {
+        } else if description.contains("rent") || description.contains("mortgage")
+            || description.contains("utility")
+        {
             return "Housing"
-        } else if description.contains("amazon") || description.contains("shopping") || amount > 100 {
+        } else if description.contains("amazon") || description.contains("shopping") || amount > 100
+        {
             return "Shopping"
-        } else if description.contains("entertainment") || description.contains("movie") || description
-            .contains("game")
+        } else if description.contains("entertainment") || description.contains("movie")
+            || description
+                .contains("game")
         {
             return "Entertainment"
         } else {
             return "Other"
         }
+    }
+
+    /// Suggests a category for a transaction based on its classification
+    func suggestCategoryForTransaction(_ transaction: FinancialTransaction) -> ExpenseCategory? {
+        let categoryName = self.classifyTransaction(transaction)
+        // Note: In a real app we'd fetch from context,
+        // but for now we return a stub or nil if not found
+        return transaction.category
     }
 }

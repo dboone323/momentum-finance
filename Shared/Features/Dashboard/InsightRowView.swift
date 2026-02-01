@@ -10,7 +10,7 @@ public struct InsightRowView: View {
     }
 
     public var body: some View {
-        Button(role: .none, action: self.action).accessibilityLabel("Button").accessibilityLabel("Button") {
+        Button(action: self.action) {
             HStack(spacing: 12) {
                 // Priority indicator
                 Circle()
@@ -23,7 +23,7 @@ public struct InsightRowView: View {
                         .foregroundColor(.primary)
                         .lineLimit(1)
 
-                    Text(self.insight.description)
+                    Text(self.insight.insightDescription)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .lineLimit(2)

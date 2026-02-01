@@ -60,18 +60,16 @@ extension Features.Subscriptions {
             NavigationView {
                 Form {
                     Section(header: Text("Subscription Details")) {
-                        TextField("Subscription Name", text: self.$name).accessibilityLabel("Text Field")
-                            .accessibilityLabel(
-                                "Text Field"
-                            )
+                        TextField("Subscription Name", text: self.$name)
+                            .accessibilityLabel("Subscription Name")
 
                         HStack {
                             Text("$")
-                            TextField("Amount", text: self.$amount).accessibilityLabel("Text Field")
-                                .accessibilityLabel("Text Field")
-                            #if canImport(UIKit)
-                                .keyboardType(.decimalPad)
-                            #endif
+                            TextField("Amount", text: self.$amount)
+                                .accessibilityLabel("Amount")
+                                #if canImport(UIKit)
+                                    .keyboardType(.decimalPad)
+                                #endif
                         }
 
                         Picker("Frequency", selection: self.$frequency) {
@@ -106,7 +104,7 @@ extension Features.Subscriptions {
 
                     Section(header: Text("Notes")) {
                         TextField(
-                            "Notes (optional).accessibilityLabel("Text Field")",
+                            "Notes (optional)",
                             text: self.$notes,
                             axis: .vertical
                         )
@@ -118,40 +116,40 @@ extension Features.Subscriptions {
                 #if os(iOS)
                     .navigationBarTitleDisplayMode(.inline)
                 #endif
-                    .toolbar(content: {
-                        #if os(iOS)
-                            ToolbarItem(placement: .navigationBarLeading) {
-                                Button("Cancel").accessibilityLabel("Button") {
-                                    self.dismiss()
-                                }
-                                .accessibilityLabel("Cancel Button")
+                .toolbar(content: {
+                    #if os(iOS)
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button("Cancel") {
+                                self.dismiss()
                             }
+                            .accessibilityLabel("Cancel Button")
+                        }
 
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Button("Save").accessibilityLabel("Button") {
-                                    self.saveSubscription()
-                                }
-                                .disabled(!self.isValidForm)
-                                .accessibilityLabel("Save Button")
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("Save") {
+                                self.saveSubscription()
                             }
-                        #else
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button("Cancel").accessibilityLabel("Button") {
-                                    self.dismiss()
-                                }
-                                .accessibilityLabel("Cancel Button")
+                            .disabled(!self.isValidForm)
+                            .accessibilityLabel("Save Button")
+                        }
+                    #else
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Cancel") {
+                                self.dismiss()
                             }
+                            .accessibilityLabel("Cancel Button")
+                        }
 
-                            ToolbarItem(placement: .primaryAction) {
-                                Button("Save").accessibilityLabel("Button") {
-                                    self.saveSubscription()
-                                }
-                                .disabled(!self.isValidForm)
-                                .accessibilityLabel("Save Button")
+                        ToolbarItem(placement: .primaryAction) {
+                            Button("Save") {
+                                self.saveSubscription()
                             }
-                        #endif
-                    })
-                    .background(self.backgroundColor)
+                            .disabled(!self.isValidForm)
+                            .accessibilityLabel("Save Button")
+                        }
+                    #endif
+                })
+                .background(self.backgroundColor)
             }
         }
 

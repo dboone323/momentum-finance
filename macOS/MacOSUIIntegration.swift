@@ -364,7 +364,7 @@ import SwiftUI
                                 Image(systemName: transaction.amount < 0 ? "arrow.down" : "arrow.up")
                                     .foregroundStyle(transaction.amount < 0 ? .red : .green)
                                 VStack(alignment: .leading) {
-                                    Text(transaction.name)
+                                    Text(transaction.title)
                                         .font(.headline)
                                     Text(transaction.amount.formatted(.currency(code: "USD")))
                                         .font(.subheadline)
@@ -393,7 +393,7 @@ import SwiftUI
                                 VStack(alignment: .leading) {
                                     Text(subscription.name)
                                         .font(.headline)
-                                    if let nextDate = subscription.nextPaymentDate {
+                                    if let nextDate = subscription.nextDueDate {
                                         Text("Due \(nextDate.formatted(date: .abbreviated, time: .omitted))")
                                             .font(.caption)
                                     }
@@ -509,14 +509,14 @@ import SwiftUI
                         ForEach(self.filteredTransactions) { transaction in
                             NavigationLink(value: ListableItem(
                                 id: transaction.id,
-                                name: transaction.name,
+                                    name: transaction.title,
                                 type: .transaction
                             )) {
                                 HStack {
                                     Image(systemName: transaction.amount < 0 ? "arrow.down" : "arrow.up")
                                         .foregroundStyle(transaction.amount < 0 ? .red : .green)
                                     VStack(alignment: .leading) {
-                                        Text(transaction.name)
+                                        Text(transaction.title)
                                             .font(.headline)
                                         if let category = transaction.category {
                                             Text(category.name)
@@ -586,13 +586,14 @@ import SwiftUI
                                         .font(.headline)
                                     Spacer()
                                     Text(
-                                        "\(budget.spent.formatted(.currency(code: "USD"))) of \(budget.amount.formatted(.currency(code: "USD")))"
+                                        "\(budget.spentAmount.formatted(.currency(code: "USD"))) of \(budget.limitAmount.formatted(.currency(code: "USD")))"
                                     )
                                     .font(.subheadline)
                                 }
 
-                                ProgressView(value: budget.spent, total: budget.amount)
-                                    .tint(self.getBudgetColor(spent: budget.spent, total: budget.amount))
+                                ProgressView(value: budget.spentAmount, total: budget.limitAmount)
+                                    .tint(self.getBudgetColor(spent: budget.spentAmount, total: budget.limitAmount))
+
                             }
                             .padding(.vertical, 4)
                         }
@@ -686,7 +687,7 @@ import SwiftUI
                                                 .formatted(.currency(code: subscription.currencyCode)))
                                                 .font(.subheadline)
 
-                                            Text(subscription.billingCycle.capitalized)
+                                            Text(subscription.billingCycle.rawValue)
                                                 .font(.caption)
                                                 .foregroundStyle(.secondary)
                                         }
@@ -714,18 +715,18 @@ import SwiftUI
             case .date:
                 // Group by next payment date (simplified)
                 let thisWeek = self.subscriptions.filter {
-                    guard let nextDate = $0.nextPaymentDate else { return false }
+                    guard let nextDate = $0.nextDueDate else { return false }
                     return Calendar.current.isDate(nextDate, equalTo: Date(), toGranularity: .weekOfYear)
                 }
 
                 let thisMonth = self.subscriptions.filter {
-                    guard let nextDate = $0.nextPaymentDate else { return false }
+                    guard let nextDate = $0.nextDueDate else { return false }
                     return Calendar.current.isDate(nextDate, equalTo: Date(), toGranularity: .month) &&
                         !Calendar.current.isDate(nextDate, equalTo: Date(), toGranularity: .weekOfYear)
                 }
 
                 let future = self.subscriptions.filter {
-                    guard let nextDate = $0.nextPaymentDate else { return false }
+                    guard let nextDate = $0.nextDueDate else { return false }
                     return nextDate > Date() &&
                         !Calendar.current.isDate(nextDate, equalTo: Date(), toGranularity: .month)
                 }
@@ -830,11 +831,11 @@ import SwiftUI
                                 .tint(.blue)
 
                             HStack {
-                                if let targetDate = goal.targetDate {
+                                let targetDate = goal.targetDate
                                     Text("Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))")
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
-                                }
+
 
                                 Spacer()
 
@@ -1014,9 +1015,9 @@ import SwiftUI
                         .font(.title2)
 
                     // Total budget usage
-                    let totalBudgeted = self.budgets.reduce(0) { $0 + $1.amount }
-                    let totalSpent = self.budgets.reduce(0) { $0 + $1.spent }
-                    let percentage = totalBudgeted > 0 ? (totalSpent / totalBudgeted) * 100 : 0
+                    let totalBudgeted = self.budgets.reduce(0) { $0 + $1.limitAmount }
+                    let totalSpent = self.budgets.reduce(0) { $0 + $1.spentAmount }
+                            Text("\(Int(percentage))%")
 
                     HStack(spacing: 20) {
                         VStack(alignment: .leading, spacing: 8) {

@@ -1,62 +1,70 @@
 import Foundation
+
 #if canImport(SwiftData)
-import SwiftData
+    import SwiftData
 #endif
 
 #if canImport(SwiftData)
-@MainActor
-public final class DataExporter {
-    private let modelContainer: ModelContainer
+    @MainActor
+    public final class DataExporter {
+        private let modelContainer: ModelContainer
 
-    public init(modelContainer: ModelContainer) {
-        self.modelContainer = modelContainer
-    }
-
-    public func exportData(settings: ExportSettings) async throws -> URL {
-        guard settings.format == .csv else {
-            throw ImportError.invalidFormat("Only CSV export is implemented for tests.")
+        public init(modelContainer: ModelContainer) {
+            self.modelContainer = modelContainer
         }
 
-        let context = ModelContext(self.modelContainer)
-        let descriptor = FetchDescriptor<FinancialTransaction>()
-
-        let transactions = ((try? context.fetch(descriptor)) ?? [])
-            .filter { transaction in
-                transaction.date >= settings.startDate && transaction.date <= settings.endDate
+        public func exportData(settings: ExportSettings) async throws -> URL {
+            guard settings.format == .csv else {
+                throw ImportError.invalidFormat("Only CSV export is implemented in this engine.")
             }
-        var rows = ["date,title,amount,type,notes,category,account"]
 
-        if transactions.isEmpty {
-            let placeholder = ISO8601DateFormatter().string(from: Date())
-            rows.append("\(placeholder),No Data,0.0,info,,,")
-        } else {
+            let context = ModelContext(self.modelContainer)
+            var csvSections: [String] = []
             let isoFormatter = ISO8601DateFormatter()
-            for transaction in transactions {
-                let dateString = isoFormatter.string(from: transaction.date)
-                let sanitizedTitle = Self.sanitizedField(transaction.title)
-                let amountString = String(format: "%.2f", transaction.amount)
-                let type = transaction.transactionType.rawValue
-                let notes = Self.sanitizedField(transaction.notes ?? "")
-                let category = Self.sanitizedField(transaction.category?.name ?? "")
-                let account = Self.sanitizedField(transaction.account?.name ?? "")
 
-                rows.append(
-                    "\(dateString),\(sanitizedTitle),\(amountString),\(type),\(notes),\(category),\(account)"
-                )
+            if settings.includeTransactions {
+                let descriptor = FetchDescriptor<FinancialTransaction>()
+                let transactions = ((try? context.fetch(descriptor)) ?? [])
+                    .filter { $0.date >= settings.startDate && $0.date <= settings.endDate }
+
+                var rows = ["TRANSACTIONS", "date,title,amount,type,notes,category,account"]
+                for transaction in transactions {
+                    rows.append(
+                        "\(isoFormatter.string(from: transaction.date)),\(Self.sanitizedField(transaction.title)),\(String(format: "%.2f", transaction.amount)),\(transaction.transactionType.rawValue),\(Self.sanitizedField(transaction.notes ?? "")),\(Self.sanitizedField(transaction.category?.name ?? "")),\(Self.sanitizedField(transaction.account?.name ?? ""))"
+                    )
+                }
+                csvSections.append(rows.joined(separator: "\n"))
             }
+
+            if settings.includeAccounts {
+                let descriptor = FetchDescriptor<FinancialAccount>()
+                let accounts = (try? context.fetch(descriptor)) ?? []
+
+                var rows = ["ACCOUNTS", "name,balance,type,currency,createdDate"]
+                for account in accounts {
+                    rows.append(
+                        "\(Self.sanitizedField(account.name)),\(String(format: "%.2f", account.balance)),\(account.accountType.rawValue),\(account.currencyCode),\(isoFormatter.string(from: account.createdDate))"
+                    )
+                }
+                csvSections.append(rows.joined(separator: "\n"))
+            }
+
+            if csvSections.isEmpty {
+                csvSections.append("No data selected for export.")
+            }
+
+            let csvContent = csvSections.joined(separator: "\n\n")
+            let fileURL = FileManager.default.temporaryDirectory
+                .appendingPathComponent("momentum-finance-export")
+                .appendingPathExtension(settings.format.fileExtension)
+
+            try csvContent.write(to: fileURL, atomically: true, encoding: .utf8)
+            return fileURL
         }
 
-        let csvContent = rows.joined(separator: "\n")
-        let fileURL = FileManager.default.temporaryDirectory
-            .appendingPathComponent("momentum-finance-export")
-            .appendingPathExtension(settings.format.fileExtension)
-
-        try csvContent.write(to: fileURL, atomically: true, encoding: .utf8)
-        return fileURL
+        private static func sanitizedField(_ value: String) -> String {
+            value.replacingOccurrences(of: ",", with: " ")
+        }
     }
 
-    private static func sanitizedField(_ value: String) -> String {
-        value.replacingOccurrences(of: ",", with: " ")
-    }
-}
 #endif

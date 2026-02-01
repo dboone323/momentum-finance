@@ -29,13 +29,16 @@ public struct TransactionEmptyStateView: View {
             .foregroundColor(.secondary)
             .multilineTextAlignment(.center)
             if self.searchText.isEmpty {
-                Button(action: self.onAddTransaction, label: {
-                    Label("Add Transaction", systemImage: "plus")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                })
+                Button(
+                    action: self.onAddTransaction,
+                    label: {
+                        Label("Add Transaction", systemImage: "plus")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                    }
+                )
                 .accessibilityLabel("Add Transaction")
             }
         }
@@ -125,9 +128,9 @@ public struct AddTransactionView: View {
                 Section("Transaction Details") {
                     TextField("Title", text: self.$title).accessibilityLabel("Text Field")
                     TextField("Amount", text: self.$amount).accessibilityLabel("Text Field")
-                    #if os(iOS)
-                        .keyboardType(.decimalPad)
-                    #endif
+                        #if os(iOS)
+                            .keyboardType(.decimalPad)
+                        #endif
                     Picker("Type", selection: self.$transactionType) {
                         Text("Income").tag(TransactionType.income)
                         Text("Expense").tag(TransactionType.expense)
@@ -196,20 +199,23 @@ public struct TransactionDetailView: View {
                         .foregroundColor(self.transaction.amount >= 0 ? .green : .red)
                 }
                 VStack(alignment: .leading, spacing: 16) {
-                    DetailRow(
+                    TransactionDetailRow(
                         label: "Date",
                         value: self.transaction.date.formatted(date: .long, time: .omitted)
                     )
-                    DetailRow(
+                    TransactionDetailRow(
                         label: "Type", value: self.transaction.transactionType.rawValue.capitalized
                     )
                     if let category = transaction.category {
-                        DetailRow(label: "Category", value: category.name)
+                        TransactionDetailRow(label: "Category", value: category.name)
                     }
                     if let account = transaction.account {
-                        DetailRow(label: "Account", value: account.name)
+                        TransactionDetailRow(label: "Account", value: account.name)
                     }
-                    if let notes = transaction.notes { DetailRow(label: "Notes", value: notes) }
+                    if let notes = transaction.notes {
+                        TransactionDetailRow(label: "Notes", value: notes)
+                    }
+
                 }
             }.padding()
         }.navigationTitle("Transaction Details")
@@ -273,9 +279,12 @@ public struct SearchAndFilterSection: View {
                     "Text Field"
                 ).textFieldStyle(.plain)
                 if !self.searchText.isEmpty {
-                    Button(action: { self.searchText = "" }, label: {
-                        Image(systemName: "xmark.circle.fill").foregroundColor(.secondary)
-                    }).accessibilityLabel("Clear Search")
+                    Button(
+                        action: { self.searchText = "" },
+                        label: {
+                            Image(systemName: "xmark.circle.fill").foregroundColor(.secondary)
+                        }
+                    ).accessibilityLabel("Clear Search")
                 }
             }
             .padding(12)
@@ -284,9 +293,10 @@ public struct SearchAndFilterSection: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     ForEach(TransactionFilter.allCases, id: \.self) { filter in
-                        FilterButton(
+                        TransactionFilterButton(
                             title: filter.displayName, isSelected: self.selectedFilter == filter
                         ) { self.selectedFilter = filter }
+
                     }
                 }.padding(.horizontal, 4)
             }
@@ -296,7 +306,7 @@ public struct SearchAndFilterSection: View {
 
 // MARK: - Helper Views
 
-private struct DetailRow: View {
+private struct TransactionDetailRow: View {
     let label: String
     let value: String
     var body: some View {
@@ -323,15 +333,18 @@ private struct StatItem: View {
     }
 }
 
-private struct FilterButton: View {
+private struct TransactionFilterButton: View {
     let title: String
     let isSelected: Bool
     let action: () -> Void
     var body: some View {
-        Button(action: self.action, label: {
-            Text(self.title).font(.subheadline).padding(.horizontal, 12).padding(.vertical, 6)
-                .background(self.isSelected ? Color.blue : platformSecondaryGrayColor())
-                .foregroundColor(self.isSelected ? .white : .primary).cornerRadius(16)
-        }).accessibilityLabel(self.title)
+        Button(
+            action: self.action,
+            label: {
+                Text(self.title).font(.subheadline).padding(.horizontal, 12).padding(.vertical, 6)
+                    .background(self.isSelected ? Color.blue : platformSecondaryGrayColor())
+                    .foregroundColor(self.isSelected ? .white : .primary).cornerRadius(16)
+            }
+        ).accessibilityLabel(self.title)
     }
 }

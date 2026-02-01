@@ -1,9 +1,12 @@
 import Foundation
+import MomentumFinanceCore
 import SwiftUI
 
-public enum FinancialInsightType: String, CaseIterable, Identifiable, Hashable {
+// FinancialInsightType is used by FinancialInsight (class)
+
+public enum FinancialInsightType: String, CaseIterable, Identifiable, Hashable, Sendable {
     case spendingPattern, anomaly, budget, forecast, optimization, cashManagement,
-         creditUtilization, duplicatePayment
+        creditUtilization, duplicatePayment
     public var id: String { rawValue }
     public var icon: String {
         switch self {
@@ -18,3 +21,6 @@ public enum FinancialInsightType: String, CaseIterable, Identifiable, Hashable {
         }
     }
 }
+
+// FinancialInsightPriority might be duplicated if in Root models.
+// Need to check Root first.

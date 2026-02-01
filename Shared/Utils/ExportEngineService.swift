@@ -4,12 +4,10 @@ import PDFKit
 import SwiftData
 import SwiftUI
 
-final class ExportEngineService {
-    private let modelContext: ModelContext
-
-    init(modelContext: ModelContext) {
-        self.modelContext = modelContext
-    }
+@ModelActor
+actor ExportEngineService {
+    // modelContext is provided by @ModelActor macro
+    // init(modelContainer:) is provided by @ModelActor macro
 
     // Public API
     func export(settings: ExportSettings) async throws -> URL {
@@ -124,7 +122,9 @@ final class ExportEngineService {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
 
-        var csvLines = ["SUBSCRIPTIONS", "Name,Amount,Billing Cycle,Next Due Date,Category,Account,Is Active"]
+        var csvLines = [
+            "SUBSCRIPTIONS", "Name,Amount,Billing Cycle,Next Due Date,Category,Account,Is Active",
+        ]
 
         for subscription in subscriptions {
             let name = self.escapeCSVField(subscription.name)
@@ -135,7 +135,8 @@ final class ExportEngineService {
             let account = self.escapeCSVField(subscription.account?.name ?? "")
             let isActive = subscription.isActive ? "Yes" : "No"
 
-            csvLines.append("\(name),\(amount),\(cycle),\(nextDue),\(category),\(account),\(isActive)")
+            csvLines.append(
+                "\(name),\(amount),\(cycle),\(nextDue),\(category),\(account),\(isActive)")
         }
 
         return csvLines.joined(separator: "\n") + "\n"
@@ -153,7 +154,7 @@ final class ExportEngineService {
             let name = self.escapeCSVField(goal.name)
             let target = String(goal.targetAmount)
             let current = String(goal.currentAmount)
-            let targetDate = goal.targetDate.map { formatter.string(from: $0) } ?? ""
+            let targetDate = formatter.string(from: goal.targetDate)
             let progress = String(format: "%.1f%%", goal.progressPercentage * 100)
 
             csvLines.append("\(name),\(target),\(current),\(targetDate),\(progress)")
@@ -178,7 +179,7 @@ final class ExportEngineService {
             let pdfData = NSMutableData()
             let pdfInfo = [kCGPDFContextCreator: "Momentum Finance"] as CFDictionary
             guard let dataConsumer = CGDataConsumer(data: pdfData as CFMutableData),
-                  let pdfContext = CGContext(consumer: dataConsumer, mediaBox: nil, pdfInfo)
+                let pdfContext = CGContext(consumer: dataConsumer, mediaBox: nil, pdfInfo)
             else { throw ExportError.pdfGenerationFailed }
 
             let pageRect = CGRect(x: 0, y: 0, width: 612, height: 792)
@@ -198,12 +199,14 @@ final class ExportEngineService {
 
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .long
-            let dateRange = "Period: \(dateFormatter.string(from: settings.startDate)) - \(dateFormatter.string(from: settings.endDate))"
+            let dateRange =
+                "Period: \(dateFormatter.string(from: settings.startDate)) - \(dateFormatter.string(from: settings.endDate))"
             let dateAttributes: [NSAttributedString.Key: Any] = [
                 .font: NSFont.systemFont(ofSize: 14),
                 .foregroundColor: NSColor.gray,
             ]
-            dateRange.draw(at: CGPoint(x: 50, y: pageRect.height - 80), withAttributes: dateAttributes)
+            dateRange.draw(
+                at: CGPoint(x: 50, y: pageRect.height - 80), withAttributes: dateAttributes)
 
             var yPosition = pageRect.height - 120
             if settings.includeTransactions {
@@ -214,7 +217,8 @@ final class ExportEngineService {
                 )
             }
             if settings.includeAccounts {
-                yPosition = try self.drawAccountsSummary(context: pdfContext, yPosition: yPosition, settings: settings)
+                yPosition = try self.drawAccountsSummary(
+                    context: pdfContext, yPosition: yPosition, settings: settings)
             }
 
             pdfContext.endPDFPage()
@@ -224,9 +228,10 @@ final class ExportEngineService {
         #endif
     }
 
-    private func drawTransactionsSummary(context _: CGContext, yPosition: Double,
-                                         settings: ExportSettings) throws -> Double
-    {
+    private func drawTransactionsSummary(
+        context _: CGContext, yPosition: Double,
+        settings: ExportSettings
+    ) throws -> Double {
         let transactions = try fetchTransactions(from: settings.startDate, to: settings.endDate)
 
         let headerAttributes: [NSAttributedString.Key: Any] = [
@@ -238,10 +243,15 @@ final class ExportEngineService {
             .foregroundColor: NSColor.black,
         ]
 
-        "Transactions Summary".draw(at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes)
+        "Transactions Summary".draw(
+            at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes)
 
-        let totalIncome = transactions.filter { $0.transactionType == .income }.reduce(0) { $0 + $1.amount }
-        let totalExpenses = transactions.filter { $0.transactionType == .expense }.reduce(0) { $0 + abs($1.amount) }
+        let totalIncome = transactions.filter { $0.transactionType == .income }.reduce(0) {
+            $0 + $1.amount
+        }
+        let totalExpenses = transactions.filter { $0.transactionType == .expense }.reduce(0) {
+            $0 + abs($1.amount)
+        }
         let netAmount = totalIncome - totalExpenses
 
         var currentY = yPosition + 30
@@ -273,9 +283,10 @@ final class ExportEngineService {
         return currentY
     }
 
-    private func drawAccountsSummary(context _: CGContext, yPosition: Double,
-                                     settings _: ExportSettings) throws -> Double
-    {
+    private func drawAccountsSummary(
+        context _: CGContext, yPosition: Double,
+        settings _: ExportSettings
+    ) throws -> Double {
         let accounts = try fetchAccounts()
 
         let headerAttributes: [NSAttributedString.Key: Any] = [
@@ -329,13 +340,16 @@ final class ExportEngineService {
             exportData["goals"] = try await self.fetchGoalsJSON()
         }
 
-        let jsonData = try JSONSerialization.data(withJSONObject: exportData, options: .prettyPrinted)
+        let jsonData = try JSONSerialization.data(
+            withJSONObject: exportData, options: .prettyPrinted)
         return try self.saveToFile(data: jsonData, filename: ExportConstants.jsonFilename)
     }
 
     // MARK: - Fetching
 
-    private func fetchTransactions(from startDate: Date, to endDate: Date) throws -> [FinancialTransaction] {
+    private func fetchTransactions(from startDate: Date, to endDate: Date) throws
+        -> [FinancialTransaction]
+    {
         let descriptor = FetchDescriptor<FinancialTransaction>(
             predicate: #Predicate { transaction in
                 transaction.date >= startDate && transaction.date <= endDate
@@ -457,9 +471,7 @@ final class ExportEngineService {
                 "progressPercentage": goal.progressPercentage,
             ]
 
-            if let targetDate = goal.targetDate {
-                goalData["targetDate"] = formatter.string(from: targetDate)
-            }
+            goalData["targetDate"] = formatter.string(from: goal.targetDate)
 
             return goalData
         }
@@ -475,14 +487,16 @@ final class ExportEngineService {
     }
 
     private func saveToFile(content: String, filename: String) throws -> URL {
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[
+            0]
         let fileURL = documentsPath.appendingPathComponent(filename)
         try content.write(to: fileURL, atomically: true, encoding: .utf8)
         return fileURL
     }
 
     private func saveToFile(data: Data, filename: String) throws -> URL {
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[
+            0]
         let fileURL = documentsPath.appendingPathComponent(filename)
         try data.write(to: fileURL)
         return fileURL

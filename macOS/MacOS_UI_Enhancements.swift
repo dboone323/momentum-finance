@@ -22,10 +22,16 @@ import SwiftUI
                 List(selection: self.$selectedItem) {
                     Section("Accounts") {
                         ForEach(self.accounts) { account in
-                            NavigationLink(value: ListableItem(id: account.id, name: account.name, type: .account)) {
+                            NavigationLink(
+                                value: ListableItem(
+                                    id: account.id, name: account.name, type: .account)
+                            ) {
                                 HStack {
-                                    Image(systemName: account.type == .checking ? "banknote" : "creditcard")
-                                        .foregroundStyle(account.type == .checking ? .green : .blue)
+                                    Image(
+                                        systemName: account.type == .checking
+                                            ? "banknote" : "creditcard"
+                                    )
+                                    .foregroundStyle(account.type == .checking ? .green : .blue)
                                     VStack(alignment: .leading) {
                                         Text(account.name)
                                             .font(.headline)
@@ -41,14 +47,19 @@ import SwiftUI
 
                     Section("Recent Transactions") {
                         ForEach(self.recentTransactions.prefix(5)) { transaction in
-                            NavigationLink(value: ListableItem(
-                                id: transaction.id,
-                                name: transaction.name,
-                                type: .transaction
-                            )) {
+                            NavigationLink(
+                                value: ListableItem(
+                                    id: transaction.id,
+                                    name: transaction.name,
+                                    type: .transaction
+                                )
+                            ) {
                                 HStack {
-                                    Image(systemName: transaction.amount < 0 ? "arrow.down" : "arrow.up")
-                                        .foregroundStyle(transaction.amount < 0 ? .red : .green)
+                                    Image(
+                                        systemName: transaction.amount < 0
+                                            ? "arrow.down" : "arrow.up"
+                                    )
+                                    .foregroundStyle(transaction.amount < 0 ? .red : .green)
                                     VStack(alignment: .leading) {
                                         Text(transaction.name)
                                             .font(.headline)
@@ -56,37 +67,47 @@ import SwiftUI
                                             .font(.subheadline)
                                     }
                                     Spacer()
-                                    Text(transaction.date.formatted(date: .abbreviated, time: .omitted))
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                    Text(
+                                        transaction.date.formatted(
+                                            date: .abbreviated, time: .omitted)
+                                    )
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
                                 }
                                 .padding(.vertical, 4)
                             }
-                            .tag(ListableItem(id: transaction.id, name: transaction.name, type: .transaction))
+                            .tag(
+                                ListableItem(
+                                    id: transaction.id, name: transaction.name, type: .transaction))
                         }
                     }
 
                     Section("Quick Actions") {
-                        Button("Add New Account").accessibilityLabel("Button").accessibilityLabel("Button") {
+                        Button("Add New Account").accessibilityLabel("Button").accessibilityLabel(
+                            "Button"
+                        ) {
                             // Action to add new account
                         }
 
-                        Button("Add New Transaction").accessibilityLabel("Button").accessibilityLabel("Button") {
-                            // Action to add new transaction
-                        }
+                        Button("Add New Transaction").accessibilityLabel("Button")
+                            .accessibilityLabel("Button") {
+                                // Action to add new transaction
+                            }
                     }
                 }
                 .navigationTitle("Dashboard")
                 .toolbar {
                     ToolbarItem {
-                        Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button") {
+                        Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                        {
                             Image(systemName: "plus")
                         }
                         .help("Add New Item")
                     }
 
                     ToolbarItem {
-                        Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button") {
+                        Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                        {
                             Image(systemName: "arrow.clockwise")
                         }
                         .help("Refresh")
@@ -110,8 +131,9 @@ import SwiftUI
                     self.sortedTransactions
                 } else {
                     self.sortedTransactions.filter {
-                        $0.name.localizedCaseInsensitiveContains(self.searchText) ||
-                            $0.category?.name.localizedCaseInsensitiveContains(self.searchText) ?? false
+                        $0.name.localizedCaseInsensitiveContains(self.searchText)
+                            || $0.category?.name.localizedCaseInsensitiveContains(self.searchText)
+                                ?? false
                     }
                 }
             }
@@ -132,14 +154,18 @@ import SwiftUI
             var body: some View {
                 List(selection: self.$selectedItem) {
                     ForEach(self.filteredTransactions) { transaction in
-                        NavigationLink(value: ListableItem(
-                            id: transaction.id,
-                            name: transaction.name,
-                            type: .transaction
-                        )) {
+                        NavigationLink(
+                            value: ListableItem(
+                                id: transaction.id,
+                                name: transaction.name,
+                                type: .transaction
+                            )
+                        ) {
                             HStack {
-                                Image(systemName: transaction.amount < 0 ? "arrow.down" : "arrow.up")
-                                    .foregroundStyle(transaction.amount < 0 ? .red : .green)
+                                Image(
+                                    systemName: transaction.amount < 0 ? "arrow.down" : "arrow.up"
+                                )
+                                .foregroundStyle(transaction.amount < 0 ? .red : .green)
                                 VStack(alignment: .leading) {
                                     Text(transaction.name)
                                         .font(.headline)
@@ -154,14 +180,19 @@ import SwiftUI
                                     Text(transaction.amount.formatted(.currency(code: "USD")))
                                         .font(.subheadline)
                                         .foregroundStyle(transaction.amount < 0 ? .red : .green)
-                                    Text(transaction.date.formatted(date: .abbreviated, time: .omitted))
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                    Text(
+                                        transaction.date.formatted(
+                                            date: .abbreviated, time: .omitted)
+                                    )
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
                                 }
                             }
                             .padding(.vertical, 4)
                         }
-                        .tag(ListableItem(id: transaction.id, name: transaction.name, type: .transaction))
+                        .tag(
+                            ListableItem(
+                                id: transaction.id, name: transaction.name, type: .transaction))
                     }
                 }
                 .navigationTitle("Transactions")
@@ -178,7 +209,8 @@ import SwiftUI
                     }
 
                     ToolbarItem {
-                        Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button") {
+                        Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                        {
                             Image(systemName: "plus")
                         }
                         .help("Add New Transaction")
@@ -228,13 +260,17 @@ import SwiftUI
 
                                 Divider()
 
-                                Grid(alignment: .leading, horizontalSpacing: 30, verticalSpacing: 20) {
+                                Grid(
+                                    alignment: .leading, horizontalSpacing: 30, verticalSpacing: 20
+                                ) {
                                     GridRow {
                                         VStack(alignment: .leading) {
                                             Text("Date")
                                                 .font(.headline)
                                                 .foregroundStyle(.secondary)
-                                            Text(transaction.date.formatted(date: .long, time: .shortened))
+                                            Text(
+                                                transaction.date.formatted(
+                                                    date: .long, time: .shortened))
                                         }
 
                                         VStack(alignment: .leading) {
@@ -257,8 +293,11 @@ import SwiftUI
                                             Text("Status")
                                                 .font(.headline)
                                                 .foregroundStyle(.secondary)
-                                            Text(transaction.isReconciled ? "Reconciled" : "Pending")
-                                                .foregroundStyle(transaction.isReconciled ? .green : .orange)
+                                            Text(
+                                                transaction.isReconciled ? "Reconciled" : "Pending"
+                                            )
+                                            .foregroundStyle(
+                                                transaction.isReconciled ? .green : .orange)
                                         }
                                     }
                                 }
@@ -285,7 +324,8 @@ import SwiftUI
                                 Spacer()
                             }
                             .padding()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                            .frame(
+                                maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                         }
                         .toolbar {
                             ToolbarItem {
@@ -321,7 +361,8 @@ import SwiftUI
                         ContentUnavailableView(
                             "Transaction Not Found",
                             systemImage: "exclamationmark.triangle",
-                            description: Text("The transaction you're looking for could not be found.")
+                            description: Text(
+                                "The transaction you're looking for could not be found.")
                         )
                     }
                 }
@@ -365,7 +406,9 @@ import SwiftUI
             var body: some View {
                 List(selection: self.$selectedItem) {
                     ForEach(self.budgets) { budget in
-                        NavigationLink(value: ListableItem(id: budget.id, name: budget.name, type: .budget)) {
+                        NavigationLink(
+                            value: ListableItem(id: budget.id, name: budget.name, type: .budget)
+                        ) {
                             VStack(alignment: .leading, spacing: 8) {
                                 HStack {
                                     Text(budget.name)
@@ -378,7 +421,9 @@ import SwiftUI
                                 }
 
                                 ProgressView(value: budget.spent, total: budget.amount)
-                                    .tint(self.getBudgetColor(spent: budget.spent, total: budget.amount))
+                                    .tint(
+                                        self.getBudgetColor(
+                                            spent: budget.spent, total: budget.amount))
                             }
                             .padding(.vertical, 4)
                         }
@@ -388,7 +433,8 @@ import SwiftUI
                 .navigationTitle("Budgets")
                 .toolbar {
                     ToolbarItem {
-                        Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button") {
+                        Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                        {
                             Image(systemName: "plus")
                         }
                         .help("Add New Budget")
@@ -431,7 +477,8 @@ import SwiftUI
                         // Check if transaction is within the current budget period
                         // This is simplified - would need actual date range logic
                         let currentMonth = Calendar.current.component(.month, from: Date())
-                        let transactionMonth = Calendar.current.component(.month, from: transaction.date)
+                        let transactionMonth = Calendar.current.component(
+                            .month, from: transaction.date)
                         return currentMonth == transactionMonth
                     }
                     return false
@@ -462,7 +509,7 @@ import SwiftUI
                                     Spacer()
 
                                     VStack(alignment: .trailing) {
-                                        Text(budget.amount.formatted(.currency(code: "USD")))
+                                        Text(budget.limitAmount.formatted(.currency(code: "USD")))
                                             .font(.system(size: 28, weight: .bold))
 
                                         Text("Budget Limit")
@@ -479,14 +526,19 @@ import SwiftUI
                                         Spacer()
 
                                         Text(
-                                            "\(budget.spent.formatted(.currency(code: "USD"))) of \(budget.amount.formatted(.currency(code: "USD")))"
+                                            "\(budget.spentAmount.formatted(.currency(code: "USD"))) of \(budget.limitAmount.formatted(.currency(code: "USD")))"
                                         )
                                     }
 
-                                    ProgressView(value: budget.spent, total: budget.amount)
-                                        .tint(self.getBudgetColor(spent: budget.spent, total: budget.amount))
-                                        .scaleEffect(y: 2.0)
-                                        .padding(.vertical, 8)
+                                    ProgressView(
+                                        value: budget.spentAmount, total: budget.limitAmount
+                                    )
+                                    .tint(
+                                        self.getBudgetColor(
+                                            spent: budget.spentAmount, total: budget.limitAmount)
+                                    )
+                                    .scaleEffect(y: 2.0)
+                                    .padding(.vertical, 8)
 
                                     HStack {
                                         Text(
@@ -497,10 +549,12 @@ import SwiftUI
                                         Spacer()
 
                                         Text("\(Int((budget.spent / budget.amount) * 100))%")
-                                            .foregroundStyle(self.getBudgetColor(
-                                                spent: budget.spent,
-                                                total: budget.amount
-                                            ))
+                                            .foregroundStyle(
+                                                self.getBudgetColor(
+                                                    spent: budget.spent,
+                                                    total: budget.amount
+                                                )
+                                            )
                                             .bold()
                                     }
                                 }
@@ -533,7 +587,8 @@ import SwiftUI
                                 Spacer()
                             }
                             .padding()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                            .frame(
+                                maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                         }
                         .toolbar {
                             ToolbarItem {
@@ -637,11 +692,13 @@ import SwiftUI
                     ForEach(self.getGroupedSubscriptions()) { group in
                         Section(header: Text(group.title)) {
                             ForEach(group.items) { subscription in
-                                NavigationLink(value: ListableItem(
-                                    id: subscription.id,
-                                    name: subscription.name,
-                                    type: .subscription
-                                )) {
+                                NavigationLink(
+                                    value: ListableItem(
+                                        id: subscription.id,
+                                        name: subscription.name,
+                                        type: .subscription
+                                    )
+                                ) {
                                     HStack {
                                         Image(systemName: "calendar.badge.clock")
                                             .foregroundStyle(.purple)
@@ -658,8 +715,11 @@ import SwiftUI
                                         Spacer()
 
                                         VStack(alignment: .trailing) {
-                                            Text(subscription.amount.formatted(.currency(code: "USD")))
-                                                .font(.subheadline)
+                                            Text(
+                                                subscription.amount.formatted(
+                                                    .currency(code: "USD"))
+                                            )
+                                            .font(.subheadline)
 
                                             Text(subscription.billingCycle.displayName)
                                                 .font(.caption)
@@ -668,7 +728,10 @@ import SwiftUI
                                     }
                                     .padding(.vertical, 4)
                                 }
-                                .tag(ListableItem(id: subscription.id, name: subscription.name, type: .subscription))
+                                .tag(
+                                    ListableItem(
+                                        id: subscription.id, name: subscription.name,
+                                        type: .subscription))
                             }
                         }
                     }
@@ -685,7 +748,8 @@ import SwiftUI
                     }
 
                     ToolbarItem {
-                        Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button") {
+                        Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                        {
                             Image(systemName: "plus")
                         }
                         .help("Add New Subscription")
@@ -705,20 +769,24 @@ import SwiftUI
                 case .date:
                     // Group by next payment date (simplified)
                     let thisWeek = self.subscriptions.filter {
-                        guard let nextDate = $0.nextPaymentDate else { return false }
-                        return Calendar.current.isDate(nextDate, equalTo: Date(), toGranularity: .weekOfYear)
+                        guard let nextDate = $0.nextDueDate else { return false }
+                        return Calendar.current.isDate(
+                            nextDate, equalTo: Date(), toGranularity: .weekOfYear)
                     }
 
                     let thisMonth = self.subscriptions.filter {
-                        guard let nextDate = $0.nextPaymentDate else { return false }
-                        return Calendar.current.isDate(nextDate, equalTo: Date(), toGranularity: .month) &&
-                            !Calendar.current.isDate(nextDate, equalTo: Date(), toGranularity: .weekOfYear)
+                        guard let nextDate = $0.nextDueDate else { return false }
+                        return Calendar.current.isDate(
+                            nextDate, equalTo: Date(), toGranularity: .month)
+                            && !Calendar.current.isDate(
+                                nextDate, equalTo: Date(), toGranularity: .weekOfYear)
                     }
 
                     let future = self.subscriptions.filter {
-                        guard let nextDate = $0.nextPaymentDate else { return false }
-                        return nextDate > Date() &&
-                            !Calendar.current.isDate(nextDate, equalTo: Date(), toGranularity: .month)
+                        guard let nextDate = $0.nextDueDate else { return false }
+                        return nextDate > Date()
+                            && !Calendar.current.isDate(
+                                nextDate, equalTo: Date(), toGranularity: .month)
                     }
 
                     var result: [SubscriptionGroup] = []
@@ -795,7 +863,8 @@ import SwiftUI
                 .navigationTitle("Goals & Reports")
                 .toolbar {
                     ToolbarItem {
-                        Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button") {
+                        Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                        {
                             Image(systemName: "plus")
                         }
                         .help("Add New Goal")
@@ -806,7 +875,9 @@ import SwiftUI
             var goalsList: some View {
                 List(selection: self.$selectedItem) {
                     ForEach(self.goals) { goal in
-                        NavigationLink(value: ListableItem(id: goal.id, name: goal.name, type: .goal)) {
+                        NavigationLink(
+                            value: ListableItem(id: goal.id, name: goal.name, type: .goal)
+                        ) {
                             VStack(alignment: .leading, spacing: 8) {
                                 HStack {
                                     Text(goal.name)
@@ -824,15 +895,17 @@ import SwiftUI
                                     .tint(.blue)
 
                                 HStack {
-                                    if let targetDate = goal.targetDate {
-                                        Text("Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))")
-                                            .font(.caption)
-                                            .foregroundStyle(.secondary)
-                                    }
+                                    let targetDate = goal.targetDate
+                                    Text(
+                                        "Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))"
+                                    )
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
 
                                     Spacer()
 
-                                    let percentage = Int((goal.currentAmount / goal.targetAmount) * 100)
+                                    let percentage = Int(
+                                        (goal.currentAmount / goal.targetAmount) * 100)
                                     Text("\(percentage)%")
                                         .font(.caption)
                                         .bold()
@@ -847,7 +920,10 @@ import SwiftUI
 
             var reportsList: some View {
                 List(selection: self.$selectedItem) {
-                    NavigationLink(value: ListableItem(id: "spending", name: "Spending by Category", type: .report)) {
+                    NavigationLink(
+                        value: ListableItem(
+                            id: "spending", name: "Spending by Category", type: .report)
+                    ) {
                         HStack {
                             Image(systemName: "chart.pie")
                                 .foregroundStyle(.orange)
@@ -857,7 +933,9 @@ import SwiftUI
                     }
                     .tag(ListableItem(id: "spending", name: "Spending by Category", type: .report))
 
-                    NavigationLink(value: ListableItem(id: "income", name: "Income vs Expenses", type: .report)) {
+                    NavigationLink(
+                        value: ListableItem(id: "income", name: "Income vs Expenses", type: .report)
+                    ) {
                         HStack {
                             Image(systemName: "chart.bar")
                                 .foregroundStyle(.green)
@@ -867,7 +945,10 @@ import SwiftUI
                     }
                     .tag(ListableItem(id: "income", name: "Income vs Expenses", type: .report))
 
-                    NavigationLink(value: ListableItem(id: "trends", name: "Monthly Spending Trends", type: .report)) {
+                    NavigationLink(
+                        value: ListableItem(
+                            id: "trends", name: "Monthly Spending Trends", type: .report)
+                    ) {
                         HStack {
                             Image(systemName: "chart.line.uptrend.xyaxis")
                                 .foregroundStyle(.blue)
@@ -877,7 +958,10 @@ import SwiftUI
                     }
                     .tag(ListableItem(id: "trends", name: "Monthly Spending Trends", type: .report))
 
-                    NavigationLink(value: ListableItem(id: "cashflow", name: "Cash Flow Analysis", type: .report)) {
+                    NavigationLink(
+                        value: ListableItem(
+                            id: "cashflow", name: "Cash Flow Analysis", type: .report)
+                    ) {
                         HStack {
                             Image(systemName: "arrow.left.arrow.right")
                                 .foregroundStyle(.purple)
@@ -911,16 +995,16 @@ import SwiftUI
                                             .font(.largeTitle)
                                             .bold()
 
-                                        if let targetDate = goal.targetDate {
-                                            HStack {
-                                                Image(systemName: "calendar")
-                                                Text(
-                                                    "Target Date: \(targetDate.formatted(date: .long, time: .omitted))"
-                                                )
-                                                .font(.headline)
-                                            }
-                                            .foregroundStyle(.secondary)
+                                        let targetDate = goal.targetDate
+                                        HStack {
+                                            Image(systemName: "calendar")
+                                            Text(
+                                                "Target Date: \(targetDate.formatted(date: .long, time: .omitted))"
+                                            )
+                                            .font(.headline)
                                         }
+                                        .foregroundStyle(.secondary)
+
                                     }
 
                                     Spacer()
@@ -947,10 +1031,12 @@ import SwiftUI
                                         )
                                     }
 
-                                    ProgressView(value: goal.currentAmount, total: goal.targetAmount)
-                                        .tint(.blue)
-                                        .scaleEffect(y: 2.0)
-                                        .padding(.vertical, 8)
+                                    ProgressView(
+                                        value: goal.currentAmount, total: goal.targetAmount
+                                    )
+                                    .tint(.blue)
+                                    .scaleEffect(y: 2.0)
+                                    .padding(.vertical, 8)
 
                                     HStack {
                                         Text(
@@ -960,7 +1046,8 @@ import SwiftUI
 
                                         Spacer()
 
-                                        let percentage = Int((goal.currentAmount / goal.targetAmount) * 100)
+                                        let percentage = Int(
+                                            (goal.currentAmount / goal.targetAmount) * 100)
                                         Text("\(percentage)% Complete")
                                             .foregroundStyle(.blue)
                                             .bold()
@@ -971,41 +1058,42 @@ import SwiftUI
                                 .cornerRadius(8)
 
                                 // Time remaining calculation
-                                if let targetDate = goal.targetDate {
-                                    VStack(alignment: .leading, spacing: 10) {
-                                        Text("Time Remaining")
-                                            .font(.headline)
+                                let targetDate = goal.targetDate
+                                VStack(alignment: .leading, spacing: 10) {
+                                    Text("Time Remaining")
+                                        .font(.headline)
 
-                                        let daysRemaining = Calendar.current.dateComponents(
+                                    let daysRemaining =
+                                        Calendar.current.dateComponents(
                                             [.day],
                                             from: Date(),
                                             to: targetDate
                                         ).day ?? 0
 
-                                        if daysRemaining > 0 {
-                                            Text("\(daysRemaining) days until target date")
-                                                .font(.title2)
+                                    if daysRemaining > 0 {
+                                        Text("\(daysRemaining) days until target date")
+                                            .font(.title2)
 
-                                            // Required monthly savings
-                                            let remainingAmount = goal.targetAmount - goal.currentAmount
-                                            let monthsRemaining = Double(daysRemaining) / 30.0
-                                            if monthsRemaining > 0 {
-                                                let requiredMonthlySavings = remainingAmount / monthsRemaining
-                                                Text(
-                                                    "You need to save \(requiredMonthlySavings.formatted(.currency(code: "USD"))) per month to reach your goal on time."
-                                                )
-                                                .foregroundStyle(.secondary)
-                                            }
-                                        } else {
-                                            Text("Target date has passed")
-                                                .font(.title2)
-                                                .foregroundStyle(.red)
+                                        // Required monthly savings
+                                        let remainingAmount = goal.targetAmount - goal.currentAmount
+                                        let monthsRemaining = Double(daysRemaining) / 30.0
+                                        if monthsRemaining > 0 {
+                                            let requiredMonthlySavings =
+                                                remainingAmount / monthsRemaining
+                                            Text(
+                                                "You need to save \(requiredMonthlySavings.formatted(.currency(code: "USD"))) per month to reach your goal on time."
+                                            )
+                                            .foregroundStyle(.secondary)
                                         }
+                                    } else {
+                                        Text("Target date has passed")
+                                            .font(.title2)
+                                            .foregroundStyle(.red)
                                     }
-                                    .padding()
-                                    .background(Color(.windowBackgroundColor).opacity(0.3))
-                                    .cornerRadius(8)
                                 }
+                                .padding()
+                                .background(Color(.windowBackgroundColor).opacity(0.3))
+                                .cornerRadius(8)
 
                                 // Contributions
                                 VStack(alignment: .leading, spacing: 10) {
@@ -1022,7 +1110,8 @@ import SwiftUI
                                 Spacer()
                             }
                             .padding()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                            .frame(
+                                maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                         }
                         .toolbar {
                             ToolbarItem {
@@ -1038,7 +1127,9 @@ import SwiftUI
                             }
 
                             ToolbarItem {
-                                Button(action: {}).accessibilityLabel("Button").accessibilityLabel("Button") {
+                                Button(action: {}).accessibilityLabel("Button").accessibilityLabel(
+                                    "Button"
+                                ) {
                                     Text("Add Contribution")
                                 }
                             }
@@ -1047,7 +1138,8 @@ import SwiftUI
                         ContentUnavailableView(
                             "Goal Not Found",
                             systemImage: "exclamationmark.triangle",
-                            description: Text("The savings goal you're looking for could not be found.")
+                            description: Text(
+                                "The savings goal you're looking for could not be found.")
                         )
                     }
                 }
@@ -1073,8 +1165,8 @@ import SwiftUI
                             .font(.headline)
 
                         Text(
-                            "This report provides insights into your \(self.getReportDescription()). " +
-                                "Use this information to make informed financial decisions and track your progress toward your financial goals."
+                            "This report provides insights into your \(self.getReportDescription()). "
+                                + "Use this information to make informed financial decisions and track your progress toward your financial goals."
                         )
                         .padding()
                         .background(Color(.windowBackgroundColor).opacity(0.3))
@@ -1092,8 +1184,10 @@ import SwiftUI
                                 .accessibilityLabel("Button")
                             Button("Export as CSV", action: {}).accessibilityLabel("Button")
                                 .accessibilityLabel("Button")
-                            Button("Print", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
-                            Button("Share", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                            Button("Print", action: {}).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
+                            Button("Share", action: {}).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
                         } label: {
                             Image(systemName: "square.and.arrow.up")
                         }
@@ -1101,12 +1195,14 @@ import SwiftUI
 
                     ToolbarItem {
                         Menu {
-                            Button("Last 30 Days", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                            Button("Last 30 Days", action: {}).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
                             Button("Last 3 Months", action: {}).accessibilityLabel("Button")
                                 .accessibilityLabel("Button")
                             Button("Last 6 Months", action: {}).accessibilityLabel("Button")
                                 .accessibilityLabel("Button")
-                            Button("Year to Date", action: {}).accessibilityLabel("Button").accessibilityLabel("Button")
+                            Button("Year to Date", action: {}).accessibilityLabel("Button")
+                                .accessibilityLabel("Button")
                             Button("Last 12 Months", action: {}).accessibilityLabel("Button")
                                 .accessibilityLabel("Button")
                             Button("Custom Range...", action: {}).accessibilityLabel("Button")
@@ -1257,23 +1353,28 @@ import SwiftUI
                 List(selection: self.$selectedSidebarItem) {
                     Section("Main") {
                         self.sidebarItem(title: "Dashboard", icon: "house", item: .dashboard)
-                        self.sidebarItem(title: "Transactions", icon: "creditcard", item: .transactions)
+                        self.sidebarItem(
+                            title: "Transactions", icon: "creditcard", item: .transactions)
                         self.sidebarItem(title: "Budgets", icon: "chart.pie", item: .budgets)
                     }
 
                     Section("Planning") {
-                        self.sidebarItem(title: "Subscriptions", icon: "calendar.badge.clock", item: .subscriptions)
-                        self.sidebarItem(title: "Goals & Reports", icon: "chart.bar", item: .goalsAndReports)
+                        self.sidebarItem(
+                            title: "Subscriptions", icon: "calendar.badge.clock",
+                            item: .subscriptions)
+                        self.sidebarItem(
+                            title: "Goals & Reports", icon: "chart.bar", item: .goalsAndReports)
                     }
                 }
                 .listStyle(.sidebar)
                 .frame(minWidth: 220)
                 .toolbar {
                     ToolbarItem(placement: .automatic) {
-                        Button(action: self.toggleSidebar).accessibilityLabel("Button").accessibilityLabel("Button") {
-                            Image(systemName: "sidebar.left")
-                        }
-                        .help("Toggle Sidebar")
+                        Button(action: self.toggleSidebar).accessibilityLabel("Button")
+                            .accessibilityLabel("Button") {
+                                Image(systemName: "sidebar.left")
+                            }
+                            .help("Toggle Sidebar")
                     }
                 }
             } content: {
@@ -1321,7 +1422,8 @@ import SwiftUI
                                 Features.GoalsAndReports.SavingsGoalDetailView(goalId: id)
                             }
                         case .report:
-                            Features.GoalsAndReports.ReportDetailView(reportType: listItem.id ?? "spending")
+                            Features.GoalsAndReports.ReportDetailView(
+                                reportType: listItem.id ?? "spending")
                         }
                     } else {
                         // Default view when no item is selected
@@ -1368,7 +1470,8 @@ import SwiftUI
 
         // Toggle the macOS sidebar
         private func toggleSidebar() {
-            NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
+            NSApp.keyWindow?.firstResponder?.tryToPerform(
+                #selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
         }
     }
 
@@ -1383,14 +1486,20 @@ import SwiftUI
         /// macOS toolbar configuration
         static func configureToolbar() -> some ToolbarContent {
             ToolbarItemGroup(placement: .automatic) {
-                Button(action: {}, label: {
-                    Image(systemName: "gear")
-                })
+                Button(
+                    action: {},
+                    label: {
+                        Image(systemName: "gear")
+                    }
+                )
                 .help("Settings")
 
-                Button(action: {}, label: {
-                    Image(systemName: "square.and.arrow.up")
-                })
+                Button(
+                    action: {},
+                    label: {
+                        Image(systemName: "square.and.arrow.up")
+                    }
+                )
                 .help("Export Data")
             }
         }

@@ -49,7 +49,8 @@ public struct ThemeSelectorCard: View {
         .padding()
         .background(self.theme.cardBackground)
         .cornerRadius(12)
-        .shadow(color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+        .shadow(
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
     }
 }
 
@@ -89,7 +90,8 @@ public struct ThemeFinancialSummaryCard: View {
         .padding()
         .background(self.theme.cardBackground)
         .cornerRadius(12)
-        .shadow(color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+        .shadow(
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
     }
 }
 
@@ -129,7 +131,8 @@ public struct ThemeAccountsList: View {
         .padding()
         .background(self.theme.cardBackground)
         .cornerRadius(12)
-        .shadow(color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+        .shadow(
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
     }
 }
 
@@ -151,9 +154,11 @@ public struct ThemeDemoBudgetProgress: View {
                             .font(.subheadline)
                             .foregroundStyle(self.theme.primaryText)
                         Spacer()
-                        Text("$\(String(format: "%.0f", budget.spent)) / $\(String(format: "%.0f", budget.total))")
-                            .font(.caption)
-                            .foregroundStyle(self.theme.secondaryText)
+                        Text(
+                            "$\(String(format: "%.0f", budget.spent)) / $\(String(format: "%.0f", budget.total))"
+                        )
+                        .font(.caption)
+                        .foregroundStyle(self.theme.secondaryText)
                     }
 
                     let progress = budget.total > 0 ? budget.spent / budget.total : 0
@@ -179,7 +184,8 @@ public struct ThemeDemoBudgetProgress: View {
         .padding()
         .background(self.theme.cardBackground)
         .cornerRadius(12)
-        .shadow(color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+        .shadow(
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
     }
 }
 
@@ -231,7 +237,8 @@ public struct ThemeDemoSubscriptionsList: View {
         .padding()
         .background(self.theme.cardBackground)
         .cornerRadius(12)
-        .shadow(color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+        .shadow(
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
     }
 }
 
@@ -290,7 +297,8 @@ public struct ThemeDemoTypographyShowcase: View {
         .padding()
         .background(self.theme.cardBackground)
         .cornerRadius(12)
-        .shadow(color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+        .shadow(
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
     }
 }
 
@@ -305,30 +313,42 @@ public struct ThemeDemoButtonStylesShowcase: View {
                 .foregroundStyle(self.theme.primaryText)
 
             VStack(spacing: 12) {
-                Button("Primary Button").accessibilityLabel("Button").accessibilityLabel("Button") {}
+                Button("Primary Button") {}
+                    .accessibilityLabel("Button")
                     .buttonStyle(.borderedProminent)
                     .tint(self.theme.accentPrimary)
 
-                Button("Secondary Button").accessibilityLabel("Button").accessibilityLabel("Button") {}
-                    .buttonStyle(.bordered)
-                    .tint(self.theme.secondaryBackground)
+                Button("Secondary Button") {
+                    // Action
+                }
+                .buttonStyle(.bordered)
+                .tint(self.theme.secondaryBackground)
+                .accessibilityLabel("Button")
 
-                Button("Text Button").accessibilityLabel("Button").accessibilityLabel("Button") {}
-                    .foregroundStyle(self.theme.accentPrimary)
+                Button("Text Button") {
+                    // Action
+                }
+                .accessibilityLabel("Button")
+                .foregroundStyle(self.theme.accentPrimary)
 
-                Button("Destructive Button").accessibilityLabel("Button").accessibilityLabel("Button") {}
-                    .foregroundStyle(self.theme.expense)
+                Button("Destructive Button") {
+                    // Action
+                }
+                .accessibilityLabel("Button")
+                .foregroundStyle(self.theme.expense)
             }
         }
         .padding()
         .background(self.theme.cardBackground)
         .cornerRadius(12)
-        .shadow(color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+        .shadow(
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
     }
 }
 
 /// Theme settings sheet for the demo view
 public struct ThemeDemoSettingsSheet: View {
+    @Environment(\.dismiss) var dismiss
     @Binding var selectedThemeMode: ThemeMode
     @Binding var sliderValue: Double
     @Binding var showSheet: Bool
@@ -349,22 +369,20 @@ public struct ThemeDemoSettingsSheet: View {
                     }
                 }
 
-                Section("Accent Adjustment") {
-                    Slider(value: self.$sliderValue, in: 0...1) {
-                        Text("Accent Intensity")
-                    }
-                    Text("Value: \(String(format: "%.2f", self.sliderValue))")
-                        .font(.caption)
-                        .foregroundStyle(self.theme.secondaryText)
+                Section("Settings") {
+                    Toggle("Show Details", isOn: .constant(true))
                 }
             }
             .navigationTitle("Theme Settings")
-            .navigationBarTitleDisplayMode(.inline)
+            #if os(iOS)
+                .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done").accessibilityLabel("Button").accessibilityLabel("Button") {
-                        self.showSheet = false
+                    Button("Done") {
+                        self.dismiss()
                     }
+                    .accessibilityLabel("Button")
                 }
             }
         }

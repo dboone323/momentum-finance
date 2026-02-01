@@ -14,28 +14,26 @@ public struct ThemeSettingsView: View {
     @State private var selectedMode: ThemeMode = .system
     @Environment(\.dismiss) private var dismiss
 
-    var body: some View {
+    public var body: some View {
         NavigationStack {
             List {
                 self.themeModeSection
                 self.colorPalettePreview
             }
             .navigationTitle("Appearance")
-            .toolbar {
+            .toolbar(content: {
                 #if os(iOS)
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Done").accessibilityLabel("Button").accessibilityLabel("Button") {
-                            self.dismiss()
-                        }
+                        Button("Done") { self.dismiss() }
+                            .accessibilityLabel("Done")
                     }
                 #else
                     ToolbarItem(placement: .primaryAction) {
-                        Button("Done").accessibilityLabel("Button").accessibilityLabel("Button") {
-                            self.dismiss()
-                        }
+                        Button("Done") { self.dismiss() }
+                            .accessibilityLabel("Done")
                     }
                 #endif
-            }
+            })
             .onAppear {
                 self.selectedMode = self.theme.currentThemeMode
             }
@@ -142,7 +140,7 @@ public struct ThemeModeOption: View {
     let isSelected: Bool
     let theme: ColorTheme
 
-    var body: some View {
+    public var body: some View {
         HStack {
             Label {
                 Text(self.mode.displayName)

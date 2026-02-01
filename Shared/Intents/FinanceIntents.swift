@@ -3,6 +3,7 @@ import Intents
 
 /// Siri Shortcuts integration for Momentum Finance
 
+@MainActor
 class FinanceIntentsHandler: NSObject {
     static let shared = FinanceIntentsHandler()
 
@@ -47,7 +48,9 @@ class FinanceIntentsHandler: NSObject {
 
     // MARK: - Handle Shortcuts
 
-    func handle(intent: AddTransactionIntent, completion: @escaping (AddTransactionIntentResponse) -> Void) {
+    func handle(
+        intent: AddTransactionIntent, completion: @escaping (AddTransactionIntentResponse) -> Void
+    ) {
         // Create transaction from Siri input
         let response = AddTransactionIntentResponse(code: .success, userActivity: nil)
         response.amount = intent.amount
@@ -55,14 +58,18 @@ class FinanceIntentsHandler: NSObject {
         completion(response)
     }
 
-    func handle(intent: ViewBalanceIntent, completion: @escaping (ViewBalanceIntentResponse) -> Void) {
+    func handle(
+        intent: ViewBalanceIntent, completion: @escaping (ViewBalanceIntentResponse) -> Void
+    ) {
         // Fetch current balance
         let response = ViewBalanceIntentResponse(code: .success, userActivity: nil)
-        response.balance = "$1,234.56" // Fetch from model
+        response.balance = "$1,234.56"  // Fetch from model
         completion(response)
     }
 
-    func handle(intent: CheckBudgetIntent, completion: @escaping (CheckBudgetIntentResponse) -> Void) {
+    func handle(
+        intent: CheckBudgetIntent, completion: @escaping (CheckBudgetIntentResponse) -> Void
+    ) {
         // Check budget status
         let response = CheckBudgetIntentResponse(code: .success, userActivity: nil)
         response.spent = "$450"
@@ -84,16 +91,58 @@ class CheckBudgetIntent: INIntent {
     @NSManaged var category: String?
 }
 
-class AddTransactionIntentResponse: INIntentResponse {
+@objc public enum AddTransactionIntentResponseCode: Int {
+    case success = 1
+    case failure = 2
+}
+
+public class AddTransactionIntentResponse: INIntentResponse {
+    @objc public init(code: AddTransactionIntentResponseCode, userActivity: NSUserActivity?) {
+        super.init()
+        self.userActivity = userActivity
+    }
+
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
     var amount: NSNumber?
     var category: String?
 }
 
-class ViewBalanceIntentResponse: INIntentResponse {
+@objc public enum ViewBalanceIntentResponseCode: Int {
+    case success = 1
+    case failure = 2
+}
+
+public class ViewBalanceIntentResponse: INIntentResponse {
+    @objc public init(code: ViewBalanceIntentResponseCode, userActivity: NSUserActivity?) {
+        super.init()
+        self.userActivity = userActivity
+    }
+
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
     var balance: String?
 }
 
-class CheckBudgetIntentResponse: INIntentResponse {
+@objc public enum CheckBudgetIntentResponseCode: Int {
+    case success = 1
+    case failure = 2
+}
+
+public class CheckBudgetIntentResponse: INIntentResponse {
+    @objc public init(code: CheckBudgetIntentResponseCode, userActivity: NSUserActivity?) {
+        super.init()
+        self.userActivity = userActivity
+    }
+
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
     var spent: String?
     var remaining: String?
     var percentage: String?

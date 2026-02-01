@@ -7,8 +7,11 @@ echo "🔧 Setting up Momentum Finance sync tools..."
 echo "==========================================="
 
 # Colors
+# shellcheck disable=SC2034
 GREEN='\033[0;32m'
+# shellcheck disable=SC2034
 YELLOW='\033[1;33m'
+# shellcheck disable=SC2034
 NC='\033[0m'
 
 # Get the script directory

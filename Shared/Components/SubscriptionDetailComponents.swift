@@ -7,7 +7,6 @@
 
 import Charts
 import MomentumFinanceCore
-import Shared
 import SwiftData
 import SwiftUI
 
@@ -149,7 +148,7 @@ import SwiftUI
         let subscription: Subscription
 
         // Sample usage data - in a real app, this would be tracked
-        @State private var usageRating: Double = 0.7 // 0-1 scale
+        @State private var usageRating: Double = 0.7  // 0-1 scale
 
         // Calculate cost per use
         private var costPerUse: Double {
@@ -225,8 +224,11 @@ import SwiftUI
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
 
-                            Text(self.subscription.amount.formatted(.currency(code: self.subscription.currencyCode)))
-                                .font(.title2)
+                            Text(
+                                self.subscription.amount.formatted(
+                                    .currency(code: self.subscription.currencyCode))
+                            )
+                            .font(.title2)
                         }
 
                         VStack(alignment: .leading, spacing: 4) {
@@ -234,8 +236,11 @@ import SwiftUI
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
 
-                            Text(self.costPerUse.formatted(.currency(code: self.subscription.currencyCode)))
-                                .font(.title3)
+                            Text(
+                                self.costPerUse.formatted(
+                                    .currency(code: self.subscription.currencyCode))
+                            )
+                            .font(.title3)
                         }
 
                         VStack(alignment: .leading, spacing: 4) {
@@ -378,9 +383,10 @@ import SwiftUI
 
                 Spacer()
 
-                Button("Close").accessibilityLabel("Button").accessibilityLabel("Button") {
+                Button("Close") {
                     self.dismiss()
                 }
+                .accessibilityLabel("Button")
                 .keyboardShortcut(.escape, modifiers: [])
             }
             .padding()
@@ -407,12 +413,20 @@ import SwiftUI
 
         // Sample alternatives data
         let alternatives = [
-            (name: "CompetitorA", price: 7.99, features: ["HD Streaming", "2 devices", "Limited library"]),
-            (name: "CompetitorB", price: 9.99, features: ["4K Streaming", "4 devices", "Full library", "Downloads"]),
+            (
+                name: "CompetitorA", price: 7.99,
+                features: ["HD Streaming", "2 devices", "Limited library"]
+            ),
+            (
+                name: "CompetitorB", price: 9.99,
+                features: ["4K Streaming", "4 devices", "Full library", "Downloads"]
+            ),
             (
                 name: "CompetitorC",
                 price: 12.99,
-                features: ["4K Streaming", "Unlimited devices", "Full library", "Downloads", "Live TV"]
+                features: [
+                    "4K Streaming", "Unlimited devices", "Full library", "Downloads", "Live TV",
+                ]
             ),
         ]
 
@@ -442,11 +456,15 @@ import SwiftUI
 
                         Divider()
 
-                        Text(self.subscription?.amount
-                            .formatted(.currency(code: self.subscription?.currencyCode ?? "USD")) ?? "$0.00")
-                            .font(.title3)
-                            .bold()
-                            .padding()
+                        Text(
+                            self.subscription?.amount
+                                .formatted(
+                                    .currency(code: self.subscription?.currencyCode ?? "USD"))
+                                ?? "$0.00"
+                        )
+                        .font(.title3)
+                        .bold()
+                        .padding()
 
                         Divider()
 
@@ -466,8 +484,10 @@ import SwiftUI
                     .cornerRadius(8)
 
                     // Alternatives columns
-                    ForEach(self.alternatives, id: \.name) { alternative in
+                    ForEach(0..<self.alternatives.count, id: \.self) { index in
+                        let alternative = self.alternatives[index]
                         VStack(spacing: 0) {
+
                             Text("Alternative")
                                 .font(.headline)
                                 .frame(maxWidth: .infinity)
@@ -476,13 +496,15 @@ import SwiftUI
 
                             Divider()
 
-                            Text(alternative.name)
+                            Text("\(alternative.name)")
+
                                 .font(.title3)
                                 .padding()
 
                             Divider()
 
                             Text(alternative.price.formatted(.currency(code: "USD")))
+
                                 .font(.title3)
                                 .bold()
                                 .padding()
@@ -499,9 +521,10 @@ import SwiftUI
 
                             Spacer()
 
-                            Button("Visit Website").accessibilityLabel("Button").accessibilityLabel("Button") {
+                            Button("Visit Website") {
                                 // Open website
                             }
+                            .accessibilityLabel("Button")
                             .buttonStyle(.bordered)
                             .padding(.bottom)
                         }
@@ -511,9 +534,10 @@ import SwiftUI
                     }
                 }
 
-                Button("Close").accessibilityLabel("Button").accessibilityLabel("Button") {
+                Button("Close") {
                     self.dismiss()
                 }
+                .accessibilityLabel("Button")
                 .keyboardShortcut(.escape, modifiers: [])
                 .padding(.top)
             }
@@ -527,7 +551,8 @@ import SwiftUI
         var amount: Double
         var billingCycle: String
         var startDate: Date?
-        var nextPaymentDate: Date?
+        var nextDueDate: Date?
+
         var notes: String
         var currencyCode: String
         var category: String?
@@ -538,12 +563,13 @@ import SwiftUI
             self.name = subscription.name
             self.provider = subscription.provider
             self.amount = subscription.amount
-            self.billingCycle = subscription.billingCycle
+            self.billingCycle = subscription.billingCycle.rawValue.lowercased()
             self.startDate = subscription.startDate
-            self.nextPaymentDate = subscription.nextPaymentDate
-            self.notes = subscription.notes
+            self.nextDueDate = subscription.nextDueDate
+            self.notes = subscription.notes ?? ""
+
             self.currencyCode = subscription.currencyCode
-            self.category = subscription.category
+            self.category = subscription.category?.name
             self.paymentMethod = subscription.paymentMethod
             self.autoRenews = subscription.autoRenews
         }

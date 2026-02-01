@@ -6,9 +6,13 @@ echo "🔧 Fixing Git pull configuration..."
 echo "==================================="
 
 # Colors
+# shellcheck disable=SC2034
 GREEN='\033[0;32m'
+# shellcheck disable=SC2034
 YELLOW='\033[1;33m'
+# shellcheck disable=SC2034
 BLUE='\033[0;34m'
+# shellcheck disable=SC2034
 NC='\033[0m'
 
 echo -e "\n${YELLOW}This will set up Git to use merge strategy for pulls (recommended for most users)${NC}"

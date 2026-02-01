@@ -7,7 +7,6 @@
 
 import Charts
 import MomentumFinanceCore
-import Shared
 import SwiftData
 import SwiftUI
 
@@ -34,6 +33,7 @@ import SwiftUI
             case .savings: "Savings"
             case .credit: "Credit"
             case .investment: "Investment"
+            case .cash: "Cash"
             }
         }
 
@@ -43,6 +43,7 @@ import SwiftUI
             case .savings: .blue
             case .credit: .purple
             case .investment: .orange
+            case .cash: .gray
             }
         }
 
@@ -101,15 +102,18 @@ import SwiftUI
                     }
 
                     // Average line
-                    let average = self.generateSampleData()
-                        .reduce(0) { $0 + $1.balance } / Double(self.generateSampleData().count)
+                    let average =
+                        self.generateSampleData()
+                        .reduce(0.0) { $0 + $1.balance } / Double(self.generateSampleData().count)
                     RuleMark(y: .value("Average", average))
                         .lineStyle(StrokeStyle(lineWidth: 1, dash: [5, 5]))
                         .foregroundStyle(.gray)
                         .annotation(position: .top, alignment: .trailing) {
-                            Text("Average: \(average.formatted(.currency(code: self.account.currencyCode)))")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            Text(
+                                "Average: \(average.formatted(.currency(code: self.account.currencyCode)))"
+                            )
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                         }
                 }
 
@@ -128,9 +132,11 @@ import SwiftUI
                         Text("Change")
                             .font(.caption)
                             .foregroundStyle(.secondary)
-                        Text("+\((self.account.balance - 1250).formatted(.currency(code: self.account.currencyCode)))")
-                            .font(.subheadline)
-                            .foregroundStyle(.green)
+                        Text(
+                            "+\((self.account.balance - 1250).formatted(.currency(code: self.account.currencyCode)))"
+                        )
+                        .font(.subheadline)
+                        .foregroundStyle(.green)
                     }
 
                     Spacer()
@@ -139,9 +145,11 @@ import SwiftUI
                         Text("Current Balance")
                             .font(.caption)
                             .foregroundStyle(.secondary)
-                        Text("\(self.account.balance.formatted(.currency(code: self.account.currencyCode)))")
-                            .font(.subheadline)
-                            .bold()
+                        Text(
+                            "\(self.account.balance.formatted(.currency(code: self.account.currencyCode)))"
+                        )
+                        .font(.subheadline)
+                        .bold()
                     }
                 }
                 .padding(.top, 10)
@@ -307,12 +315,13 @@ import SwiftUI
 
                 // Add a white circle in the center for a donut chart effect
                 let innerRadius = radius * 0.6
-                let innerCirclePath = Path(ellipseIn: CGRect(
-                    x: center.x - innerRadius,
-                    y: center.y - innerRadius,
-                    width: innerRadius * 2,
-                    height: innerRadius * 2
-                ))
+                let innerCirclePath = Path(
+                    ellipseIn: CGRect(
+                        x: center.x - innerRadius,
+                        y: center.y - innerRadius,
+                        width: innerRadius * 2,
+                        height: innerRadius * 2
+                    ))
                 context.fill(innerCirclePath, with: .color(.white))
             }
         }
@@ -326,36 +335,29 @@ import SwiftUI
                 Text("Credit Account Details")
                     .font(.headline)
 
+                let creditLimit = self.account.creditLimit ?? 0
+                let balance = abs(self.account.balance)
+                let availableCredit = creditLimit - balance
+                let utilization = creditLimit > 0 ? (balance / creditLimit) * 100 : 0
+
                 Grid(alignment: .leading, horizontalSpacing: 40, verticalSpacing: 12) {
                     GridRow {
                         DetailField(
                             label: "Credit Limit",
-                            value: (self.account.creditLimit ?? 0).formatted(.currency(code: self.account.currencyCode))
+                            value: creditLimit.formatted(.currency(code: self.account.currencyCode))
                         )
 
                         DetailField(
                             label: "Available Credit",
-                            value: ((self.account.creditLimit ?? 0) - abs(self.account.balance))
-                                .formatted(.currency(code: self.account.currencyCode))
+                            value: availableCredit.formatted(
+                                .currency(code: self.account.currencyCode))
                         )
-                    }
-
-                    GridRow {
-                        DetailField(
-                            label: "Interest Rate",
-                            value: ((self.account.interestRate ?? 0) * 100)
-                                .formatted(.number.precision(.fractionLength(2))) + "%"
-                        )
-
-                        if let dueDate = account.dueDate {
-                            DetailField(label: "Payment Due", value: "Every \(dueDate.ordinal) of month")
-                        }
                     }
 
                     GridRow {
                         DetailField(
                             label: "Utilization",
-                            value: "\(((self.account.creditLimit ?? 0) - abs(self.account.balance)) / (self.account.creditLimit ?? 1) * 100, specifier: "%.2f")%"
+                            value: "\(String(format: "%.2f", utilization))%"
                         )
                         .gridCellColumns(2)
                     }
@@ -371,7 +373,9 @@ import SwiftUI
                             .font(.subheadline)
 
                         ProgressView(value: abs(self.account.balance), total: creditLimit)
-                            .tint(self.getCreditUtilizationColor(used: abs(self.account.balance), limit: creditLimit))
+                            .tint(
+                                self.getCreditUtilizationColor(
+                                    used: abs(self.account.balance), limit: creditLimit))
 
                         HStack {
                             Text(
@@ -382,9 +386,11 @@ import SwiftUI
 
                             Spacer()
 
-                            Text("Limit: \(creditLimit.formatted(.currency(code: self.account.currencyCode)))")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            Text(
+                                "Limit: \(creditLimit.formatted(.currency(code: self.account.currencyCode)))"
+                            )
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                         }
                     }
                     .padding(.top, 10)
@@ -468,15 +474,19 @@ import SwiftUI
                             VStack(alignment: .leading) {
                                 Text("Start Date")
                                     .font(.subheadline)
-                                DatePicker("", selection: self.$customStartDate, displayedComponents: .date)
-                                    .labelsHidden()
+                                DatePicker(
+                                    "", selection: self.$customStartDate, displayedComponents: .date
+                                )
+                                .labelsHidden()
                             }
 
                             VStack(alignment: .leading) {
                                 Text("End Date")
                                     .font(.subheadline)
-                                DatePicker("", selection: self.$customEndDate, displayedComponents: .date)
-                                    .labelsHidden()
+                                DatePicker(
+                                    "", selection: self.$customEndDate, displayedComponents: .date
+                                )
+                                .labelsHidden()
                             }
                         }
                     }
@@ -501,17 +511,19 @@ import SwiftUI
                 Spacer()
 
                 HStack {
-                    Button("Cancel").accessibilityLabel("Button").accessibilityLabel("Button") {
+                    Button("Cancel") {
                         self.dismiss()
                     }
+                    .accessibilityLabel("Button")
                     .buttonStyle(.bordered)
 
                     Spacer()
 
-                    Button("Export").accessibilityLabel("Button").accessibilityLabel("Button") {
+                    Button("Export") {
                         self.performExport()
                         self.dismiss()
                     }
+                    .accessibilityLabel("Button")
                     .buttonStyle(.borderedProminent)
                 }
                 .padding(.top)
@@ -526,7 +538,7 @@ import SwiftUI
 
     struct AccountEditModel {
         var name: String
-        var type: FinancialAccount.AccountType
+        var type: AccountType
         var balance: Double
         var currencyCode: String
         var institution: String?
@@ -540,17 +552,13 @@ import SwiftUI
 
         init(from account: FinancialAccount) {
             self.name = account.name
-            self.type = account.type
+            self.type = account.accountType
             self.balance = account.balance
             self.currencyCode = account.currencyCode
-            self.institution = account.institution
-            self.accountNumber = account.accountNumber
-            self.interestRate = account.interestRate
-            self.creditLimit = account.creditLimit
-            self.dueDate = account.dueDate
-            self.includeInTotal = account.includeInTotal
-            self.isActive = account.isActive
-            self.notes = account.notes
+            self.dueDate = nil
+            self.includeInTotal = true
+            self.isActive = true
+            self.notes = ""
         }
     }
 

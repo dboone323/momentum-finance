@@ -46,6 +46,22 @@ extension Features.Dashboard {
         @State private var subscriptions: [Subscription] = []
         @State private var budgets: [Budget] = []
 
+        @MainActor
+        private func loadData() {
+            do {
+                let accountDescriptor = FetchDescriptor<FinancialAccount>()
+                accounts = try modelContext.fetch(accountDescriptor)
+
+                let subscriptionDescriptor = FetchDescriptor<Subscription>()
+                subscriptions = try modelContext.fetch(subscriptionDescriptor)
+
+                let budgetDescriptor = FetchDescriptor<Budget>()
+                budgets = try modelContext.fetch(budgetDescriptor)
+            } catch {
+                print("Error loading dashboard data: \(error)")
+            }
+        }
+
         var body: some View {
             NavigationStack(path: self.$navigationPath) {
                 ScrollView {
@@ -62,15 +78,17 @@ extension Features.Dashboard {
                         // Account Balances Summary
                         DashboardAccountsSummary(
                             accounts: self.accounts,
-                            onAccountTap: { accountId in
+                            onAccountTap: { (account: FinancialAccount) in
                                 self.navigationPath.append(
-                                    DashboardDestination.accountDetail(accountId)
+                                    DashboardDestination.accountDetail(
+                                        String(describing: account.persistentModelID))
                                 )
                             },
                             onViewAllTap: {
-                                self.navigationPath.append(DashboardDestination.transactions)
+                                // Navigate to accounts list
                             }
                         )
+
                         .transition(
                             .asymmetric(
                                 insertion: .move(edge: .leading).combined(with: .opacity),
@@ -147,29 +165,30 @@ extension Features.Dashboard {
                 #if os(iOS)
                     .navigationBarTitleDisplayMode(.large)
                 #endif
-                    .onAppear {
-                        self.loadData()
+                .onAppear {
+                    self.loadData()
+                }
+                .task {
+                    // Process overdue subscriptions asynchronously
+                    await self.processOverdueSubscriptions(
+                        self.subscriptions, modelContext: self.modelContext)
+                }
+                .navigationDestination(for: DashboardDestination.self) { destination in
+                    switch destination {
+                    case .transactions:
+                        Features.Transactions.TransactionsView()
+                    case .subscriptions:
+                        #if canImport(SwiftData)
+                            Features.Subscriptions.SubscriptionsView()
+                        #else
+                            Text("Subscriptions View - SwiftData not available")
+                        #endif
+                    case .budgets:
+                        Features.Budgets.BudgetsView()
+                    case .accountDetail(let accountId):
+                        Text("Account Detail: \(accountId)")
                     }
-                    .task {
-                        // Process overdue subscriptions asynchronously
-                        await self.processOverdueSubscriptions(self.subscriptions)
-                    }
-                    .navigationDestination(for: DashboardDestination.self) { destination in
-                        switch destination {
-                        case .transactions:
-                            Features.Transactions.TransactionsView()
-                        case .subscriptions:
-                            #if canImport(SwiftData)
-                                Features.Subscriptions.SubscriptionsView()
-                            #else
-                                Text("Subscriptions View - SwiftData not available")
-                            #endif
-                        case .budgets:
-                            Features.Budgets.BudgetsView()
-                        case let .accountDetail(accountId):
-                            Text("Account Detail: \(accountId)")
-                        }
-                    }
+                }
             }
         }
 
@@ -216,32 +235,18 @@ extension Features.Dashboard {
             1890.0
         }
 
-        // MARK: - Data Loading
-
-        private func loadData() {
-            do {
-                let accountDescriptor = FetchDescriptor<FinancialAccount>()
-                self.accounts = try self.modelContext.fetch(accountDescriptor)
-
-                let subscriptionDescriptor = FetchDescriptor<Subscription>()
-                self.subscriptions = try self.modelContext.fetch(subscriptionDescriptor)
-
-                let budgetDescriptor = FetchDescriptor<Budget>()
-                self.budgets = try self.modelContext.fetch(budgetDescriptor)
-            } catch {
-                print("Error loading dashboard data: \(error)")
-            }
-        }
-
-        private func processOverdueSubscriptions(_ subscriptions: [Subscription]) async {
+        @MainActor
+        private func processOverdueSubscriptions(
+            _ subscriptions: [Subscription], modelContext: ModelContext
+        ) async {
             let overdueSubscriptions = subscriptions.filter { subscription in
                 subscription.isActive && subscription.nextDueDate <= Date()
             }
 
             for subscription in overdueSubscriptions {
-                subscription.processPayment(modelContext: self.modelContext)
+                subscription.processPayment(modelContext: modelContext)
                 do {
-                    try self.modelContext.save()
+                    try modelContext.save()
                 } catch {
                     print("Failed to process subscription payment: \(error)")
                 }
@@ -274,9 +279,12 @@ struct BudgetWidgetView: View {
                 .foregroundColor(.secondary)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(NumberFormatter.currency.string(from: NSNumber(value: totalBudget - totalSpent)) ?? "$0")
-                    .font(.title3)
-                    .fontWeight(.bold)
+                Text(
+                    NumberFormatter.currency.string(from: NSNumber(value: totalBudget - totalSpent))
+                        ?? "$0"
+                )
+                .font(.title3)
+                .fontWeight(.bold)
                 Text("Left to spend")
                     .font(.caption2)
                     .foregroundColor(.secondary)

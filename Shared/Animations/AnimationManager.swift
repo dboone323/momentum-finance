@@ -156,10 +156,12 @@ extension View {
     /// <#Description#>
     /// - Returns: <#description#>
     func slideIn(from edge: Edge, delay: Double = 0) -> some View {
-        transition(.asymmetric(
-            insertion: .move(edge: edge).combined(with: .opacity),
-            removal: .move(edge: edge.opposite).combined(with: .opacity)
-        ))
+        transition(
+            .asymmetric(
+                insertion: .move(edge: edge).combined(with: .opacity),
+                removal: .move(edge: edge.opposite).combined(with: .opacity)
+            )
+        )
         .animation(AnimationManager.Springs.smooth.delay(delay), value: true)
     }
 
@@ -264,7 +266,7 @@ public struct CardFlipModifier: ViewModifier {
 
     /// <#Description#>
     /// - Returns: <#description#>
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .rotation3DEffect(
                 .degrees(self.rotation),
@@ -284,7 +286,7 @@ public struct LoadingIndicator: View {
         case dots, spinner, pulse
     }
 
-    var body: some View {
+    public var body: some View {
         Group {
             switch self.style {
             case .dots:
@@ -342,7 +344,7 @@ public struct AnimatedProgressBar: View {
     let height: CGFloat
     @State private var animatedProgress: Double = 0
 
-    var body: some View {
+    public var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
                 Rectangle()
@@ -373,10 +375,11 @@ public struct AnimatedProgressBar: View {
 // MARK: - Object Pooling
 
 /// Object pool for performance optimization
-private var objectPool: [Any] = []
+@MainActor private var objectPool: [Any] = []
 private let maxPoolSize = 50
 
 /// Get an object from the pool or create new one
+@MainActor
 private func getPooledObject<T>() -> T? {
     if let pooled = objectPool.popLast() as? T {
         return pooled
@@ -385,6 +388,7 @@ private func getPooledObject<T>() -> T? {
 }
 
 /// Return an object to the pool
+@MainActor
 private func returnToPool(_ object: Any) {
     if objectPool.count < maxPoolSize {
         objectPool.append(object)

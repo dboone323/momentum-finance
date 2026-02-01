@@ -34,13 +34,15 @@ public struct GlobalSearchView: View {
                         }
 
                     if !self.searchText.isEmpty {
-                        Button(action: {
-                            self.searchText = ""
-                            self.searchResults = []
-                        }, label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.secondary)
-                        })
+                        Button(
+                            action: {
+                                self.searchText = ""
+                                self.searchResults = []
+                            },
+                            label: {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.secondary)
+                            })
                     }
                 }
                 .padding()
@@ -65,19 +67,20 @@ public struct GlobalSearchView: View {
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancel").accessibilityLabel("Button") {
-                            self.dismiss()
-                        }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        self.dismiss()
                     }
+                    .accessibilityLabel("Button")
                 }
-                .sheet(item: self.$selectedResult) { result in
-                    SearchResultDetailView(result: result)
-                }
-                .onAppear {
-                    // Model context is now passed to searchEngine via computed property
-                }
+            }
+            .sheet(item: self.$selectedResult) { result in
+                SearchResultDetailView(result: result)
+            }
+            .onAppear {
+                // Model context is now passed to searchEngine via computed property
+            }
         }
     }
 
@@ -166,7 +169,7 @@ public struct GlobalSearchView: View {
 public struct SearchResultRow: View {
     let result: SearchResult
 
-    var body: some View {
+    public var body: some View {
         HStack(spacing: 12) {
             // Icon
             ZStack {
@@ -229,7 +232,7 @@ public struct SearchResultDetailView: View {
     let result: SearchResult
     @Environment(\.dismiss) private var dismiss
 
-    var body: some View {
+    public var body: some View {
         NavigationView {
             VStack(spacing: 20) {
                 // Header
@@ -276,13 +279,14 @@ public struct SearchResultDetailView: View {
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Done").accessibilityLabel("Button") {
-                            self.dismiss()
-                        }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Done") {
+                        self.dismiss()
                     }
+                    .accessibilityLabel("Button")
                 }
+            }
         }
     }
 
@@ -306,7 +310,7 @@ public struct DetailRow: View {
     let label: String
     let value: String
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(self.label)
                 .font(.caption)

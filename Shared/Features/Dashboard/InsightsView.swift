@@ -17,7 +17,7 @@ public struct InsightsView: View {
     @State private var filterPriority: InsightPriority?
     @State private var filterType: InsightType?
 
-    var body: some View {
+    public var body: some View {
         Group {
             #if os(macOS)
                 NavigationStack {
@@ -34,13 +34,14 @@ public struct InsightsView: View {
                     .navigationTitle("Financial Insights")
                     .toolbar {
                         ToolbarItem(placement: .navigation) {
-                            Button("Refresh").accessibilityLabel("Button").accessibilityLabel("Button") {
+                            Button("Refresh") {
                                 Task {
                                     await self.intelligenceService.analyzeFinancialData(
                                         modelContext: self.modelContext
                                     )
                                 }
                             }
+                            .accessibilityLabel("Button")
                             .disabled(self.intelligenceService.isAnalyzing)
                         }
                     }
@@ -60,15 +61,15 @@ public struct InsightsView: View {
                     .navigationTitle("Financial Insights")
                     .navigationBarItems(
                         trailing:
-                        Button("Refresh").accessibilityLabel("Button") {
-                            Task {
-                                await self.intelligenceService.analyzeFinancialData(
-                                    modelContext: self.modelContext
-                                )
+                            Button("Refresh") {
+                                Task {
+                                    await self.intelligenceService.analyzeFinancialData(
+                                        modelContext: self.modelContext
+                                    )
+                                }
                             }
-                        }
-                        .disabled(self.intelligenceService.isAnalyzing)
-                        .accessibilityLabel("Button")
+                            .disabled(self.intelligenceService.isAnalyzing)
+                            .accessibilityLabel("Button")
                     )
                 }
             #endif
@@ -79,7 +80,8 @@ public struct InsightsView: View {
         .onAppear {
             Task {
                 if self.intelligenceService.insights.isEmpty {
-                    await self.intelligenceService.analyzeFinancialData(modelContext: self.modelContext)
+                    await self.intelligenceService.analyzeFinancialData(
+                        modelContext: self.modelContext)
                 }
             }
         }
@@ -118,7 +120,7 @@ public struct InsightsView: View {
                 }
                 return true
             }
-            .sorted { $0.priority > $1.priority } // Sort by priority (critical first)
+            .sorted { $0.priority > $1.priority }  // Sort by priority (critical first)
     }
 }
 

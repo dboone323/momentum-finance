@@ -7,7 +7,7 @@ import uuid
 
 def add_file_to_project(proj_file, file_path, group_name="MomentumFinance"):
     """Add a Swift file to the Xcode project."""
-    with open(proj_file, encoding='utf-8') as f:
+    with open(proj_file, encoding="utf-8") as f:
         content = f.read()
 
     # Generate UUIDs for the file
@@ -19,8 +19,8 @@ def add_file_to_project(proj_file, file_path, group_name="MomentumFinance"):
     # Add file reference
     file_ref_pattern = r"(/\* End PBXFileReference section \*/)"
     file_ref_entry = (
-        f'\t\t{file_ref_uuid} /* {filename} */ = {{isa = PBXFileReference; '
-        f'lastKnownFileType = sourcecode.swift; path = {filename}; '
+        f"\t\t{file_ref_uuid} /* {filename} */ = {{isa = PBXFileReference; "
+        f"lastKnownFileType = sourcecode.swift; path = {filename}; "
         f'sourceTree = "<group>"; }};\n'
     )
     content = re.sub(file_ref_pattern, f"{file_ref_entry}\\1", content)
@@ -43,7 +43,7 @@ def add_file_to_project(proj_file, file_path, group_name="MomentumFinance"):
     sources_entry = f"\t\t\t\t{build_file_uuid} /* {filename} in Sources */,\n"
     content = re.sub(sources_pattern, f"\\1{sources_entry}", content)
 
-    with open(proj_file, "w", encoding='utf-8') as f:
+    with open(proj_file, "w", encoding="utf-8") as f:
         f.write(content)
 
     print(f"Added {filename} to Xcode project")

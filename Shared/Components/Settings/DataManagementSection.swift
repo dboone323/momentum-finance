@@ -4,8 +4,8 @@ public struct DataManagementSection: View {
     @Binding var dataRetentionDays: Int
     @Binding var showingDeleteConfirmation: Bool
 
-    var body: some View {
-        Section(header: Text("Data Management")) {
+    public var body: some View {
+        Section {
             Picker("Keep data for", selection: self.$dataRetentionDays) {
                 Text("30 days").tag(30)
                 Text("90 days").tag(90)
@@ -13,25 +13,27 @@ public struct DataManagementSection: View {
                 Text("Forever").tag(0)
             }
 
-            Button(
-                action: Button(action: { self.showingDeleteConfirmation = true }).accessibilityLabel("Button")
-                    .accessibilityLabel("Button") {
-                        HStack {
-                            Image(systemName: "trash")
-                                .foregroundColor(.red)
-                            Text("Delete All Data")
-                                .foregroundColor(.red)
-                        }
-                    },
-                label: .alert("Delete All Data", isPresented: self.$showingDeleteConfirmation) {
-                    Button("Cancel", role: .cancel).accessibilityLabel("Button").accessibilityLabel("Button") {}
-                    Button("Delete", role: .destructive).accessibilityLabel("Button").accessibilityLabel("Button") {
-                        // Handle data deletion
-                    }
-                } message: {
-                    Text("This action cannot be undone. All your financial data will be permanently deleted.")
+            Button(role: .destructive) {
+                self.showingDeleteConfirmation = true
+            } label: {
+                HStack {
+                    Image(systemName: "trash")
+                    Text("Delete All Data")
                 }
-            )
+                .foregroundColor(.red)
+            }
+            .alert("Delete All Data", isPresented: self.$showingDeleteConfirmation) {
+                Button("Cancel", role: .cancel) {}
+                Button("Delete", role: .destructive) {
+                    // Handle data deletion
+                }
+            } message: {
+                Text(
+                    "This action cannot be undone. All your financial data will be permanently deleted."
+                )
+            }
+        } header: {
+            Text("Data Management")
         }
     }
 }

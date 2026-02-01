@@ -78,7 +78,9 @@ class ProductionSystem:
         # Health check
         health_ok = await self._health_check()
         if not health_ok:
-            raise Exception("Health check failed")  # pylint: disable=broad-exception-raised
+            raise Exception(
+                "Health check failed"
+            )  # pylint: disable=broad-exception-raised
 
         self.is_running = True
         logger.info("✅ Production system deployed successfully")

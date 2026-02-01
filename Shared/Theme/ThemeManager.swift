@@ -1,7 +1,7 @@
-import Observation
-import os
 import OSLog
+import Observation
 import SwiftUI
+import os
 
 //
 //  ThemeManager.swift
@@ -127,7 +127,7 @@ final class ThemeManager {
         #if os(iOS)
             return UIFontMetrics.default.scaledValue(for: 1.0)
         #else
-            return 1.0 // Default for macOS
+            return 1.0  // Default for macOS
         #endif
     }
 
@@ -151,10 +151,11 @@ final class ThemeManager {
 // MARK: - Object Pooling
 
 /// Object pool for performance optimization
-private var objectPool: [Any] = []
+@MainActor private var objectPool: [Any] = []
 private let maxPoolSize = 50
 
 /// Get an object from the pool or create new one
+@MainActor
 private func getPooledObject<T>() -> T? {
     if let pooled = objectPool.popLast() as? T {
         return pooled
@@ -163,6 +164,7 @@ private func getPooledObject<T>() -> T? {
 }
 
 /// Return an object to the pool
+@MainActor
 private func returnToPool(_ object: Any) {
     if objectPool.count < maxPoolSize {
         objectPool.append(object)

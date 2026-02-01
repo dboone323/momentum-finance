@@ -20,7 +20,7 @@ public struct InsightsWidget: View {
         )
     }
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             // Header
             HStack {
@@ -34,10 +34,11 @@ public struct InsightsWidget: View {
                     ProgressView()
                         .scaleEffect(0.8)
                 } else if !self.intelligenceService.insights.isEmpty {
-                    Button(action: { self.showAllInsights = true }).accessibilityLabel("Button") {
-                        Text("View All")
-                            .accessibilityLabel("View All Insights")
+                    Button("View All") {
+                        self.showAllInsights = true
                     }
+                    .accessibilityLabel("View All Insights")
+                    .accessibilityLabel("Button")
                     .font(.caption)
                     .foregroundColor(.blue)
                 }
@@ -62,7 +63,8 @@ public struct InsightsWidget: View {
         .onAppear {
             Task {
                 if self.intelligenceService.insights.isEmpty {
-                    await self.intelligenceService.analyzeFinancialData(modelContext: self.modelContext)
+                    await self.intelligenceService.analyzeFinancialData(
+                        modelContext: self.modelContext)
                 }
             }
         }
@@ -122,10 +124,11 @@ public struct InsightsWidget: View {
 
                     Spacer()
 
-                    Button(action: { self.showAllInsights = true }).accessibilityLabel("Button") {
-                        Text("View All")
-                            .accessibilityLabel("View All Insights")
+                    Button("View All") {
+                        self.showAllInsights = true
                     }
+                    .accessibilityLabel("View All Insights")
+                    .accessibilityLabel("Button")
                     .font(.caption)
                     .foregroundColor(.blue)
                 }
@@ -141,8 +144,8 @@ public struct CompactInsightRow: View {
     let insight: FinancialInsight
     @State private var showDetail = false
 
-    var body: some View {
-        Button(action: { self.showDetail = true }).accessibilityLabel("Button") {
+    public var body: some View {
+        Button(action: { self.showDetail = true }) {
             HStack(spacing: 12) {
                 // Priority indicator
                 RoundedRectangle(cornerRadius: 3)
@@ -157,7 +160,7 @@ public struct CompactInsightRow: View {
                         .foregroundColor(.primary)
                         .lineLimit(1)
 
-                    Text(self.insight.description)
+                    Text(self.insight.insightDescription)
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .lineLimit(2)
