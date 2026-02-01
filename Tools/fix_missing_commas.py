@@ -22,7 +22,7 @@ def fix_commas():
 
         id_regex = re.compile(r"^(\s*[A-Fa-f0-9]{24}\s/\*.*?\*/\s*)")
 
-        for _, line in enumerate(lines):
+        for i, line in enumerate(lines):
             # Clean line ending
             stripped = line.rstrip()
 

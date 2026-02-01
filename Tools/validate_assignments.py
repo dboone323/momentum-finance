@@ -20,7 +20,7 @@ def validate_assignments():
 
         assignment_regex = re.compile(r'^\s*([a-zA-Z0-9_"\./]+|"[^"]+")\s*=\s*(.*)')
 
-        for _, line in enumerate(lines):
+        for i, line in enumerate(lines):
             stripped = line.strip()
             if not stripped:
                 continue
