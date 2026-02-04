@@ -25,17 +25,17 @@ included:
   - .
 
 excluded:
-  - "**/.build"
-  - "**/DerivedData"
-  - "**/.swiftpm"
-  - "**/Pods"
-  - "**/Carthage"
-  - "**/node_modules"
-  - "**/*.generated.swift"
-  - "Tools/Automation"
-  - "**/Automation/**"
-  - "**/automation/**"
-  - "**/Generated/**"
+  - '**/.build'
+  - '**/DerivedData'
+  - '**/.swiftpm'
+  - '**/Pods'
+  - '**/Carthage'
+  - '**/node_modules'
+  - '**/*.generated.swift'
+  - 'Tools/Automation'
+  - '**/Automation/**'
+  - '**/automation/**'
+  - '**/Generated/**'
 
 identifier_name:
   min_length: { warning: 1, error: 1 }

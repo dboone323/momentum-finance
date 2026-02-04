@@ -535,5 +535,6 @@ make validate
 ```
 
 Scripts:
+
 - `.ci/agent_validate.sh`: sets AI env and runs validation
 - `.ci/run_validation.sh`: performs lint/format, tests, and best‑effort remediation via Tools/Automation

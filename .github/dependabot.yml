@@ -1,22 +1,22 @@
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "daily"
-  - package-ecosystem: "docker"
-    directory: "/"
+      interval: 'daily'
+  - package-ecosystem: 'docker'
+    directory: '/'
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
 
   # added by normalize
-  - package-ecosystem: "swift"
-    directory: "/"
+  - package-ecosystem: 'swift'
+    directory: '/'
     schedule:
-      interval: "daily"
+      interval: 'daily'
 
   # added by normalize
-  - package-ecosystem: "gitsubmodule"
-    directory: "/"
+  - package-ecosystem: 'gitsubmodule'
+    directory: '/'
     schedule:
-      interval: "daily"
+      interval: 'daily'
