@@ -1,5 +1,6 @@
 import Foundation
 import SwiftData
+import MomentumFinanceCore
 
 /// Budget forecasting using trend analysis
 @MainActor

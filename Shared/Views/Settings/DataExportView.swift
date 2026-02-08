@@ -1,7 +1,6 @@
 // Momentum Finance - Data Export View
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
-import MomentumFinanceCore
 import SwiftData
 import SwiftUI
 import UniformTypeIdentifiers
@@ -240,10 +239,10 @@ public struct DataExportView: View {
         #endif
 
         do {
-            let exporter = MomentumFinanceCore.DataExporter(modelContainer: modelContext.container)
+            let exporter = DataExporter(modelContainer: modelContext.container)
             let (start, end) = self.getDateRange()
 
-            let exportSettings = MomentumFinanceCore.ExportSettings(
+            let exportSettings = ExportSettings(
                 format: exportFormat,
                 dateRange: dateRange,
                 startDate: start,

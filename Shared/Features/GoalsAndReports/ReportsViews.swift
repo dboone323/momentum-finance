@@ -319,7 +319,7 @@ public struct BudgetPerformanceCard: View {
                                 .font(.caption)
                                 .foregroundColor(.secondary)
 
-                            ForEach(self.overBudgets.prefix(3), id: \.createdDate) { budget in
+                            ForEach(Array(self.overBudgets.prefix(3)), id: \.createdDate) { budget in
                                 HStack {
                                     Text(budget.category?.name ?? "Unknown")
                                         .font(.caption)

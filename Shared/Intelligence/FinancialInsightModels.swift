@@ -1,26 +1,40 @@
 import Foundation
-import MomentumFinanceCore
-import SwiftUI
 
-// FinancialInsightType is used by FinancialInsight (class)
+public struct FinancialInsight: Identifiable, Sendable, Hashable {
+    public let id: UUID
+    public let title: String
+    public let insightDescription: String
+    public let type: FinancialInsightType
 
-public enum FinancialInsightType: String, CaseIterable, Identifiable, Hashable, Sendable {
-    case spendingPattern, anomaly, budget, forecast, optimization, cashManagement,
-        creditUtilization, duplicatePayment
-    public var id: String { rawValue }
-    public var icon: String {
-        switch self {
-        case .spendingPattern: "chart.pie.fill"
-        case .anomaly: "exclamationmark.triangle.fill"
-        case .budget: "chart.bar.fill"
-        case .forecast: "chart.line.uptrend.xyaxis"
-        case .optimization: "lightbulb.fill"
-        case .cashManagement: "banknote"
-        case .creditUtilization: "creditcard.fill"
-        case .duplicatePayment: "repeat"
-        }
+    public init(
+        id: UUID = UUID(),
+        title: String,
+        insightDescription: String,
+        type: FinancialInsightType = .general
+    ) {
+        self.id = id
+        self.title = title
+        self.insightDescription = insightDescription
+        self.type = type
     }
 }
 
-// FinancialInsightPriority might be duplicated if in Root models.
-// Need to check Root first.
+public enum FinancialInsightType: String, CaseIterable, Sendable {
+    case spending
+    case savings
+    case budget
+    case subscription
+    case goal
+    case general
+
+    public var icon: String {
+        switch self {
+        case .spending: "chart.pie.fill"
+        case .savings: "banknote.fill"
+        case .budget: "calendar"
+        case .subscription: "repeat"
+        case .goal: "flag.checkered"
+        case .general: "lightbulb.fill"
+        }
+    }
+}

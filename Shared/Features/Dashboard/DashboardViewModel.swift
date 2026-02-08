@@ -75,7 +75,7 @@ final class DashboardViewModel {
 
     /// Process a single subscription payment
     private func processSubscription(_ subscription: Subscription, modelContext: ModelContext) async {
-        subscription.processPayment(modelContext: modelContext)
+        subscription.processPayment()
 
         do {
             try modelContext.save()

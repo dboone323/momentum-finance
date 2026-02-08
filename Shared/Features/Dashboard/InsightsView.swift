@@ -32,7 +32,7 @@ public struct InsightsView: View {
                         self.insightsContent
                     }
                     .navigationTitle("Financial Insights")
-                    .toolbar {
+                    .toolbar(content: {
                         ToolbarItem(placement: .navigation) {
                             Button("Refresh") {
                                 Task {
@@ -44,7 +44,7 @@ public struct InsightsView: View {
                             .accessibilityLabel("Button")
                             .disabled(self.intelligenceService.isAnalyzing)
                         }
-                    }
+                    })
                 }
             #else
                 NavigationView {

@@ -67,14 +67,14 @@ public struct GlobalSearchView: View {
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
+            .toolbar(content: {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
                         self.dismiss()
                     }
                     .accessibilityLabel("Button")
                 }
-            }
+            })
             .sheet(item: self.$selectedResult) { result in
                 SearchResultDetailView(result: result)
             }
@@ -279,14 +279,14 @@ public struct SearchResultDetailView: View {
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
+            .toolbar(content: {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Done") {
                         self.dismiss()
                     }
                     .accessibilityLabel("Button")
                 }
-            }
+            })
         }
     }
 

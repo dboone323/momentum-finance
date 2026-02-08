@@ -132,6 +132,9 @@ public enum InsightType: String, CaseIterable, Identifiable, Codable {
     case debtManagement
     case taxOptimization
     case emergencyFund
+    case cashManagement
+    case creditUtilization
+    case duplicatePayment
 
     public var id: String { rawValue }
 
@@ -153,6 +156,9 @@ public enum InsightType: String, CaseIterable, Identifiable, Codable {
         case .debtManagement: "creditcard"
         case .taxOptimization: "doc.text"
         case .emergencyFund: "shield"
+        case .cashManagement: "banknote"
+        case .creditUtilization: "creditcard.fill"
+        case .duplicatePayment: "repeat"
         }
     }
 
@@ -165,6 +171,9 @@ public enum InsightType: String, CaseIterable, Identifiable, Codable {
         case .riskAlert, .emergencyFund: .risk
         case .savingsOpportunity, .investmentAdvice: .wealth
         case .debtManagement, .taxOptimization: .financial
+        case .cashManagement: .wealth
+        case .creditUtilization: .risk
+        case .duplicatePayment: .spending
         }
     }
 }

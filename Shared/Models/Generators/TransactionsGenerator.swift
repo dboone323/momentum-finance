@@ -1,5 +1,6 @@
 import Foundation
 import SwiftData
+import MomentumFinanceCore
 
 /// Transactions data generator
 @MainActor

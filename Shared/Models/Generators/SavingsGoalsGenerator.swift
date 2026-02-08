@@ -1,5 +1,6 @@
 import Foundation
 import SwiftData
+import MomentumFinanceCore
 
 /// Savings goals data generator
 @MainActor

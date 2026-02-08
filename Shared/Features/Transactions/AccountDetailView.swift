@@ -52,7 +52,7 @@ public struct AccountDetailView: View {
         // Populate transactions from the provided account relationship if available.
         // This avoids using the SwiftData @Query attribute which may not be available
         // on all toolchains in this workspace.
-        self.transactions = account.transactions
+        self.transactions = account.transactions ?? []
     }
 
     var filteredTransactions: [FinancialTransaction] {

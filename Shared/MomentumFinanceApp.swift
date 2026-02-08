@@ -1,5 +1,5 @@
 import Foundation
-@_exported import MomentumFinanceCore
+import MomentumFinanceCore
 import os
 import SwiftData
 import SwiftUI

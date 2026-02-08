@@ -125,3 +125,17 @@ public struct ValidationError: Identifiable, Codable {
         }
     }
 }
+
+public struct ImportResult: Sendable {
+    public let success: Bool
+    public let itemsImported: Int
+    public let errors: [String]
+    public let warnings: [String]
+
+    public init(success: Bool, itemsImported: Int, errors: [String] = [], warnings: [String] = []) {
+        self.success = success
+        self.itemsImported = itemsImported
+        self.errors = errors
+        self.warnings = warnings
+    }
+}

@@ -201,11 +201,12 @@ public struct SavingsGoalDetailView: View {
                             .foregroundColor(self.goal.isCompleted ? .green : .blue)
                     }
 
-                    let targetDate = goal.targetDate
+                    let targetDate = goal.targetDate?.formatted(date: .long, time: .omitted) ??
+                        "No target date"
                     HStack {
                         Text("Target Date")
                         Spacer()
-                        Text(targetDate.formatted(date: .long, time: .omitted))
+                        Text(targetDate)
                             .foregroundColor(.secondary)
                     }
 

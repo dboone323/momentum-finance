@@ -1,5 +1,6 @@
 import Foundation
 import SwiftData
+import MomentumFinanceCore
 
 /// Accounts data generator
 @MainActor

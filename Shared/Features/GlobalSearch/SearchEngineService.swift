@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import SwiftData
+// import MomentumFinanceCore
 
 @MainActor
 public final class SearchEngineService: ObservableObject {
@@ -90,7 +91,7 @@ public final class SearchEngineService: ObservableObject {
     }
 
     private func searchSubscriptions(_ query: String) -> [SearchResult] {
-        let descriptor = FetchDescriptor<MomentumFinanceCore.Subscription>()
+        let descriptor = FetchDescriptor<Subscription>()
         guard let subscriptions = try? modelContext.fetch(descriptor) else { return [] }
 
         return subscriptions.compactMap { subscription in

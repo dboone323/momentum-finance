@@ -1,10 +1,3 @@
-import MomentumFinanceCore
-import SwiftUI
-
-#if canImport(AppKit)
-    import AppKit
-#endif
-
 //
 //  SubscriptionsView.swift
 //  MomentumFinance
@@ -13,8 +6,15 @@ import SwiftUI
 //  Copyright © 2025 Daniel Stevens. All rights reserved.
 //
 
+import MomentumFinanceCore
+import SwiftData
+import SwiftUI
+
+#if canImport(AppKit)
+    import AppKit
+#endif
 #if canImport(UIKit)
-#elseif canImport(AppKit)
+    import UIKit
 #endif
 
 extension Features.Subscriptions {
@@ -158,6 +158,8 @@ extension Features.Subscriptions {
         }
     }
 
+
+
     // MARK: - Content View
 
     private struct SubscriptionContentView: View {
@@ -238,16 +240,6 @@ extension Features.Subscriptions {
                 return Color(NSColor.controlBackgroundColor)
             #else
                 return Color.white
-            #endif
-        }
-
-        private var secondaryBackgroundColor: Color {
-            #if canImport(UIKit)
-                return Color(UIColor.systemGroupedBackground)
-            #elseif canImport(AppKit)
-                return Color(NSColor.controlBackgroundColor)
-            #else
-                return Color.gray.opacity(0.1)
             #endif
         }
 
@@ -345,5 +337,110 @@ extension Features.Subscriptions {
                 self.accounts = accounts
             #endif
         }
+    }
+
+
+}
+
+// MARK: - Placeholder Views
+
+private struct SubscriptionRowView: View {
+    let subscription: Subscription
+
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(subscription.name)
+                    .font(.headline)
+                Text(subscription.billingCycle.rawValue.capitalized)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
+            Text(subscription.amount, format: .currency(code: "USD"))
+                .font(.subheadline)
+        }
+        .padding()
+        .background(platformBackgroundColor())
+        .cornerRadius(10)
+    }
+}
+
+private struct AddSubscriptionView: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
+
+    @State private var name: String = ""
+    @State private var amount: String = ""
+    @State private var billingCycle: BillingCycle = .monthly
+    @State private var nextDueDate: Date = .init()
+    @State private var provider: String = ""
+    @State private var isActive: Bool = true
+    @State private var notes: String = ""
+    @State private var error: String?
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section("Details") {
+                    TextField("Name", text: self.$name)
+                    TextField("Provider", text: self.$provider)
+                    TextField("Amount", text: self.$amount)
+                        .keyboardType(.decimalPad)
+                    Picker("Billing Cycle", selection: self.$billingCycle) {
+                        ForEach(BillingCycle.allCases, id: \.self) { cycle in
+                            Text(cycle.rawValue.capitalized).tag(cycle)
+                        }
+                    }
+                    DatePicker("Next Due Date", selection: self.$nextDueDate, displayedComponents: .date)
+                    Toggle("Active", isOn: self.$isActive)
+                    TextField("Notes", text: self.$notes, axis: .vertical)
+                }
+
+                if let error {
+                    Section {
+                        Text(error)
+                            .foregroundColor(.red)
+                    }
+                }
+
+                Section {
+                    Button("Save Subscription") { self.save() }
+                        .disabled(!self.canSave)
+                }
+            }
+            .navigationTitle("Add Subscription")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { self.dismiss() }
+                }
+            }
+        }
+    }
+
+    private var canSave: Bool {
+        !self.name.trimmingCharacters(in: .whitespaces).isEmpty
+            && Double(self.amount) != nil
+    }
+
+    private func save() {
+        guard let amountValue = Double(self.amount) else {
+            self.error = "Amount must be a number"
+            return
+        }
+
+        let subscription = Subscription(
+            name: self.name.trimmingCharacters(in: .whitespaces),
+            amount: amountValue,
+            provider: self.provider,
+            billingCycle: self.billingCycle,
+            nextDueDate: self.nextDueDate,
+            isActive: self.isActive,
+            notes: self.notes.isEmpty ? nil : self.notes
+        )
+
+        self.modelContext.insert(subscription)
+        try? self.modelContext.save()
+        self.dismiss()
     }
 }

@@ -85,7 +85,6 @@
 		A0CORE2B2F0ABCDE00000001 /* SampleDataProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B532C0D1E9100123456 /* SampleDataProviders.swift */; };
 		A0CORE2D2F0ABCDE00000001 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B5B2C0D1E9100123456 /* Logger.swift */; };
 		A0CORE2E2F0ABCDE00000001 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B592C0D1E9100123456 /* ErrorHandler.swift */; };
-		A0CORE312F0ABCDE00000001 /* ExportTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CORE302F0ABCDE00000001 /* ExportTypes.swift */; };
 		A0CORE322F0ABCDE00000001 /* MomentumFinanceCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CORE102F0ABCDE00000001 /* MomentumFinanceCore.framework */; };
 		A0TEST022F0ABCDE00000001 /* DataExporterDateRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0TEST032F0ABCDE00000001 /* DataExporterDateRangeTests.swift */; };
 		A0TEST042F0ABCDE00000001 /* DataImporterErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0TEST052F0ABCDE00000001 /* DataImporterErrorTests.swift */; };
@@ -260,7 +259,6 @@
 		A00110102F0ABCDE00000001 /* BreadcrumbNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Navigation/BreadcrumbNavigation.swift; sourceTree = SOURCE_ROOT; };
 		A0CORE012F0ABCDE00000001 /* CoreExports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceCore/CoreExports.swift; sourceTree = SOURCE_ROOT; };
 		A0CORE102F0ABCDE00000001 /* MomentumFinanceCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MomentumFinanceCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0CORE302F0ABCDE00000001 /* ExportTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Utils/ExportTypes.swift; sourceTree = SOURCE_ROOT; };
 		A0TEST002F0ABCDE00000001 /* CSVParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/CSVParserTests.swift; sourceTree = SOURCE_ROOT; };
 		A0TEST032F0ABCDE00000001 /* DataExporterDateRangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/DataExporterDateRangeTests.swift; sourceTree = SOURCE_ROOT; };
 		A0TEST052F0ABCDE00000001 /* DataImporterErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/DataImporterErrorTests.swift; sourceTree = SOURCE_ROOT; };
@@ -637,7 +635,6 @@
 			isa = PBXGroup;
 			children = (
 				681809752DF34D4F00EB877A /* HapticManager.swift */,
-				A0CORE302F0ABCDE00000001 /* ExportTypes.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -902,7 +899,6 @@
 				A0CORE2B2F0ABCDE00000001 /* SampleDataProviders.swift in Sources */,
 				A0CORE2D2F0ABCDE00000001 /* Logger.swift in Sources */,
 				A0CORE2E2F0ABCDE00000001 /* ErrorHandler.swift in Sources */,
-				A0CORE312F0ABCDE00000001 /* ExportTypes.swift in Sources */,
 			);
 		};
 		A0TEST122F0ABCDE00000001 /* Sources */ = {

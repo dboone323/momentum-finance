@@ -17,6 +17,11 @@ DerivedData/
 *.ipa
 *.xcarchive
 
+# Xcode backup artifacts
+*.pbxproj.backup*
+*.xcodeproj.backup_*/
+build_log_*.txt
+
 # Swift Package Manager
 .build/
 Packages/

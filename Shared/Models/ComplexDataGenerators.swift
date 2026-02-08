@@ -3,6 +3,7 @@
 
 import Foundation
 import SwiftData
+import MomentumFinanceCore
 
 /// Generates sample transactions for testing and demo purposes.
 @MainActor

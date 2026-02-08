@@ -285,7 +285,7 @@ struct MonthlySpending {
 }
 
 struct BudgetRolloverSummary {
-    let budgetId: UUID
+    let budgetId: PersistentIdentifier
     let unusedAmount: Double
     let potentialRollover: Double
     let rolloverEnabled: Bool

@@ -218,7 +218,7 @@ extension Features.Subscriptions {
                         }
                         .accessibilityLabel("Cancel")
                         Button("Process Payment") {
-                            subscription.processPayment(modelContext: self.modelContext)
+                            subscription.processPayment()
                         }
                         .accessibilityLabel("Process Payment")
                     } message: {
@@ -239,14 +239,14 @@ extension Features.Subscriptions {
 
         private func billingFrequencyText(_ cycle: BillingCycle) -> String {
             switch cycle {
+            case .daily:
+                "Billed Daily"
             case .weekly:
                 "Billed Weekly"
             case .monthly:
                 "Billed Monthly"
             case .yearly:
                 "Billed Yearly"
-            case .daily:
-                "Billed Daily"
             case .quarterly:
                 "Billed Quarterly"
             }

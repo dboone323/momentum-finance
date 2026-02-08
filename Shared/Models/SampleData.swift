@@ -2,6 +2,7 @@ import Foundation
 import os.log
 import OSLog
 import SwiftData
+import MomentumFinanceCore
 
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.

@@ -64,8 +64,9 @@ public struct SavingsGoalCard: View {
                         .font(.headline)
                         .fontWeight(.semibold)
 
-                    let targetDate = goal.targetDate
-                    Text("Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))")
+                    let targetText = goal.targetDate?
+                        .formatted(date: .abbreviated, time: .omitted) ?? "No target date"
+                    Text("Target: \(targetText)")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }

@@ -88,7 +88,7 @@ final class SubscriptionsViewModel {
         let overdue = self.overdueSubscriptions(subscriptions)
 
         for subscription in overdue {
-            subscription.processPayment(modelContext: modelContext)
+            subscription.processPayment()
         }
 
         try? modelContext.save()

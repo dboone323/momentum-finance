@@ -3,7 +3,7 @@
 # Created for Momentum Finance App
 
 # Define paths
-PROJECT_FILE="/Users/danielstevens/Desktop/MomentumFinaceApp/MomentumFinance.xcodeproj/project.pbxproj"
+PROJECT_FILE="/Users/danielstevens/github-projects/tools-automation/MomentumFinance/MomentumFinance.xcodeproj/project.pbxproj"
 BACKUP_FILE="${PROJECT_FILE}.backup_$(date +%s)"
 
 # Backup current project file
@@ -12,21 +12,11 @@ echo "Project file backed up to: ${BACKUP_FILE}"
 
 # List of missing files to add
 declare -a MISSING_FILES=(
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Utils/DataImporter.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Views/Settings/DataImportView.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Views/Settings/DataExportView.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Utils/HapticManager.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Features/NotificationCenterView.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Features/GoalsAndReports/GoalsAndReportsView_New.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Features/GoalsAndReports/EnhancedGoalsSectionViews.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Features/Subscriptions/SubscriptionManagementViews.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Features/Subscriptions/SubscriptionSummaryViews.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Features/Subscriptions/SubscriptionRowViews.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Features/Subscriptions/SubscriptionsView_New.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Features/GlobalSearchView.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Features/NotificationsView.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Navigation/NavigationCoordinator_Enhanced.swift"
-	"/Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Utilities/NotificationManager.swift"
+    "/Users/danielstevens/github-projects/tools-automation/MomentumFinance/Sources/MomentumFinanceCore/DataExporter.swift"
+    "/Users/danielstevens/github-projects/tools-automation/MomentumFinance/Sources/MomentumFinanceCore/DataImporter.swift"
+    "/Users/danielstevens/github-projects/tools-automation/MomentumFinance/Sources/MomentumFinanceCore/ImportExportTypes.swift"
+    "/Users/danielstevens/github-projects/tools-automation/MomentumFinance/Sources/MomentumFinanceCore/CSVParsing.swift"
+	"/Users/danielstevens/github-projects/tools-automation/MomentumFinance/Shared/Features/Dashboard/InsightsFilterBar.swift"
 )
 
 echo "Preparing to add missing files to Xcode project..."
