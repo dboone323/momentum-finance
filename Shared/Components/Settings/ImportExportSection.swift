@@ -71,10 +71,11 @@ public struct ImportExportSection: View {
     private func shareExportedFile(_ url: URL) {
         #if os(iOS)
             let activityVC = UIActivityViewController(
-                activityItems: [url], applicationActivities: nil)
+                activityItems: [url], applicationActivities: nil
+            )
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                let window = windowScene.windows.first,
-                let rootVC = window.rootViewController
+               let window = windowScene.windows.first,
+               let rootVC = window.rootViewController
             {
                 rootVC.present(activityVC, animated: true)
             }

@@ -5,8 +5,8 @@
 // Tests for multi-currency support and exchange rates
 //
 
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 final class CurrencyServiceTests: XCTestCase {
     var service: CurrencyService!

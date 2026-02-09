@@ -107,9 +107,9 @@ public struct AddTransactionView: View {
                 Section("Transaction Details") {
                     TextField("Title", text: self.$title).accessibilityLabel("Text Field")
                     TextField("Amount", text: self.$amount).accessibilityLabel("Text Field")
-                        #if os(iOS)
-                            .keyboardType(.decimalPad)
-                        #endif
+                    #if os(iOS)
+                        .keyboardType(.decimalPad)
+                    #endif
                     Picker("Type", selection: self.$transactionType) {
                         Text("Income").tag(TransactionType.income)
                         Text("Expense").tag(TransactionType.expense)

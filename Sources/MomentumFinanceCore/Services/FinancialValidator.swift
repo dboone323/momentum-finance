@@ -7,7 +7,8 @@
 
 import Foundation
 
-@MainActor class FinancialValidator {
+@MainActor
+class FinancialValidator {
     @MainActor static let shared = FinancialValidator()
 
     enum ValidationError: Error {

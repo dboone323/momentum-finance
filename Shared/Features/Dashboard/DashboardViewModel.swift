@@ -1,10 +1,10 @@
 import Foundation
 import MomentumFinanceCore
-import OSLog
 import Observation
+import os
+import OSLog
 import SwiftData
 import SwiftUI
-import os
 
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
@@ -14,7 +14,8 @@ import os
 final class DashboardViewModel {
     private var modelContext: ModelContext?
     private let logger = OSLog(
-        subsystem: Bundle.main.bundleIdentifier ?? "MomentumFinance", category: "Dashboard")
+        subsystem: Bundle.main.bundleIdentifier ?? "MomentumFinance", category: "Dashboard"
+    )
 
     /// <#Description#>
     /// - Returns: <#description#>
@@ -78,8 +79,7 @@ final class DashboardViewModel {
     }
 
     /// Process a single subscription payment
-    private func processSubscription(_ subscription: Subscription, modelContext: ModelContext) async
-    {
+    private func processSubscription(_ subscription: Subscription, modelContext: ModelContext) async {
         subscription.processPayment(modelContext: modelContext)
 
         do {
@@ -128,13 +128,13 @@ final class DashboardViewModel {
 
         let income =
             currentMonthTransactions
-            .filter { $0.transactionType == .income }
-            .reduce(0) { $0 + $1.amount }
+                .filter { $0.transactionType == .income }
+                .reduce(0) { $0 + $1.amount }
 
         let expenses =
             currentMonthTransactions
-            .filter { $0.transactionType == .expense }
-            .reduce(0) { $0 + $1.amount }
+                .filter { $0.transactionType == .expense }
+                .reduce(0) { $0 + $1.amount }
 
         return income - expenses
     }

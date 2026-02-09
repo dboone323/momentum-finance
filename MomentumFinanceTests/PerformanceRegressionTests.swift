@@ -1,6 +1,6 @@
-@testable import MomentumFinance
 import SwiftData
 import XCTest
+@testable import MomentumFinance
 
 /// Performance regression tests to track app performance over time
 final class PerformanceRegressionTests: XCTestCase {

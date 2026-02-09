@@ -7,7 +7,8 @@
 
 import Foundation
 
-@MainActor public final class DataAnonymizer: Sendable {
+@MainActor
+public final class DataAnonymizer: Sendable {
     @MainActor public static let shared = DataAnonymizer()
 
     private init() {}
@@ -21,9 +22,9 @@ import Foundation
         // Return a copy with sensitive fields redacted
         CoreTransaction(
             id: transaction.id,
-            amount: transaction.amount,  // Keep amount for math checks
+            amount: transaction.amount, // Keep amount for math checks
             date: transaction.date,
-            note: "REDACTED",  // Redact notes as they may contain PII
+            note: "REDACTED", // Redact notes as they may contain PII
             categoryId: transaction.categoryId,
             accountId: transaction.accountId
         )
@@ -37,7 +38,7 @@ import Foundation
     public func anonymizeAccount(_ account: CoreAccount) -> CoreAccount {
         CoreAccount(
             id: account.id,
-            name: "Account \(account.id.uuidString.prefix(4))",  // Use partial UUID for recognition
+            name: "Account \(account.id.uuidString.prefix(4))", // Use partial UUID for recognition
             balance: account.balance,
             type: account.type
         )
@@ -49,7 +50,7 @@ import Foundation
      - Returns: Array of anonymized transactions.
      */
     public func anonymizeTransactions(_ transactions: [CoreTransaction]) -> [CoreTransaction] {
-        return transactions.map { self.anonymizeTransaction($0) }
+        transactions.map { self.anonymizeTransaction($0) }
     }
 
     /**
@@ -58,6 +59,6 @@ import Foundation
      - Returns: Array of anonymized accounts.
      */
     public func anonymizeAccounts(_ accounts: [CoreAccount]) -> [CoreAccount] {
-        return accounts.map { self.anonymizeAccount($0) }
+        accounts.map { self.anonymizeAccount($0) }
     }
 }

@@ -16,7 +16,7 @@ extension FinancialIntelligenceService {
         let monthlyPairs = fi_monthlyNetCashFlow(transactions)
         let sortedMonths = monthlyPairs
         if sortedMonths.count >= 3 {
-            let values = sortedMonths.map { $0.1 }
+            let values = sortedMonths.map(\.1)
             let trend = fi_trendAndForecast(values: values)
 
             if let nextMonthForecast = trend.nextForecast {
@@ -42,7 +42,7 @@ extension FinancialIntelligenceService {
                 var forecastLabels = lastMonths
 
                 if let lastDate = sortedMonths.last?.0,
-                    let nextMonth = calendar.date(byAdding: .month, value: 1, to: lastDate)
+                   let nextMonth = calendar.date(byAdding: .month, value: 1, to: lastDate)
                 {
                     forecastLabels.append(fi_formatMonthAbbrev(nextMonth))
                 }
@@ -143,7 +143,8 @@ extension FinancialIntelligenceService {
             priority = .medium
             let growthPerMonth = fi_formatCurrency(
                 Double(truncating: averageMonthlyChange as NSDecimalNumber),
-                code: account.currencyCode)
+                code: account.currencyCode
+            )
             description =
                 "Your \(account.name) balance is growing by approximately \(growthPerMonth) per month."
         } else {

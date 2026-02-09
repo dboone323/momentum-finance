@@ -7,7 +7,8 @@
 
 import LocalAuthentication
 
-@MainActor class BiometricAuth: ObservableObject {
+@MainActor
+class BiometricAuth: ObservableObject {
     @MainActor static let shared = BiometricAuth()
     @Published var isUnlocked = false
 

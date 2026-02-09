@@ -1,6 +1,6 @@
-@testable import MomentumFinance
 import OSLog
 import XCTest
+@testable import MomentumFinance
 
 @MainActor
 final class AppLoggerTests: XCTestCase {

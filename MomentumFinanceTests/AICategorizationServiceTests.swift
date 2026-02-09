@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 final class AICategorizationServiceTests: XCTestCase {
     // Mock categories for testing
@@ -16,9 +16,15 @@ final class AICategorizationServiceTests: XCTestCase {
 
     func testPredictCategory_KeywordMatch() {
         // Direct keyword matches
-        XCTAssertEqual(AICategorizationService.predictCategory(for: "Starbucks Coffee", categories: allCategories), food)
+        XCTAssertEqual(
+            AICategorizationService.predictCategory(for: "Starbucks Coffee", categories: allCategories),
+            food
+        )
         XCTAssertEqual(AICategorizationService.predictCategory(for: "Uber Trip", categories: allCategories), transport)
-        XCTAssertEqual(AICategorizationService.predictCategory(for: "Comcast Bill", categories: allCategories), utilities)
+        XCTAssertEqual(
+            AICategorizationService.predictCategory(for: "Comcast Bill", categories: allCategories),
+            utilities
+        )
     }
 
     func testPredictCategory_CaseInsensitive() {
@@ -29,7 +35,10 @@ final class AICategorizationServiceTests: XCTestCase {
     func testPredictCategory_CategoryNameMatch() {
         // Fallback to name heuristic
         XCTAssertEqual(AICategorizationService.predictCategory(for: "My Food expense", categories: allCategories), food)
-        XCTAssertEqual(AICategorizationService.predictCategory(for: "Utilities payment", categories: allCategories), utilities)
+        XCTAssertEqual(
+            AICategorizationService.predictCategory(for: "Utilities payment", categories: allCategories),
+            utilities
+        )
     }
 
     func testPredictCategory_NoMatch() {

@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class FormattingUtilitiesTests: XCTestCase {
     // Test case for fi_formatCurrency with optional currency code

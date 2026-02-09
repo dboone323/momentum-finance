@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class AccountDetailViewTests: XCTestCase {
     var account: FinancialAccount!

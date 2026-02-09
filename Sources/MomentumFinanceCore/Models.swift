@@ -70,7 +70,7 @@ public struct CoreAccount: Identifiable {
 public final class FinancialTransaction: Encodable {
     enum CodingKeys: String, CodingKey {
         case title, amount, date, transactionType, notes, isReconciled, isRecurring, location,
-            subcategory, category, account, currencyCode
+             subcategory, category, account, currencyCode
     }
 
     public var title: String
@@ -262,9 +262,9 @@ public final class ExpenseCategory: Hashable, Encodable {
         else { return 0 }
         return
             transactions
-            .filter { $0.transactionType == .expense }
-            .filter { $0.date >= startOfMonth && $0.date < endOfMonth }
-            .reduce(0) { $0 + $1.amount }
+                .filter { $0.transactionType == .expense }
+                .filter { $0.date >= startOfMonth && $0.date < endOfMonth }
+                .reduce(0) { $0 + $1.amount }
     }
 }
 
@@ -272,7 +272,7 @@ public final class ExpenseCategory: Hashable, Encodable {
 public final class Budget: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, name, limitAmount, month, createdDate, rolloverEnabled, rolledOverAmount,
-            maxRolloverPercentage, currencyCode
+             maxRolloverPercentage, currencyCode
     }
 
     public var id: UUID
@@ -361,7 +361,7 @@ public final class Budget: Encodable {
 public final class Subscription: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, name, provider, amount, currencyCode, billingCycle, startDate, nextDueDate, notes,
-            paymentMethod, isActive, autoRenews
+             paymentMethod, isActive, autoRenews
     }
 
     public var id: UUID
@@ -421,13 +421,12 @@ public final class Subscription: Encodable {
 
         // Update next due date
         let calendar = Calendar.current
-        let component: Calendar.Component
-        switch billingCycle {
-        case .daily: component = .day
-        case .weekly: component = .weekday
-        case .monthly: component = .month
-        case .quarterly: component = .month
-        case .yearly: component = .year
+        let component: Calendar.Component = switch billingCycle {
+        case .daily: .day
+        case .weekly: .weekday
+        case .monthly: .month
+        case .quarterly: .month
+        case .yearly: .year
         }
 
         let value = billingCycle == .quarterly ? 3 : 1
@@ -453,11 +452,11 @@ public final class Subscription: Encodable {
 
     public var monthlyEquivalent: Decimal {
         switch billingCycle {
-        case .daily: return amount * 30
-        case .weekly: return amount * Decimal(4.33)
-        case .monthly: return amount
-        case .quarterly: return amount / 3
-        case .yearly: return amount / 12
+        case .daily: amount * 30
+        case .weekly: amount * Decimal(4.33)
+        case .monthly: amount
+        case .quarterly: amount / 3
+        case .yearly: amount / 12
         }
     }
 }

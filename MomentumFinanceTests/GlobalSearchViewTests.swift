@@ -1,6 +1,6 @@
-@testable import MomentumFinance
 import SwiftData
 import XCTest
+@testable import MomentumFinance
 
 class GlobalSearchViewTests: XCTestCase {
     var sut: GlobalSearchView!

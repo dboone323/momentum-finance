@@ -6,9 +6,9 @@
 //
 
 import CryptoKit
-@testable import MomentumFinance
 import Security
 import XCTest
+@testable import MomentumFinance
 
 final class SSLPinningTests: XCTestCase {
     var pinningManager: SSLPinningManager!

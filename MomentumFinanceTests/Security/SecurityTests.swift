@@ -183,7 +183,7 @@ final class SecurityTests: XCTestCase {
 
         // Invalid amounts
         XCTAssertThrowsError(try validator.validateAmount("not-a-number"))
-        XCTAssertThrowsError(try validator.validateAmount("$1,000,000,000,000.00"))  // Too large
+        XCTAssertThrowsError(try validator.validateAmount("$1,000,000,000,000.00")) // Too large
     }
 
     func testValidateAccountNumber() {
@@ -195,24 +195,24 @@ final class SecurityTests: XCTestCase {
         XCTAssertTrue(validator.isValidAccountNumber("1234-5678-9012"))
 
         // Invalid account numbers
-        XCTAssertFalse(validator.isValidAccountNumber("123"))  // Too short
-        XCTAssertFalse(validator.isValidAccountNumber("123456789012345678"))  // Too long
-        XCTAssertFalse(validator.isValidAccountNumber("ABCD1234"))  // Contains letters
+        XCTAssertFalse(validator.isValidAccountNumber("123")) // Too short
+        XCTAssertFalse(validator.isValidAccountNumber("123456789012345678")) // Too long
+        XCTAssertFalse(validator.isValidAccountNumber("ABCD1234")) // Contains letters
     }
 
     func testValidateRoutingNumber() {
         let validator = InputValidator.shared
 
         // Valid routing numbers (with correct checksum)
-        XCTAssertTrue(validator.isValidRoutingNumber("021000021"))  // Chase
-        XCTAssertTrue(validator.isValidRoutingNumber("011103093"))  // Bank of America
+        XCTAssertTrue(validator.isValidRoutingNumber("021000021")) // Chase
+        XCTAssertTrue(validator.isValidRoutingNumber("011103093")) // Bank of America
 
         // Invalid checksum
         XCTAssertFalse(validator.isValidRoutingNumber("123456789"))
 
         // Invalid format
-        XCTAssertFalse(validator.isValidRoutingNumber("12345"))  // Too short
-        XCTAssertFalse(validator.isValidRoutingNumber("ABC123456"))  // Contains letters
+        XCTAssertFalse(validator.isValidRoutingNumber("12345")) // Too short
+        XCTAssertFalse(validator.isValidRoutingNumber("ABC123456")) // Contains letters
     }
 
     func testSQLInjectionDetection() {
@@ -258,7 +258,8 @@ final class SecurityTests: XCTestCase {
         XCTAssertFalse(sanitizedXSS.contains("<script>"), "Should escape script tags")
         XCTAssertTrue(
             sanitizedXSS.contains("&lt;") || sanitizedXSS.contains("&gt;"),
-            "Should use HTML entities")
+            "Should use HTML entities"
+        )
     }
 
     func testEmailValidation() {
@@ -367,7 +368,8 @@ final class SecurityTests: XCTestCase {
         // Validate input
         let accountNumber = "123456789"
         XCTAssertTrue(
-            validator.isValidAccountNumber(accountNumber), "Should validate account number")
+            validator.isValidAccountNumber(accountNumber), "Should validate account number"
+        )
 
         // Sanitize (in case of user input)
         let sanitized = validator.sanitize(accountNumber)

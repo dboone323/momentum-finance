@@ -286,7 +286,8 @@ public struct BudgetNotificationScheduler {
                 )
             } else {
                 os_log(
-                    "Scheduled rollover opportunity for %@", log: logger, type: .info, categoryName)
+                    "Scheduled rollover opportunity for %@", log: logger, type: .info, categoryName
+                )
             }
         }
     }
@@ -364,7 +365,8 @@ public struct BudgetNotificationScheduler {
                 )
             } else {
                 os_log(
-                    "Scheduled spending prediction for %@", log: logger, type: .info, categoryName)
+                    "Scheduled spending prediction for %@", log: logger, type: .info, categoryName
+                )
             }
         }
     }
@@ -403,7 +405,8 @@ public struct BudgetNotificationScheduler {
                 )
             } else {
                 os_log(
-                    "Scheduled spending spike alert for %@", log: logger, type: .info, categoryName)
+                    "Scheduled spending spike alert for %@", log: logger, type: .info, categoryName
+                )
             }
         }
     }
@@ -435,7 +438,7 @@ public struct BudgetNotificationScheduler {
 
         return
             "Based on your current spending, you may overspend your \(categoryName) budget by "
-            + "\(overspendFormatted) in \(daysRemaining) days. Predicted total: \(predictedFormatted) of \(limitFormatted)."
+                + "\(overspendFormatted) in \(daysRemaining) days. Predicted total: \(predictedFormatted) of \(limitFormatted)."
     }
 
     /// Creates a spending spike alert message
@@ -457,7 +460,7 @@ public struct BudgetNotificationScheduler {
 
         // Check recent transactions for spikes (simplified logic)
         // This would need access to transaction data to implement properly
-        return false  // Placeholder - would need transaction analysis
+        return false // Placeholder - would need transaction analysis
     }
 
     /// Schedules rollover opportunity notifications for multiple budgets

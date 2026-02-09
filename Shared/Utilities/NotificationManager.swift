@@ -1,9 +1,9 @@
 import Foundation
 import MomentumFinanceCore
+import os
 import OSLog
 import SwiftData
 @preconcurrency import UserNotifications
-import os
 
 //
 //  NotificationManager.swift
@@ -108,10 +108,10 @@ public class NotificationManager: ObservableObject {
             let requests = await center.pendingNotificationRequests()
             let identifiersToRemove =
                 requests
-                .filter { request in
-                    (request.content.userInfo["type"] as? String) == type
-                }
-                .map(\.identifier)
+                    .filter { request in
+                        (request.content.userInfo["type"] as? String) == type
+                    }
+                    .map(\.identifier)
 
             self.center.removePendingNotificationRequests(withIdentifiers: identifiersToRemove)
         }

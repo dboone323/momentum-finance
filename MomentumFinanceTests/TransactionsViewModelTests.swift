@@ -1,6 +1,6 @@
-@testable import MomentumFinance
 import SwiftData
 import XCTest
+@testable import MomentumFinance
 
 @MainActor
 class TransactionsViewModelTests: XCTestCase {
@@ -10,7 +10,12 @@ class TransactionsViewModelTests: XCTestCase {
 
     override func setUp() async throws {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        modelContainer = try ModelContainer(for: FinancialTransaction.self, ExpenseCategory.self, FinancialAccount.self, configurations: config)
+        modelContainer = try ModelContainer(
+            for: FinancialTransaction.self,
+            ExpenseCategory.self,
+            FinancialAccount.self,
+            configurations: config
+        )
         modelContext = ModelContext(modelContainer)
         viewModel = Features.Transactions.TransactionsViewModel()
         viewModel.setModelContext(modelContext)

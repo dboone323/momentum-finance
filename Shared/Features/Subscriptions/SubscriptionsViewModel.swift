@@ -67,7 +67,7 @@ final class SubscriptionsViewModel {
                     case .daily:
                         subscriptionAmount * 30.0
                     case .weekly:
-                        subscriptionAmount * 4.33  // Average weeks per month
+                        subscriptionAmount * 4.33 // Average weeks per month
                     case .monthly:
                         subscriptionAmount
                     case .quarterly:

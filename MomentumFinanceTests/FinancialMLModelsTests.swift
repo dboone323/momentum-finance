@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 @MainActor
 class FinancialMLModelsTests: XCTestCase {
@@ -86,8 +86,18 @@ class FinancialMLModelsTests: XCTestCase {
 
     // Test case for classifyTransaction
     func testClassifyTransaction() {
-        let transaction1 = FinancialTransaction(title: "Grocery", amount: -50.0, date: Date(), transactionType: .expense)
-        let transaction2 = FinancialTransaction(title: "Shopping", amount: 300.0, date: Date(), transactionType: .expense)
+        let transaction1 = FinancialTransaction(
+            title: "Grocery",
+            amount: -50.0,
+            date: Date(),
+            transactionType: .expense
+        )
+        let transaction2 = FinancialTransaction(
+            title: "Shopping",
+            amount: 300.0,
+            date: Date(),
+            transactionType: .expense
+        )
 
         XCTAssertEqual(
             financialMLModels.classifyTransaction(transaction1),

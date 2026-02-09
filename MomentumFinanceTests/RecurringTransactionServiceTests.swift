@@ -5,8 +5,8 @@
 // Tests for recurring transaction processing
 //
 
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 final class RecurringTransactionServiceTests: XCTestCase {
     var service: RecurringTransactionService!

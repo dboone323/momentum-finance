@@ -16,7 +16,7 @@ public final class SessionManager: Sendable {
     // MARK: - Properties
 
     /// The date of the last user interaction
-    private var lastInteractionDate: Date = Date()
+    private var lastInteractionDate: Date = .init()
 
     /// The timeout duration in seconds (default: 5 minutes)
     public var sessionTimeout: TimeInterval = 300

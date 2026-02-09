@@ -74,8 +74,8 @@ extension Features.Transactions {
 
             return
                 filteredTransactions
-                .filter { $0.transactionType == .income }
-                .reduce(Decimal(0)) { $0 + $1.amount }
+                    .filter { $0.transactionType == .income }
+                    .reduce(Decimal(0)) { $0 + $1.amount }
         }
 
         /// Get total expenses for a period
@@ -95,8 +95,8 @@ extension Features.Transactions {
 
             return
                 filteredTransactions
-                .filter { $0.transactionType == .expense }
-                .reduce(Decimal(0)) { $0 + $1.amount }
+                    .filter { $0.transactionType == .expense }
+                    .reduce(Decimal(0)) { $0 + $1.amount }
         }
 
         /// Get net income for a period

@@ -370,7 +370,7 @@ import SwiftUI
             self.date = transaction.date
             self.notes = transaction.notes ?? ""
             self.categoryId = transaction.category?.id.uuidString ?? ""
-            self.accountId = transaction.account?.name ?? ""  // Using account name as ID for now
+            self.accountId = transaction.account?.name ?? "" // Using account name as ID for now
             self.isReconciled = transaction.isReconciled
             self.isRecurring = transaction.isRecurring
             self.location = transaction.location

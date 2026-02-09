@@ -32,7 +32,8 @@ public final class DataEncryptionService {
         guard let data = Data(base64Encoded: base64Text) else {
             throw NSError(
                 domain: "Encryption", code: 1,
-                userInfo: [NSLocalizedDescriptionKey: "Invalid base64"])
+                userInfo: [NSLocalizedDescriptionKey: "Invalid base64"]
+            )
         }
         let decryptedData = try decrypt(data)
         guard let text = String(data: decryptedData, encoding: .utf8) else {

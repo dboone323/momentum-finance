@@ -1,6 +1,6 @@
 import LocalAuthentication
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 @MainActor
 final class MockLAContext: LAContextProtocol {
@@ -11,7 +11,9 @@ final class MockLAContext: LAContextProtocol {
         shouldAllowEvaluation
     }
 
-    func evaluatePolicy(_ policy: LAPolicy, localizedReason: String, reply: @escaping @Sendable (Bool, Error?) -> Void) {
+    func evaluatePolicy(_ policy: LAPolicy, localizedReason: String,
+                        reply: @escaping @Sendable (Bool, Error?) -> Void)
+    {
         reply(shouldSucceed, nil)
     }
 }

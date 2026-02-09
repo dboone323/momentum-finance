@@ -130,7 +130,7 @@ public struct DashboardAccountsSummary: View {
                     }
                 }
                 .padding(.horizontal, 4)
-                .padding(.bottom, 8)  // Space for shadow
+                .padding(.bottom, 8) // Space for shadow
             }
         }
     }
@@ -281,7 +281,8 @@ public struct DashboardQuickActions: View {
                     action: self.onViewReports
                 )
                 self.quickAction(
-                    icon: "target", title: "Set Goals", color: .orange, action: self.onSetGoals)
+                    icon: "target", title: "Set Goals", color: .orange, action: self.onSetGoals
+                )
             }
         }
         .padding()

@@ -130,17 +130,17 @@ public enum Logger {
 
     private static func getLogger(for category: OSLog) -> os.Logger {
         switch category {
-        case ui: return uiLogger
-        case data: return dataLogger
-        case business: return businessLogger
-        case network: return networkLogger
-        case performance: return performanceLogger
-        default: return generalLogger
+        case ui: uiLogger
+        case data: dataLogger
+        case business: businessLogger
+        case network: networkLogger
+        case performance: performanceLogger
+        default: generalLogger
         }
     }
 
     fileprivate static func sanitizeForLogging(_ message: String) -> String {
-        return InputValidator.redactPII(message)
+        InputValidator.redactPII(message)
     }
 }
 

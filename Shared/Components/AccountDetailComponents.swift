@@ -375,7 +375,8 @@ import SwiftUI
                         ProgressView(value: abs(self.account.balance), total: creditLimit)
                             .tint(
                                 self.getCreditUtilizationColor(
-                                    used: abs(self.account.balance), limit: creditLimit))
+                                    used: abs(self.account.balance), limit: creditLimit
+                                ))
 
                         HStack {
                             Text(

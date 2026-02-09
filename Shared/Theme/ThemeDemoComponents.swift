@@ -50,7 +50,8 @@ public struct ThemeSelectorCard: View {
         .background(self.theme.cardBackground)
         .cornerRadius(12)
         .shadow(
-            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2
+        )
     }
 }
 
@@ -91,7 +92,8 @@ public struct ThemeFinancialSummaryCard: View {
         .background(self.theme.cardBackground)
         .cornerRadius(12)
         .shadow(
-            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2
+        )
     }
 }
 
@@ -132,7 +134,8 @@ public struct ThemeAccountsList: View {
         .background(self.theme.cardBackground)
         .cornerRadius(12)
         .shadow(
-            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2
+        )
     }
 }
 
@@ -185,7 +188,8 @@ public struct ThemeDemoBudgetProgress: View {
         .background(self.theme.cardBackground)
         .cornerRadius(12)
         .shadow(
-            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2
+        )
     }
 }
 
@@ -238,7 +242,8 @@ public struct ThemeDemoSubscriptionsList: View {
         .background(self.theme.cardBackground)
         .cornerRadius(12)
         .shadow(
-            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2
+        )
     }
 }
 
@@ -298,7 +303,8 @@ public struct ThemeDemoTypographyShowcase: View {
         .background(self.theme.cardBackground)
         .cornerRadius(12)
         .shadow(
-            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2
+        )
     }
 }
 
@@ -342,7 +348,8 @@ public struct ThemeDemoButtonStylesShowcase: View {
         .background(self.theme.cardBackground)
         .cornerRadius(12)
         .shadow(
-            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2)
+            color: Color.black.opacity(self.theme.isDarkMode ? 0.3 : 0.1), radius: 8, x: 0, y: 2
+        )
     }
 }
 
@@ -377,14 +384,14 @@ public struct ThemeDemoSettingsSheet: View {
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
-                        self.dismiss()
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Done") {
+                            self.dismiss()
+                        }
+                        .accessibilityLabel("Button")
                     }
-                    .accessibilityLabel("Button")
                 }
-            }
         }
     }
 }

@@ -173,7 +173,7 @@ public final class AuditLogger {
 
     private func loadPersistedLog() {
         guard let data = try? Data(contentsOf: logFileURL),
-            let log = try? JSONDecoder().decode([AuditEvent].self, from: data)
+              let log = try? JSONDecoder().decode([AuditEvent].self, from: data)
         else {
             return
         }

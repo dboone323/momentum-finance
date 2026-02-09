@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 #if os(macOS)
     final class KeyboardShortcutManagerTests: XCTestCase {

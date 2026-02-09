@@ -22,7 +22,10 @@ func run() {
 
     // Find the Core target ID
     // 52F6B3356E214580BF28E730 /* MomentumFinanceCore */
-    guard let coreTargetRange = content.range(of: "\\/\\* MomentumFinanceCore \\*\\/ = \\{[^\\}]*buildPhases = \\(([^\\)]*)\\)", options: .regularExpression) else {
+    guard let coreTargetRange = content.range(
+        of: "\\/\\* MomentumFinanceCore \\*\\/ = \\{[^\\}]*buildPhases = \\(([^\\)]*)\\)",
+        options: .regularExpression
+    ) else {
         print("Error: Could not find MomentumFinanceCore target")
         exit(1)
     }
@@ -30,7 +33,10 @@ func run() {
     // Find the Sources build phase ID for Core
     let buildPhasesBlock = String(content[coreTargetRange])
     // 082010CC617947138385A238 /* Sources */,
-    guard let sourcesPhaseMatch = buildPhasesBlock.range(of: "([A-Z0-9]{24}) /\\* Sources \\*/", options: .regularExpression) else {
+    guard let sourcesPhaseMatch = buildPhasesBlock.range(
+        of: "([A-Z0-9]{24}) /\\* Sources \\*/",
+        options: .regularExpression
+    ) else {
         print("Error: Could not find Sources build phase for Core")
         exit(1)
     }
@@ -43,7 +49,8 @@ func run() {
     // Or simpler: just find all file references in 'Shared' group and add them to Core sources build phase
 
     // Strategy: Manual xcodebuild manipulation is hard via regex.
-    // Better strategy: Use 'ruby xcodeproj' if available, otherwise just use xcodebuild to add them? No xcodebuild can't add files.
+    // Better strategy: Use 'ruby xcodeproj' if available, otherwise just use xcodebuild to add them? No xcodebuild
+    // can't add files.
 
     print("This script is complex to implement safely with regex. Aborting manual pbxproj edit.")
 }

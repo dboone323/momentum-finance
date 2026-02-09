@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class SubscriptionManagementViewsTests: XCTestCase {
     var subscriptionViewModel: SubscriptionViewModel!

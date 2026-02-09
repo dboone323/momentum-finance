@@ -383,16 +383,17 @@ private struct AddSubscriptionView: View {
                     TextField("Name", text: self.$name)
                     TextField("Provider", text: self.$provider)
                     TextField("Amount", text: self.$amount)
-                        #if os(iOS)
-                            .keyboardType(.decimalPad)
-                        #endif
+                    #if os(iOS)
+                        .keyboardType(.decimalPad)
+                    #endif
                     Picker("Billing Cycle", selection: self.$billingCycle) {
                         ForEach(BillingCycle.allCases, id: \.self) { cycle in
                             Text(cycle.rawValue.capitalized).tag(cycle)
                         }
                     }
                     DatePicker(
-                        "Next Due Date", selection: self.$nextDueDate, displayedComponents: .date)
+                        "Next Due Date", selection: self.$nextDueDate, displayedComponents: .date
+                    )
                     Toggle("Active", isOn: self.$isActive)
                     TextField("Notes", text: self.$notes, axis: .vertical)
                 }

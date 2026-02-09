@@ -26,15 +26,18 @@ class BiometricAuthManager: ObservableObject {
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             let reason = "Identify yourself!"
 
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, _ in
-                DispatchQueue.main.async {
-                    if success {
-                        self?.isAuthenticated = true
-                    } else {
-                        // authentication did not happen
+            context
+                .evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
+                                localizedReason: reason)
+                { [weak self] success, _ in
+                    DispatchQueue.main.async {
+                        if success {
+                            self?.isAuthenticated = true
+                        } else {
+                            // authentication did not happen
+                        }
                     }
                 }
-            }
         } else {
             // no biometrics
         }

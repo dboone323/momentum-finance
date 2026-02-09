@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class EnhancedSubscriptionDetailViewTests: XCTestCase {
     var subscriptionId: String = "12345"

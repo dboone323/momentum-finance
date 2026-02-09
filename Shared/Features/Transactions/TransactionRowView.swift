@@ -9,8 +9,8 @@ import MomentumFinanceCore
 import SwiftData
 import SwiftUI
 
-extension Features.Transactions {
-    public struct TransactionRowView: View {
+public extension Features.Transactions {
+    struct TransactionRowView: View {
         public let transaction: FinancialTransaction
         public let onTapped: () -> Void
 

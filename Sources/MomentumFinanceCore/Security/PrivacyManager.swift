@@ -2,8 +2,8 @@
 // Copyright © 2026 Momentum Finance. All rights reserved.
 
 import Foundation
-import SwiftData
 import os
+import SwiftData
 
 /// Manager for privacy-related features including GDPR/CCPA compliance.
 @MainActor
@@ -50,7 +50,7 @@ public final class PrivacyManager: Sendable {
      - Returns: Current consent status.
      */
     public func getConsent(for key: ConsentKey) -> Bool {
-        return self.defaults.bool(forKey: key.rawValue)
+        self.defaults.bool(forKey: key.rawValue)
     }
 
     // MARK: - Data Retention

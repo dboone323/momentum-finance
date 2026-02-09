@@ -58,7 +58,8 @@ public struct BudgetAlertConfig: Codable, Identifiable {
 }
 
 /// Manager for budget alerts and notifications.
-@MainActor public final class BudgetAlertManager: ObservableObject {
+@MainActor
+public final class BudgetAlertManager: ObservableObject {
     @MainActor public static let shared = BudgetAlertManager()
 
     @Published public var alerts: [BudgetAlertConfig] = []
@@ -101,7 +102,9 @@ public struct BudgetAlertConfig: Codable, Identifiable {
                 let newPercent = alerts[i].percentUsed
 
                 // Check for threshold crossing
-                if alerts[i].isEnabled && previousPercent < alerts[i].alertThreshold && newPercent >= alerts[i].alertThreshold {
+                if alerts[i].isEnabled && previousPercent < alerts[i].alertThreshold && newPercent >= alerts[i]
+                    .alertThreshold
+                {
                     sendThresholdAlert(alerts[i])
                 }
 

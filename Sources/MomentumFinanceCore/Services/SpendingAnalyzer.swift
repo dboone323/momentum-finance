@@ -13,7 +13,8 @@ struct CategorySpending {
     let percentage: Double
 }
 
-@MainActor class SpendingAnalyzer {
+@MainActor
+class SpendingAnalyzer {
     @MainActor static let shared = SpendingAnalyzer()
 
     func analyzeSpendingByCategory(transactions: [CoreTransaction]) -> [CategorySpending] {
@@ -28,7 +29,8 @@ struct CategorySpending {
                 (Double(truncating: categoryTotal as NSNumber)
                     / Double(truncating: totalSpending as NSNumber)) * 100
             return CategorySpending(
-                categoryId: categoryId, totalAmount: categoryTotal, percentage: percentage)
+                categoryId: categoryId, totalAmount: categoryTotal, percentage: percentage
+            )
         }.sorted { $0.totalAmount > $1.totalAmount }
     }
 
@@ -50,8 +52,8 @@ struct CategorySpending {
         // Calculate total expenses (negative transactions)
         let totalExpenses =
             recentTransactions
-            .filter { $0.amount < 0 }
-            .reduce(Decimal(0)) { $0 + abs($1.amount) }
+                .filter { $0.amount < 0 }
+                .reduce(Decimal(0)) { $0 + abs($1.amount) }
 
         // Calculate number of months in the range
         let components = calendar.dateComponents([.month], from: threeMonthsAgo, to: now)
@@ -73,7 +75,7 @@ struct CategorySpending {
             (Double(truncating: savings as NSDecimalNumber)
                 / Double(truncating: income as NSDecimalNumber)) * 100
 
-        return max(0, min(100, savingRate))  // Clamp between 0 and 100
+        return max(0, min(100, savingRate)) // Clamp between 0 and 100
     }
 
     /// Detects spending anomalies based on statistical analysis
@@ -87,7 +89,7 @@ struct CategorySpending {
     ) -> [CoreTransaction] {
         // Filter to expenses only
         let expenses = transactions.filter { $0.amount < 0 }
-        guard expenses.count > 3 else { return [] }  // Need at least a few transactions
+        guard expenses.count > 3 else { return [] } // Need at least a few transactions
 
         // Convert to positive amounts for analysis
         let amounts = expenses.map { abs($0.amount) }

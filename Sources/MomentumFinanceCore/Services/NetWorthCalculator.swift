@@ -15,7 +15,8 @@ struct NetWorthPoint: Identifiable {
     var netWorth: Decimal { assets - liabilities }
 }
 
-@MainActor class NetWorthCalculator {
+@MainActor
+class NetWorthCalculator {
     @MainActor static let shared = NetWorthCalculator()
 
     func calculateCurrentNetWorth(accounts: [NetWorthAccount]) -> Decimal {

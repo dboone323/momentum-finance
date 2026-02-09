@@ -5,7 +5,7 @@ class MomentumFinanceTypesTests: XCTestCase {
     func testTypeDefinitions() {
         // Example type to verify the existence of a type
         let _: FinancialMLModels
-        
+
         // Additional type checks can be added here as needed
     }
 }

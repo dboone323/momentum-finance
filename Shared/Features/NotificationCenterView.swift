@@ -90,7 +90,7 @@ public struct NotificationCenterView: View {
     private func dismissNotification(_ notification: ScheduledNotification) {
         self.notificationManager.pendingNotifications.removeAll { $0.id == notification.id }
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [
-            notification.id
+            notification.id,
         ])
     }
 }

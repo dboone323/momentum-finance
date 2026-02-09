@@ -40,54 +40,54 @@ public struct NotificationsView: View {
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                #if os(iOS)
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(
-                            "Clear All",
-                            action: {
-                                self.clearAllNotifications()
-                            }
-                        )
-                        .accessibilityLabel("Button")
-                        .foregroundColor(.red)
-                    }
+                .toolbar {
+                    #if os(iOS)
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(
+                                "Clear All",
+                                action: {
+                                    self.clearAllNotifications()
+                                }
+                            )
+                            .accessibilityLabel("Button")
+                            .foregroundColor(.red)
+                        }
 
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(
-                            "Done",
-                            action: {
-                                self.dismiss()
-                            }
-                        )
-                        .accessibilityLabel("Button")
-                    }
-                #else
-                    ToolbarItem {
-                        Button(
-                            "Clear All",
-                            action: {
-                                self.clearAllNotifications()
-                            }
-                        )
-                        .accessibilityLabel("Button")
-                        .foregroundColor(.red)
-                    }
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(
+                                "Done",
+                                action: {
+                                    self.dismiss()
+                                }
+                            )
+                            .accessibilityLabel("Button")
+                        }
+                    #else
+                        ToolbarItem {
+                            Button(
+                                "Clear All",
+                                action: {
+                                    self.clearAllNotifications()
+                                }
+                            )
+                            .accessibilityLabel("Button")
+                            .foregroundColor(.red)
+                        }
 
-                    ToolbarItem {
-                        Button(
-                            "Done",
-                            action: {
-                                self.dismiss()
-                            }
-                        )
-                        .accessibilityLabel("Button")
-                    }
-                #endif
-            }
-            .task {
-                await self.loadNotifications()
-            }
+                        ToolbarItem {
+                            Button(
+                                "Done",
+                                action: {
+                                    self.dismiss()
+                                }
+                            )
+                            .accessibilityLabel("Button")
+                        }
+                    #endif
+                }
+                .task {
+                    await self.loadNotifications()
+                }
         }
     }
 
@@ -180,11 +180,11 @@ public struct NotificationsView: View {
         case .all:
             self.pendingNotifications.count
         case .budgets:
-            self.pendingNotifications.filter { $0.type.contains("budget") }.count
+            self.pendingNotifications.count(where: { $0.type.contains("budget") })
         case .subscriptions:
-            self.pendingNotifications.filter { $0.type.contains("subscription") }.count
+            self.pendingNotifications.count(where: { $0.type.contains("subscription") })
         case .goals:
-            self.pendingNotifications.filter { $0.type.contains("goal") }.count
+            self.pendingNotifications.count(where: { $0.type.contains("goal") })
         }
 
     }
@@ -221,7 +221,7 @@ public struct NotificationsView: View {
 
         // Remove from system
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [
-            notification.id
+            notification.id,
         ])
     }
 

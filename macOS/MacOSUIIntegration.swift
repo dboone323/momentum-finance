@@ -509,7 +509,7 @@ import SwiftUI
                         ForEach(self.filteredTransactions) { transaction in
                             NavigationLink(value: ListableItem(
                                 id: transaction.id,
-                                    name: transaction.title,
+                                name: transaction.title,
                                 type: .transaction
                             )) {
                                 HStack {
@@ -832,10 +832,9 @@ import SwiftUI
 
                             HStack {
                                 let targetDate = goal.targetDate
-                                    Text("Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))")
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-
+                                Text("Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
 
                                 Spacer()
 
@@ -1017,7 +1016,7 @@ import SwiftUI
                     // Total budget usage
                     let totalBudgeted = self.budgets.reduce(0) { $0 + $1.limitAmount }
                     let totalSpent = self.budgets.reduce(0) { $0 + $1.spentAmount }
-                            Text("\(Int(percentage))%")
+                    Text("\(Int(percentage))%")
 
                     HStack(spacing: 20) {
                         VStack(alignment: .leading, spacing: 8) {

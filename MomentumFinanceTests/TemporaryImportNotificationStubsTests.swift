@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 final class TemporaryImportNotificationStubsTests: XCTestCase {
     // MARK: - Setup & Teardown

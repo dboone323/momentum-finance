@@ -29,7 +29,8 @@ public struct InsightsFilterBar: View {
                     .padding(.vertical, 8)
                     .background(
                         self.filterPriority != nil
-                            ? Color.blue.opacity(0.1) : Color.gray.opacity(0.1)
+                            ? Color.blue.opacity(0.1)
+                            : Color.gray.opacity(0.1)
                     )
                     .cornerRadius(8)
                     .foregroundColor(self.filterPriority != nil ? .blue : .primary)

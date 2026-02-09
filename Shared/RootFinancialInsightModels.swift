@@ -105,7 +105,7 @@ public enum InsightPriority: String, CaseIterable, Comparable, Identifiable, Cod
     public static func < (lhs: InsightPriority, rhs: InsightPriority) -> Bool {
         let order: [InsightPriority] = [.low, .medium, .high, .critical]
         guard let lhsIndex = order.firstIndex(of: lhs),
-            let rhsIndex = order.firstIndex(of: rhs)
+              let rhsIndex = order.firstIndex(of: rhs)
         else {
             return false
         }
@@ -221,10 +221,10 @@ public enum InsightCategory: String, CaseIterable, Identifiable, Codable {
 public final class FinancialInsight {
     public var id: UUID
     public var title: String
-    public var insightDescription: String  // Renamed from 'description' to avoid SwiftData conflict
+    public var insightDescription: String // Renamed from 'description' to avoid SwiftData conflict
     public var priority: InsightPriority
     public var type: InsightType
-    public var confidence: Double  // 0.0 to 1.0
+    public var confidence: Double // 0.0 to 1.0
     public var createdAt: Date
     public var isRead: Bool
     public var relatedAccountId: String?
@@ -234,14 +234,14 @@ public final class FinancialInsight {
     public var actionTaken: Bool
 
     // Enhanced AI properties
-    public var impactScore: Double  // 0.0 to 10.0 - measures potential financial impact
-    public var actionRecommendations: [String]  // AI-generated action items
-    public var potentialSavings: Double?  // Estimated savings if action is taken
-    public var riskLevel: RiskLevel  // Associated risk level
-    public var aiAnalysisVersion: String  // Version of AI model used for analysis
-    public var contextualTags: [String]  // Tags for better categorization
-    public var followUpDate: Date?  // When to follow up on this insight
-    public var isUserFeedbackPositive: Bool?  // User feedback for ML improvement
+    public var impactScore: Double // 0.0 to 10.0 - measures potential financial impact
+    public var actionRecommendations: [String] // AI-generated action items
+    public var potentialSavings: Double? // Estimated savings if action is taken
+    public var riskLevel: RiskLevel // Associated risk level
+    public var aiAnalysisVersion: String // Version of AI model used for analysis
+    public var contextualTags: [String] // Tags for better categorization
+    public var followUpDate: Date? // When to follow up on this insight
+    public var isUserFeedbackPositive: Bool? // User feedback for ML improvement
 
     // UI and Visualization Properties
     public var visualizationType: VisualizationType?
@@ -294,11 +294,11 @@ public final class FinancialInsight {
 
 /// Confidence levels for AI-generated insights
 public enum AIConfidenceLevel: String, CaseIterable, Codable {
-    case veryHigh  // 90-100%
-    case high  // 80-89%
-    case medium  // 60-79%
-    case low  // 40-59%
-    case veryLow  // 0-39%
+    case veryHigh // 90-100%
+    case high // 80-89%
+    case medium // 60-79%
+    case low // 40-59%
+    case veryLow // 0-39%
 
     public var range: ClosedRange<Double> {
         switch self {

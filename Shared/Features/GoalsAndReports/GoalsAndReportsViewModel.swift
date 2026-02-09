@@ -74,8 +74,8 @@ final class GoalsAndReportsViewModel {
             name: name,
             targetAmount: targetAmount,
             currentAmount: 0,
-            targetDate: targetDate ?? Date()  // Default to today if nil
-                // notes field removed if not present in initializer, checking previous usage
+            targetDate: targetDate ?? Date() // Default to today if nil
+            // notes field removed if not present in initializer, checking previous usage
         )
         // If notes is a property, set it after
         goal.notes = notes
@@ -180,8 +180,8 @@ final class GoalsAndReportsViewModel {
 
         return (0..<months).compactMap { i in
             guard let monthDate = calendar.date(byAdding: .month, value: -i, to: now),
-                let monthKey = calendar.date(
-                    from: calendar.dateComponents([.year, .month], from: monthDate))
+                  let monthKey = calendar.date(
+                      from: calendar.dateComponents([.year, .month], from: monthDate))
             else {
                 return nil
             }
@@ -190,13 +190,13 @@ final class GoalsAndReportsViewModel {
 
             let income =
                 monthTransactions
-                .filter { $0.transactionType == .income }
-                .reduce(0.0) { $0 + $1.amount }
+                    .filter { $0.transactionType == .income }
+                    .reduce(0.0) { $0 + $1.amount }
 
             let expenses =
                 monthTransactions
-                .filter { $0.transactionType == .expense }
-                .reduce(0.0) { $0 + $1.amount }
+                    .filter { $0.transactionType == .expense }
+                    .reduce(0.0) { $0 + $1.amount }
 
             return MonthlySpendingData(
                 month: monthDate,

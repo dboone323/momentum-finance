@@ -63,7 +63,7 @@ class FinanceIntentsHandler: NSObject {
     ) {
         // Fetch current balance
         let response = ViewBalanceIntentResponse(code: .success, userActivity: nil)
-        response.balance = "$1,234.56"  // Fetch from model
+        response.balance = "$1,234.56" // Fetch from model
         completion(response)
     }
 
@@ -91,13 +91,15 @@ class CheckBudgetIntent: INIntent {
     @NSManaged var category: String?
 }
 
-@objc public enum AddTransactionIntentResponseCode: Int {
+@objc
+public enum AddTransactionIntentResponseCode: Int {
     case success = 1
     case failure = 2
 }
 
 public class AddTransactionIntentResponse: INIntentResponse {
-    @objc public init(code: AddTransactionIntentResponseCode, userActivity: NSUserActivity?) {
+    @objc
+    public init(code: AddTransactionIntentResponseCode, userActivity: NSUserActivity?) {
         super.init()
         self.userActivity = userActivity
     }
@@ -110,13 +112,15 @@ public class AddTransactionIntentResponse: INIntentResponse {
     var category: String?
 }
 
-@objc public enum ViewBalanceIntentResponseCode: Int {
+@objc
+public enum ViewBalanceIntentResponseCode: Int {
     case success = 1
     case failure = 2
 }
 
 public class ViewBalanceIntentResponse: INIntentResponse {
-    @objc public init(code: ViewBalanceIntentResponseCode, userActivity: NSUserActivity?) {
+    @objc
+    public init(code: ViewBalanceIntentResponseCode, userActivity: NSUserActivity?) {
         super.init()
         self.userActivity = userActivity
     }
@@ -128,13 +132,15 @@ public class ViewBalanceIntentResponse: INIntentResponse {
     var balance: String?
 }
 
-@objc public enum CheckBudgetIntentResponseCode: Int {
+@objc
+public enum CheckBudgetIntentResponseCode: Int {
     case success = 1
     case failure = 2
 }
 
 public class CheckBudgetIntentResponse: INIntentResponse {
-    @objc public init(code: CheckBudgetIntentResponseCode, userActivity: NSUserActivity?) {
+    @objc
+    public init(code: CheckBudgetIntentResponseCode, userActivity: NSUserActivity?) {
         super.init()
         self.userActivity = userActivity
     }

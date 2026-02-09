@@ -30,9 +30,9 @@ public final class NetworkSecurityManager: Sendable {
     /// SHA256 hashes of pinned public keys
     /// These should be replaced with actual production hashes
     private let pinnedHashes = [
-        "h6Svlptv/6NoEVXEHh5L6X9Lno7j26/q0Y6uT8S6wYc=",  // api.momentumfinance.io
-        "d6Svlptv/6NoEVXEHh5L6X9Lno7j26/q0Y6uT8S6wYc=",  // sync.momentumfinance.io
-        "a6Svlptv/6NoEVXEHh5L6X9Lno7j26/q0Y6uT8S6wYc=",  // auth.momentumfinance.io
+        "h6Svlptv/6NoEVXEHh5L6X9Lno7j26/q0Y6uT8S6wYc=", // api.momentumfinance.io
+        "d6Svlptv/6NoEVXEHh5L6X9Lno7j26/q0Y6uT8S6wYc=", // sync.momentumfinance.io
+        "a6Svlptv/6NoEVXEHh5L6X9Lno7j26/q0Y6uT8S6wYc=", // auth.momentumfinance.io
     ]
 
     // MARK: - Initialization

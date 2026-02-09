@@ -1,7 +1,7 @@
 #if os(macOS)
-    @testable import MomentumFinance
     import SwiftData
     import XCTest
+    @testable import MomentumFinance
 
     class MacOSUIIntegrationTests: XCTestCase {
         var modelContext: ModelContext!
@@ -82,7 +82,10 @@
             XCTAssertEqual(navigationCoordinator.selectedListItem, sampleListItem)
 
             // Assert that the appropriate navigation path is updated
-            XCTAssertEqual(navigationCoordinator.subscriptionsNavPath, [SubscriptionsDestination.subscriptionDetail(id)])
+            XCTAssertEqual(
+                navigationCoordinator.subscriptionsNavPath,
+                [SubscriptionsDestination.subscriptionDetail(id)]
+            )
         }
     }
 

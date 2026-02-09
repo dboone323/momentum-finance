@@ -48,7 +48,8 @@ public final class SearchEngineService: ObservableObject {
         return accounts.compactMap { account in
             let titleScore = self.calculateRelevance(account.name, query: query)
             let balanceScore = self.calculateRelevance(
-                String(format: "%.2f", account.balance), query: query)
+                String(format: "%.2f", account.balance), query: query
+            )
 
             let score = max(titleScore, balanceScore)
             if score > 0 {
@@ -72,7 +73,8 @@ public final class SearchEngineService: ObservableObject {
         return transactions.compactMap { transaction -> SearchResult? in
             let titleScore = self.calculateRelevance(transaction.title, query: query)
             let amountScore = self.calculateRelevance(
-                String(format: "%.2f", transaction.amount), query: query)
+                String(format: "%.2f", transaction.amount), query: query
+            )
 
             let score = max(titleScore, amountScore)
             if score > 0 {
@@ -80,7 +82,8 @@ public final class SearchEngineService: ObservableObject {
                     id: String(describing: transaction.id),
                     title: transaction.title,
                     subtitle: String(
-                        format: "$%.2f • %@", transaction.amount, transaction.date.formatted()),
+                        format: "$%.2f • %@", transaction.amount, transaction.date.formatted()
+                    ),
                     type: .transactions,
                     iconName: "arrow.left.arrow.right",
                     relevanceScore: score
@@ -97,7 +100,8 @@ public final class SearchEngineService: ObservableObject {
         return subscriptions.compactMap { subscription -> SearchResult? in
             let titleScore = self.calculateRelevance(subscription.name, query: query)
             let amountScore = self.calculateRelevance(
-                String(format: "%.2f", subscription.amount), query: query)
+                String(format: "%.2f", subscription.amount), query: query
+            )
 
             let score = max(titleScore, amountScore)
             if score > 0 {
@@ -106,7 +110,8 @@ public final class SearchEngineService: ObservableObject {
                     title: subscription.name,
                     subtitle: String(
                         format: "$%.2f • %@", subscription.amount,
-                        subscription.billingCycle.rawValue),
+                        subscription.billingCycle.rawValue
+                    ),
                     type: .subscriptions,
                     iconName: "calendar",
                     relevanceScore: score
@@ -123,7 +128,8 @@ public final class SearchEngineService: ObservableObject {
         return budgets.compactMap { budget -> SearchResult? in
             let titleScore = self.calculateRelevance(budget.name, query: query)
             let amountScore = self.calculateRelevance(
-                String(format: "%.2f", budget.limitAmount), query: query)
+                String(format: "%.2f", budget.limitAmount), query: query
+            )
 
             let score = max(titleScore, amountScore)
             if score > 0 {

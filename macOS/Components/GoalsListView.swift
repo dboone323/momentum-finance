@@ -97,7 +97,8 @@ import SwiftUI
                 List(selection: self.$selectedItem) {
                     NavigationLink(
                         value: ListableItem(
-                            id: "spending", name: "Spending by Category", type: .report)
+                            id: "spending", name: "Spending by Category", type: .report
+                        )
                     ) {
                         HStack {
                             Image(systemName: "chart.pie")
@@ -122,7 +123,8 @@ import SwiftUI
 
                     NavigationLink(
                         value: ListableItem(
-                            id: "trends", name: "Monthly Spending Trends", type: .report)
+                            id: "trends", name: "Monthly Spending Trends", type: .report
+                        )
                     ) {
                         HStack {
                             Image(systemName: "chart.line.uptrend.xyaxis")
@@ -135,7 +137,8 @@ import SwiftUI
 
                     NavigationLink(
                         value: ListableItem(
-                            id: "cashflow", name: "Cash Flow Analysis", type: .report)
+                            id: "cashflow", name: "Cash Flow Analysis", type: .report
+                        )
                     ) {
                         HStack {
                             Image(systemName: "arrow.left.arrow.right")
@@ -238,7 +241,8 @@ import SwiftUI
                             }
                             .padding()
                             .frame(
-                                maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                                maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading
+                            )
                         }
                         .toolbar {
                             ToolbarItem {

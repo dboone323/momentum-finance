@@ -42,7 +42,8 @@ public struct GlobalSearchView: View {
                             label: {
                                 Image(systemName: "xmark.circle.fill")
                                     .foregroundColor(.secondary)
-                            })
+                            }
+                        )
                     }
                 }
                 .padding()
@@ -67,20 +68,20 @@ public struct GlobalSearchView: View {
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar(content: {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        self.dismiss()
+                .toolbar(content: {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancel") {
+                            self.dismiss()
+                        }
+                        .accessibilityLabel("Button")
                     }
-                    .accessibilityLabel("Button")
+                })
+                .sheet(item: self.$selectedResult) { result in
+                    SearchResultDetailView(result: result)
                 }
-            })
-            .sheet(item: self.$selectedResult) { result in
-                SearchResultDetailView(result: result)
-            }
-            .onAppear {
-                // Model context is now passed to searchEngine via computed property
-            }
+                .onAppear {
+                    // Model context is now passed to searchEngine via computed property
+                }
         }
     }
 
@@ -279,14 +280,14 @@ public struct SearchResultDetailView: View {
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar(content: {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Done") {
-                        self.dismiss()
+                .toolbar(content: {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Done") {
+                            self.dismiss()
+                        }
+                        .accessibilityLabel("Button")
                     }
-                    .accessibilityLabel("Button")
-                }
-            })
+                })
         }
     }
 

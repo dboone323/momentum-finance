@@ -1,7 +1,7 @@
-import OSLog
 import Observation
-import SwiftUI
 import os
+import OSLog
+import SwiftUI
 
 //
 //  ThemeManager.swift
@@ -127,7 +127,7 @@ final class ThemeManager {
         #if os(iOS)
             return UIFontMetrics.default.scaledValue(for: 1.0)
         #else
-            return 1.0  // Default for macOS
+            return 1.0 // Default for macOS
         #endif
     }
 

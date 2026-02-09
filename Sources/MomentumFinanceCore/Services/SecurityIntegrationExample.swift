@@ -23,7 +23,7 @@ func storeAPIKey(_ apiKey: String) throws {
     try credentialManager.store(
         apiKey,
         forKey: .apiKey,
-        requireBiometric: true  // Require Face ID/Touch ID to retrieve
+        requireBiometric: true // Require Face ID/Touch ID to retrieve
     )
 
     Logger.logInfo("API key stored securely")
@@ -182,7 +182,7 @@ struct SecureTransactionForm: View {
             // Store encrypted account for later use
             try SecureCredentialManager.shared.store(
                 encryptedAccount,
-                forKey: .apiKey  // Use appropriate key
+                forKey: .apiKey // Use appropriate key
             )
 
         } catch {
@@ -193,15 +193,16 @@ struct SecureTransactionForm: View {
 
 // MARK: - Example 5: Biometric Authentication Flow
 
-@MainActor class BiometricAuthExample {
+@MainActor
+class BiometricAuthExample {
     private let biometricAuth = BiometricAuthManager.shared
 
     /// Check if biometrics are available
     func checkBiometricSupport() -> String {
         if biometricAuth.isBiometricAvailable {
-            return "Biometric authentication available: \(biometricAuth.biometricType.rawValue)"
+            "Biometric authentication available: \(biometricAuth.biometricType.rawValue)"
         } else {
-            return "Biometric authentication not available"
+            "Biometric authentication not available"
         }
     }
 
@@ -219,10 +220,12 @@ struct SecureTransactionForm: View {
         // User authenticated - retrieve sensitive data
         guard
             let apiKey = try SecureCredentialManager.shared.retrieve(
-                .apiKey, requireBiometric: false)
+                .apiKey, requireBiometric: false
+            )
         else {
             throw NSError(
-                domain: "App", code: 1, userInfo: [NSLocalizedDescriptionKey: "No API key found"])
+                domain: "App", code: 1, userInfo: [NSLocalizedDescriptionKey: "No API key found"]
+            )
         }
 
         return apiKey
@@ -240,7 +243,8 @@ func demonstratePIIRedaction() {
     Logger.logError(
         NSError(
             domain: "App", code: 1,
-            userInfo: [NSLocalizedDescriptionKey: "Payment failed for card 1234-5678-9012-3456"]),
+            userInfo: [NSLocalizedDescriptionKey: "Payment failed for card 1234-5678-9012-3456"]
+        ),
         context: "Processing payment"
     )
     // Logs card as: "[CARD]"

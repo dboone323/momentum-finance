@@ -1,6 +1,6 @@
 import Foundation
-import SwiftData
 import MomentumFinanceCore
+import SwiftData
 
 /// Detects recurring transactions and suggests subscriptions
 public final class RecurringTransactionDetector {

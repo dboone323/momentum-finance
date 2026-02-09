@@ -100,9 +100,9 @@ public enum DataParser {
     public static func parseAmount(_ string: String) throws -> Decimal {
         let cleaned =
             string
-            .replacingOccurrences(of: "$", with: "")
-            .replacingOccurrences(of: ",", with: "")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+                .replacingOccurrences(of: "$", with: "")
+                .replacingOccurrences(of: ",", with: "")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
         guard let value = Decimal(string: cleaned) else {
             throw ImportError.invalidAmountFormat(string)
         }

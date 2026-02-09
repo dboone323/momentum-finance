@@ -1,6 +1,6 @@
-@testable import MomentumFinance
 import SwiftData
 import XCTest
+@testable import MomentumFinance
 
 class FeaturesTests: XCTestCase {
     // Test the Dashboard namespace

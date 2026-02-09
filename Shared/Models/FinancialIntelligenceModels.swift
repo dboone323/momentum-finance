@@ -7,7 +7,7 @@ import SwiftUI
 /// Represents the type of financial insight
 public enum SimpleInsightType: Sendable {
     case spendingPattern, anomaly, budgetAlert, forecast, optimization, budgetRecommendation,
-        positiveSpendingTrend
+         positiveSpendingTrend
 
     public var displayName: String {
         switch self {

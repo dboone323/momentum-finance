@@ -36,7 +36,8 @@ public struct SearchHeaderComponent: View {
                         label: {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(.secondary)
-                        })
+                        }
+                    )
                 }
             }
             .padding()

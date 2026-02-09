@@ -61,15 +61,15 @@ public struct InsightsView: View {
                     .navigationTitle("Financial Insights")
                     .navigationBarItems(
                         trailing:
-                            Button("Refresh") {
-                                Task {
-                                    await self.intelligenceService.analyzeFinancialData(
-                                        modelContext: self.modelContext
-                                    )
-                                }
+                        Button("Refresh") {
+                            Task {
+                                await self.intelligenceService.analyzeFinancialData(
+                                    modelContext: self.modelContext
+                                )
                             }
-                            .disabled(self.intelligenceService.isAnalyzing)
-                            .accessibilityLabel("Button")
+                        }
+                        .disabled(self.intelligenceService.isAnalyzing)
+                        .accessibilityLabel("Button")
                     )
                 }
             #endif
@@ -120,7 +120,7 @@ public struct InsightsView: View {
                 }
                 return true
             }
-            .sorted { $0.priority > $1.priority }  // Sort by priority (critical first)
+            .sorted { $0.priority > $1.priority } // Sort by priority (critical first)
     }
 }
 

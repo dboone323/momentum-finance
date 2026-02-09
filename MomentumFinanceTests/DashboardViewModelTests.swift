@@ -1,6 +1,6 @@
-@testable import MomentumFinance
 import SwiftData
 import XCTest
+@testable import MomentumFinance
 
 @MainActor
 class DashboardViewModelTests: XCTestCase {
@@ -10,7 +10,14 @@ class DashboardViewModelTests: XCTestCase {
 
     override func setUp() async throws {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        modelContainer = try ModelContainer(for: Subscription.self, Budget.self, FinancialAccount.self, FinancialTransaction.self, ExpenseCategory.self, configurations: config)
+        modelContainer = try ModelContainer(
+            for: Subscription.self,
+            Budget.self,
+            FinancialAccount.self,
+            FinancialTransaction.self,
+            ExpenseCategory.self,
+            configurations: config
+        )
         modelContext = ModelContext(modelContainer)
         viewModel = DashboardViewModel()
         viewModel.setModelContext(modelContext)
@@ -19,9 +26,19 @@ class DashboardViewModelTests: XCTestCase {
     /// Test upcomingSubscriptions method
     func testUpcomingSubscriptions() {
         // Arrange
-        let s1 = Subscription(name: "Sub 1", amount: 10.0, billingCycle: .monthly, nextDueDate: Date().addingTimeInterval(3600 * 24))
+        let s1 = Subscription(
+            name: "Sub 1",
+            amount: 10.0,
+            billingCycle: .monthly,
+            nextDueDate: Date().addingTimeInterval(3600 * 24)
+        )
         s1.isActive = true
-        let s2 = Subscription(name: "Sub 2", amount: 10.0, billingCycle: .monthly, nextDueDate: Date().addingTimeInterval(-3600 * 24))
+        let s2 = Subscription(
+            name: "Sub 2",
+            amount: 10.0,
+            billingCycle: .monthly,
+            nextDueDate: Date().addingTimeInterval(-3600 * 24)
+        )
         s2.isActive = false
 
         let subscriptions = [s1, s2]
@@ -38,7 +55,8 @@ class DashboardViewModelTests: XCTestCase {
     func testCurrentMonthBudgets() {
         // Arrange
         let b1 = Budget(name: "Budget 1", limitAmount: 100.0, month: Date())
-        let b2 = Budget(name: "Budget 2", limitAmount: 50.0, month: Date().addingTimeInterval(3600 * 24 * 40)) // Next month approx
+        let b2 = Budget(name: "Budget 2", limitAmount: 50.0,
+                        month: Date().addingTimeInterval(3600 * 24 * 40)) // Next month approx
 
         let budgets = [b1, b2]
 
@@ -71,7 +89,12 @@ class DashboardViewModelTests: XCTestCase {
     /// Test recentTransactions method
     func testRecentTransactions() {
         // Arrange
-        let t1 = FinancialTransaction(title: "Old T1", amount: 50.0, date: Date().addingTimeInterval(-3600 * 24), transactionType: .expense)
+        let t1 = FinancialTransaction(
+            title: "Old T1",
+            amount: 50.0,
+            date: Date().addingTimeInterval(-3600 * 24),
+            transactionType: .expense
+        )
         let t2 = FinancialTransaction(title: "New T2", amount: 100.0, date: Date(), transactionType: .income)
 
         // Order in array doesn't matter, view model sorts them
@@ -89,7 +112,12 @@ class DashboardViewModelTests: XCTestCase {
     /// Test processOverdueSubscriptions method
     func testProcessOverdueSubscriptions() async {
         // Arrange
-        let s1 = Subscription(name: "Overdue", amount: 10.0, billingCycle: .monthly, nextDueDate: Date().addingTimeInterval(-3600))
+        let s1 = Subscription(
+            name: "Overdue",
+            amount: 10.0,
+            billingCycle: .monthly,
+            nextDueDate: Date().addingTimeInterval(-3600)
+        )
         s1.isActive = true
         modelContext.insert(s1)
 

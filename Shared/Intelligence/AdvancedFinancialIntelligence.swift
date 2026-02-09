@@ -110,7 +110,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                 EnhancedFinancialInsight(
                     title: "Accelerating Spending Detected",
                     description:
-                        "Your spending has increased by \(Int(spendingVelocity.percentageIncrease))% this month. Consider reviewing your recent purchases.",
+                    "Your spending has increased by \(Int(spendingVelocity.percentageIncrease))% this month. Consider reviewing your recent purchases.",
                     priority: .high,
                     type: .spendingAlert,
                     confidence: 0.9,
@@ -161,7 +161,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                 EnhancedFinancialInsight(
                     title: "Subscription Optimization Opportunity",
                     description:
-                        "You could save $\(potentialSavings)/month by canceling \(unusedSubscriptions.count) unused subscriptions.",
+                    "You could save $\(potentialSavings)/month by canceling \(unusedSubscriptions.count) unused subscriptions.",
                     priority: .medium,
                     type: .savingsOpportunity,
                     confidence: 0.85,
@@ -170,7 +170,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                         "Cancel unused subscriptions",
                         "Set usage reminders",
                     ],
-                    potentialSavings: potentialSavings * 12,  // Annual savings
+                    potentialSavings: potentialSavings * 12, // Annual savings
                     impactScore: 7.2
                 )
             )
@@ -184,7 +184,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                 EnhancedFinancialInsight(
                     title: "High-Yield Savings Opportunity",
                     description:
-                        "Consider moving excess cash to high-yield savings to earn up to 4.5% APY.",
+                    "Consider moving excess cash to high-yield savings to earn up to 4.5% APY.",
                     priority: .medium,
                     type: .savingsOpportunity,
                     confidence: 0.95,
@@ -193,7 +193,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                         "Compare interest rates",
                         "Consider CDs for longer terms",
                     ],
-                    potentialSavings: cashBalance * Decimal(0.045),  // Potential annual earnings
+                    potentialSavings: cashBalance * Decimal(0.045), // Potential annual earnings
                     impactScore: 6.8
                 )
             )
@@ -218,7 +218,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                     EnhancedFinancialInsight(
                         title: "\(budget.name) Budget Alert",
                         description:
-                            "You've used \(Int(percentageUsed))% of your \(budget.name) budget. $\(budget.limitAmount - spent) remaining.",
+                        "You've used \(Int(percentageUsed))% of your \(budget.name) budget. $\(budget.limitAmount - spent) remaining.",
                         priority: percentageUsed > 100 ? .critical : .high,
                         type: .budgetAlert,
                         confidence: 0.95,
@@ -257,7 +257,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                 EnhancedFinancialInsight(
                     title: "Emergency Fund Below Recommended Level",
                     description:
-                        "Your emergency fund covers \(String(format: "%.1f", monthsCovered)) months of expenses. Experts recommend 3-6 months.",
+                    "Your emergency fund covers \(String(format: "%.1f", monthsCovered)) months of expenses. Experts recommend 3-6 months.",
                     priority: monthsCovered < 1 ? .critical : .high,
                     type: .riskAlert,
                     confidence: 0.9,
@@ -292,7 +292,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                 EnhancedFinancialInsight(
                     title: "Potential Cash Flow Issues Ahead",
                     description:
-                        "Predicted negative cash flow in \(negativeMonths.count) of the next 3 months.",
+                    "Predicted negative cash flow in \(negativeMonths.count) of the next 3 months.",
                     priority: .high,
                     type: .prediction,
                     confidence: 0.75,
@@ -340,27 +340,27 @@ public class AdvancedFinancialIntelligence: ObservableObject {
     }
 
     private func calculateSpendingVelocity(_: [FinancialTransaction]) -> SpendingVelocity {
-        SpendingVelocity(percentageIncrease: 15.0)  // Placeholder
+        SpendingVelocity(percentageIncrease: 15.0) // Placeholder
     }
 
     private func analyzeCategoryTrends(_: [FinancialTransaction]) -> [CategoryTrend] {
-        []  // Placeholder
+        [] // Placeholder
     }
 
     private func identifySubscriptions(_: [FinancialTransaction]) -> [Subscription] {
-        []  // Placeholder
+        [] // Placeholder
     }
 
     private func findUnusedSubscriptions(_: [Subscription]) -> [Subscription] {
-        []  // Placeholder
+        [] // Placeholder
     }
 
     private func calculateSpentAmount(_: [FinancialTransaction], for _: Budget) -> Decimal {
-        Decimal(0)  // Placeholder
+        Decimal(0) // Placeholder
     }
 
     private func calculateMonthlyExpenses(_: [FinancialTransaction]) -> Decimal {
-        Decimal(5000)  // Placeholder
+        Decimal(5000) // Placeholder
     }
 
     private func generateRiskAssessment(
@@ -405,7 +405,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         public let relatedBudgetId: String?
         public let actionRecommendations: [String]
         public let potentialSavings: Decimal?
-        public let impactScore: Double  // 0-10 scale
+        public let impactScore: Double // 0-10 scale
         public let createdAt: Date
 
         public init(
@@ -473,7 +473,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         let nextMonthSpending: Decimal
         let nextMonthIncome: Decimal
         let savingsProjection: Decimal
-        let budgetVarianceProjection: Double  // 0-1 scale
+        let budgetVarianceProjection: Double // 0-1 scale
     }
 
     public struct SpendingVelocity: Sendable {
@@ -551,6 +551,5 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         }
     }
 
-    private class RiskAssessmentEngine {
-    }
+    private class RiskAssessmentEngine {}
 }

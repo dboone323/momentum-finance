@@ -1,2 +1,2 @@
-#include "../../Config/WorkspaceBase.xcconfig"
-// App specific overrides here
+// Base build settings for MomentumFinance
+// Project-specific overrides below

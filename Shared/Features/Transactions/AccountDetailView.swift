@@ -312,7 +312,7 @@ public struct ActivityChartView: View {
     var chartData: [DailyTransactionData] {
         let calendar = Calendar.current
         let today = Date()
-        let numberOfDays = 14  // Show last 2 weeks
+        let numberOfDays = 14 // Show last 2 weeks
 
         // Create data for each day
         var result: [DailyTransactionData] = []
@@ -332,13 +332,13 @@ public struct ActivityChartView: View {
                 // Calculate income and expense totals
                 let income =
                     dayTransactions
-                    .filter { $0.transactionType == .income }
-                    .reduce(0.0) { $0 + Double(truncating: $1.amount as NSDecimalNumber) }
+                        .filter { $0.transactionType == .income }
+                        .reduce(0.0) { $0 + Double(truncating: $1.amount as NSDecimalNumber) }
 
                 let expense =
                     dayTransactions
-                    .filter { $0.transactionType == .expense }
-                    .reduce(0.0) { $0 + Double(truncating: $1.amount as NSDecimalNumber) }
+                        .filter { $0.transactionType == .expense }
+                        .reduce(0.0) { $0 + Double(truncating: $1.amount as NSDecimalNumber) }
 
                 result.append(DailyTransactionData(date: date, income: income, expense: expense))
             }

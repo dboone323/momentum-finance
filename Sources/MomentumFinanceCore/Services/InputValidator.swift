@@ -34,7 +34,7 @@ public final class InputValidator {
     }
 
     /// Sanitizes input by removing potentially dangerous characters.
-    public static nonisolated func sanitize(_ input: String) -> String {
+    public nonisolated static func sanitize(_ input: String) -> String {
         // Basic sanitization
         var sanitized = input
         let noisyChars = ["<", ">", ";", "'", "--"]
@@ -50,18 +50,20 @@ public final class InputValidator {
 
     /// Redacts PII from a message.
     /// This is nonisolated so it can be called from logging contexts.
-    public static nonisolated func redactPII(_ message: String) -> String {
+    public nonisolated static func redactPII(_ message: String) -> String {
         var redacted = message
 
         // Redact email
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         redacted = redacted.replacingOccurrences(
-            of: emailRegex, with: "[EMAIL]", options: .regularExpression)
+            of: emailRegex, with: "[EMAIL]", options: .regularExpression
+        )
 
         // Redact cards
         let cardRegex = "\\b\\d{4}[\\s-]?\\d{4}[\\s-]?\\d{4}[\\s-]?\\d{4}\\b"
         redacted = redacted.replacingOccurrences(
-            of: cardRegex, with: "[CARD]", options: .regularExpression)
+            of: cardRegex, with: "[CARD]", options: .regularExpression
+        )
 
         return redacted
     }

@@ -1,8 +1,8 @@
 import Foundation
 import MomentumFinanceCore
+import os
 import SwiftData
 import SwiftUI
-import os
 
 // Import KeychainHelper for secure storage
 // import KeychainHelper // This line is commented out and will be removed as per instruction
@@ -12,11 +12,12 @@ import os
 
 // MARK: - Secure Settings Access
 
-// The top-level biometric settings access has been removed as it was redundant and replaced by the implementation within MomentumFinanceApp.
+// The top-level biometric settings access has been removed as it was redundant and replaced by the implementation
+// within MomentumFinanceApp.
 
 // Model references for SwiftData container
-extension MomentumFinanceApp {
-    fileprivate enum ModelReferences {
+private extension MomentumFinanceApp {
+    enum ModelReferences {
         static let accounts = FinancialAccount.self
         static let transactions = FinancialTransaction.self
         static let subscriptions = Subscription.self
@@ -121,7 +122,7 @@ public struct MomentumFinanceApp: App {
         }
 
         if defaults.object(forKey: "themePreference") == nil {
-            defaults.set("system", forKey: "themePreference")  // system, light, dark
+            defaults.set("system", forKey: "themePreference") // system, light, dark
         }
 
         if defaults.object(forKey: "notificationsEnabled") == nil {
@@ -223,8 +224,8 @@ public struct MomentumFinanceApp: App {
 
                     Button("Quit App") {
                         #if os(iOS)
-                            // iOS doesn't allow programmatic app termination
-                            // User must manually close the app
+                        // iOS doesn't allow programmatic app termination
+                        // User must manually close the app
                         #else
                             NSApplication.shared.terminate(nil)
                         #endif
@@ -239,9 +240,9 @@ public struct MomentumFinanceApp: App {
                 #else
                     .background(Color(NSColor.windowBackgroundColor))
                 #endif
-                .onAppear {
-                    print("MomentumFinanceApp: Error view appeared")
-                }
+                    .onAppear {
+                        print("MomentumFinanceApp: Error view appeared")
+                    }
             }
         }
 

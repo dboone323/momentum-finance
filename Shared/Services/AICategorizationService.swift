@@ -12,29 +12,121 @@ enum AICategorizationService {
             "food": [
                 "grocer", "market", "food", "restaurant", "cafe", "coffee",
                 "starbucks", "pizza", "burger", "sushi", "pub", "bar",
-                "taco", "chipotle", "eats", "dash", "dinner", "lunch", "breakfast"
+                "taco", "chipotle", "eats", "dash", "dinner", "lunch", "breakfast",
             ],
 
             // Transport
-            "transportation": ["uber", "lyft", "taxi", "bus", "train", "gas", "fuel", "shell", "bp", "chevron", "wawa", "parking", "auto", "car", "toyota", "ford", "tesla", "subway", "metro"],
+            "transportation": [
+                "uber",
+                "lyft",
+                "taxi",
+                "bus",
+                "train",
+                "gas",
+                "fuel",
+                "shell",
+                "bp",
+                "chevron",
+                "wawa",
+                "parking",
+                "auto",
+                "car",
+                "toyota",
+                "ford",
+                "tesla",
+                "subway",
+                "metro",
+            ],
 
             // Utilities & Bills
-            "utilities": ["electric", "water", "utility", "power", "internet", "wifi", "phone", "mobile", "att", "verizon", "t-mobile", "comcast", "xfinity", "bill", "insurance"],
+            "utilities": [
+                "electric",
+                "water",
+                "utility",
+                "power",
+                "internet",
+                "wifi",
+                "phone",
+                "mobile",
+                "att",
+                "verizon",
+                "t-mobile",
+                "comcast",
+                "xfinity",
+                "bill",
+                "insurance",
+            ],
 
             // Entertainment
-            "entertainment": ["netflix", "spotify", "hulu", "disney", "prime video", "steam", "game", "movie", "cinema", "theatre", "ticket", "event", "concert", "nintendo", "xbox", "playstation"],
+            "entertainment": [
+                "netflix",
+                "spotify",
+                "hulu",
+                "disney",
+                "prime video",
+                "steam",
+                "game",
+                "movie",
+                "cinema",
+                "theatre",
+                "ticket",
+                "event",
+                "concert",
+                "nintendo",
+                "xbox",
+                "playstation",
+            ],
 
             // Shopping
-            "shopping": ["amazon", "walmart", "target", "costco", "best buy", "apple", "store", "shop", "mall", "cloth", "shoe", "nike", "adidas"],
+            "shopping": [
+                "amazon",
+                "walmart",
+                "target",
+                "costco",
+                "best buy",
+                "apple",
+                "store",
+                "shop",
+                "mall",
+                "cloth",
+                "shoe",
+                "nike",
+                "adidas",
+            ],
 
             // Health
-            "health": ["doctor", "pharmacy", "cvs", "walgreens", "rite aid", "gym", "fitness", "yoga", "hospital", "med", "clinic", "dentist"],
+            "health": [
+                "doctor",
+                "pharmacy",
+                "cvs",
+                "walgreens",
+                "rite aid",
+                "gym",
+                "fitness",
+                "yoga",
+                "hospital",
+                "med",
+                "clinic",
+                "dentist",
+            ],
 
             // Housing
             "housing": ["rent", "mortgage", "home", "apartment", "depot", "lowe's", "ikea", "repair", "maintenance"],
 
             // Travel
-            "travel": ["hotel", "airbnb", "flight", "airline", "delta", "united", "american", "expedia", "booking", "resort", "vacation"],
+            "travel": [
+                "hotel",
+                "airbnb",
+                "flight",
+                "airline",
+                "delta",
+                "united",
+                "american",
+                "expedia",
+                "booking",
+                "resort",
+                "vacation",
+            ],
         ]
 
         // 1. Check heuristics against available categories

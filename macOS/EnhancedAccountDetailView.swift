@@ -46,7 +46,8 @@ import SwiftUI
                         HStack(spacing: 8) {
                             Image(
                                 systemName: account.type == .checking
-                                    ? "banknote" : "creditcard.fill"
+                                    ? "banknote"
+                                    : "creditcard.fill"
                             )
                             .font(.title)
                             .foregroundStyle(account.type == .checking ? .green : .blue)
@@ -231,7 +232,8 @@ import SwiftUI
 
                                         DetailField(
                                             label: "Transactions",
-                                            value: "\(self.filteredTransactions.count)")
+                                            value: "\(self.filteredTransactions.count)"
+                                        )
                                     }
 
                                     if let interestRate = account.interestRate, interestRate > 0 {
@@ -350,8 +352,7 @@ import SwiftUI
                             }
                             .frame(maxHeight: .infinity)
                         } else {
-                            List(self.filteredTransactions, selection: self.$selectedTransactionIds)
-                            {
+                            List(self.filteredTransactions, selection: self.$selectedTransactionIds) {
                                 self.transactionRow(for: $0)
                             }
                             .listStyle(.inset)
@@ -577,7 +578,8 @@ import SwiftUI
                                     self.editedAccount?.includeInTotal ?? account.includeInTotal
                                 },
                                 set: { self.editedAccount?.includeInTotal = $0 }
-                            ))
+                            )
+                        )
                     }
 
                     // Active/Inactive
@@ -590,7 +592,8 @@ import SwiftUI
                             isOn: Binding(
                                 get: { self.editedAccount?.isActive ?? account.isActive },
                                 set: { self.editedAccount?.isActive = $0 }
-                            ))
+                            )
+                        )
                     }
                 }
                 .padding(.bottom, 20)
@@ -711,10 +714,12 @@ import SwiftUI
             case .lastYear:
                 var componentsThisYear = calendar.dateComponents([.year], from: today)
                 guard let startOfThisYear = calendar.date(from: componentsThisYear),
-                    let startOfLastYear = calendar.date(
-                        byAdding: .year, value: -1, to: startOfThisYear),
-                    let endOfLastYear = calendar.date(
-                        byAdding: .day, value: -1, to: startOfThisYear)
+                      let startOfLastYear = calendar.date(
+                          byAdding: .year, value: -1, to: startOfThisYear
+                      ),
+                      let endOfLastYear = calendar.date(
+                          byAdding: .day, value: -1, to: startOfThisYear
+                      )
                 else { return false }
                 return date >= startOfLastYear && date <= endOfLastYear
             case .allTime:

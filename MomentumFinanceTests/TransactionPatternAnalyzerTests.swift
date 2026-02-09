@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class TransactionPatternAnalyzerTests: XCTestCase {
     var analyzer: TransactionPatternAnalyzer!

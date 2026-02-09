@@ -1,6 +1,6 @@
-@testable import MomentumFinance
 import SwiftData
 import XCTest
+@testable import MomentumFinance
 
 @MainActor
 class BudgetsViewModelTests: XCTestCase {
@@ -10,7 +10,12 @@ class BudgetsViewModelTests: XCTestCase {
 
     override func setUp() async throws {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        modelContainer = try ModelContainer(for: Budget.self, ExpenseCategory.self, FinancialTransaction.self, configurations: config)
+        modelContainer = try ModelContainer(
+            for: Budget.self,
+            ExpenseCategory.self,
+            FinancialTransaction.self,
+            configurations: config
+        )
         modelContext = ModelContext(modelContainer)
         viewModel = BudgetsViewModel()
         viewModel.setModelContext(modelContext)
@@ -52,12 +57,14 @@ class BudgetsViewModelTests: XCTestCase {
         // But BudgetsViewModel likely just exposes Budgets.
 
         // Let's assume the test is valid if models work.
-        // If Budget.spentAmount returns 0.0 because of relationship query not working in memory without save, we might need save.
+        // If Budget.spentAmount returns 0.0 because of relationship query not working in memory without save, we might
+        // need save.
         try? modelContext.save()
 
         // XCTAssertEqual(budget.spentAmount, 25.0) // This might be flaky if category.transactions is empty?
         // category.transactions is implicit inverse?
-        // FinancialTransaction has `category`. ExpenseCategory should have `@Relationship(deleteRule: .cascade) var transactions: [FinancialTransaction]?`
+        // FinancialTransaction has `category`. ExpenseCategory should have `@Relationship(deleteRule: .cascade) var
+        // transactions: [FinancialTransaction]?`
 
         // Let's skip deep integration assertion if risky, but test ViewModel API.
     }

@@ -41,39 +41,39 @@ extension Features.Transactions {
                     .navigationBarTitleDisplayMode(.inline)
                 #endif
                 #if canImport(UIKit)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button("Cancel") {
-                                self.dismiss()
-                            }
-                            .accessibilityLabel("Button")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button("Cancel") {
+                            self.dismiss()
                         }
-
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button("Save") {
-                                self.saveTransaction()
-                            }
-                            .accessibilityLabel("Button")
-                            .disabled(!self.isFormValid)
-                        }
+                        .accessibilityLabel("Button")
                     }
+
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Save") {
+                            self.saveTransaction()
+                        }
+                        .accessibilityLabel("Button")
+                        .disabled(!self.isFormValid)
+                    }
+                }
                 #else
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Cancel") {
-                                self.dismiss()
+                .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("Cancel") {
+                                    self.dismiss()
+                                }
+                                .accessibilityLabel("Button")
                             }
-                            .accessibilityLabel("Button")
-                        }
 
-                        ToolbarItem(placement: .primaryAction) {
-                            Button("Save") {
-                                self.saveTransaction()
+                            ToolbarItem(placement: .primaryAction) {
+                                Button("Save") {
+                                    self.saveTransaction()
+                                }
+                                .accessibilityLabel("Button")
+                                .disabled(!self.isFormValid)
                             }
-                            .accessibilityLabel("Button")
-                            .disabled(!self.isFormValid)
                         }
-                    }
                 #endif
             }
         }
@@ -87,9 +87,9 @@ extension Features.Transactions {
                     }
 
                 TextField("Amount", text: self.$amount)
-                    #if os(iOS)
-                        .keyboardType(.decimalPad)
-                    #endif
+                #if os(iOS)
+                    .keyboardType(.decimalPad)
+                #endif
 
                 Picker("Type", selection: self.$selectedTransactionType) {
                     ForEach(TransactionType.allCases, id: \.self) { type in
@@ -161,7 +161,7 @@ extension Features.Transactions {
 
         private func saveTransaction() {
             guard let amountValue = Double(amount),
-                let account = selectedAccount
+                  let account = selectedAccount
             else { return }
 
             let transaction = FinancialTransaction(

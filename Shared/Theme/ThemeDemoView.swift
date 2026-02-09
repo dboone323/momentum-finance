@@ -69,7 +69,8 @@ public struct ThemeDemoView: View {
                     ThemeDemoSubscriptionsList(
                         subscriptions: self.subscriptions.map {
                             SubscriptionItem(
-                                name: $0.0, icon: $0.1, renewalDate: $0.2, amount: $0.3)
+                                name: $0.0, icon: $0.1, renewalDate: $0.2, amount: $0.3
+                            )
                         },
                         theme: self.theme
                     )

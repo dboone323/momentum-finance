@@ -266,18 +266,21 @@ import SwiftUI
                                                 SubscriptionDetailField(
                                                     label: "Next Payment",
                                                     value: nextPayment.formatted(
-                                                        date: .abbreviated, time: .omitted)
+                                                        date: .abbreviated, time: .omitted
+                                                    )
                                                 )
                                             } else {
                                                 SubscriptionDetailField(
-                                                    label: "Next Payment", value: "Not scheduled")
+                                                    label: "Next Payment", value: "Not scheduled"
+                                                )
                                             }
 
                                             if let startDate = subscription.startDate {
                                                 SubscriptionDetailField(
                                                     label: "Started On",
                                                     value: startDate.formatted(
-                                                        date: .abbreviated, time: .omitted)
+                                                        date: .abbreviated, time: .omitted
+                                                    )
                                                 )
                                             }
                                         }
@@ -380,7 +383,8 @@ import SwiftUI
                                                     if i == 0 {
                                                         Text(
                                                             nextDate.formatted(
-                                                                date: .abbreviated, time: .omitted)
+                                                                date: .abbreviated, time: .omitted
+                                                            )
                                                         )
                                                         .foregroundStyle(.primary)
                                                     } else {
@@ -391,7 +395,8 @@ import SwiftUI
                                                                 cycle: subscription.billingCycle
                                                                     .rawValue.lowercased()
                                                             ).formatted(
-                                                                date: .abbreviated, time: .omitted)
+                                                                date: .abbreviated, time: .omitted
+                                                            )
                                                         )
                                                         .foregroundStyle(.secondary)
                                                     }
@@ -675,7 +680,8 @@ import SwiftUI
                                             ?? subscription.autoRenews
                                     },
                                     set: { self.editedSubscription?.autoRenews = $0 }
-                                ))
+                                )
+                            )
                         }
                     }
                     .padding(.bottom, 20)
@@ -740,8 +746,7 @@ import SwiftUI
                 }
                 .padding(.vertical, 4)
                 .contextMenu {
-                    Button("View Details").accessibilityLabel("Button").accessibilityLabel("Button")
-                    {
+                    Button("View Details").accessibilityLabel("Button").accessibilityLabel("Button") {
                         // Navigate to transaction detail
                     }
 
@@ -776,7 +781,7 @@ import SwiftUI
                 case .monthly: subscription.amount
                 case .yearly: subscription.amount / 12
                 case .quarterly: subscription.amount / 3
-                case .weekly: subscription.amount * 4.33  // Average weeks in a month
+                case .weekly: subscription.amount * 4.33 // Average weeks in a month
                 default: subscription.amount
                 }
             }
@@ -797,7 +802,7 @@ import SwiftUI
 
                 let monthsSinceStart =
                     Calendar.current.dateComponents([.month], from: startDate, to: Date()).month
-                    ?? 0
+                        ?? 0
                 return self.calculateMonthlyCost(subscription) * Double(monthsSinceStart)
             }
 

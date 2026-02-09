@@ -17,7 +17,8 @@ struct Holding: Identifiable {
     var gainLoss: Decimal { marketValue - costBasis }
 }
 
-@MainActor class PortfolioManager {
+@MainActor
+class PortfolioManager {
     @MainActor static let shared = PortfolioManager()
 
     func calculatePortfolioValue(holdings: [Holding]) -> Decimal {

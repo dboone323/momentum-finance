@@ -1,6 +1,6 @@
 #if os(macOS)
-    @testable import MomentumFinance
     import XCTest
+    @testable import MomentumFinance
 
     class MacOSNavigationTypesTests: XCTestCase {
         // Test SidebarItem enum

@@ -39,8 +39,7 @@ final class TransactionPatternAnalyzer {
         return insights
     }
 
-    private func analyzeWeekdaySpending(_ transactions: [FinancialTransaction]) -> FinancialInsight?
-    {
+    private func analyzeWeekdaySpending(_ transactions: [FinancialTransaction]) -> FinancialInsight? {
         let calendar = Calendar.current
         let expenses = transactions.filter { $0.amount < 0 }
 
@@ -67,7 +66,7 @@ final class TransactionPatternAnalyzer {
         return FinancialInsight(
             title: "Spending Patterns",
             description:
-                "You tend to spend the most on \(dayName)s. Consider this when planning your budget.",
+            "You tend to spend the most on \(dayName)s. Consider this when planning your budget.",
             priority: .low,
             type: .spendingPattern,
             visualizationType: .barChart,
@@ -81,8 +80,7 @@ final class TransactionPatternAnalyzer {
         )
     }
 
-    private func analyzeMonthlySpending(_ transactions: [FinancialTransaction]) -> FinancialInsight?
-    {
+    private func analyzeMonthlySpending(_ transactions: [FinancialTransaction]) -> FinancialInsight? {
         let calendar = Calendar.current
         let expenses = transactions.filter { $0.amount < 0 }
 
@@ -102,7 +100,7 @@ final class TransactionPatternAnalyzer {
         return FinancialInsight(
             title: "Monthly Spending Cycle",
             description:
-                "You tend to spend more around the \(maxDay)th of each month. This could indicate bill payment patterns.",
+            "You tend to spend more around the \(maxDay)th of each month. This could indicate bill payment patterns.",
             priority: .low,
             type: .spendingPattern,
             visualizationType: .lineChart,
@@ -134,18 +132,20 @@ final class TransactionPatternAnalyzer {
             let insight = FinancialInsight(
                 title: "Unusual Transaction Detected",
                 description:
-                    "A transaction of \(fi_formatCurrency(Double(truncating: abs(anomaly.amount) as NSDecimalNumber))) on \(anomaly.date.formatted()) seems unusually large compared to your typical spending.",
+                "A transaction of \(fi_formatCurrency(Double(truncating: abs(anomaly.amount) as NSDecimalNumber))) on \(anomaly.date.formatted()) seems unusually large compared to your typical spending.",
                 priority: .medium,
                 type: .anomaly,
                 visualizationType: .barChart,
                 chartData: [
                     ChartDataPoint(
                         label: "Transaction Amount",
-                        value: Double(truncating: abs(anomaly.amount) as NSDecimalNumber)),
+                        value: Double(truncating: abs(anomaly.amount) as NSDecimalNumber)
+                    ),
                     ChartDataPoint(label: "Average Amount", value: average),
                     ChartDataPoint(
                         label: "Deviation",
-                        value: Double(truncating: abs(anomaly.amount) as NSDecimalNumber) - average),
+                        value: Double(truncating: abs(anomaly.amount) as NSDecimalNumber) - average
+                    ),
                 ]
             )
             insights.append(insight)

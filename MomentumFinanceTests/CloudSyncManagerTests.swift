@@ -1,13 +1,17 @@
 import CloudKit
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 @MainActor
 final class MockCloudDatabase: CloudDatabaseProtocol {
     var savedRecords: [CKRecord] = []
     var recordsToReturn: [CKRecord] = []
 
-    func perform(_ query: CKQuery, inZoneWith zoneID: CKRecordZone.ID?, completionHandler: @escaping @Sendable ([CKRecord]?, Error?) -> Void) {
+    func perform(
+        _ query: CKQuery,
+        inZoneWith zoneID: CKRecordZone.ID?,
+        completionHandler: @escaping @Sendable ([CKRecord]?, Error?) -> Void
+    ) {
         completionHandler(recordsToReturn, nil)
     }
 

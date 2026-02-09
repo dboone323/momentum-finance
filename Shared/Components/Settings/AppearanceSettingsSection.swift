@@ -11,7 +11,7 @@ public struct AppearanceSettingsSection: View {
                 }
             }
             .pickerStyle(.menu)
-            .disabled(true)  // For now, just display current preference
+            .disabled(true) // For now, just display current preference
         } header: {
             Text("Appearance")
         }

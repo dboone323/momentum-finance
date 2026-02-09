@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 class EnhancedReportsSectionViewsTests: XCTestCase {
     var viewModel: Features.GoalsAndReports.EnhancedReportsSectionViewModel!

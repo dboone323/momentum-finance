@@ -1,5 +1,5 @@
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 final class FinancialIntelligenceModelsTests: XCTestCase {
     // MARK: - Setup & Teardown

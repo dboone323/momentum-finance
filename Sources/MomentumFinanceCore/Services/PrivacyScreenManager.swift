@@ -12,7 +12,8 @@ import Foundation
 #endif
 
 /// Manager for app privacy screens to prevent data leakage in App Switcher.
-@MainActor public final class PrivacyScreenManager {
+@MainActor
+public final class PrivacyScreenManager {
     @MainActor public static let shared = PrivacyScreenManager()
 
     /// Whether privacy screen is currently active.
@@ -102,11 +103,13 @@ import Foundation
 
         // MARK: - Notification Handlers
 
-        @objc private func applicationWillResignActive() {
+        @objc
+        private func applicationWillResignActive() {
             showPrivacyScreen()
         }
 
-        @objc private func applicationDidBecomeActive() {
+        @objc
+        private func applicationDidBecomeActive() {
             hidePrivacyScreen()
         }
     #else

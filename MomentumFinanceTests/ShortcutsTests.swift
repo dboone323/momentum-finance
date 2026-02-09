@@ -3,8 +3,8 @@
 // MomentumFinanceTests
 //
 
-@testable import MomentumFinance
 import XCTest
+@testable import MomentumFinance
 
 final class ShortcutsTests: XCTestCase {
     // MARK: - App Shortcuts

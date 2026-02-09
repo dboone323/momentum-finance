@@ -132,17 +132,17 @@ public enum ColorDefinitions {
     // MARK: - Category Colors
 
     public static let categoryColors: [Color] = [
-        Color(hex: "#FF6B6B"),  // Red
-        Color(hex: "#4ECDC4"),  // Teal
-        Color(hex: "#45B7D1"),  // Blue
-        Color(hex: "#96CEB4"),  // Green
-        Color(hex: "#FFEAA7"),  // Yellow
-        Color(hex: "#DDA0DD"),  // Plum
-        Color(hex: "#98D8C8"),  // Mint
-        Color(hex: "#F7DC6F"),  // Gold
-        Color(hex: "#BB8FCE"),  // Purple
-        Color(hex: "#85C1E9"),  // Sky Blue
-        Color(hex: "#F8C471"),  // Orange
+        Color(hex: "#FF6B6B"), // Red
+        Color(hex: "#4ECDC4"), // Teal
+        Color(hex: "#45B7D1"), // Blue
+        Color(hex: "#96CEB4"), // Green
+        Color(hex: "#FFEAA7"), // Yellow
+        Color(hex: "#DDA0DD"), // Plum
+        Color(hex: "#98D8C8"), // Mint
+        Color(hex: "#F7DC6F"), // Gold
+        Color(hex: "#BB8FCE"), // Purple
+        Color(hex: "#85C1E9"), // Sky Blue
+        Color(hex: "#F8C471"), // Orange
         Color(hex: "#82E0AA"),
     ]
 }

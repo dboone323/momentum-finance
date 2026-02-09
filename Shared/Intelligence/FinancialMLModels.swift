@@ -54,7 +54,7 @@ final class FinancialMLModels {
         var predictions: [Double] = []
         for i in 1...months {
             let prediction = slope * (n + Double(i)) + intercept
-            predictions.append(max(0, prediction))  // Ensure non-negative
+            predictions.append(max(0, prediction)) // Ensure non-negative
         }
 
         return predictions
@@ -78,12 +78,11 @@ final class FinancialMLModels {
             || description.contains("utility")
         {
             return "Housing"
-        } else if description.contains("amazon") || description.contains("shopping") || amount > 100
-        {
+        } else if description.contains("amazon") || description.contains("shopping") || amount > 100 {
             return "Shopping"
         } else if description.contains("entertainment") || description.contains("movie")
             || description
-                .contains("game")
+            .contains("game")
         {
             return "Entertainment"
         } else {

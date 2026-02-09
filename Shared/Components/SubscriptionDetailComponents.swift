@@ -148,7 +148,7 @@ import SwiftUI
         let subscription: Subscription
 
         // Sample usage data - in a real app, this would be tracked
-        @State private var usageRating: Double = 0.7  // 0-1 scale
+        @State private var usageRating: Double = 0.7 // 0-1 scale
 
         // Calculate cost per use
         private var costPerUse: Double {
@@ -497,14 +497,12 @@ import SwiftUI
                             Divider()
 
                             Text("\(alternative.name)")
-
                                 .font(.title3)
                                 .padding()
 
                             Divider()
 
                             Text(alternative.price.formatted(.currency(code: "USD")))
-
                                 .font(.title3)
                                 .bold()
                                 .padding()

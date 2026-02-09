@@ -1,6 +1,6 @@
-@testable import MomentumFinance
 import SwiftData
 import XCTest
+@testable import MomentumFinance
 
 final class CoreFinancialModelsTests: XCTestCase {
     // MARK: - FinancialAccount Tests

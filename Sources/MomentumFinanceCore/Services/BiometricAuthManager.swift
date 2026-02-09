@@ -9,7 +9,8 @@ import Foundation
 import LocalAuthentication
 
 /// Manager for biometric authentication (Face ID / Touch ID).
-@MainActor public final class BiometricAuthManager {
+@MainActor
+public final class BiometricAuthManager {
     @MainActor public static let shared = BiometricAuthManager()
 
     private let context = LAContext()

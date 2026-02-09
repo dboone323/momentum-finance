@@ -53,21 +53,21 @@ public final class SecureCredentialManager {
         public var errorDescription: String? {
             switch self {
             case .itemNotFound:
-                return "Credential not found in keychain"
+                "Credential not found in keychain"
             case .duplicateItem:
-                return "Credential already exists"
+                "Credential already exists"
             case .invalidData:
-                return "Invalid credential data"
+                "Invalid credential data"
             case .encodingFailed:
-                return "Failed to encode credential"
+                "Failed to encode credential"
             case .decodingFailed:
-                return "Failed to decode credential"
-            case .keychainError(let status):
-                return "Keychain error: \(status)"
+                "Failed to decode credential"
+            case let .keychainError(status):
+                "Keychain error: \(status)"
             case .biometricNotAvailable:
-                return "Biometric authentication not available"
+                "Biometric authentication not available"
             case .biometricAuthFailed:
-                return "Biometric authentication failed"
+                "Biometric authentication failed"
             }
         }
     }
@@ -90,7 +90,8 @@ public final class SecureCredentialManager {
         }
 
         try store(
-            data, forKey: key, requireBiometric: requireBiometric, syncWithiCloud: syncWithiCloud)
+            data, forKey: key, requireBiometric: requireBiometric, syncWithiCloud: syncWithiCloud
+        )
     }
 
     /// Store a boolean value in the Keychain
@@ -100,7 +101,8 @@ public final class SecureCredentialManager {
     ) throws {
         let data = value ? Data([1]) : Data([0])
         try store(
-            data, forKey: key, requireBiometric: requireBiometric, syncWithiCloud: syncWithiCloud)
+            data, forKey: key, requireBiometric: requireBiometric, syncWithiCloud: syncWithiCloud
+        )
     }
 
     public func store(
@@ -132,10 +134,11 @@ public final class SecureCredentialManager {
 
         if status == errSecDuplicateItem {
             let attributesToUpdate: [String: Any] = [
-                kSecValueData as String: data
+                kSecValueData as String: data,
             ]
             SecItemUpdate(
-                baseQuery(forKey: key) as CFDictionary, attributesToUpdate as CFDictionary)
+                baseQuery(forKey: key) as CFDictionary, attributesToUpdate as CFDictionary
+            )
         } else if status != errSecSuccess {
             throw CredentialError.keychainError(status)
         }
@@ -214,7 +217,7 @@ public final class SecureCredentialManager {
             kSecAttrAccount as String: key.fullyQualifiedKey,
         ]
 
-        if let accessGroup = accessGroup {
+        if let accessGroup {
             query[kSecAttrAccessGroup as String] = accessGroup
         }
 

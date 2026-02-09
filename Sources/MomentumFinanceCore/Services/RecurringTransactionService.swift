@@ -28,7 +28,8 @@ struct RecurringTransaction: Identifiable, Codable {
     var isActive: Bool
 }
 
-@MainActor class RecurringTransactionService {
+@MainActor
+class RecurringTransactionService {
     @MainActor static let shared = RecurringTransactionService()
 
     func processRecurringTransactions(transactions: [RecurringTransaction]) -> [CoreTransaction] {
@@ -49,7 +50,8 @@ struct RecurringTransaction: Identifiable, Codable {
 
                 // Update next due date
                 recurring.nextDueDate = calculateNextDate(
-                    from: recurring.nextDueDate, interval: recurring.interval)
+                    from: recurring.nextDueDate, interval: recurring.interval
+                )
             }
         }
 

@@ -5,7 +5,11 @@ import Combine
 
 @MainActor
 protocol CloudDatabaseProtocol {
-    func perform(_ query: CKQuery, inZoneWith zoneID: CKRecordZone.ID?, completionHandler: @escaping @Sendable ([CKRecord]?, Error?) -> Void)
+    func perform(
+        _ query: CKQuery,
+        inZoneWith zoneID: CKRecordZone.ID?,
+        completionHandler: @escaping @Sendable ([CKRecord]?, Error?) -> Void
+    )
     func save(_ record: CKRecord, completionHandler: @escaping @Sendable (CKRecord?, Error?) -> Void)
 }
 

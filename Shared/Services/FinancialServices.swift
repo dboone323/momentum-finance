@@ -87,7 +87,7 @@ public final class SwiftDataEntityManager: EntityManager {
     ) throws -> ExpenseCategory? {
         // Extract category name from CSV fields
         guard let categoryColumnIndex = columnMapping.categoryIndex,
-            categoryColumnIndex < fields.count
+              categoryColumnIndex < fields.count
         else {
             // Use default category based on transaction type
             return self.getDefaultCategory(for: transactionType)
@@ -122,7 +122,7 @@ public final class SwiftDataEntityManager: EntityManager {
     private func getColumnIndex(for columnName: String?, in _: [String]) -> Int? {
         guard let columnName else { return nil }
         // This is a simplified implementation - in a real app you'd have proper CSV parsing
-        return 0  // Placeholder
+        return 0 // Placeholder
     }
 
     private func getDefaultCategory(for transactionType: TransactionType) -> ExpenseCategory? {
@@ -208,34 +208,34 @@ public final class SwiftDataExportEngineService: Sendable {
             "transactions_report.html")
 
         var html = """
-            <!DOCTYPE html>
-            <html>
-            <head>
-            <style>
-                body { font-family: -apple-system, sans-serif; padding: 20px; }
-                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-                th { background-color: #f2f2f2; }
-                tr:nth-child(even) { background-color: #f9f9f9; }
-                .amount { text-align: right; }
-                .header { margin-bottom: 30px; }
-            </style>
-            </head>
-            <body>
-                <div class="header">
-                    <h1>Financial Transaction Report</h1>
-                    <p>Generated: \(Date().formatted())</p>
-                    <p>Total Transactions: \(transactions.count)</p>
-                </div>
-                <table>
-                    <tr>
-                        <th>Date</th>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>Account</th>
-                        <th>Amount</th>
-                    </tr>
-            """
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <style>
+            body { font-family: -apple-system, sans-serif; padding: 20px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            tr:nth-child(even) { background-color: #f9f9f9; }
+            .amount { text-align: right; }
+            .header { margin-bottom: 30px; }
+        </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>Financial Transaction Report</h1>
+                <p>Generated: \(Date().formatted())</p>
+                <p>Total Transactions: \(transactions.count)</p>
+            </div>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Account</th>
+                    <th>Amount</th>
+                </tr>
+        """
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -243,23 +243,23 @@ public final class SwiftDataExportEngineService: Sendable {
         for transaction in transactions.sorted(by: { $0.date > $1.date }) {
             let amountColor = transaction.transactionType == .income ? "green" : "black"
             html += """
-                    <tr>
-                        <td>\(dateFormatter.string(from: transaction.date))</td>
-                        <td>\(transaction.title)</td>
-                        <td>\(transaction.category?.name ?? "-")</td>
-                        <td>\(transaction.account?.name ?? "-")</td>
-                        <td class="amount" style="color: \(amountColor)">
-                            \(String(format: "%.2f", transaction.amount))
-                        </td>
-                    </tr>
-                """
+                <tr>
+                    <td>\(dateFormatter.string(from: transaction.date))</td>
+                    <td>\(transaction.title)</td>
+                    <td>\(transaction.category?.name ?? "-")</td>
+                    <td>\(transaction.account?.name ?? "-")</td>
+                    <td class="amount" style="color: \(amountColor)">
+                        \(String(format: "%.2f", transaction.amount))
+                    </td>
+                </tr>
+            """
         }
 
         html += """
-                </table>
-            </body>
-            </html>
-            """
+            </table>
+        </body>
+        </html>
+        """
 
         try html.write(to: tempURL, atomically: true, encoding: .utf8)
         return tempURL
@@ -353,7 +353,7 @@ public final class SwiftDataFinancialMLService: Sendable {
             var anomalies: [TransactionAnomaly] = []
 
             // Simple anomaly detection based on amount thresholds
-            for transaction in transactions where transaction.amount > 1000 {  // High amount threshold
+            for transaction in transactions where transaction.amount > 1000 { // High amount threshold
                 anomalies.append(
                     TransactionAnomaly(
                         transaction: transaction,

@@ -90,11 +90,11 @@ extension Features.Dashboard {
                         )
 
                         .transition(
-                            .asymmetric(
-                                insertion: .move(edge: .leading).combined(with: .opacity),
-                                removal: .move(edge: .trailing).combined(with: .opacity)
+                                .asymmetric(
+                                    insertion: .move(edge: .leading).combined(with: .opacity),
+                                    removal: .move(edge: .trailing).combined(with: .opacity)
+                                )
                             )
-                        )
 
                         // Upcoming Subscriptions
                         DashboardSubscriptionsSection(
@@ -165,30 +165,31 @@ extension Features.Dashboard {
                 #if os(iOS)
                     .navigationBarTitleDisplayMode(.large)
                 #endif
-                .onAppear {
-                    self.loadData()
-                }
-                .task {
-                    // Process overdue subscriptions asynchronously
-                    await self.processOverdueSubscriptions(
-                        self.subscriptions, modelContext: self.modelContext)
-                }
-                .navigationDestination(for: DashboardDestination.self) { destination in
-                    switch destination {
-                    case .transactions:
-                        Features.Transactions.TransactionsView()
-                    case .subscriptions:
-                        #if canImport(SwiftData)
-                            Features.Subscriptions.SubscriptionsView()
-                        #else
-                            Text("Subscriptions View - SwiftData not available")
-                        #endif
-                    case .budgets:
-                        Features.Budgets.BudgetsView()
-                    case .accountDetail(let accountId):
-                        Text("Account Detail: \(accountId)")
+                    .onAppear {
+                        self.loadData()
                     }
-                }
+                    .task {
+                        // Process overdue subscriptions asynchronously
+                        await self.processOverdueSubscriptions(
+                            self.subscriptions, modelContext: self.modelContext
+                        )
+                    }
+                    .navigationDestination(for: DashboardDestination.self) { destination in
+                        switch destination {
+                        case .transactions:
+                            Features.Transactions.TransactionsView()
+                        case .subscriptions:
+                            #if canImport(SwiftData)
+                                Features.Subscriptions.SubscriptionsView()
+                            #else
+                                Text("Subscriptions View - SwiftData not available")
+                            #endif
+                        case .budgets:
+                            Features.Budgets.BudgetsView()
+                        case let .accountDetail(accountId):
+                            Text("Account Detail: \(accountId)")
+                        }
+                    }
             }
         }
 

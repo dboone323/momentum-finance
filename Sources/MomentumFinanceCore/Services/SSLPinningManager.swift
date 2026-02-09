@@ -65,14 +65,14 @@ public final class SSLPinningManager: NSObject, @unchecked Sendable {
         }
 
         guard let certificate = SecTrustCopyCertificateChain(serverTrust) as? [SecCertificate],
-            let leafCertificate = certificate.first
+              let leafCertificate = certificate.first
         else {
             print("[SSLPinning] Could not extract leaf certificate")
             return false
         }
 
         guard let publicKey = SecCertificateCopyKey(leafCertificate),
-            let publicKeyData = SecKeyCopyExternalRepresentation(publicKey, nil) as Data?
+              let publicKeyData = SecKeyCopyExternalRepresentation(publicKey, nil) as Data?
         else {
             print("[SSLPinning] Could not extract public key")
             return false

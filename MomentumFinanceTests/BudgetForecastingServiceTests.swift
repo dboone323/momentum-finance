@@ -1,6 +1,6 @@
-@testable import MomentumFinance
 import SwiftData
 import XCTest
+@testable import MomentumFinance
 
 @MainActor
 final class BudgetForecastingServiceTests: XCTestCase {
@@ -11,7 +11,11 @@ final class BudgetForecastingServiceTests: XCTestCase {
 
     override func setUp() async throws {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        modelContainer = try ModelContainer(for: FinancialTransaction.self, ExpenseCategory.self, configurations: config)
+        modelContainer = try ModelContainer(
+            for: FinancialTransaction.self,
+            ExpenseCategory.self,
+            configurations: config
+        )
         modelContext = modelContainer.mainContext
         forecastingService = BudgetForecastingService(modelContext: modelContext)
     }

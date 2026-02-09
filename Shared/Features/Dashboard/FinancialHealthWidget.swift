@@ -72,21 +72,21 @@ struct FinancialHealthWidget: View {
 
     private var savingRateColor: Color {
         if savingRate >= 20 {
-            return .green
+            .green
         } else if savingRate >= 10 {
-            return .orange
+            .orange
         } else {
-            return .red
+            .red
         }
     }
 
     private var savingRateDescription: String {
         if savingRate >= 20 {
-            return "Great job saving!"
+            "Great job saving!"
         } else if savingRate >= 10 {
-            return "Good progress"
+            "Good progress"
         } else {
-            return "Consider saving more"
+            "Consider saving more"
         }
     }
 
@@ -165,6 +165,7 @@ private struct MetricRow: View {
 }
 
 // MARK: - Preview
+
 #Preview {
     FinancialHealthWidget(
         transactions: [],

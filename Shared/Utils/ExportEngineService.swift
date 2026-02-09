@@ -179,7 +179,7 @@ actor ExportEngineService {
             let pdfData = NSMutableData()
             let pdfInfo = [kCGPDFContextCreator: "Momentum Finance"] as CFDictionary
             guard let dataConsumer = CGDataConsumer(data: pdfData as CFMutableData),
-                let pdfContext = CGContext(consumer: dataConsumer, mediaBox: nil, pdfInfo)
+                  let pdfContext = CGContext(consumer: dataConsumer, mediaBox: nil, pdfInfo)
             else { throw ExportError.pdfGenerationFailed }
 
             let pageRect = CGRect(x: 0, y: 0, width: 612, height: 792)
@@ -206,7 +206,8 @@ actor ExportEngineService {
                 .foregroundColor: NSColor.gray,
             ]
             dateRange.draw(
-                at: CGPoint(x: 50, y: pageRect.height - 80), withAttributes: dateAttributes)
+                at: CGPoint(x: 50, y: pageRect.height - 80), withAttributes: dateAttributes
+            )
 
             var yPosition = pageRect.height - 120
             if settings.includeTransactions {
@@ -218,7 +219,8 @@ actor ExportEngineService {
             }
             if settings.includeAccounts {
                 yPosition = try self.drawAccountsSummary(
-                    context: pdfContext, yPosition: yPosition, settings: settings)
+                    context: pdfContext, yPosition: yPosition, settings: settings
+                )
             }
 
             pdfContext.endPDFPage()
@@ -244,7 +246,8 @@ actor ExportEngineService {
         ]
 
         "Transactions Summary".draw(
-            at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes)
+            at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes
+        )
 
         let totalIncome = transactions.filter { $0.transactionType == .income }.reduce(0) {
             $0 + $1.amount
@@ -345,7 +348,8 @@ actor ExportEngineService {
         }
 
         let jsonData = try JSONSerialization.data(
-            withJSONObject: exportData, options: .prettyPrinted)
+            withJSONObject: exportData, options: .prettyPrinted
+        )
         return try self.saveToFile(data: jsonData, filename: ExportConstants.jsonFilename)
     }
 

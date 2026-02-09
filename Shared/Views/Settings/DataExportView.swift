@@ -38,32 +38,32 @@ public struct DataExportView: View {
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.large)
             #endif
-            .toolbar {
-                #if os(iOS)
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button("Cancel") { self.dismiss() }
-                            .accessibilityLabel("Cancel Button")
-                    }
-                #else
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancel") { self.dismiss() }
-                            .accessibilityLabel("Cancel Button")
-                    }
-                #endif
-            }
-            .sheet(isPresented: self.$showingShareSheet) {
-                if let url = exportedFileURL {
-                    ShareSheet(activityItems: [url])
+                .toolbar {
+                    #if os(iOS)
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button("Cancel") { self.dismiss() }
+                                .accessibilityLabel("Cancel Button")
+                        }
+                    #else
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Cancel") { self.dismiss() }
+                                .accessibilityLabel("Cancel Button")
+                        }
+                    #endif
                 }
-            }
-            .alert("Export Error", isPresented: .constant(self.exportError != nil)) {
-                Button("OK") { self.exportError = nil }
-                    .accessibilityLabel("Dismiss Error Button")
-            } message: {
-                if let error = exportError {
-                    Text(error)
+                .sheet(isPresented: self.$showingShareSheet) {
+                    if let url = exportedFileURL {
+                        ShareSheet(activityItems: [url])
+                    }
                 }
-            }
+                .alert("Export Error", isPresented: .constant(self.exportError != nil)) {
+                    Button("OK") { self.exportError = nil }
+                        .accessibilityLabel("Dismiss Error Button")
+                } message: {
+                    if let error = exportError {
+                        Text(error)
+                    }
+                }
         }
     }
 

@@ -14,7 +14,8 @@ import Foundation
             let lines = content.components(separatedBy: .newlines).filter { !$0.isEmpty }
             guard !lines.isEmpty else {
                 return ImportResult(
-                    success: false, itemsImported: 0, errors: ["CSV file is empty"])
+                    success: false, itemsImported: 0, errors: ["CSV file is empty"]
+                )
             }
             let headers = CSVParser.parseCSVRow(lines[0])
             let mapping = CSVParser.mapColumns(headers: headers)
@@ -51,7 +52,8 @@ import Foundation
 
                     // Use default entities or handle as needed
                     let account = FinancialAccount(
-                        name: "Imported Account", balance: Decimal(0), iconName: "creditcard")
+                        name: "Imported Account", balance: Decimal(0), iconName: "creditcard"
+                    )
                     let category = ExpenseCategory(name: "Imported Category", iconName: "tag")
 
                     let transaction = FinancialTransaction(
