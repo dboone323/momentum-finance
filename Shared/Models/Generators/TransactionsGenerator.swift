@@ -1,6 +1,6 @@
 import Foundation
-import SwiftData
 import MomentumFinanceCore
+import SwiftData
 
 /// Transactions data generator
 @MainActor
@@ -14,7 +14,7 @@ final class TransactionsGenerator: DataGenerator {
     /// Generates sample transactions for the past few months
     func generate() {
         guard let categories = try? modelContext.fetch(FetchDescriptor<ExpenseCategory>()),
-              let accounts = try? modelContext.fetch(FetchDescriptor<FinancialAccount>())
+            let accounts = try? modelContext.fetch(FetchDescriptor<FinancialAccount>())
         else {
             return
         }
@@ -27,7 +27,8 @@ final class TransactionsGenerator: DataGenerator {
 
         // Generate transactions for the past 3 months
         for monthOffset in 0..<3 {
-            guard let monthDate = calendar.date(byAdding: .month, value: -monthOffset, to: now) else { continue }
+            guard let monthDate = calendar.date(byAdding: .month, value: -monthOffset, to: now)
+            else { continue }
 
             let transactions = self.generateTransactionsForMonth(
                 monthDate,
@@ -50,7 +51,7 @@ final class TransactionsGenerator: DataGenerator {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month], from: month)
         guard let startOfMonth = calendar.date(from: components),
-              let daysInMonth = calendar.range(of: .day, in: .month, for: month)?.count
+            let daysInMonth = calendar.range(of: .day, in: .month, for: month)?.count
         else {
             return []
         }
@@ -59,10 +60,12 @@ final class TransactionsGenerator: DataGenerator {
 
         // Income transactions (salary, etc.)
         if let incomeCategory = categories["Income"],
-           let checkingAccount = accounts["Checking Account"]
+            let checkingAccount = accounts["Checking Account"]
         {
             for week in 0..<4 {
-                let payDate = calendar.date(byAdding: .day, value: week * 7 + 1, to: startOfMonth) ?? startOfMonth
+                let payDate =
+                    calendar.date(byAdding: .day, value: week * 7 + 1, to: startOfMonth)
+                    ?? startOfMonth
                 let income = FinancialTransaction(
                     title: "Salary Deposit",
                     amount: 3200.0,
@@ -97,15 +100,16 @@ final class TransactionsGenerator: DataGenerator {
 
         for (title, amount, categoryName) in expenseData {
             if let category = categories[categoryName],
-               let account = accounts["Checking Account"] ?? accounts.values.first
+                let account = accounts["Checking Account"] ?? accounts.values.first
             {
                 let randomDay = Int.random(in: 1...daysInMonth)
-                let transactionDate = calendar
+                let transactionDate =
+                    calendar
                     .date(byAdding: .day, value: randomDay - 1, to: startOfMonth) ?? startOfMonth
 
                 let transaction = FinancialTransaction(
                     title: title,
-                    amount: amount,
+                    amount: Decimal(amount),
                     date: transactionDate,
                     transactionType: .expense,
                     notes: nil

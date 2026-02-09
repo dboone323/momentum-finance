@@ -1,7 +1,7 @@
 import Foundation
 import Observation
-import os
 import SwiftUI
+import os
 
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
@@ -30,23 +30,24 @@ final class ErrorHandler {
     }
 
     /// Handle an error and optionally show it to the user
-    /// <#Description#>
-    /// - Returns: <#description#>
+    /// Automatically sanitizes error messages to prevent PII/sensitive data leakage
     @MainActor
     func handle(
         _ error: Error, showToUser: Bool = true, context: String = "", file: String = #file,
         function: String = #function, line: Int = #line
     ) {
-        let appError = AppError.from(error, context: context)
+        // Sanitize context before processing
+        let sanitizedContext = sanitizeErrorContext(context)
+        let appError = AppError.from(error, context: sanitizedContext)
 
         // Track error frequency
         self.trackError(appError)
 
-        // Log the error with source information
+        // Log the error with source information (Logger already redacts PII)
         Logger.logError(
             appError,
             context:
-            "\(context) [\(URL(fileURLWithPath: file).lastPathComponent):\(line) \(function)]"
+                "\(sanitizedContext) [\(URL(fileURLWithPath: file).lastPathComponent):\(line) \(function)]"
         )
 
         // Determine if this is a frequent error (same type occurring rapidly)
@@ -71,8 +72,6 @@ final class ErrorHandler {
     }
 
     /// Clear the current error
-    /// <#Description#>
-    /// - Returns: <#description#>
     func clearError() {
         DispatchQueue.main.async {
             self.currentError = nil
@@ -147,8 +146,6 @@ final class ErrorHandler {
     }
 
     /// Report an error to analytics system
-    /// <#Description#>
-    /// - Returns: <#description#>
     func reportErrorToAnalytics(_ error: AppError) {
         // Here you would integrate with an analytics system like Firebase Crashlytics
         // Example: Crashlytics.record(error: error)
@@ -185,58 +182,58 @@ public enum AppError: LocalizedError, Identifiable {
 
     public var id: String {
         switch self {
-        case let .dataError(message):
+        case .dataError(let message):
             "data_\(message)"
-        case let .validationError(message):
+        case .validationError(let message):
             "validation_\(message)"
-        case let .networkError(message):
+        case .networkError(let message):
             "network_\(message)"
-        case let .businessLogicError(message):
+        case .businessLogicError(let message):
             "business_\(message)"
-        case let .subscriptionError(message):
+        case .subscriptionError(let message):
             "subscription_\(message)"
-        case let .budgetError(message):
+        case .budgetError(let message):
             "budget_\(message)"
-        case let .goalError(message):
+        case .goalError(let message):
             "goal_\(message)"
-        case let .permissionError(message):
+        case .permissionError(let message):
             "permission_\(message)"
-        case let .authenticationError(message):
+        case .authenticationError(let message):
             "auth_\(message)"
-        case let .syncError(message):
+        case .syncError(let message):
             "sync_\(message)"
-        case let .fileSystemError(message):
+        case .fileSystemError(let message):
             "file_\(message)"
-        case let .unknown(message):
+        case .unknown(let message):
             "unknown_\(message)"
         }
     }
 
     public var errorDescription: String? {
         switch self {
-        case let .dataError(message):
+        case .dataError(let message):
             "Data Error: \(message)"
-        case let .validationError(message):
+        case .validationError(let message):
             "Validation Error: \(message)"
-        case let .networkError(message):
+        case .networkError(let message):
             "Network Error: \(message)"
-        case let .businessLogicError(message):
+        case .businessLogicError(let message):
             "Business Logic Error: \(message)"
-        case let .subscriptionError(message):
+        case .subscriptionError(let message):
             "Subscription Error: \(message)"
-        case let .budgetError(message):
+        case .budgetError(let message):
             "Budget Error: \(message)"
-        case let .goalError(message):
+        case .goalError(let message):
             "Goal Error: \(message)"
-        case let .permissionError(message):
+        case .permissionError(let message):
             "Permission Error: \(message)"
-        case let .authenticationError(message):
+        case .authenticationError(let message):
             "Authentication Error: \(message)"
-        case let .syncError(message):
+        case .syncError(let message):
             "Sync Error: \(message)"
-        case let .fileSystemError(message):
+        case .fileSystemError(let message):
             "File System Error: \(message)"
-        case let .unknown(message):
+        case .unknown(let message):
             "Unknown Error: \(message)"
         }
     }
@@ -395,34 +392,31 @@ public struct ErrorAlert: ViewModifier {
         )
     }
 
-    private func alertActions(_: Error) -> some View {
+    private func alertActions(_: AppError) -> some View {
         ForEach(self.errorHandler.recoveryOptions) { option in
-            Button(action: {
-                option.action()
-            }, label: {
-                Text(option.title)
-            })
+            Button(
+                action: {
+                    option.action()
+                },
+                label: {
+                    Text(option.title)
+                }
+            )
             .accessibilityLabel("Button")
         }
     }
 
-    private func alertMessage(_ error: Error) -> some View {
+    private func alertMessage(_ error: AppError) -> some View {
         Group {
-            if let localizedError = error as? LocalizedError {
-                if let reason = localizedError.failureReason {
-                    Text(reason)
-                }
-                if let suggestion = localizedError.recoverySuggestion {
-                    Text(suggestion)
-                }
-            } else {
-                Text(error.localizedDescription)
+            if let reason = error.failureReason {
+                Text(reason)
+            }
+            if let suggestion = error.recoverySuggestion {
+                Text(suggestion)
             }
         }
     }
 
-    /// <#Description#>
-    /// - Returns: <#description#>
     public func body(content: Content) -> some View {
         content
             .alert(
@@ -436,9 +430,20 @@ public struct ErrorAlert: ViewModifier {
 }
 
 extension View {
-    /// <#Description#>
-    /// - Returns: <#description#>
+    /// Apply error handling with automatic sanitization
     func withErrorHandling() -> some View {
         modifier(ErrorAlert())
+    }
+}
+
+// MARK: - Security Extensions
+
+extension ErrorHandler {
+    /// Sanitize error context to prevent sensitive data leakage
+    fileprivate func sanitizeErrorContext(_ context: String) -> String {
+        // First sanitize potential injection attacks
+        let sanitized = InputValidator.sanitize(context)
+        // Then redact PII
+        return InputValidator.redactPII(sanitized)
     }
 }

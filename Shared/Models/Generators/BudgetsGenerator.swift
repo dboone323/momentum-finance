@@ -1,4 +1,5 @@
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 /// Budgets data generator
@@ -12,7 +13,9 @@ final class BudgetsGenerator: DataGenerator {
 
     /// Generates sample budgets for the current and previous months
     func generate() {
-        guard let categories = try? modelContext.fetch(FetchDescriptor<ExpenseCategory>()) else { return }
+        guard let categories = try? modelContext.fetch(FetchDescriptor<ExpenseCategory>()) else {
+            return
+        }
 
         var categoryDict: [String: ExpenseCategory] = [:]
         for category in categories {
@@ -44,7 +47,7 @@ final class BudgetsGenerator: DataGenerator {
             if let category = categoryDict[budgetInfo.category] {
                 let budget = Budget(
                     name: "\(category.name) Budget",
-                    limitAmount: budgetInfo.limit,
+                    limitAmount: Decimal(budgetInfo.limit),
                     month: firstDayOfMonth
                 )
                 budget.category = category
@@ -58,7 +61,7 @@ final class BudgetsGenerator: DataGenerator {
                 if let category = categoryDict[budgetInfo.category] {
                     let budget = Budget(
                         name: "\(category.name) Budget",
-                        limitAmount: budgetInfo.limit,
+                        limitAmount: Decimal(budgetInfo.limit),
                         month: previousMonth
                     )
                     budget.category = category

@@ -88,10 +88,13 @@ public struct AccountDetailView: View {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
 
-                        Text(self.formattedCurrency(self.account.balance))
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(self.account.balance >= 0 ? .primary : .red)
+                        Text(
+                            self.formattedCurrency(
+                                Double(truncating: self.account.balance as NSDecimalNumber))
+                        )
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(self.account.balance >= 0 ? .primary : .red)
                     }
 
                     // Activity Summary
@@ -186,8 +189,10 @@ public struct AccountDetailView: View {
                         .frame(height: 100)
                     } else {
                         ForEach(self.filteredTransactions.prefix(5)) { transaction in
-                            TransactionRowView(transaction: transaction, onTap: {})
-                                .padding(.horizontal, 16)
+                            Features.Transactions.TransactionRowView(
+                                transaction: transaction, onTapped: {}
+                            )
+                            .padding(.horizontal, 16)
                         }
 
                         if self.filteredTransactions.count > 5 {
@@ -243,13 +248,13 @@ public struct AccountDetailView: View {
     private var incomeSummary: Double {
         self.filteredTransactions
             .filter { $0.transactionType == .income }
-            .reduce(0) { $0 + $1.amount }
+            .reduce(0) { $0 + Double(truncating: $1.amount as NSDecimalNumber) }
     }
 
     private var expenseSummary: Double {
         self.filteredTransactions
             .filter { $0.transactionType == .expense }
-            .reduce(0) { $0 + $1.amount }
+            .reduce(0) { $0 + Double(truncating: $1.amount as NSDecimalNumber) }
     }
 
     private func formattedCurrency(_ value: Double) -> String {
@@ -307,7 +312,7 @@ public struct ActivityChartView: View {
     var chartData: [DailyTransactionData] {
         let calendar = Calendar.current
         let today = Date()
-        let numberOfDays = 14 // Show last 2 weeks
+        let numberOfDays = 14  // Show last 2 weeks
 
         // Create data for each day
         var result: [DailyTransactionData] = []
@@ -327,13 +332,13 @@ public struct ActivityChartView: View {
                 // Calculate income and expense totals
                 let income =
                     dayTransactions
-                        .filter { $0.transactionType == .income }
-                        .reduce(0) { $0 + $1.amount }
+                    .filter { $0.transactionType == .income }
+                    .reduce(0.0) { $0 + Double(truncating: $1.amount as NSDecimalNumber) }
 
                 let expense =
                     dayTransactions
-                        .filter { $0.transactionType == .expense }
-                        .reduce(0) { $0 + $1.amount }
+                    .filter { $0.transactionType == .expense }
+                    .reduce(0.0) { $0 + Double(truncating: $1.amount as NSDecimalNumber) }
 
                 result.append(DailyTransactionData(date: date, income: income, expense: expense))
             }

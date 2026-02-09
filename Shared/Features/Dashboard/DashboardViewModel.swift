@@ -1,10 +1,10 @@
 import Foundation
 import MomentumFinanceCore
-import Observation
-import os
 import OSLog
+import Observation
 import SwiftData
 import SwiftUI
+import os
 
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
@@ -13,7 +13,8 @@ import SwiftUI
 @Observable
 final class DashboardViewModel {
     private var modelContext: ModelContext?
-    private let logger = OSLog(subsystem: Bundle.main.bundleIdentifier ?? "MomentumFinance", category: "Dashboard")
+    private let logger = OSLog(
+        subsystem: Bundle.main.bundleIdentifier ?? "MomentumFinance", category: "Dashboard")
 
     /// <#Description#>
     /// - Returns: <#description#>
@@ -52,10 +53,13 @@ final class DashboardViewModel {
     /// Get recent transactions
     /// <#Description#>
     /// - Returns: <#description#>
-    func recentTransactions(_ transactions: [FinancialTransaction], limit: Int = 5) -> [FinancialTransaction] {
-        Array(transactions
-            .sorted { $0.date > $1.date }
-            .prefix(limit))
+    func recentTransactions(_ transactions: [FinancialTransaction], limit: Int = 5)
+        -> [FinancialTransaction]
+    {
+        Array(
+            transactions
+                .sorted { $0.date > $1.date }
+                .prefix(limit))
     }
 
     /// Check for overdue subscriptions and process them
@@ -74,8 +78,9 @@ final class DashboardViewModel {
     }
 
     /// Process a single subscription payment
-    private func processSubscription(_ subscription: Subscription, modelContext: ModelContext) async {
-        subscription.processPayment()
+    private func processSubscription(_ subscription: Subscription, modelContext: ModelContext) async
+    {
+        subscription.processPayment(modelContext: modelContext)
 
         do {
             try modelContext.save()
@@ -97,8 +102,8 @@ final class DashboardViewModel {
         let now = Date()
 
         let currentMonthTransactions = transactions.filter { transaction in
-            transaction.transactionType == .expense &&
-                calendar.isDate(transaction.date, equalTo: now, toGranularity: .month)
+            transaction.transactionType == .expense
+                && calendar.isDate(transaction.date, equalTo: now, toGranularity: .month)
         }
 
         var spendingByCategory: [String: Double] = [:]
@@ -121,11 +126,13 @@ final class DashboardViewModel {
             calendar.isDate(transaction.date, equalTo: now, toGranularity: .month)
         }
 
-        let income = currentMonthTransactions
+        let income =
+            currentMonthTransactions
             .filter { $0.transactionType == .income }
             .reduce(0) { $0 + $1.amount }
 
-        let expenses = currentMonthTransactions
+        let expenses =
+            currentMonthTransactions
             .filter { $0.transactionType == .expense }
             .reduce(0) { $0 + $1.amount }
 

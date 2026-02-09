@@ -28,17 +28,17 @@ struct RecurringTransaction: Identifiable, Codable {
     var isActive: Bool
 }
 
-class RecurringTransactionService {
-    static let shared = RecurringTransactionService()
+@MainActor class RecurringTransactionService {
+    @MainActor static let shared = RecurringTransactionService()
 
-    func processRecurringTransactions(transactions: [RecurringTransaction]) -> [Transaction] {
-        var newTransactions: [Transaction] = []
+    func processRecurringTransactions(transactions: [RecurringTransaction]) -> [CoreTransaction] {
+        var newTransactions: [CoreTransaction] = []
         let today = Date()
 
         for var recurring in transactions where recurring.isActive {
             if recurring.nextDueDate <= today {
                 // Generate transaction
-                let transaction = Transaction(
+                let transaction = CoreTransaction(
                     amount: recurring.amount,
                     date: recurring.nextDueDate,
                     note: recurring.name,
@@ -48,7 +48,8 @@ class RecurringTransactionService {
                 newTransactions.append(transaction)
 
                 // Update next due date
-                recurring.nextDueDate = calculateNextDate(from: recurring.nextDueDate, interval: recurring.interval)
+                recurring.nextDueDate = calculateNextDate(
+                    from: recurring.nextDueDate, interval: recurring.interval)
             }
         }
 
@@ -66,14 +67,4 @@ class RecurringTransactionService {
         case .yearly: return calendar.date(byAdding: .year, value: 1, to: date) ?? date
         }
     }
-}
-
-// Placeholder Transaction struct if not already defined
-struct Transaction: Identifiable {
-    let id = UUID()
-    let amount: Decimal
-    let date: Date
-    let note: String
-    let categoryId: UUID
-    let accountId: UUID
 }

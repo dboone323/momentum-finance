@@ -25,8 +25,8 @@ enum Currency: String, CaseIterable, Identifiable {
     }
 }
 
-class CurrencyService {
-    static let shared = CurrencyService()
+@MainActor class CurrencyService {
+    @MainActor static let shared = CurrencyService()
 
     // Mock exchange rates (Base: USD)
     private let rates: [Currency: Decimal] = [

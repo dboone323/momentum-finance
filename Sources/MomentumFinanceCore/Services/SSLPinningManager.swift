@@ -2,21 +2,18 @@
 // SSLPinningManager.swift
 // MomentumFinance
 //
-// Provides SSL/TLS certificate pinning for secure API communication.
-// Critical for finance apps to prevent Man-in-the-Middle attacks.
-//
 
 import CryptoKit
 import Foundation
 
 /// Manager for SSL certificate pinning to prevent MitM attacks.
-public final class SSLPinningManager: NSObject {
-    public static let shared = SSLPinningManager()
+/// This class is now thread-safe for use in URLSession delegates.
+public final class SSLPinningManager: NSObject, @unchecked Sendable {
+    @MainActor public static let shared = SSLPinningManager()
 
+    private let lock = NSLock()
     /// SHA256 hashes of pinned certificate public keys.
-    /// These should be updated when rotating certificates.
     private var pinnedCertificateHashes: Set<String> = []
-
     /// Domains that require certificate pinning.
     private var pinnedDomains: Set<String> = []
 
@@ -26,82 +23,75 @@ public final class SSLPinningManager: NSObject {
 
     // MARK: - Configuration
 
-    /// Configures the pinning manager with certificate hashes.
-    /// - Parameters:
-    ///   - hashes: SHA256 hashes of the public keys to pin.
-    ///   - domains: Domains to enforce pinning for.
+    @MainActor
     public func configure(certificateHashes: [String], domains: [String]) {
+        lock.lock()
         pinnedCertificateHashes = Set(certificateHashes)
         pinnedDomains = Set(domains.map { $0.lowercased() })
-        print("[SSLPinning] Configured with \(hashes.count) certificates for \(domains.count) domains")
+        lock.unlock()
+        print(
+            "[SSLPinning] Configured with \(certificateHashes.count) certificates for \(domains.count) domains"
+        )
     }
 
-    /// Adds a certificate hash to the pinned set.
+    @MainActor
     public func addPinnedCertificate(hash: String) {
+        lock.lock()
         pinnedCertificateHashes.insert(hash)
+        lock.unlock()
     }
 
-    /// Adds a domain to the pinned domains.
+    @MainActor
     public func addPinnedDomain(_ domain: String) {
+        lock.lock()
         pinnedDomains.insert(domain.lowercased())
+        lock.unlock()
     }
 
     // MARK: - Validation
 
-    /// Checks if a domain requires certificate pinning.
     public func requiresPinning(for domain: String) -> Bool {
-        pinnedDomains.contains(domain.lowercased())
+        lock.lock()
+        defer { lock.unlock() }
+        return pinnedDomains.contains(domain.lowercased())
     }
 
-    /// Validates a server trust against pinned certificates.
-    /// - Parameter serverTrust: The server trust from the authentication challenge.
-    /// - Returns: True if the certificate is valid and pinned.
     public func validate(serverTrust: SecTrust, for domain: String) -> Bool {
-        guard requiresPinning(for: domain) else {
-            // No pinning required for this domain
-            return true
-        }
+        guard requiresPinning(for: domain) else { return true }
 
         guard SecTrustGetCertificateCount(serverTrust) > 0 else {
             print("[SSLPinning] No certificates in server trust")
             return false
         }
 
-        // Get the leaf certificate
         guard let certificate = SecTrustCopyCertificateChain(serverTrust) as? [SecCertificate],
-              let leafCertificate = certificate.first
+            let leafCertificate = certificate.first
         else {
             print("[SSLPinning] Could not extract leaf certificate")
             return false
         }
 
-        // Extract public key and compute hash
-        guard let publicKey = SecCertificateCopyKey(leafCertificate) else {
+        guard let publicKey = SecCertificateCopyKey(leafCertificate),
+            let publicKeyData = SecKeyCopyExternalRepresentation(publicKey, nil) as Data?
+        else {
             print("[SSLPinning] Could not extract public key")
             return false
         }
 
-        guard let publicKeyData = SecKeyCopyExternalRepresentation(publicKey, nil) as Data? else {
-            print("[SSLPinning] Could not get public key data")
-            return false
-        }
-
-        // Compute SHA256 hash of public key
         let hash = SHA256.hash(data: publicKeyData)
         let hashString = hash.compactMap { String(format: "%02x", $0) }.joined()
 
+        lock.lock()
         let isValid = pinnedCertificateHashes.contains(hashString)
+        lock.unlock()
 
         if !isValid {
             print("[SSLPinning] Certificate hash mismatch for \(domain)")
-            print("[SSLPinning] Expected one of: \(pinnedCertificateHashes)")
-            print("[SSLPinning] Got: \(hashString)")
         }
 
         return isValid
     }
 
-    /// Creates a URLSession configuration with pinning.
     public func createPinnedSessionConfiguration() -> URLSessionConfiguration {
         let config = URLSessionConfiguration.default
         config.tlsMinimumSupportedProtocolVersion = .TLSv12
@@ -118,8 +108,9 @@ extension SSLPinningManager: URLSessionDelegate {
         didReceive challenge: URLAuthenticationChallenge,
         completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
     ) {
-        guard challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
-              let serverTrust = challenge.protectionSpace.serverTrust
+        guard
+            challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
+            let serverTrust = challenge.protectionSpace.serverTrust
         else {
             completionHandler(.performDefaultHandling, nil)
             return
@@ -127,11 +118,11 @@ extension SSLPinningManager: URLSessionDelegate {
 
         let domain = challenge.protectionSpace.host
 
-        if validate(serverTrust: serverTrust, for: domain) {
+        // Perform validation synchronously on the delegate queue
+        if self.validate(serverTrust: serverTrust, for: domain) {
             let credential = URLCredential(trust: serverTrust)
             completionHandler(.useCredential, credential)
         } else {
-            // Certificate validation failed - reject connection
             completionHandler(.cancelAuthenticationChallenge, nil)
         }
     }

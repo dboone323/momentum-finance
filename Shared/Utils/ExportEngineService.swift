@@ -61,7 +61,7 @@ actor ExportEngineService {
         for transaction in transactions {
             let date = formatter.string(from: transaction.date)
             let title = self.escapeCSVField(transaction.title)
-            let amount = String(transaction.amount)
+            let amount = transaction.amount.description
             let type = transaction.transactionType.rawValue
             let category = self.escapeCSVField(transaction.category?.name ?? "")
             let account = self.escapeCSVField(transaction.account?.name ?? "")
@@ -83,7 +83,7 @@ actor ExportEngineService {
 
         for account in accounts {
             let name = self.escapeCSVField(account.name)
-            let balance = String(account.balance)
+            let balance = account.balance.description
             let type = account.accountType.rawValue
             let currency = account.currencyCode
             let created = formatter.string(from: account.createdDate)
@@ -104,8 +104,8 @@ actor ExportEngineService {
 
         for budget in budgets {
             let name = self.escapeCSVField(budget.name)
-            let limit = String(budget.limitAmount)
-            let spent = String(budget.spentAmount)
+            let limit = budget.limitAmount.description
+            let spent = budget.spentAmount.description
             let category = self.escapeCSVField(budget.category?.name ?? "")
             let month = formatter.string(from: budget.month)
             let created = formatter.string(from: budget.createdDate)
@@ -128,7 +128,7 @@ actor ExportEngineService {
 
         for subscription in subscriptions {
             let name = self.escapeCSVField(subscription.name)
-            let amount = String(subscription.amount)
+            let amount = subscription.amount.description
             let cycle = subscription.billingCycle.rawValue
             let nextDue = formatter.string(from: subscription.nextDueDate)
             let category = self.escapeCSVField(subscription.category?.name ?? "")
@@ -152,8 +152,8 @@ actor ExportEngineService {
 
         for goal in goals {
             let name = self.escapeCSVField(goal.name)
-            let target = String(goal.targetAmount)
-            let current = String(goal.currentAmount)
+            let target = goal.targetAmount.description
+            let current = goal.currentAmount.description
             let targetDate = formatter.string(from: goal.targetDate)
             let progress = String(format: "%.1f%%", goal.progressPercentage * 100)
 
@@ -262,22 +262,25 @@ actor ExportEngineService {
         )
         currentY += 20
 
-        "Total Income: $\(String(format: "%.2f", totalIncome))".draw(
-            at: CGPoint(x: 70, y: currentY),
-            withAttributes: textAttributes
-        )
+        "Total Income: $\(String(format: "%.2f", Double(truncating: totalIncome as NSDecimalNumber)))"
+            .draw(
+                at: CGPoint(x: 70, y: currentY),
+                withAttributes: textAttributes
+            )
         currentY += 20
 
-        "Total Expenses: $\(String(format: "%.2f", totalExpenses))".draw(
-            at: CGPoint(x: 70, y: currentY),
-            withAttributes: textAttributes
-        )
+        "Total Expenses: $\(String(format: "%.2f", Double(truncating: totalExpenses as NSDecimalNumber)))"
+            .draw(
+                at: CGPoint(x: 70, y: currentY),
+                withAttributes: textAttributes
+            )
         currentY += 20
 
-        "Net Amount: $\(String(format: "%.2f", netAmount))".draw(
-            at: CGPoint(x: 70, y: currentY),
-            withAttributes: textAttributes
-        )
+        "Net Amount: $\(String(format: "%.2f", Double(truncating: netAmount as NSDecimalNumber)))"
+            .draw(
+                at: CGPoint(x: 70, y: currentY),
+                withAttributes: textAttributes
+            )
         currentY += 40
 
         return currentY
@@ -303,7 +306,8 @@ actor ExportEngineService {
         var currentY = yPosition + 30
 
         for account in accounts {
-            let accountInfo = "\(account.name): $\(String(format: "%.2f", account.balance))"
+            let accountInfo =
+                "\(account.name): $\(String(format: "%.2f", Double(truncating: account.balance as NSDecimalNumber)))"
             accountInfo.draw(at: CGPoint(x: 70, y: currentY), withAttributes: textAttributes)
             currentY += 20
         }
@@ -398,7 +402,7 @@ actor ExportEngineService {
                 "id": transaction.id.hashValue.description,
                 "date": formatter.string(from: transaction.date),
                 "title": transaction.title,
-                "amount": transaction.amount,
+                "amount": Double(truncating: transaction.amount as NSDecimalNumber),
                 "type": transaction.transactionType.rawValue,
                 "category": transaction.category?.name ?? "",
                 "account": transaction.account?.name ?? "",
@@ -415,7 +419,7 @@ actor ExportEngineService {
             [
                 "id": account.id.hashValue.description,
                 "name": account.name,
-                "balance": account.balance,
+                "balance": Double(truncating: account.balance as NSDecimalNumber),
                 "type": account.accountType.rawValue,
                 "currencyCode": account.currencyCode,
                 "createdDate": formatter.string(from: account.createdDate),
@@ -431,8 +435,8 @@ actor ExportEngineService {
             [
                 "id": budget.id.hashValue.description,
                 "name": budget.name,
-                "limitAmount": budget.limitAmount,
-                "spentAmount": budget.spentAmount,
+                "limitAmount": Double(truncating: budget.limitAmount as NSDecimalNumber),
+                "spentAmount": Double(truncating: budget.spentAmount as NSDecimalNumber),
                 "category": budget.category?.name ?? "",
                 "month": formatter.string(from: budget.month),
                 "createdDate": formatter.string(from: budget.createdDate),
@@ -448,7 +452,7 @@ actor ExportEngineService {
             [
                 "id": subscription.id.hashValue.description,
                 "name": subscription.name,
-                "amount": subscription.amount,
+                "amount": Double(truncating: subscription.amount as NSDecimalNumber),
                 "billingCycle": subscription.billingCycle.rawValue,
                 "nextDueDate": formatter.string(from: subscription.nextDueDate),
                 "category": subscription.category?.name ?? "",
@@ -466,8 +470,8 @@ actor ExportEngineService {
             var goalData: [String: Any] = [
                 "id": goal.id.hashValue.description,
                 "name": goal.name,
-                "targetAmount": goal.targetAmount,
-                "currentAmount": goal.currentAmount,
+                "targetAmount": Double(truncating: goal.targetAmount as NSDecimalNumber),
+                "currentAmount": Double(truncating: goal.currentAmount as NSDecimalNumber),
                 "progressPercentage": goal.progressPercentage,
             ]
 

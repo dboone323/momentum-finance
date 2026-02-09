@@ -1,6 +1,6 @@
 import Foundation
-import SwiftData
 import MomentumFinanceCore
+import SwiftData
 
 /// Accounts data generator
 @MainActor
@@ -14,8 +14,14 @@ final class AccountsGenerator: DataGenerator {
     /// Generates sample financial accounts for the app
     func generate() {
         let accounts = [
-            (name: "Checking Account", icon: "creditcard.fill", balance: 2500.0, type: AccountType.checking),
-            (name: "Savings Account", icon: "building.columns.fill", balance: 15000.0, type: AccountType.savings),
+            (
+                name: "Checking Account", icon: "creditcard.fill", balance: 2500.0,
+                type: AccountType.checking
+            ),
+            (
+                name: "Savings Account", icon: "building.columns.fill", balance: 15000.0,
+                type: AccountType.savings
+            ),
             (name: "Credit Card", icon: "creditcard", balance: -850.0, type: AccountType.credit),
             (
                 name: "Investment Account",
@@ -23,14 +29,17 @@ final class AccountsGenerator: DataGenerator {
                 balance: 25000.0,
                 type: AccountType.investment
             ),
-            (name: "Emergency Fund", icon: "shield.fill", balance: 5000.0, type: AccountType.savings),
+            (
+                name: "Emergency Fund", icon: "shield.fill", balance: 5000.0,
+                type: AccountType.savings
+            ),
             (name: "Cash", icon: "banknote", balance: 150.0, type: AccountType.cash),
         ]
 
         for account in accounts {
             let newAccount = FinancialAccount(
                 name: account.name,
-                balance: account.balance,
+                balance: Decimal(account.balance),
                 iconName: account.icon,
                 accountType: account.type
             )

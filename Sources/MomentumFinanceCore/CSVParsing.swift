@@ -97,18 +97,19 @@ public enum DataParser {
         return date
     }
 
-    public static func parseAmount(_ string: String) throws -> Double {
-        let cleaned = string
+    public static func parseAmount(_ string: String) throws -> Decimal {
+        let cleaned =
+            string
             .replacingOccurrences(of: "$", with: "")
             .replacingOccurrences(of: ",", with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let value = Double(cleaned) else {
+        guard let value = Decimal(string: cleaned) else {
             throw ImportError.invalidAmountFormat(string)
         }
         return value
     }
 
-    public static func parseTransactionType(_ string: String, fallbackAmount amount: Double)
+    public static func parseTransactionType(_ string: String, fallbackAmount amount: Decimal)
         -> TransactionType
     {
         let normalized = string.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)

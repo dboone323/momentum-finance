@@ -13,16 +13,16 @@ extension Features.Transactions {
     struct TransactionStatsCard: View {
         let transactions: [FinancialTransaction]
 
-        private var income: Double {
+        private var income: Decimal {
             self.transactions
                 .filter { $0.transactionType == .income }
-                .reduce(0) { $0 + $1.amount }
+                .reduce(Decimal(0)) { $0 + $1.amount }
         }
 
-        private var expenses: Double {
+        private var expenses: Decimal {
             self.transactions
                 .filter { $0.transactionType == .expense }
-                .reduce(0) { $0 + $1.amount }
+                .reduce(Decimal(0)) { $0 + $1.amount }
         }
 
         var body: some View {

@@ -25,17 +25,56 @@ public enum BillingCycle: String, Codable, Sendable, CaseIterable {
     case yearly = "Yearly"
 }
 
+// MARK: - Shared Service Models
+
+/// Lightweight struct for financial calculations using Decimal for precision
+public struct CoreTransaction: Identifiable, Codable {
+    public let id: UUID
+    public let amount: Decimal
+    public let date: Date
+    public let note: String
+    public let categoryId: UUID?
+    public let accountId: UUID?
+
+    public init(
+        id: UUID = UUID(), amount: Decimal, date: Date = Date(), note: String,
+        categoryId: UUID? = nil, accountId: UUID? = nil
+    ) {
+        self.id = id
+        self.amount = amount
+        self.date = date
+        self.note = note
+        self.categoryId = categoryId
+        self.accountId = accountId
+    }
+}
+
+/// Lightweight struct for account calculations
+public struct CoreAccount: Identifiable {
+    public let id: UUID
+    public let name: String
+    public var balance: Decimal
+    public let type: String
+
+    public init(id: UUID = UUID(), name: String, balance: Decimal, type: String) {
+        self.id = id
+        self.name = name
+        self.balance = balance
+        self.type = type
+    }
+}
+
 // MARK: - Models
 
 @Model
 public final class FinancialTransaction: Encodable {
     enum CodingKeys: String, CodingKey {
         case title, amount, date, transactionType, notes, isReconciled, isRecurring, location,
-            subcategory, category, account
+            subcategory, category, account, currencyCode
     }
 
     public var title: String
-    public var amount: Double
+    public var amount: Decimal
     public var date: Date
     public var transactionType: TransactionType
     public var notes: String?
@@ -46,10 +85,11 @@ public final class FinancialTransaction: Encodable {
 
     public var category: ExpenseCategory?
     public var account: FinancialAccount?
+    public var currencyCode: String = "USD"
 
     public init(
         title: String,
-        amount: Double,
+        amount: Decimal,
         date: Date,
         transactionType: TransactionType,
         notes: String? = nil,
@@ -58,7 +98,8 @@ public final class FinancialTransaction: Encodable {
         location: String? = nil,
         subcategory: String? = nil,
         category: ExpenseCategory? = nil,
-        account: FinancialAccount? = nil
+        account: FinancialAccount? = nil,
+        currencyCode: String? = nil
     ) {
 
         self.title = title
@@ -72,6 +113,8 @@ public final class FinancialTransaction: Encodable {
         self.subcategory = subcategory
         self.category = category
         self.account = account
+        // Use account's currency if available, otherwise use provided or default to USD
+        self.currencyCode = currencyCode ?? account?.currencyCode ?? "USD"
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -87,14 +130,15 @@ public final class FinancialTransaction: Encodable {
         try container.encode(subcategory, forKey: .subcategory)
         try container.encodeIfPresent(category, forKey: .category)
         try container.encodeIfPresent(account, forKey: .account)
+        try container.encode(currencyCode, forKey: .currencyCode)
     }
 
     public var formattedAmount: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.currencyCode = "USD"
+        formatter.currencyCode = currencyCode
         let sign = transactionType == .income ? "+" : "-"
-        let formattedValue = formatter.string(from: NSNumber(value: amount)) ?? "$0.00"
+        let formattedValue = formatter.string(from: amount as NSDecimalNumber) ?? "$0.00"
         return "\(sign)\(formattedValue)"
     }
 
@@ -113,12 +157,12 @@ public final class FinancialAccount: Hashable, Encodable {
     }
 
     public var name: String
-    public var balance: Double
+    public var balance: Decimal
     public var iconName: String
     public var createdDate: Date
     public var accountType: AccountType
     public var currencyCode: String
-    public var creditLimit: Double?
+    public var creditLimit: Decimal?
 
     @Relationship(deleteRule: .cascade)
     public var transactions: [FinancialTransaction] = []
@@ -128,11 +172,11 @@ public final class FinancialAccount: Hashable, Encodable {
 
     public init(
         name: String,
-        balance: Double,
+        balance: Decimal,
         iconName: String,
         accountType: AccountType = .checking,
         currencyCode: String = "USD",
-        creditLimit: Double? = nil
+        creditLimit: Decimal? = nil
     ) {
         self.name = name
         self.balance = balance
@@ -211,11 +255,11 @@ public final class ExpenseCategory: Hashable, Encodable {
         lhs.id == rhs.id
     }
 
-    public func totalSpent(for month: Date) -> Double {
+    public func totalSpent(for month: Date) -> Decimal {
         let calendar = Calendar.current
         let monthComponents = calendar.dateInterval(of: .month, for: month)
         guard let startOfMonth = monthComponents?.start, let endOfMonth = monthComponents?.end
-        else { return 0.0 }
+        else { return 0 }
         return
             transactions
             .filter { $0.transactionType == .expense }
@@ -228,13 +272,13 @@ public final class ExpenseCategory: Hashable, Encodable {
 public final class Budget: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, name, limitAmount, month, createdDate, rolloverEnabled, rolledOverAmount,
-            maxRolloverPercentage
+            maxRolloverPercentage, currencyCode
     }
 
     public var id: UUID
     public var name: String
-    public var limitAmount: Double
-    public var spentAmount: Double
+    public var limitAmount: Decimal
+    public var spentAmount: Decimal
     public var month: Date
     public var createdDate: Date
     public var category: ExpenseCategory?
@@ -242,18 +286,23 @@ public final class Budget: Encodable {
     // Rollover properties
     public var rolloverEnabled: Bool = false
     public var maxRolloverPercentage: Double = 0.0
-    public var rolledOverAmount: Double = 0.0
+    public var rolledOverAmount: Decimal = 0.0
+    public var currencyCode: String = "USD"
 
-    public init(name: String, limitAmount: Double, spentAmount: Double = 0, month: Date) {
+    public init(
+        name: String, limitAmount: Decimal, spentAmount: Decimal = 0, month: Date,
+        currencyCode: String = "USD"
+    ) {
         self.id = UUID()
         self.name = name
         self.limitAmount = limitAmount
         self.spentAmount = spentAmount
         self.month = month
         self.createdDate = Date()
+        self.currencyCode = currencyCode
     }
 
-    public var effectiveLimit: Double {
+    public var effectiveLimit: Decimal {
         limitAmount + rolledOverAmount
     }
 
@@ -263,17 +312,17 @@ public final class Budget: Encodable {
 
     public var progress: Double {
         guard effectiveLimit > 0 else { return 0.0 }
-        return min(1.0, spentAmount / effectiveLimit)
+        return min(1.0, Double(truncating: (spentAmount / effectiveLimit) as NSDecimalNumber))
     }
 
-    public var remainingAmount: Double {
+    public var remainingAmount: Decimal {
         max(0, effectiveLimit - spentAmount)
     }
 
-    public func calculateRolloverAmount() -> Double {
+    public func calculateRolloverAmount() -> Decimal {
         guard rolloverEnabled else { return 0.0 }
         let remaining = effectiveLimit - spentAmount
-        let maxRollover = limitAmount * maxRolloverPercentage
+        let maxRollover = limitAmount * Decimal(maxRolloverPercentage)
         return min(max(0, remaining), maxRollover)
     }
 
@@ -282,7 +331,8 @@ public final class Budget: Encodable {
         let nextBudget = Budget(
             name: self.name,
             limitAmount: self.limitAmount,
-            month: date
+            month: date,
+            currencyCode: self.currencyCode
         )
         // Copy settings
         nextBudget.rolloverEnabled = self.rolloverEnabled
@@ -303,6 +353,7 @@ public final class Budget: Encodable {
         try container.encode(rolloverEnabled, forKey: .rolloverEnabled)
         try container.encode(rolledOverAmount, forKey: .rolledOverAmount)
         try container.encode(maxRolloverPercentage, forKey: .maxRolloverPercentage)
+        try container.encode(currencyCode, forKey: .currencyCode)
     }
 }
 
@@ -316,7 +367,7 @@ public final class Subscription: Encodable {
     public var id: UUID
     public var name: String
     public var provider: String
-    public var amount: Double
+    public var amount: Decimal
     public var currencyCode: String
     public var billingCycle: BillingCycle
     public var startDate: Date
@@ -332,7 +383,7 @@ public final class Subscription: Encodable {
     public init(
         name: String,
         provider: String = "",
-        amount: Double,
+        amount: Decimal,
         currencyCode: String = "USD",
         billingCycle: BillingCycle,
         startDate: Date = Date(),
@@ -400,10 +451,10 @@ public final class Subscription: Encodable {
         try container.encode(autoRenews, forKey: .autoRenews)
     }
 
-    public var monthlyEquivalent: Double {
+    public var monthlyEquivalent: Decimal {
         switch billingCycle {
         case .daily: return amount * 30
-        case .weekly: return amount * 4.33
+        case .weekly: return amount * Decimal(4.33)
         case .monthly: return amount
         case .quarterly: return amount / 3
         case .yearly: return amount / 12
@@ -414,20 +465,22 @@ public final class Subscription: Encodable {
 @Model
 public final class SavingsGoal: Encodable {
     enum CodingKeys: String, CodingKey {
-        case id, name, targetAmount, currentAmount, targetDate, createdDate
+        case id, name, targetAmount, currentAmount, targetDate, createdDate, currencyCode
     }
 
     public var id: UUID
     public var name: String
-    public var targetAmount: Double
-    public var currentAmount: Double
+    public var targetAmount: Decimal
+    public var currentAmount: Decimal
     public var targetDate: Date
     public var createdDate: Date
     public var notes: String? = ""
+    public var currencyCode: String = "USD"
 
     public init(
-        name: String, targetAmount: Double, currentAmount: Double = 0, targetDate: Date,
-        notes: String? = ""
+        name: String, targetAmount: Decimal, currentAmount: Decimal = 0, targetDate: Date,
+        notes: String? = "",
+        currencyCode: String = "USD"
     ) {
         self.id = UUID()
         self.name = name
@@ -436,6 +489,7 @@ public final class SavingsGoal: Encodable {
         self.targetDate = targetDate
         self.createdDate = Date()
         self.notes = notes
+        self.currencyCode = currencyCode
     }
 
     public var isCompleted: Bool {
@@ -444,23 +498,23 @@ public final class SavingsGoal: Encodable {
 
     public var progressPercentage: Double {
         guard targetAmount > 0 else { return 0 }
-        return min(1.0, currentAmount / targetAmount)
+        return min(1.0, Double(truncating: (currentAmount / targetAmount) as NSDecimalNumber))
     }
 
-    public func addFunds(_ amount: Double) {
+    public func addFunds(_ amount: Decimal) {
         currentAmount += amount
     }
 
     public var formattedCurrentAmount: String {
-        currentAmount.formatted(.currency(code: "USD"))
+        currentAmount.formatted(.currency(code: currencyCode))
     }
 
     public var formattedTargetAmount: String {
-        targetAmount.formatted(.currency(code: "USD"))
+        targetAmount.formatted(.currency(code: currencyCode))
     }
 
     public var formattedRemainingAmount: String {
-        max(0, targetAmount - currentAmount).formatted(.currency(code: "USD"))
+        max(0, targetAmount - currentAmount).formatted(.currency(code: currencyCode))
     }
 
     public var daysRemaining: Int? {
@@ -477,5 +531,6 @@ public final class SavingsGoal: Encodable {
         try container.encode(currentAmount, forKey: .currentAmount)
         try container.encode(targetDate, forKey: .targetDate)
         try container.encode(createdDate, forKey: .createdDate)
+        try container.encode(currencyCode, forKey: .currencyCode)
     }
 }

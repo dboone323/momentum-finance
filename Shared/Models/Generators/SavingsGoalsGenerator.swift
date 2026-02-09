@@ -1,6 +1,6 @@
 import Foundation
-import SwiftData
 import MomentumFinanceCore
+import SwiftData
 
 /// Savings goals data generator
 @MainActor
@@ -63,8 +63,8 @@ final class SavingsGoalsGenerator: DataGenerator {
         for goal in savingsGoals {
             let newGoal = SavingsGoal(
                 name: goal.name,
-                targetAmount: goal.target,
-                currentAmount: goal.current,
+                targetAmount: Decimal(goal.target),
+                currentAmount: Decimal(goal.current),
                 targetDate: goal.targetDate ?? Date()
             )
             // Note: SavingsGoal model might not have notes field based on usage, leaving it out if so.

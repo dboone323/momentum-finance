@@ -61,7 +61,7 @@ extension Features.Transactions {
         /// <#Description#>
         /// - Returns: <#description#>
         func totalIncome(_ transactions: [FinancialTransaction], for period: DateInterval? = nil)
-            -> Double
+            -> Decimal
         {
             let filteredTransactions: [FinancialTransaction] =
                 if let period {
@@ -74,15 +74,15 @@ extension Features.Transactions {
 
             return
                 filteredTransactions
-                    .filter { $0.transactionType == .income }
-                    .reduce(0.0) { $0 + $1.amount }
+                .filter { $0.transactionType == .income }
+                .reduce(Decimal(0)) { $0 + $1.amount }
         }
 
         /// Get total expenses for a period
         /// <#Description#>
         /// - Returns: <#description#>
         func totalExpenses(_ transactions: [FinancialTransaction], for period: DateInterval? = nil)
-            -> Double
+            -> Decimal
         {
             let filteredTransactions: [FinancialTransaction] =
                 if let period {
@@ -95,15 +95,15 @@ extension Features.Transactions {
 
             return
                 filteredTransactions
-                    .filter { $0.transactionType == .expense }
-                    .reduce(0.0) { $0 + $1.amount }
+                .filter { $0.transactionType == .expense }
+                .reduce(Decimal(0)) { $0 + $1.amount }
         }
 
         /// Get net income for a period
         /// <#Description#>
         /// - Returns: <#description#>
         func netIncome(_ transactions: [FinancialTransaction], for period: DateInterval? = nil)
-            -> Double
+            -> Decimal
         {
             self.totalIncome(transactions, for: period)
                 - self.totalExpenses(transactions, for: period)
@@ -167,7 +167,7 @@ extension Features.Transactions {
         /// Create a new transaction
         func createTransaction(
             title: String,
-            amount: Double,
+            amount: Decimal,
             type: TransactionType,
             category: ExpenseCategory?,
             account: FinancialAccount,
@@ -204,7 +204,7 @@ extension Features.Transactions {
         /// - Returns: <#description#>
         func spendingByCategory(
             _ transactions: [FinancialTransaction], for period: DateInterval? = nil
-        ) -> [String: Double] {
+        ) -> [String: Decimal] {
             let filteredTransactions: [FinancialTransaction] =
                 if let period {
                     transactions.filter { transaction in
@@ -214,11 +214,11 @@ extension Features.Transactions {
                     transactions.filter { $0.transactionType == .expense }
                 }
 
-            var spending: [String: Double] = [:]
+            var spending: [String: Decimal] = [:]
 
             for transaction in filteredTransactions {
                 let categoryName = transaction.category?.name ?? "Uncategorized"
-                spending[categoryName, default: 0] += transaction.amount
+                spending[categoryName, default: Decimal(0)] += transaction.amount
             }
 
             return spending

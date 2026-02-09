@@ -7,8 +7,8 @@
 
 import Foundation
 
-class FinancialValidator {
-    static let shared = FinancialValidator()
+@MainActor class FinancialValidator {
+    @MainActor static let shared = FinancialValidator()
 
     enum ValidationError: Error {
         case negativeBalance
@@ -17,7 +17,7 @@ class FinancialValidator {
         case duplicateTransaction
     }
 
-    func validateTransaction(_ transaction: Transaction) -> [ValidationError] {
+    func validateTransaction(_ transaction: CoreTransaction) -> [ValidationError] {
         var errors: [ValidationError] = []
 
         if transaction.amount == 0 {
@@ -31,7 +31,7 @@ class FinancialValidator {
         return errors
     }
 
-    func validateAccountBalance(accountBalance: Decimal, transactions: [Transaction]) -> Bool {
+    func validateAccountBalance(accountBalance: Decimal, transactions: [CoreTransaction]) -> Bool {
         let calculatedBalance = transactions.reduce(0) { $0 + $1.amount }
         return abs(accountBalance - calculatedBalance) < 0.01
     }

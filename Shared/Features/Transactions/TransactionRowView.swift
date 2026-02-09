@@ -10,11 +10,16 @@ import SwiftData
 import SwiftUI
 
 extension Features.Transactions {
-    struct TransactionRowView: View {
-        let transaction: FinancialTransaction
-        let onTapped: () -> Void
+    public struct TransactionRowView: View {
+        public let transaction: FinancialTransaction
+        public let onTapped: () -> Void
 
-        var body: some View {
+        public init(transaction: FinancialTransaction, onTapped: @escaping () -> Void) {
+            self.transaction = transaction
+            self.onTapped = onTapped
+        }
+
+        public var body: some View {
             Button(action: self.onTapped) {
                 HStack {
                     VStack(alignment: .leading) {

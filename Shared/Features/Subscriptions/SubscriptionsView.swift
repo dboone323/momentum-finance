@@ -158,8 +158,6 @@ extension Features.Subscriptions {
         }
     }
 
-
-
     // MARK: - Content View
 
     private struct SubscriptionContentView: View {
@@ -339,7 +337,6 @@ extension Features.Subscriptions {
         }
     }
 
-
 }
 
 // MARK: - Placeholder Views
@@ -386,13 +383,16 @@ private struct AddSubscriptionView: View {
                     TextField("Name", text: self.$name)
                     TextField("Provider", text: self.$provider)
                     TextField("Amount", text: self.$amount)
-                        .keyboardType(.decimalPad)
+                        #if os(iOS)
+                            .keyboardType(.decimalPad)
+                        #endif
                     Picker("Billing Cycle", selection: self.$billingCycle) {
                         ForEach(BillingCycle.allCases, id: \.self) { cycle in
                             Text(cycle.rawValue.capitalized).tag(cycle)
                         }
                     }
-                    DatePicker("Next Due Date", selection: self.$nextDueDate, displayedComponents: .date)
+                    DatePicker(
+                        "Next Due Date", selection: self.$nextDueDate, displayedComponents: .date)
                     Toggle("Active", isOn: self.$isActive)
                     TextField("Notes", text: self.$notes, axis: .vertical)
                 }
@@ -431,12 +431,12 @@ private struct AddSubscriptionView: View {
 
         let subscription = Subscription(
             name: self.name.trimmingCharacters(in: .whitespaces),
-            amount: amountValue,
             provider: self.provider,
+            amount: amountValue,
             billingCycle: self.billingCycle,
             nextDueDate: self.nextDueDate,
-            isActive: self.isActive,
-            notes: self.notes.isEmpty ? nil : self.notes
+            notes: self.notes.isEmpty ? nil : self.notes,
+            isActive: self.isActive
         )
 
         self.modelContext.insert(subscription)

@@ -1,7 +1,7 @@
 import Combine
 import Foundation
+import MomentumFinanceCore
 import SwiftData
-// import MomentumFinanceCore
 
 @MainActor
 public final class SearchEngineService: ObservableObject {
@@ -42,7 +42,7 @@ public final class SearchEngineService: ObservableObject {
     }
 
     private func searchAccounts(_ query: String) -> [SearchResult] {
-        let descriptor = FetchDescriptor<FinancialAccount>()
+        let descriptor = FetchDescriptor<MomentumFinanceCore.FinancialAccount>()
         guard let accounts = try? modelContext.fetch(descriptor) else { return [] }
 
         return accounts.compactMap { account in
@@ -66,10 +66,10 @@ public final class SearchEngineService: ObservableObject {
     }
 
     private func searchTransactions(_ query: String) -> [SearchResult] {
-        let descriptor = FetchDescriptor<FinancialTransaction>()
+        let descriptor = FetchDescriptor<MomentumFinanceCore.FinancialTransaction>()
         guard let transactions = try? modelContext.fetch(descriptor) else { return [] }
 
-        return transactions.compactMap { transaction in
+        return transactions.compactMap { transaction -> SearchResult? in
             let titleScore = self.calculateRelevance(transaction.title, query: query)
             let amountScore = self.calculateRelevance(
                 String(format: "%.2f", transaction.amount), query: query)
@@ -91,10 +91,10 @@ public final class SearchEngineService: ObservableObject {
     }
 
     private func searchSubscriptions(_ query: String) -> [SearchResult] {
-        let descriptor = FetchDescriptor<Subscription>()
+        let descriptor = FetchDescriptor<MomentumFinanceCore.Subscription>()
         guard let subscriptions = try? modelContext.fetch(descriptor) else { return [] }
 
-        return subscriptions.compactMap { subscription in
+        return subscriptions.compactMap { subscription -> SearchResult? in
             let titleScore = self.calculateRelevance(subscription.name, query: query)
             let amountScore = self.calculateRelevance(
                 String(format: "%.2f", subscription.amount), query: query)
@@ -117,10 +117,10 @@ public final class SearchEngineService: ObservableObject {
     }
 
     private func searchBudgets(_ query: String) -> [SearchResult] {
-        let descriptor = FetchDescriptor<Budget>()
+        let descriptor = FetchDescriptor<MomentumFinanceCore.Budget>()
         guard let budgets = try? modelContext.fetch(descriptor) else { return [] }
 
-        return budgets.compactMap { budget in
+        return budgets.compactMap { budget -> SearchResult? in
             let titleScore = self.calculateRelevance(budget.name, query: query)
             let amountScore = self.calculateRelevance(
                 String(format: "%.2f", budget.limitAmount), query: query)

@@ -24,17 +24,19 @@ public struct SearchHeaderComponent: View {
                 TextField("Search...", text: self.$searchText).accessibilityLabel("Text Field")
                     .accessibilityLabel("Text Field")
                     .textFieldStyle(.plain)
-                    .onChange(of: self.searchText) { _ in
+                    .onChange(of: self.searchText) {
                         self.onSearchChanged?()
                     }
                 if !self.searchText.isEmpty {
-                    Button(action: {
-                        self.searchText = ""
-                        self.onSearchChanged?()
-                    }, label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.secondary)
-                    })
+                    Button(
+                        action: {
+                            self.searchText = ""
+                            self.onSearchChanged?()
+                        },
+                        label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundColor(.secondary)
+                        })
                 }
             }
             .padding()

@@ -39,7 +39,8 @@ final class TransactionPatternAnalyzer {
         return insights
     }
 
-    private func analyzeWeekdaySpending(_ transactions: [FinancialTransaction]) -> FinancialInsight? {
+    private func analyzeWeekdaySpending(_ transactions: [FinancialTransaction]) -> FinancialInsight?
+    {
         let calendar = Calendar.current
         let expenses = transactions.filter { $0.amount < 0 }
 
@@ -48,7 +49,9 @@ final class TransactionPatternAnalyzer {
 
         for transaction in expenses {
             let weekday = calendar.component(.weekday, from: transaction.date)
-            spendingByWeekday[weekday] = (spendingByWeekday[weekday] ?? 0) + abs(transaction.amount)
+            spendingByWeekday[weekday] =
+                (spendingByWeekday[weekday] ?? 0)
+                + Double(truncating: abs(transaction.amount) as NSDecimalNumber)
             countByWeekday[weekday] = (countByWeekday[weekday] ?? 0) + 1
         }
 
@@ -56,12 +59,15 @@ final class TransactionPatternAnalyzer {
             return nil
         }
 
-        let weekdayNames = ["", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        let weekdayNames = [
+            "", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
+        ]
         let dayName = weekdayNames[maxWeekday]
 
         return FinancialInsight(
             title: "Spending Patterns",
-            description: "You tend to spend the most on \(dayName)s. Consider this when planning your budget.",
+            description:
+                "You tend to spend the most on \(dayName)s. Consider this when planning your budget.",
             priority: .low,
             type: .spendingPattern,
             visualizationType: .barChart,
@@ -75,7 +81,8 @@ final class TransactionPatternAnalyzer {
         )
     }
 
-    private func analyzeMonthlySpending(_ transactions: [FinancialTransaction]) -> FinancialInsight? {
+    private func analyzeMonthlySpending(_ transactions: [FinancialTransaction]) -> FinancialInsight?
+    {
         let calendar = Calendar.current
         let expenses = transactions.filter { $0.amount < 0 }
 
@@ -83,7 +90,9 @@ final class TransactionPatternAnalyzer {
 
         for transaction in expenses {
             let day = calendar.component(.day, from: transaction.date)
-            spendingByDay[day] = (spendingByDay[day] ?? 0) + abs(transaction.amount)
+            spendingByDay[day] =
+                (spendingByDay[day] ?? 0)
+                + Double(truncating: abs(transaction.amount) as NSDecimalNumber)
         }
 
         guard let maxDay = spendingByDay.max(by: { $0.value < $1.value })?.key else {
@@ -92,7 +101,8 @@ final class TransactionPatternAnalyzer {
 
         return FinancialInsight(
             title: "Monthly Spending Cycle",
-            description: "You tend to spend more around the \(maxDay)th of each month. This could indicate bill payment patterns.",
+            description:
+                "You tend to spend more around the \(maxDay)th of each month. This could indicate bill payment patterns.",
             priority: .low,
             type: .spendingPattern,
             visualizationType: .lineChart,
@@ -110,25 +120,32 @@ final class TransactionPatternAnalyzer {
         let expenses = transactions.filter { $0.amount < 0 }
         guard !expenses.isEmpty else { return insights }
 
-        let amounts = expenses.map { abs($0.amount) }
+        let amounts = expenses.map { Double(truncating: abs($0.amount) as NSDecimalNumber) }
         let average = amounts.reduce(0, +) / Double(amounts.count)
         let standardDeviation = self.calculateStandardDeviation(amounts, mean: average)
 
         // Find transactions that are more than 2 standard deviations above the mean
         let threshold = average + (2 * standardDeviation)
-        let anomalies = expenses.filter { abs($0.amount) > threshold }
+        let anomalies = expenses.filter {
+            Double(truncating: abs($0.amount) as NSDecimalNumber) > threshold
+        }
 
         for anomaly in anomalies {
             let insight = FinancialInsight(
                 title: "Unusual Transaction Detected",
-                description: "A transaction of \(fi_formatCurrency(abs(anomaly.amount))) on \(anomaly.date.formatted()) seems unusually large compared to your typical spending.",
+                description:
+                    "A transaction of \(fi_formatCurrency(Double(truncating: abs(anomaly.amount) as NSDecimalNumber))) on \(anomaly.date.formatted()) seems unusually large compared to your typical spending.",
                 priority: .medium,
                 type: .anomaly,
                 visualizationType: .barChart,
                 chartData: [
-                    ChartDataPoint(label: "Transaction Amount", value: abs(anomaly.amount)),
+                    ChartDataPoint(
+                        label: "Transaction Amount",
+                        value: Double(truncating: abs(anomaly.amount) as NSDecimalNumber)),
                     ChartDataPoint(label: "Average Amount", value: average),
-                    ChartDataPoint(label: "Deviation", value: abs(anomaly.amount) - average),
+                    ChartDataPoint(
+                        label: "Deviation",
+                        value: Double(truncating: abs(anomaly.amount) as NSDecimalNumber) - average),
                 ]
             )
             insights.append(insight)

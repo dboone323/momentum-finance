@@ -244,7 +244,7 @@ extension Features.Dashboard {
             }
 
             for subscription in overdueSubscriptions {
-                subscription.processPayment()
+                subscription.processPayment(modelContext: modelContext)
                 do {
                     try modelContext.save()
                 } catch {

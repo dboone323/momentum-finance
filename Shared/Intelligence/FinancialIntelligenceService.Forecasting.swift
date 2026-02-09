@@ -99,12 +99,13 @@ extension FinancialIntelligenceService {
             return lhsKey < rhsKey
         }
         let monthlyNetFlow = sortedMonths.map { month, transactions in
-            (month, transactions.reduce(0) { $0 + $1.amount })
+            (month, transactions.reduce(Decimal(0)) { $0 + $1.amount })
         }
 
         // Calculate average monthly change
         let monthlyChanges = monthlyNetFlow.map(\.1)
-        let averageMonthlyChange = monthlyChanges.reduce(0, +) / Double(monthlyChanges.count)
+        let averageMonthlyChange =
+            monthlyChanges.reduce(Decimal(0), +) / Decimal(monthlyChanges.count)
 
         // Forecast next 3 months
         let forecastData = fi_projectedBalances(
@@ -113,17 +114,18 @@ extension FinancialIntelligenceService {
             months: 3,
             calendar: calendar
         )
-        let threeMonthPrediction = account.balance + (averageMonthlyChange * 3)
+        let threeMonthPrediction = account.balance + (averageMonthlyChange * Decimal(3))
 
         let title: String
         let priority: InsightPriority
         let description: String
 
-        if averageMonthlyChange < 0, threeMonthPrediction < account.balance * 0.5 {
+        if averageMonthlyChange < 0, threeMonthPrediction < account.balance * Decimal(0.5) {
             title = "Critical Balance Reduction"
             priority = .critical
             let dropAmount = fi_formatCurrency(
-                abs(averageMonthlyChange * 3), code: account.currencyCode
+                Double(truncating: abs(averageMonthlyChange * Decimal(3)) as NSDecimalNumber),
+                code: account.currencyCode
             )
             description =
                 "Your \(account.name) balance is projected to drop by \(dropAmount) in the next 3 months."
@@ -131,14 +133,17 @@ extension FinancialIntelligenceService {
             title = "Declining Account Balance"
             priority = .high
             let declinePerMonth = fi_formatCurrency(
-                abs(averageMonthlyChange), code: account.currencyCode
+                Double(truncating: abs(averageMonthlyChange) as NSDecimalNumber),
+                code: account.currencyCode
             )
             description =
                 "Your \(account.name) balance is declining by approximately \(declinePerMonth) per month."
         } else if averageMonthlyChange > 0 {
             title = "Growing Account Balance"
             priority = .medium
-            let growthPerMonth = fi_formatCurrency(averageMonthlyChange, code: account.currencyCode)
+            let growthPerMonth = fi_formatCurrency(
+                Double(truncating: averageMonthlyChange as NSDecimalNumber),
+                code: account.currencyCode)
             description =
                 "Your \(account.name) balance is growing by approximately \(growthPerMonth) per month."
         } else {

@@ -2,8 +2,8 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 import Foundation
-import SwiftData
 import MomentumFinanceCore
+import SwiftData
 
 /// Generates sample transactions for testing and demo purposes.
 @MainActor
@@ -116,7 +116,7 @@ public class TransactionsDataGenerator: DataGenerator {
         for transaction in transactions {
             let newTransaction = FinancialTransaction(
                 title: transaction.title,
-                amount: transaction.amount,
+                amount: Decimal(transaction.amount),
                 date: transaction.date,
                 transactionType: transaction.type
             )
@@ -182,7 +182,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
         for subscription in subscriptions {
             let newSubscription = Subscription(
                 name: subscription.name,
-                amount: subscription.amount,
+                amount: Decimal(subscription.amount),
                 billingCycle: subscription.cycle,
                 nextDueDate: subscription.nextDue
             )
@@ -210,7 +210,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
             checkingAccount: checkingAccount, creditCard: creditCard
         )
         let personal = self.createPersonalSubscriptions(checkingAccount: checkingAccount)
-        let transportation = self.createTransportationSubscriptions(checkingAccount: checkingAccount)
+        let transportation = self.createTransportationSubscriptions(
+            checkingAccount: checkingAccount)
 
         return entertainment + utilities + personal + transportation
     }
@@ -333,7 +334,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 category: "Personal Care",
                 account: checkingAccount,
                 isActive: true
-            ),
+            )
         ]
     }
 
@@ -361,7 +362,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 category: "Transportation",
                 account: checkingAccount,
                 isActive: true
-            ),
+            )
         ]
     }
 }

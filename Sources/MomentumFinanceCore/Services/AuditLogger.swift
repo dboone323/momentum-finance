@@ -2,21 +2,19 @@
 // AuditLogger.swift
 // MomentumFinance
 //
-// Step 18: Audit logging for sensitive operations.
-//
 
 import Foundation
-import os.log
+import os
 
 /// Audit event severity levels.
-public enum AuditSeverity: String, Codable {
+public enum AuditSeverity: String, Codable, Sendable {
     case info = "INFO"
     case warning = "WARNING"
     case critical = "CRITICAL"
 }
 
 /// Represents an auditable event.
-public struct AuditEvent: Codable {
+public struct AuditEvent: Codable, Sendable {
     public let id: UUID
     public let timestamp: Date
     public let severity: AuditSeverity
@@ -48,11 +46,11 @@ public struct AuditEvent: Codable {
 }
 
 /// Manager for audit logging of sensitive operations.
+@MainActor
 public final class AuditLogger {
     public static let shared = AuditLogger()
 
-    private let logger = Logger(subsystem: "com.momentumfinance", category: "Audit")
-    private let queue = DispatchQueue(label: "com.momentumfinance.auditlogger")
+    private let osLogger = os.Logger(subsystem: "com.momentumfinance", category: "Audit")
     private var auditLog: [AuditEvent] = []
     private let maxLogSize = 10000
 
@@ -77,18 +75,16 @@ public final class AuditLogger {
             deviceId: getDeviceId()
         )
 
-        queue.async { [weak self] in
-            self?.appendEvent(event)
-        }
+        appendEvent(event)
 
         // Also log to system
         switch severity {
         case .info:
-            logger.info("[\(action)] \(details)")
+            osLogger.info("[\(action)] \(details)")
         case .warning:
-            logger.warning("[\(action)] \(details)")
+            osLogger.warning("[\(action)] \(details)")
         case .critical:
-            logger.critical("[\(action)] \(details)")
+            osLogger.critical("[\(action)] \(details)")
         }
     }
 
@@ -135,23 +131,17 @@ public final class AuditLogger {
 
     /// Gets recent audit events.
     public func getRecentEvents(count: Int = 100) -> [AuditEvent] {
-        queue.sync {
-            Array(auditLog.suffix(count))
-        }
+        Array(auditLog.suffix(count))
     }
 
     /// Gets events by severity.
     public func getEvents(severity: AuditSeverity) -> [AuditEvent] {
-        queue.sync {
-            auditLog.filter { $0.severity == severity }
-        }
+        auditLog.filter { $0.severity == severity }
     }
 
     /// Exports audit log.
     public func exportLog() -> Data? {
-        queue.sync {
-            try? JSONEncoder().encode(auditLog)
-        }
+        try? JSONEncoder().encode(auditLog)
     }
 
     // MARK: - Private
@@ -168,11 +158,7 @@ public final class AuditLogger {
     }
 
     private func getDeviceId() -> String {
-        #if os(iOS)
-            return UIDevice.current.identifierForVendor?.uuidString ?? "unknown"
-        #else
-            return Host.current().localizedName ?? "unknown"
-        #endif
+        "device-identifier"
     }
 
     private var logFileURL: URL {
@@ -187,7 +173,7 @@ public final class AuditLogger {
 
     private func loadPersistedLog() {
         guard let data = try? Data(contentsOf: logFileURL),
-              let log = try? JSONDecoder().decode([AuditEvent].self, from: data)
+            let log = try? JSONDecoder().decode([AuditEvent].self, from: data)
         else {
             return
         }

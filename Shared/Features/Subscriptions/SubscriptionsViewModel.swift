@@ -61,18 +61,19 @@ final class SubscriptionsViewModel {
             .filter(\.isActive)
             .reduce(0.0) { total, subscription in
                 // Convert subscription amount to monthly equivalent
+                let subscriptionAmount = Double(truncating: subscription.amount as NSDecimalNumber)
                 let monthlyAmount: Double =
                     switch subscription.billingCycle {
                     case .daily:
-                        subscription.amount * 30.0
+                        subscriptionAmount * 30.0
                     case .weekly:
-                        subscription.amount * 4.33  // Average weeks per month
+                        subscriptionAmount * 4.33  // Average weeks per month
                     case .monthly:
-                        subscription.amount
+                        subscriptionAmount
                     case .quarterly:
-                        subscription.amount / 3.0
+                        subscriptionAmount / 3.0
                     case .yearly:
-                        subscription.amount / 12.0
+                        subscriptionAmount / 12.0
                     }
 
                 return total + monthlyAmount
@@ -88,7 +89,7 @@ final class SubscriptionsViewModel {
         let overdue = self.overdueSubscriptions(subscriptions)
 
         for subscription in overdue {
-            subscription.processPayment()
+            subscription.processPayment(modelContext: modelContext)
         }
 
         try? modelContext.save()

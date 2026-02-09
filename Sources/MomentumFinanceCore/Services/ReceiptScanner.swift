@@ -27,8 +27,8 @@ public struct ReceiptScanResult {
 }
 
 /// Scanner for extracting data from receipt images.
-public final class ReceiptScanner {
-    public static let shared = ReceiptScanner()
+@MainActor public final class ReceiptScanner {
+    @MainActor public static let shared = ReceiptScanner()
 
     private init() {}
 

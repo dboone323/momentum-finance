@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class ThemeManager: ObservableObject {
+@MainActor class ThemeManager: ObservableObject {
     @AppStorage("selectedTheme") var selectedTheme: String = "System"
 
     // Financial apps often have "Green" (Growth) or "Blue" (Trust) themes

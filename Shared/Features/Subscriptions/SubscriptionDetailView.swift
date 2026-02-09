@@ -218,7 +218,7 @@ extension Features.Subscriptions {
                         }
                         .accessibilityLabel("Cancel")
                         Button("Process Payment") {
-                            subscription.processPayment()
+                            subscription.processPayment(modelContext: self.modelContext)
                         }
                         .accessibilityLabel("Process Payment")
                     } message: {

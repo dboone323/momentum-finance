@@ -15,14 +15,16 @@ struct NetWorthPoint: Identifiable {
     var netWorth: Decimal { assets - liabilities }
 }
 
-class NetWorthCalculator {
-    static let shared = NetWorthCalculator()
+@MainActor class NetWorthCalculator {
+    @MainActor static let shared = NetWorthCalculator()
 
-    func calculateCurrentNetWorth(accounts: [Account]) -> Decimal {
+    func calculateCurrentNetWorth(accounts: [NetWorthAccount]) -> Decimal {
         accounts.reduce(0) { $0 + $1.balance }
     }
 
-    func generateHistory(accounts: [Account], transactions: [Transaction]) -> [NetWorthPoint] {
+    func generateHistory(accounts: [NetWorthAccount], transactions: [CoreTransaction])
+        -> [NetWorthPoint]
+    {
         // Replay transactions to build history
         // This is complex; simplified placeholder for now
         []
@@ -30,14 +32,14 @@ class NetWorthCalculator {
 }
 
 // Placeholder Account struct
-struct Account: Identifiable {
+struct NetWorthAccount: Identifiable {
     let id = UUID()
     let name: String
     let balance: Decimal
-    let type: AccountType
+    let type: NetWorthAccountType
 }
 
-enum AccountType {
+enum NetWorthAccountType {
     case asset
     case liability
 }

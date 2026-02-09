@@ -12,8 +12,8 @@ import Foundation
 #endif
 
 /// Manager for app privacy screens to prevent data leakage in App Switcher.
-public final class PrivacyScreenManager {
-    public static let shared = PrivacyScreenManager()
+@MainActor public final class PrivacyScreenManager {
+    @MainActor public static let shared = PrivacyScreenManager()
 
     /// Whether privacy screen is currently active.
     private(set) var isPrivacyScreenActive = false

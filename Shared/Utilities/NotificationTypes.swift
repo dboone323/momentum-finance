@@ -266,7 +266,7 @@ public struct BudgetNotificationScheduler {
         content.userInfo = [
             "type": "rollover_opportunity",
             "budgetId": "\(budget.persistentModelID)",
-            "rolloverAmount": rolloverAmount,
+            "rolloverAmount": Double(truncating: rolloverAmount as NSDecimalNumber),
         ]
 
         // Schedule immediately for current opportunities
@@ -298,11 +298,13 @@ public struct BudgetNotificationScheduler {
             Calendar.current.range(of: .day, in: .month, for: budget.month)?.count ?? 30
         let currentDay = Calendar.current.component(.day, from: Date())
         let daysRemaining = max(1, daysInMonth - currentDay)
-        let dailySpendingRate = budget.spentAmount / Double(currentDay)
+        let dailySpendingRate = Double(
+            truncating: (budget.spentAmount / Decimal(currentDay)) as NSDecimalNumber)
 
         // Predict end-of-month spending
         let predictedSpending = dailySpendingRate * Double(daysInMonth)
-        let predictedPercentage = predictedSpending / budget.effectiveLimit
+        let predictedPercentage =
+            predictedSpending / Double(truncating: budget.effectiveLimit as NSDecimalNumber)
 
         // Alert if predicted spending exceeds budget
         if predictedPercentage > 1.0, spentPercentage < 0.9 {
@@ -410,7 +412,9 @@ public struct BudgetNotificationScheduler {
     private func createRolloverMessage(budget: Budget, rolloverAmount: Double) -> String {
         let categoryName = budget.category?.name ?? "Unknown Category"
         let rolloverFormatted = rolloverAmount.formatted(.currency(code: "USD"))
-        let percentage = Int((rolloverAmount / budget.limitAmount) * 100)
+        let percentage = Int(
+            (Double(truncating: rolloverAmount as NSDecimalNumber)
+                / Double(truncating: budget.limitAmount as NSDecimalNumber)) * 100)
 
         return
             "Great job staying under budget! You can roll over \(rolloverFormatted) (\(percentage)%) from your \(categoryName) budget to next month."
@@ -425,7 +429,8 @@ public struct BudgetNotificationScheduler {
         let categoryName = budget.category?.name ?? "Unknown Category"
         let predictedFormatted = predictedAmount.formatted(.currency(code: "USD"))
         let limitFormatted = budget.effectiveLimit.formatted(.currency(code: "USD"))
-        let overspend = predictedAmount - budget.effectiveLimit
+        let overspend =
+            predictedAmount - Double(truncating: budget.effectiveLimit as NSDecimalNumber)
         let overspendFormatted = overspend.formatted(.currency(code: "USD"))
 
         return
@@ -447,7 +452,8 @@ public struct BudgetNotificationScheduler {
         let daysInMonth =
             Calendar.current.range(of: .day, in: .month, for: budget.month)?.count ?? 30
         let currentDay = Calendar.current.component(.day, from: Date())
-        let averageDailySpending = budget.spentAmount / Double(max(1, currentDay))
+        let averageDailySpending = Double(
+            truncating: (budget.spentAmount / Decimal(max(1, currentDay))) as NSDecimalNumber)
 
         // Check recent transactions for spikes (simplified logic)
         // This would need access to transaction data to implement properly
@@ -582,7 +588,8 @@ public struct GoalNotificationScheduler {
         self.center.removePendingNotificationRequests(withIdentifiers: [identifier])
 
         // Calculate progress percentage
-        let progressPercentage = goal.currentAmount / goal.targetAmount
+        let progressPercentage = Double(
+            truncating: (goal.currentAmount / goal.targetAmount) as NSDecimalNumber)
         let progressPercent = Int(progressPercentage * 100)
 
         // Only schedule if goal is active and has meaningful progress

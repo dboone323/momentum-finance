@@ -65,9 +65,12 @@ public struct TransactionListView: View {
     public var body: some View {
         List {
             ForEach(self.transactions) { transaction in
-                TransactionRowView(transaction: transaction) {
-                    self.onTransactionTapped(transaction)
-                }
+                Features.Transactions.TransactionRowView(
+                    transaction: transaction,
+                    onTapped: {
+                        self.onTransactionTapped(transaction)
+                    }
+                )
                 .swipeActions {
                     Button(role: .destructive) {
                         self.onDeleteTransaction(transaction)
@@ -79,30 +82,6 @@ public struct TransactionListView: View {
             }
         }
         .listStyle(.plain)
-    }
-}
-
-public struct TransactionRowView: View {
-    let transaction: FinancialTransaction
-    let onTap: () -> Void
-    public init(transaction: FinancialTransaction, onTap: @escaping () -> Void) {
-        self.transaction = transaction
-        self.onTap = onTap
-    }
-
-    public var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(self.transaction.title).font(.subheadline).foregroundColor(.primary)
-                Text(self.transaction.date, style: .date).font(.caption).foregroundColor(.secondary)
-            }
-            Spacer()
-            Text(self.transaction.amount.formatted(.currency(code: "USD")))
-                .font(.subheadline)
-                .foregroundColor(self.transaction.amount >= 0 ? .green : .red)
-        }
-        .contentShape(Rectangle())
-        .onTapGesture(perform: self.onTap)
     }
 }
 

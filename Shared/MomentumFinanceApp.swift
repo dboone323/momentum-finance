@@ -1,35 +1,22 @@
 import Foundation
 import MomentumFinanceCore
-import os
 import SwiftData
 import SwiftUI
+import os
 
 // Import KeychainHelper for secure storage
-// import KeychainHelper
+// import KeychainHelper // This line is commented out and will be removed as per instruction
 
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 // MARK: - Secure Settings Access
 
-/// Securely access biometric authentication setting from Keychain
-var isBiometricAuthEnabled: Bool {
-    // let keychainHelper = KeychainHelper(serviceName: "com.momentumfinance.app")
-    // return keychainHelper.getBool(forKey: "biometricAuthEnabled") ?? false
-    UserDefaults.standard.bool(forKey: "biometricAuthEnabled")
-}
-
-/// Securely set biometric authentication setting in Keychain
-/// - Parameter enabled: Whether biometric auth should be enabled
-func setBiometricAuthEnabled(_ enabled: Bool) {
-    // let keychainHelper = KeychainHelper(serviceName: "com.momentumfinance.app")
-    // let _ = keychainHelper.setBool(enabled, forKey: "biometricAuthEnabled")
-    UserDefaults.standard.set(enabled, forKey: "biometricAuthEnabled")
-}
+// The top-level biometric settings access has been removed as it was redundant and replaced by the implementation within MomentumFinanceApp.
 
 // Model references for SwiftData container
-private extension MomentumFinanceApp {
-    enum ModelReferences {
+extension MomentumFinanceApp {
+    fileprivate enum ModelReferences {
         static let accounts = FinancialAccount.self
         static let transactions = FinancialTransaction.self
         static let subscriptions = Subscription.self
@@ -55,23 +42,37 @@ public struct MomentumFinanceApp: App {
 
         // Initialize user preferences
         self.initializeUserPreferences()
+
+        // Initialize network security
+        NetworkSecurityManager.shared.initialize()
     }
 
     // MARK: - Secure Settings Access
 
     /// Securely access biometric authentication setting from Keychain
     var isBiometricAuthEnabled: Bool {
-        // let keychainHelper = KeychainHelper(serviceName: "com.momentumfinance.app")
-        // return keychainHelper.getBool(forKey: "biometricAuthEnabled") ?? false
-        UserDefaults.standard.bool(forKey: "biometricAuthEnabled")
+        do {
+            return try SecureCredentialManager.shared.retrieveBool(.biometricEnabled) ?? false
+        } catch {
+            os_log(
+                "Failed to retrieve biometric setting from Keychain: %@", log: .default,
+                type: .error, error.localizedDescription
+            )
+            return false
+        }
     }
 
     /// Securely set biometric authentication setting in Keychain
     /// - Parameter enabled: Whether biometric auth should be enabled
     func setBiometricAuthEnabled(_ enabled: Bool) {
-        // let keychainHelper = KeychainHelper(serviceName: "com.momentumfinance.app")
-        // let _ = keychainHelper.setBool(enabled, forKey: "biometricAuthEnabled")
-        UserDefaults.standard.set(enabled, forKey: "biometricAuthEnabled")
+        do {
+            try SecureCredentialManager.shared.store(enabled, forKey: .biometricEnabled)
+        } catch {
+            os_log(
+                "Failed to store biometric setting in Keychain: %@", log: .default, type: .error,
+                error.localizedDescription
+            )
+        }
     }
 
     private func trackAppLaunch() {
@@ -120,7 +121,7 @@ public struct MomentumFinanceApp: App {
         }
 
         if defaults.object(forKey: "themePreference") == nil {
-            defaults.set("system", forKey: "themePreference") // system, light, dark
+            defaults.set("system", forKey: "themePreference")  // system, light, dark
         }
 
         if defaults.object(forKey: "notificationsEnabled") == nil {
@@ -128,13 +129,21 @@ public struct MomentumFinanceApp: App {
         }
 
         // Migrate biometric auth setting from UserDefaults to Keychain if needed
-        // let keychainHelper = KeychainHelper(serviceName: "com.momentumfinance.app")
-        // keychainHelper.migrateFromUserDefaults(key: "biometricAuthEnabled")
+        if defaults.object(forKey: "biometricAuthEnabled") != nil {
+            let enabled = defaults.bool(forKey: "biometricAuthEnabled")
+            do {
+                try SecureCredentialManager.shared.store(enabled, forKey: .biometricEnabled)
+                defaults.removeObject(forKey: "biometricAuthEnabled")
+                print("MomentumFinanceApp: Migrated biometric preference to Keychain")
+            } catch {
+                print("MomentumFinanceApp: Failed to migrate biometric preference: \(error)")
+            }
+        }
 
         // Set default biometric auth preference in Keychain if not already set
-        // if !keychainHelper.hasValue(forKey: "biometricAuthEnabled") {
-        //     let _ = keychainHelper.setBool(false, forKey: "biometricAuthEnabled")
-        // }
+        if !SecureCredentialManager.shared.exists(.biometricEnabled) {
+            try? SecureCredentialManager.shared.store(false, forKey: .biometricEnabled)
+        }
 
         defaults.synchronize()
         print("MomentumFinanceApp: User preferences initialized")
@@ -214,8 +223,8 @@ public struct MomentumFinanceApp: App {
 
                     Button("Quit App") {
                         #if os(iOS)
-                        // iOS doesn't allow programmatic app termination
-                        // User must manually close the app
+                            // iOS doesn't allow programmatic app termination
+                            // User must manually close the app
                         #else
                             NSApplication.shared.terminate(nil)
                         #endif
@@ -230,9 +239,9 @@ public struct MomentumFinanceApp: App {
                 #else
                     .background(Color(NSColor.windowBackgroundColor))
                 #endif
-                    .onAppear {
-                        print("MomentumFinanceApp: Error view appeared")
-                    }
+                .onAppear {
+                    print("MomentumFinanceApp: Error view appeared")
+                }
             }
         }
 

@@ -1,6 +1,7 @@
 // Momentum Finance - Data Export View
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
+import MomentumFinanceCore
 import SwiftData
 import SwiftUI
 import UniformTypeIdentifiers

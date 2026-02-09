@@ -103,7 +103,7 @@ public struct AddSavingsGoalView: View {
     private func saveSavingsGoal() {
         guard let targetAmount = Double(targetAmountString) else { return }
 
-        let goal = SavingsGoal(
+        let goal = MomentumFinanceCore.SavingsGoal(
             name: name,
             targetAmount: targetAmount,
             targetDate: hasTargetDate ? self.targetDate : Date()
@@ -117,7 +117,7 @@ public struct AddSavingsGoalView: View {
 }
 
 public struct SavingsGoalDetailView: View {
-    let goal: SavingsGoal
+    let goal: MomentumFinanceCore.SavingsGoal
     @Environment(\.dismiss)
     private var dismiss
     @Environment(\.modelContext)
@@ -201,8 +201,7 @@ public struct SavingsGoalDetailView: View {
                             .foregroundColor(self.goal.isCompleted ? .green : .blue)
                     }
 
-                    let targetDate = goal.targetDate?.formatted(date: .long, time: .omitted) ??
-                        "No target date"
+                    let targetDate = goal.targetDate.formatted(date: .long, time: .omitted)
                     HStack {
                         Text("Target Date")
                         Spacer()

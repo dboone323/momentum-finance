@@ -5,6 +5,7 @@ import Foundation
 #endif
 
 #if canImport(SwiftData)
+    @MainActor
     public class DataImporter {
         private let modelContainer: ModelContainer
         public init(modelContainer: ModelContainer) { self.modelContainer = modelContainer }
@@ -50,12 +51,12 @@ import Foundation
 
                     // Use default entities or handle as needed
                     let account = FinancialAccount(
-                        name: "Imported Account", balance: 0, iconName: "creditcard")
+                        name: "Imported Account", balance: Decimal(0), iconName: "creditcard")
                     let category = ExpenseCategory(name: "Imported Category", iconName: "tag")
 
                     let transaction = FinancialTransaction(
                         title: title,
-                        amount: abs(amount),
+                        amount: amount < 0 ? -amount : amount,
                         date: date,
                         transactionType: txType,
                         notes: notes
@@ -75,6 +76,14 @@ import Foundation
             return ImportResult(
                 success: errors.isEmpty, itemsImported: imported, errors: errors, warnings: warnings
             )
+        }
+
+        public func importFromEncryptedData(_ data: Data) async throws -> ImportResult {
+            let decryptedData = try DataEncryptionService.shared.decrypt(data)
+            guard let content = String(data: decryptedData, encoding: .utf8) else {
+                throw ImportError.invalidFormat("Decrypted data is not valid UTF-8 text.")
+            }
+            return try await importFromCSV(content)
         }
     }
 #endif

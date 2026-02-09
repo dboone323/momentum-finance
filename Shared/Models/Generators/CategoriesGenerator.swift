@@ -1,6 +1,6 @@
 import Foundation
-import SwiftData
 import MomentumFinanceCore
+import SwiftData
 
 /// Protocol for data generators
 @MainActor

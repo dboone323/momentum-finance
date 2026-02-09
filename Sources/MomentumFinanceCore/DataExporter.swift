@@ -30,7 +30,7 @@ import Foundation
                 var rows = ["TRANSACTIONS", "date,title,amount,type,notes,category,account"]
                 for transaction in transactions {
                     rows.append(
-                        "\(isoFormatter.string(from: transaction.date)),\(Self.sanitizedField(transaction.title)),\(String(format: "%.2f", transaction.amount)),\(transaction.transactionType.rawValue),\(Self.sanitizedField(transaction.notes ?? "")),\(Self.sanitizedField(transaction.category?.name ?? "")),\(Self.sanitizedField(transaction.account?.name ?? ""))"
+                        "\(isoFormatter.string(from: transaction.date)),\(Self.sanitizedField(transaction.title)),\(transaction.amount.description),\(transaction.transactionType.rawValue),\(Self.sanitizedField(transaction.notes ?? "")),\(Self.sanitizedField(transaction.category?.name ?? "")),\(Self.sanitizedField(transaction.account?.name ?? ""))"
                     )
                 }
                 csvSections.append(rows.joined(separator: "\n"))
@@ -43,7 +43,7 @@ import Foundation
                 var rows = ["ACCOUNTS", "name,balance,type,currency,createdDate"]
                 for account in accounts {
                     rows.append(
-                        "\(Self.sanitizedField(account.name)),\(String(format: "%.2f", account.balance)),\(account.accountType.rawValue),\(account.currencyCode),\(isoFormatter.string(from: account.createdDate))"
+                        "\(Self.sanitizedField(account.name)),\(account.balance.description),\(account.accountType.rawValue),\(account.currencyCode),\(isoFormatter.string(from: account.createdDate))"
                     )
                 }
                 csvSections.append(rows.joined(separator: "\n"))
@@ -58,7 +58,16 @@ import Foundation
                 .appendingPathComponent("momentum-finance-export")
                 .appendingPathExtension(settings.format.fileExtension)
 
-            try csvContent.write(to: fileURL, atomically: true, encoding: .utf8)
+            if settings.isEncrypted {
+                let data = csvContent.data(using: .utf8) ?? Data()
+                let encryptedData = try DataEncryptionService.shared.encrypt(data)
+                try encryptedData.write(to: fileURL, options: .atomic)
+                Logger.logInfo("Data exported and encrypted successfully")
+            } else {
+                try csvContent.write(to: fileURL, atomically: true, encoding: .utf8)
+                Logger.logInfo("Data exported successfully")
+            }
+
             return fileURL
         }
 

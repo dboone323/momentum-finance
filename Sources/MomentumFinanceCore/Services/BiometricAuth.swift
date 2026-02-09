@@ -7,8 +7,8 @@
 
 import LocalAuthentication
 
-class BiometricAuth: ObservableObject {
-    static let shared = BiometricAuth()
+@MainActor class BiometricAuth: ObservableObject {
+    @MainActor static let shared = BiometricAuth()
     @Published var isUnlocked = false
 
     func authenticate() {

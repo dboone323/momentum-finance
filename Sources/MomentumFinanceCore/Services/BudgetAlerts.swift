@@ -58,8 +58,8 @@ public struct BudgetAlertConfig: Codable, Identifiable {
 }
 
 /// Manager for budget alerts and notifications.
-public final class BudgetAlertManager: ObservableObject {
-    public static let shared = BudgetAlertManager()
+@MainActor public final class BudgetAlertManager: ObservableObject {
+    @MainActor public static let shared = BudgetAlertManager()
 
     @Published public var alerts: [BudgetAlertConfig] = []
     @Published public var pendingNotifications: [String] = []
