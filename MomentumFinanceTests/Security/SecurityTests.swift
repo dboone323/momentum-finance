@@ -9,7 +9,6 @@ import XCTest
 ///
 /// Tests credential management, encryption, input validation, and biometric auth.
 final class SecurityTests: XCTestCase {
-
     // MARK: - Test Setup
 
     override func setUp() {

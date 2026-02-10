@@ -8,7 +8,6 @@ import Foundation
 
 @MainActor
 public final class DataEncryptionService {
-
     // MARK: - Singleton
 
     public static let shared = DataEncryptionService()

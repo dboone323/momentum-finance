@@ -7,8 +7,7 @@ import SwiftData
 
 /// Manager for privacy-related features including GDPR/CCPA compliance.
 @MainActor
-public final class PrivacyManager: Sendable {
-
+public final class PrivacyManager {
     // MARK: - Singleton
 
     /// Shared singleton instance

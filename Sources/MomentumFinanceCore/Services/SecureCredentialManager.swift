@@ -8,7 +8,6 @@ import Security
 /// Secure credential storage and retrieval using iOS/macOS Keychain.
 @MainActor
 public final class SecureCredentialManager {
-
     // MARK: - Singleton
 
     /// Shared singleton instance

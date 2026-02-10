@@ -73,7 +73,7 @@ extension Features.Transactions {
                                 .accessibilityLabel("Button")
                                 .disabled(!self.isFormValid)
                             }
-                        }
+                }
                 #endif
             }
         }

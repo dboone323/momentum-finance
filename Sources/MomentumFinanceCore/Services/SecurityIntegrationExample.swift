@@ -184,7 +184,6 @@ struct SecureTransactionForm: View {
                 encryptedAccount,
                 forKey: .apiKey // Use appropriate key
             )
-
         } catch {
             ErrorHandler.shared.handle(error, context: "Transaction submission")
         }

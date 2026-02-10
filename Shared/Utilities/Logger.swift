@@ -10,7 +10,7 @@ import OSLog
 
 /// Centralized logging system for the Momentum Finance application
 @MainActor
-public final class Logger: Sendable {
+public final class Logger {
     public static let shared = Logger()
 
     private let logger: os.Logger

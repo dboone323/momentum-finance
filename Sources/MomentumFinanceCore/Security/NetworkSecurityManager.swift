@@ -6,8 +6,7 @@ import os
 
 /// Centralized manager for network security policies including SSL pinning and TLS enforcement.
 @MainActor
-public final class NetworkSecurityManager: Sendable {
-
+public final class NetworkSecurityManager {
     // MARK: - Singleton
 
     /// Shared singleton instance

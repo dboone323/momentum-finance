@@ -194,7 +194,6 @@ public struct TransactionDetailView: View {
                     if let notes = transaction.notes {
                         TransactionDetailRow(label: "Notes", value: notes)
                     }
-
                 }
             }.padding()
         }.navigationTitle("Transaction Details")
@@ -275,7 +274,6 @@ public struct SearchAndFilterSection: View {
                         TransactionFilterButton(
                             title: filter.displayName, isSelected: self.selectedFilter == filter
                         ) { self.selectedFilter = filter }
-
                     }
                 }.padding(.horizontal, 4)
             }

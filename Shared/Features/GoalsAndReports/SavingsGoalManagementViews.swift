@@ -51,7 +51,6 @@ public struct AddSavingsGoalView: View {
                             displayedComponents: .date
                         )
                     }
-
                 }
 
                 Section(header: Text("Notes (Optional)")) {
@@ -220,7 +219,6 @@ public struct SavingsGoalDetailView: View {
                     }
 
                     if let notes = goal.notes, !notes.isEmpty {
-
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Notes")
                                 .font(.caption)

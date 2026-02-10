@@ -105,7 +105,6 @@ public struct NotificationsView: View {
                         self.selectedFilter = filter
                     }
                 }
-
             }
             .padding(.horizontal, 16)
         }
@@ -186,7 +185,6 @@ public struct NotificationsView: View {
         case .goals:
             self.pendingNotifications.count(where: { $0.type.contains("goal") })
         }
-
     }
 
     private func loadNotifications() async {
@@ -262,7 +260,6 @@ public struct NotificationFilterButton: View {
     }
 
     public var body: some View {
-
         Button(action: self.action) {
             HStack(spacing: 8) {
                 Image(systemName: self.filter.icon)
@@ -302,7 +299,6 @@ public struct NotificationRow: View {
     let onDismiss: () -> Void
 
     public var body: some View {
-
         HStack(spacing: 12) {
             // Type Icon
             Circle()

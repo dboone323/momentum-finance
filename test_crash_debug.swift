@@ -31,7 +31,6 @@ do {
     )
 
     print("ModelContainer created successfully!")
-
 } catch {
     print("ERROR creating ModelContainer: \(error)")
     print("Error type: \(type(of: error))")

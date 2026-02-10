@@ -391,7 +391,6 @@ public struct GoalNotificationScheduler {
                     "Scheduled goal progress reminder for %@", log: logger, type: .info, goalName
                 )
             }
-
         }
     }
 }

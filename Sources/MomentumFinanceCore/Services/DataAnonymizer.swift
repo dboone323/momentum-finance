@@ -8,7 +8,7 @@
 import Foundation
 
 @MainActor
-public final class DataAnonymizer: Sendable {
+public final class DataAnonymizer {
     @MainActor public static let shared = DataAnonymizer()
 
     private init() {}

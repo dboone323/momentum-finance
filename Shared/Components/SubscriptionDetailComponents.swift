@@ -487,7 +487,6 @@ import SwiftUI
                     ForEach(0..<self.alternatives.count, id: \.self) { index in
                         let alternative = self.alternatives[index]
                         VStack(spacing: 0) {
-
                             Text("Alternative")
                                 .font(.headline)
                                 .frame(maxWidth: .infinity)

@@ -343,7 +343,7 @@ import UniformTypeIdentifiers
                         withAnimation(.easeInOut(duration: 0.2)) {
                             // Visual feedback can be applied in the calling code using the isTargeted binding
                         }
-                    }
+                }
         }
     }
 

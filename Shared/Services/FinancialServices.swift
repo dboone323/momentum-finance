@@ -153,7 +153,7 @@ public final class SwiftDataEntityManager: EntityManager {
 // MARK: - Export Engine Service
 
 @MainActor
-public final class SwiftDataExportEngineService: Sendable {
+public final class SwiftDataExportEngineService {
     private let modelContext: ModelContext
 
     public init(modelContext: ModelContext) {
@@ -290,7 +290,7 @@ public final class SwiftDataExportEngineService: Sendable {
 // MARK: - Financial ML and Analysis Services
 
 @MainActor
-public final class SwiftDataFinancialMLService: Sendable {
+public final class SwiftDataFinancialMLService {
     private let modelContext: ModelContext
 
     public init(modelContext: ModelContext) {
@@ -397,7 +397,7 @@ public enum Severity {
 // MARK: - Transaction Pattern Analyzer
 
 @MainActor
-public final class SwiftDataTransactionPatternAnalyzer: Sendable {
+public final class SwiftDataTransactionPatternAnalyzer {
     private let modelContext: ModelContext
 
     public init(modelContext: ModelContext) {

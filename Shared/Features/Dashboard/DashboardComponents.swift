@@ -74,7 +74,6 @@ public struct DashboardAccountsSummary: View {
         accounts: [FinancialAccount], onAccountTap: @escaping (FinancialAccount) -> Void,
         onViewAllTap: @escaping () -> Void
     ) {
-
         self.accounts = accounts
         self.onAccountTap = onAccountTap
         self.onViewAllTap = onViewAllTap

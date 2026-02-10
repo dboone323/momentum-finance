@@ -101,7 +101,6 @@ public final class FinancialTransaction: Encodable {
         account: FinancialAccount? = nil,
         currencyCode: String? = nil
     ) {
-
         self.title = title
         self.amount = amount
         self.date = date

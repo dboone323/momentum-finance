@@ -35,7 +35,6 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         accounts: [FinancialAccount],
         budgets: [Budget]
     ) async {
-
         self.isAnalyzing = true
 
         // Generate multiple types of insights concurrently
@@ -83,7 +82,6 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         transactions: [FinancialTransaction],
         months: Int = 12
     ) -> [CashFlowPrediction] {
-
         self.predictionEngine.predictCashFlow(
             transactions: transactions,
             monthsAhead: months
@@ -92,7 +90,6 @@ public class AdvancedFinancialIntelligence: ObservableObject {
 
     /// Detect anomalous transactions (fraud detection)
     public func detectAnomalies(in transactions: [FinancialTransaction]) -> [TransactionAnomaly] {
-
         self.analyticsEngine.detectAnomalies(in: transactions)
     }
 
@@ -148,7 +145,6 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         _ transactions: [FinancialTransaction],
         _ accounts: [FinancialAccount]
     ) async -> [EnhancedFinancialInsight] {
-
         var insights: [EnhancedFinancialInsight] = []
 
         // Identify subscription optimization opportunities
@@ -241,7 +237,6 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         _ transactions: [FinancialTransaction],
         _ accounts: [FinancialAccount]
     ) async -> [EnhancedFinancialInsight] {
-
         var insights: [EnhancedFinancialInsight] = []
 
         // Emergency fund assessment
@@ -278,7 +273,6 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         _ transactions: [FinancialTransaction],
         _: [FinancialAccount]
     ) async -> [EnhancedFinancialInsight] {
-
         var insights: [EnhancedFinancialInsight] = []
 
         // Cash flow prediction
@@ -367,7 +361,6 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         _: [FinancialTransaction],
         _: [FinancialAccount]
     ) async -> RiskAssessment {
-
         RiskAssessment(
             overallRiskLevel: .moderate,
             emergencyFundRisk: .high,
@@ -381,7 +374,6 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         _: [FinancialTransaction],
         _: [FinancialAccount]
     ) async -> PredictiveAnalytics {
-
         PredictiveAnalytics(
             nextMonthSpending: 4200,
             nextMonthIncome: 6500,

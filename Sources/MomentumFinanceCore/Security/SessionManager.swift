@@ -6,8 +6,7 @@ import os
 
 /// Manager for app session timeouts and auto-lock security.
 @MainActor
-public final class SessionManager: Sendable {
-
+public final class SessionManager {
     // MARK: - Singleton
 
     /// Shared singleton instance

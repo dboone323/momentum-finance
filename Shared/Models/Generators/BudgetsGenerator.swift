@@ -47,7 +47,7 @@ final class BudgetsGenerator: DataGenerator {
             if let category = categoryDict[budgetInfo.category] {
                 let startDate = firstDayOfMonth
                 let endDate = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startDate) ?? startDate
-                
+
                 let budget = Budget(
                     name: "\(category.name) Budget",
                     budgetDescription: "Monthly budget for \(category.name)",
@@ -67,7 +67,7 @@ final class BudgetsGenerator: DataGenerator {
                 if let category = categoryDict[budgetInfo.category] {
                     let startDate = previousMonth
                     let endDate = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startDate) ?? startDate
-                    
+
                     let budget = Budget(
                         name: "\(category.name) Budget",
                         budgetDescription: "Monthly budget for \(category.name)",

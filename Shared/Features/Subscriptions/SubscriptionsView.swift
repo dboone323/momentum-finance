@@ -336,7 +336,6 @@ extension Features.Subscriptions {
             #endif
         }
     }
-
 }
 
 // MARK: - Placeholder Views

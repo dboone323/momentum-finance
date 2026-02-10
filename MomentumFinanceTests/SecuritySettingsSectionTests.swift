@@ -2,7 +2,6 @@ import XCTest
 @testable import MomentumFinance
 
 final class SecuritySettingsSectionTests: XCTestCase {
-
     // MARK: - Setup & Teardown
 
     // MARK: - Initialization Tests

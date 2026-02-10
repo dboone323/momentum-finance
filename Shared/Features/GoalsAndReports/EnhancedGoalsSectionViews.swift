@@ -211,7 +211,6 @@ extension Features.GoalsAndReports {
                                 self.selectedGoal = goal
                             }
                     }
-
                 }
             }
         }
@@ -230,7 +229,6 @@ extension Features.GoalsAndReports {
                                 self.selectedGoal = goal
                             }
                     }
-
                 }
             }
         }

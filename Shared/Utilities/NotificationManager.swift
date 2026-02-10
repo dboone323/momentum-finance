@@ -71,8 +71,6 @@ public class NotificationManager: ObservableObject {
         self.budgetScheduler.scheduleWarningNotifications(for: budgets)
     }
 
-
-
     // MARK: - Subscription Due Date Notifications (Delegate to SubscriptionScheduler)
 
     func scheduleSubscriptionNotifications(for subscriptions: [Subscription]) {

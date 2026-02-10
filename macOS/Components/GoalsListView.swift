@@ -182,7 +182,6 @@ import SwiftUI
                                             .font(.headline)
                                         }
                                         .foregroundStyle(.secondary)
-
                                     }
 
                                     Spacer()

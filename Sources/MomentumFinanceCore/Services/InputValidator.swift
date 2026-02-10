@@ -7,7 +7,6 @@ import Foundation
 
 @MainActor
 public final class InputValidator {
-
     public static let shared = InputValidator()
 
     public enum ValidationError: Error {
@@ -34,7 +33,7 @@ public final class InputValidator {
     }
 
     /// Sanitizes input by removing potentially dangerous characters.
-    public nonisolated static func sanitize(_ input: String) -> String {
+    nonisolated public static func sanitize(_ input: String) -> String {
         // Basic sanitization
         var sanitized = input
         let noisyChars = ["<", ">", ";", "'", "--"]
@@ -44,13 +43,13 @@ public final class InputValidator {
         return sanitized
     }
 
-    public nonisolated func sanitize(_ input: String) -> String {
+    nonisolated public func sanitize(_ input: String) -> String {
         Self.sanitize(input)
     }
 
     /// Redacts PII from a message.
     /// This is nonisolated so it can be called from logging contexts.
-    public nonisolated static func redactPII(_ message: String) -> String {
+    nonisolated public static func redactPII(_ message: String) -> String {
         var redacted = message
 
         // Redact email
@@ -68,7 +67,7 @@ public final class InputValidator {
         return redacted
     }
 
-    public nonisolated func redactPII(_ message: String) -> String {
+    nonisolated public func redactPII(_ message: String) -> String {
         Self.redactPII(message)
     }
 }

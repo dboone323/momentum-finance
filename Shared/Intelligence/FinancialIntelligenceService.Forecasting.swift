@@ -24,7 +24,6 @@ extension FinancialIntelligenceService {
                 let priority: InsightPriority
 
                 if nextMonthForecast < 0, trend.trendDirection == "declining" {
-
                     title = "Negative Cash Flow Forecast"
                     priority = .critical
                 } else if nextMonthForecast < 0 {

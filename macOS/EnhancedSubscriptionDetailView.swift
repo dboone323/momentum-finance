@@ -40,7 +40,6 @@ import SwiftUI
 
                     return false
                 }.sorted { $0.date > $1.date }
-
             }
 
             // swiftlint:disable:next nesting
@@ -216,7 +215,6 @@ import SwiftUI
                                                 isActive: subscription.isActive,
                                                 autoRenews: subscription.autoRenews
                                             )
-
                                         }
 
                                         Spacer()
@@ -735,7 +733,6 @@ import SwiftUI
                         Text("Paid")
                             .font(.caption)
                             .foregroundStyle(.green)
-
                     }
 
                     Spacer()
@@ -759,7 +756,6 @@ import SwiftUI
                     Button("Mark as Paid") {
                         // Toggle status
                     }
-
                 }
             }
 
