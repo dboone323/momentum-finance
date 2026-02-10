@@ -116,15 +116,15 @@ public class TransactionsDataGenerator: DataGenerator {
         for transaction in transactions {
             let newTransaction = FinancialTransaction(
                 title: transaction.title,
-                amount: Decimal(transaction.amount),
+                amount: Double(transaction.amount),
                 date: transaction.date,
                 transactionType: transaction.type
             )
-            newTransaction.category = categoryDict[transaction.category]
+            newTransaction.category = transaction.category
             newTransaction.account = transaction.account
 
             // Update account balance based on transaction
-            transaction.account?.updateBalance(for: newTransaction)
+            transaction.account?.updateBalance(with: newTransaction)
 
             self.modelContext.insert(newTransaction)
         }
@@ -182,13 +182,12 @@ public class SubscriptionsDataGenerator: DataGenerator {
         for subscription in subscriptions {
             let newSubscription = Subscription(
                 name: subscription.name,
-                amount: Decimal(subscription.amount),
+                amount: Double(subscription.amount),
                 billingCycle: subscription.cycle,
-                nextDueDate: subscription.nextDue
+                nextBillingDate: subscription.nextDue
             )
 
-            newSubscription.category = categoryDict[subscription.category]
-            newSubscription.account = subscription.account
+            newSubscription.category = subscription.category
             newSubscription.isActive = subscription.isActive
 
             self.modelContext.insert(newSubscription)

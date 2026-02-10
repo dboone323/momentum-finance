@@ -62,9 +62,9 @@ final class SavingsGoalsGenerator: DataGenerator {
 
         for goal in savingsGoals {
             let newGoal = SavingsGoal(
-                name: goal.name,
-                targetAmount: Decimal(goal.target),
-                currentAmount: Decimal(goal.current),
+                title: goal.name,
+                targetAmount: Double(goal.target),
+                currentAmount: Double(goal.current),
                 targetDate: goal.targetDate ?? Date()
             )
             // Note: SavingsGoal model might not have notes field based on usage, leaving it out if so.

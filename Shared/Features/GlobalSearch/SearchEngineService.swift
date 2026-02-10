@@ -110,7 +110,7 @@ public final class SearchEngineService: ObservableObject {
                     title: subscription.name,
                     subtitle: String(
                         format: "$%.2f • %@", subscription.amount,
-                        subscription.billingCycle.rawValue
+                        subscription.billingCycle.displayName
                     ),
                     type: .subscriptions,
                     iconName: "calendar",
@@ -128,7 +128,7 @@ public final class SearchEngineService: ObservableObject {
         return budgets.compactMap { budget -> SearchResult? in
             let titleScore = self.calculateRelevance(budget.name, query: query)
             let amountScore = self.calculateRelevance(
-                String(format: "%.2f", budget.limitAmount), query: query
+                String(format: "%.2f", budget.totalAmount), query: query
             )
 
             let score = max(titleScore, amountScore)
@@ -136,7 +136,7 @@ public final class SearchEngineService: ObservableObject {
                 return SearchResult(
                     id: String(describing: budget.id),
                     title: budget.name,
-                    subtitle: String(format: "$%.2f limit", budget.limitAmount),
+                    subtitle: String(format: "$%.2f limit", budget.totalAmount),
                     type: .budgets,
                     iconName: "chart.pie",
                     relevanceScore: score

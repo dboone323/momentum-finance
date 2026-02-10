@@ -57,7 +57,6 @@ final class BudgetsGenerator: DataGenerator {
                     endDate: endDate,
                     category: category.name
                 )
-                budget.category = category
                 self.modelContext.insert(budget)
             }
         }
@@ -78,7 +77,6 @@ final class BudgetsGenerator: DataGenerator {
                         endDate: endDate,
                         category: category.name
                     )
-                    budget.category = category
                     self.modelContext.insert(budget)
                 }
             }

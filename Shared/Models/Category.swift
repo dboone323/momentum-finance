@@ -109,28 +109,28 @@ extension Category {
     /// Default expense categories
     public static var defaultExpenseCategories: [Category] {
         [
-            Category(name: "Food & Dining", type: .expense, colorHex: "#FF9500", iconName: "fork.knife", isDefault: true),
-            Category(name: "Transportation", type: .expense, colorHex: "#007AFF", iconName: "car.fill", isDefault: true),
-            Category(name: "Shopping", type: .expense, colorHex: "#AF52DE", iconName: "bag.fill", isDefault: true),
-            Category(name: "Entertainment", type: .expense, colorHex: "#FF3B30", iconName: "gamecontroller.fill", isDefault: true),
-            Category(name: "Bills & Utilities", type: .expense, colorHex: "#34C759", iconName: "house.fill", isDefault: true),
-            Category(name: "Healthcare", type: .expense, colorHex: "#FF2D55", iconName: "heart.fill", isDefault: true),
-            Category(name: "Education", type: .expense, colorHex: "#5AC8FA", iconName: "book.fill", isDefault: true),
-            Category(name: "Travel", type: .expense, colorHex: "#FFCC00", iconName: "airplane", isDefault: true),
-            Category(name: "Personal Care", type: .expense, colorHex: "#FF6B9E", iconName: "person.fill", isDefault: true),
-            Category(name: "Other", type: .expense, colorHex: "#8E8E93", iconName: "circle.fill", isDefault: true)
+            Category(name: "Food & Dining", colorHex: "#FF9500", iconName: "fork.knife", type: .expense, isDefault: true),
+            Category(name: "Transportation", colorHex: "#007AFF", iconName: "car.fill", type: .expense, isDefault: true),
+            Category(name: "Shopping", colorHex: "#AF52DE", iconName: "bag.fill", type: .expense, isDefault: true),
+            Category(name: "Entertainment", colorHex: "#FF3B30", iconName: "gamecontroller.fill", type: .expense, isDefault: true),
+            Category(name: "Bills & Utilities", colorHex: "#34C759", iconName: "house.fill", type: .expense, isDefault: true),
+            Category(name: "Healthcare", colorHex: "#FF2D55", iconName: "heart.fill", type: .expense, isDefault: true),
+            Category(name: "Education", colorHex: "#5AC8FA", iconName: "book.fill", type: .expense, isDefault: true),
+            Category(name: "Travel", colorHex: "#FFCC00", iconName: "airplane", type: .expense, isDefault: true),
+            Category(name: "Personal Care", colorHex: "#FF6B9E", iconName: "person.fill", type: .expense, isDefault: true),
+            Category(name: "Other", colorHex: "#8E8E93", iconName: "circle.fill", type: .expense, isDefault: true)
         ]
     }
 
     /// Default income categories
     public static var defaultIncomeCategories: [Category] {
         [
-            Category(name: "Salary", type: .income, colorHex: "#34C759", iconName: "briefcase.fill", isDefault: true),
-            Category(name: "Freelance", type: .income, colorHex: "#5AC8FA", iconName: "person.2.fill", isDefault: true),
-            Category(name: "Business", type: .income, colorHex: "#AF52DE", iconName: "building.2.fill", isDefault: true),
-            Category(name: "Investments", type: .income, colorHex: "#FF9500", iconName: "chart.line.uptrend.xyaxis", isDefault: true),
-            Category(name: "Gifts", type: .income, colorHex: "#FF3B30", iconName: "gift.fill", isDefault: true),
-            Category(name: "Other", type: .income, colorHex: "#8E8E93", iconName: "circle.fill", isDefault: true)
+            Category(name: "Salary", colorHex: "#34C759", iconName: "briefcase.fill", type: .income, isDefault: true),
+            Category(name: "Freelance", colorHex: "#5AC8FA", iconName: "person.2.fill", type: .income, isDefault: true),
+            Category(name: "Business", colorHex: "#AF52DE", iconName: "building.2.fill", type: .income, isDefault: true),
+            Category(name: "Investments", colorHex: "#FF9500", iconName: "chart.line.uptrend.xyaxis", type: .income, isDefault: true),
+            Category(name: "Gifts", colorHex: "#FF3B30", iconName: "gift.fill", type: .income, isDefault: true),
+            Category(name: "Other", colorHex: "#8E8E93", iconName: "circle.fill", type: .income, isDefault: true)
         ]
     }
 

@@ -78,7 +78,6 @@
 		BB7A5BD961FC5DDE5E252E17 /* CategoriesGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FE4C7F884E7BB2E2E7B69D /* CategoriesGenerator.swift */; };
 		435C7B6AA9084129B621A701 /* MomentumFinanceTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91FB2CBAB284ADAB2B1E3D4 /* MomentumFinanceTypes.swift */; };
 		BC2A68F522DC4FE49D141649 /* MissingTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F343DE9B95B40549BF95688 /* MissingTypes.swift */; };
-		8C7615F8D0AF42BFA2BB60D1 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C7BFE8C64E4F8585857714 /* Package.swift */; };
 		7A1A3F81FE944B92B53D3D34 /* RootSearchEngineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE0CAE9EB54FCC8925C3AB /* RootSearchEngineService.swift */; };
 		A058F89B20794A50AEED71BB /* FinancialIntelligenceService.Budgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D39C3365B4BBC84C5EACD /* FinancialIntelligenceService.Budgets.swift */; };
 		B99AF1F6B3694A94876D9467 /* FinancialIntelligenceService.Forecasting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F4F00722848D699250406 /* FinancialIntelligenceService.Forecasting.swift */; };
@@ -367,7 +366,6 @@
 		A00100102F0ABCDE00000001 /* TransactionFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFilter.swift; sourceTree = "<group>"; };
 		A00100122F0ABCDE00000001 /* DashboardComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardComponents.swift; sourceTree = "<group>"; };
 		A00100142F0ABCDE00000001 /* TransactionComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionComponents.swift; sourceTree = "<group>"; };
-		A00100162F0ABCDE00000001 /* DataImportComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Views/Settings/DataImportComponents.swift; sourceTree = SOURCE_ROOT; };
 		A00100182F0ABCDE00000001 /* FinancialInsightModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Intelligence/FinancialInsightModels.swift; sourceTree = SOURCE_ROOT; };
 		A001001A2F0ABCDE00000001 /* DashboardWelcomeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Features/Dashboard/DashboardWelcomeHeader.swift; sourceTree = SOURCE_ROOT; };
 		A00110102F0ABCDE00000001 /* BreadcrumbNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Navigation/BreadcrumbNavigation.swift; sourceTree = SOURCE_ROOT; };
@@ -423,7 +421,6 @@
 		FEA80E67E8D942E685D4D243 /* DataParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/DataParserTests.swift; sourceTree = "<group>"; };
 		B91FB2CBAB284ADAB2B1E3D4 /* MomentumFinanceTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MomentumFinanceTypes.swift"; sourceTree = "<group>"; };
 		0F343DE9B95B40549BF95688 /* MissingTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MissingTypes.swift"; sourceTree = "<group>"; };
-		02C7BFE8C64E4F8585857714 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Package.swift"; sourceTree = "<group>"; };
 		D8DE0CAE9EB54FCC8925C3AB /* RootSearchEngineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootSearchEngineService.swift"; sourceTree = "<group>"; };
 		D10D39C3365B4BBC84C5EACD /* FinancialIntelligenceService.Budgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Intelligence/FinancialIntelligenceService.Budgets.swift"; sourceTree = "<group>"; };
 		879F4F00722848D699250406 /* FinancialIntelligenceService.Forecasting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Intelligence/FinancialIntelligenceService.Forecasting.swift"; sourceTree = "<group>"; };
@@ -449,14 +446,12 @@
 		FA901FDA3C7745208DB07E6B /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/NotificationsView.swift"; sourceTree = "<group>"; };
 		EF31A2B0A47B4F99B64A24BA /* BudgetForecasting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/BudgetForecasting.swift"; sourceTree = "<group>"; };
 		5BF0B2C021534786A91261FE /* InsightUIStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Insights/InsightUIStubs.swift"; sourceTree = "<group>"; };
-		1DABB62B4EE844F4B53A07CC /* InsightsFilterBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Insights/InsightsFilterBar.swift"; sourceTree = "<group>"; };
 		3ED782867CE243BEB03EEC85 /* GoalsAndReportsView_New.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/GoalsAndReports/GoalsAndReportsView_New.swift"; sourceTree = "<group>"; };
 		53166763540144DEABB77E95 /* EnhancedGoalsSectionViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/GoalsAndReports/EnhancedGoalsSectionViews.swift"; sourceTree = "<group>"; };
 		B0FE5CD278A84701863BEA20 /* SubscriptionManagementViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Subscriptions/SubscriptionManagementViews.swift"; sourceTree = "<group>"; };
 		3A16DAD7525944AFA965AA9F /* SubscriptionSummaryViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Subscriptions/SubscriptionSummaryViews.swift"; sourceTree = "<group>"; };
 		AE3207E4C0BA4A209B421CA0 /* SubscriptionRowViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Subscriptions/SubscriptionRowViews.swift"; sourceTree = "<group>"; };
 		55E77F3437584F8984625791 /* SubscriptionsView_New.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Subscriptions/SubscriptionsView_New.swift"; sourceTree = "<group>"; };
-		7531112576474074880BF5CC /* DashboardInsightsFilterBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Dashboard/DashboardInsightsFilterBar.swift"; sourceTree = "<group>"; };
 		B97736C144684ABC953BD157 /* DashboardUpcomingSubscriptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Dashboard/DashboardUpcomingSubscriptions.swift"; sourceTree = "<group>"; };
 		12E727654AB842A2A1C7DD3B /* InsightRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Dashboard/InsightRowView.swift"; sourceTree = "<group>"; };
 		7EF49A315179444C9735E775 /* SimpleDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Dashboard/SimpleDashboardView.swift"; sourceTree = "<group>"; };
@@ -487,20 +482,14 @@
 		C4159CCFD97546A7BA957E66 /* NavigationTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Navigation/NavigationTypes.swift"; sourceTree = "<group>"; };
 		2198FBBD044142FCB88ECD28 /* MacOSNavigationTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Navigation/MacOSNavigationTypes.swift"; sourceTree = "<group>"; };
 		B9352598FF314128A31E51EA /* ImportExportActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils/ImportExportActor.swift"; sourceTree = "<group>"; };
-		19656AEC86BB413482621BB3 /* DataExporter_Original.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils/DataExporter_Original.swift"; sourceTree = "<group>"; };
 		38159839F7E84244A132CBA5 /* DataImportHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils/DataImportHelpers.swift"; sourceTree = "<group>"; };
 		EF84F18F4B9E46CE93439D28 /* ExportEngineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils/ExportEngineService.swift"; sourceTree = "<group>"; };
 		CE072100B8E54BA0B12E08B1 /* DataExporter_Simplified.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils/DataExporter_Simplified.swift"; sourceTree = "<group>"; };
-		409DDFA5AF2C4CB4AFB46B97 /* DataImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils/DataImporter.swift"; sourceTree = "<group>"; };
-		2A198F798A704EAB8B257FBC /* DataExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils/DataExporter.swift"; sourceTree = "<group>"; };
-		1214115756C644BC822D1F23 /* CSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils/ImportComponents/CSVParser.swift"; sourceTree = "<group>"; };
 		99504B8590DB4DDEBE9E4AB0 /* ImportValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils/ImportComponents/ImportValidator.swift"; sourceTree = "<group>"; };
 		7B24088161384ED4909A3334 /* CSVMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils/ImportComponents/CSVMapping.swift"; sourceTree = "<group>"; };
 		0F85E16AB942492688CF8145 /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils/ImportComponents/DataParser.swift"; sourceTree = "<group>"; };
-		B7E4C176188F4C82A930A11B /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils/ImportComponents/EntityManager.swift"; sourceTree = "<group>"; };
 		273FA46AB16345229D1228B5 /* ImportError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils/ImportComponents/ImportError.swift"; sourceTree = "<group>"; };
 		CD6464AEB30A4A428B1F2A04 /* NavigationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/NavigationModels.swift"; sourceTree = "<group>"; };
-		180D0B35DE444C4F9DDAC40A /* DataImportModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/DataImportModels.swift"; sourceTree = "<group>"; };
 		56960E2AD8B74F2CA72B82F7 /* FinancialIntelligenceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/FinancialIntelligenceModels.swift"; sourceTree = "<group>"; };
 		4D3026B12FB34F8EB2F0EA45 /* TransactionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/TransactionModels.swift"; sourceTree = "<group>"; };
 		52CEAC4107354A359DA23D8B /* NotificationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/NotificationModels.swift"; sourceTree = "<group>"; };
@@ -513,32 +502,22 @@
 		CEC1FA8DAB96492AB2059AA6 /* FinancialUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utilities/FinancialUtilities.swift"; sourceTree = "<group>"; };
 		573AA58F72E147F1AC8AB659 /* NotificationTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utilities/NotificationTypes.swift"; sourceTree = "<group>"; };
 		FADA0B456E58491991BE6F76 /* QueryFallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utilities/QueryFallback.swift"; sourceTree = "<group>"; };
-		5C4EE7773AFB4BB5B618B326 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utilities/AppLogger.swift"; sourceTree = "<group>"; };
 		870F63889BE842ECBE69A9B6 /* GoalsReportsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/GoalsReportsComponents.swift"; sourceTree = "<group>"; };
-		DD3A86AFBFA44ADC972D1B5B /* UIAnimationComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/UIAnimationComponents.swift"; sourceTree = "<group>"; };
 		50B921BCA9D84E5D9F5F4308 /* UITransactionComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/UITransactionComponents.swift"; sourceTree = "<group>"; };
-		5779EEC3D72C4B1CB7436D05 /* ComponentButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/ComponentButtonStyles.swift"; sourceTree = "<group>"; };
 		9537CA7347E8413685AFA47F /* SubscriptionDetailComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/SubscriptionDetailComponents.swift"; sourceTree = "<group>"; };
 		026D7E8FBA7D41EABD01B7ED /* AccountDetailComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/AccountDetailComponents.swift"; sourceTree = "<group>"; };
-		73AF04ECC438470F85730EFA /* UIThemeDemoComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/UIThemeDemoComponents.swift"; sourceTree = "<group>"; };
 		B7440A4490A74599BA7966B2 /* BudgetComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/BudgetComponents.swift"; sourceTree = "<group>"; };
 		12C2944A140542E88077E6E0 /* DetailViewComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/DetailViewComponents.swift"; sourceTree = "<group>"; };
-		EDC460ED81C34BC9BBDDC56D /* ImportComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/ImportComponents.swift"; sourceTree = "<group>"; };
 		8D33EE099D344E0098AC7146 /* ThemeSettingsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/ThemeSettingsComponents.swift"; sourceTree = "<group>"; };
 		B0B4DF2918964BA28C6FEEC6 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/SectionHeader.swift"; sourceTree = "<group>"; };
 		665667AC84E64D37850CEBEF /* SecuritySettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/Settings/SecuritySettingsSection.swift"; sourceTree = "<group>"; };
-		1B96E0FC83AD4CE3A64B70E0 /* ExportDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/Settings/ExportDataView.swift"; sourceTree = "<group>"; };
 		15654090FF274A93B1CFE577 /* AppearanceSettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/Settings/AppearanceSettingsSection.swift"; sourceTree = "<group>"; };
-		BF3A7D9C48F64A8B96ED9438 /* SettingsImportResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/Settings/SettingsImportResultView.swift"; sourceTree = "<group>"; };
 		4B9937E1D57642EFA45C4B85 /* DataManagementSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/Settings/DataManagementSection.swift"; sourceTree = "<group>"; };
-		DC83A100F8DE465C81C3AD9C /* ImportDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/Settings/ImportDataView.swift"; sourceTree = "<group>"; };
 		90A4792E7DF74F498919AFC6 /* AccessibilitySettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/Settings/AccessibilitySettingsSection.swift"; sourceTree = "<group>"; };
 		96676CF99B9B47E980D503C3 /* ImportExportSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/Settings/ImportExportSection.swift"; sourceTree = "<group>"; };
 		696D9AFE9E704987B23B6769 /* AboutSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/Settings/AboutSection.swift"; sourceTree = "<group>"; };
 		AF1E02A567434A4FA147881F /* DashboardUIComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/Dashboard/DashboardUIComponents.swift"; sourceTree = "<group>"; };
-		7D35EE86AFC84F7C8BE63BF3 /* DataImportHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/Import/DataImportHeaderComponent.swift"; sourceTree = "<group>"; };
 		5EFB8D665A024FF9AB9ABD05 /* ImportResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/Import/ImportResultView.swift"; sourceTree = "<group>"; };
-		9534A28C7D2144FEA309F54D /* ImportResultComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/Import/ImportResultComponent.swift"; sourceTree = "<group>"; };
 		8A2B191E20C8442587ED73B1 /* DarkModePreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme/DarkModePreference.swift"; sourceTree = "<group>"; };
 		642F2989C71A470ABBF66C00 /* ThemeDemoComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme/ThemeDemoComponents.swift"; sourceTree = "<group>"; };
 		9E3D3F04D4E748A2BB41B82E /* ThemeDemoPublicWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme/ThemeDemoPublicWrappers.swift"; sourceTree = "<group>"; };
@@ -877,7 +856,6 @@
 				CFB66CEAE90D4F7A9D6CE9BC /* InsightsWidget.swift */,
 				B91FB2CBAB284ADAB2B1E3D4 /* MomentumFinanceTypes.swift */,
 				0F343DE9B95B40549BF95688 /* MissingTypes.swift */,
-				02C7BFE8C64E4F8585857714 /* Package.swift */,
 				D8DE0CAE9EB54FCC8925C3AB /* RootSearchEngineService.swift */,
 				D10D39C3365B4BBC84C5EACD /* FinancialIntelligenceService.Budgets.swift */,
 				879F4F00722848D699250406 /* FinancialIntelligenceService.Forecasting.swift */,
@@ -1368,7 +1346,6 @@
 				C83C86B9789342A581FAB15F /* InsightsWidget.swift in Sources */,
 				435C7B6AA9084129B621A701 /* MomentumFinanceTypes.swift in Sources */,
 				BC2A68F522DC4FE49D141649 /* MissingTypes.swift in Sources */,
-				8C7615F8D0AF42BFA2BB60D1 /* Package.swift in Sources */,
 				7A1A3F81FE944B92B53D3D34 /* RootSearchEngineService.swift in Sources */,
 				A058F89B20794A50AEED71BB /* FinancialIntelligenceService.Budgets.swift in Sources */,
 				B99AF1F6B3694A94876D9467 /* FinancialIntelligenceService.Forecasting.swift in Sources */,
@@ -1491,7 +1468,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MomentumFinanceUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.DanielStevens.MomentumFinanceUITests;
 				PRODUCT_NAME = MomentumFinanceUITests;
 				SDKROOT = iphoneos;
@@ -1806,7 +1783,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MomentumFinanceUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.DanielStevens.MomentumFinanceUITests;
 				PRODUCT_NAME = MomentumFinanceUITests;
 				SDKROOT = iphoneos;

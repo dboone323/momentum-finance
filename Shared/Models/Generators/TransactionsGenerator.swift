@@ -73,7 +73,7 @@ final class TransactionsGenerator: DataGenerator {
                     transactionType: .income,
                     notes: "Bi-weekly salary"
                 )
-                income.category = incomeCategory
+                income.expenseCategory = incomeCategory
                 income.account = checkingAccount
                 transactions.append(income)
             }
@@ -109,12 +109,12 @@ final class TransactionsGenerator: DataGenerator {
 
                 let transaction = FinancialTransaction(
                     title: title,
-                    amount: Decimal(amount),
+                    amount: Double(amount),
                     date: transactionDate,
                     transactionType: .expense,
                     notes: nil
                 )
-                transaction.category = category
+                transaction.expenseCategory = category
                 transaction.account = account
                 transactions.append(transaction)
             }

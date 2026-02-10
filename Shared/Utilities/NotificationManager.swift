@@ -71,15 +71,7 @@ public class NotificationManager: ObservableObject {
         self.budgetScheduler.scheduleWarningNotifications(for: budgets)
     }
 
-    func scheduleRolloverNotifications(for budgets: [Budget]) {
-        guard self.isNotificationPermissionGranted else { return }
-        self.budgetScheduler.scheduleRolloverNotifications(for: budgets)
-    }
 
-    func scheduleSpendingPredictionNotifications(for budgets: [Budget]) {
-        guard self.isNotificationPermissionGranted else { return }
-        self.budgetScheduler.scheduleSpendingPredictionNotifications(for: budgets)
-    }
 
     // MARK: - Subscription Due Date Notifications (Delegate to SubscriptionScheduler)
 

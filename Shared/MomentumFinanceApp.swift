@@ -150,6 +150,27 @@ public struct MomentumFinanceApp: App {
         print("MomentumFinanceApp: User preferences initialized")
     }
 
+    private func createTenantAwareModelConfiguration(schema: Schema) -> ModelConfiguration {
+        // Get current tenant for database isolation
+        let tenantId = "personal-finance-default" // Default tenant
+
+        // Create tenant-specific storage URL
+        let appSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let tenantDirectory = appSupportURL.appendingPathComponent("MomentumFinance").appendingPathComponent("Tenants").appendingPathComponent(tenantId)
+        let databaseURL = tenantDirectory.appendingPathComponent("MomentumFinance.sqlite")
+
+        // Create tenant directory if it doesn't exist
+        try? FileManager.default.createDirectory(at: tenantDirectory, withIntermediateDirectories: true)
+
+        return ModelConfiguration(
+            schema: schema,
+            url: databaseURL,
+            isStoredInMemoryOnly: false,
+            allowsSave: true,
+            cloudKitDatabase: .none // Could be tenant-specific in enterprise setup
+        )
+    }
+
     var sharedModelContainer: ModelContainer? = {
         print("MomentumFinanceApp: Creating ModelContainer")
 
@@ -164,7 +185,8 @@ public struct MomentumFinanceApp: App {
 
         print("MomentumFinanceApp: Schema created")
 
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        // Create tenant-aware model configuration
+        let modelConfiguration = createTenantAwareModelConfiguration(schema: schema)
 
         print("MomentumFinanceApp: ModelConfiguration created")
 

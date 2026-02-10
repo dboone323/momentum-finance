@@ -22,7 +22,7 @@ final class AccountsGenerator: DataGenerator {
                 name: "Savings Account", icon: "building.columns.fill", balance: 15000.0,
                 type: AccountType.savings
             ),
-            (name: "Credit Card", icon: "creditcard", balance: -850.0, type: AccountType.credit),
+            (name: "Credit Card", icon: "creditcard", balance: -850.0, type: AccountType.creditCard),
             (
                 name: "Investment Account",
                 icon: "chart.line.uptrend.xyaxis",
@@ -39,9 +39,9 @@ final class AccountsGenerator: DataGenerator {
         for account in accounts {
             let newAccount = FinancialAccount(
                 name: account.name,
-                balance: Decimal(account.balance),
-                iconName: account.icon,
-                accountType: account.type
+                accountType: account.type,
+                balance: account.balance,
+                iconName: account.icon
             )
             self.modelContext.insert(newAccount)
         }
