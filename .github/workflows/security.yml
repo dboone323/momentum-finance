@@ -69,6 +69,18 @@ jobs:
             Tools/Automation
             .build
             .swiftpm
+          ignore_names: |
+            launch_iphone16.sh
+            run_ios_fixed.sh
+            verify-project-structure.sh
+            fix_file_headers.sh
+            launch_multiplatform.sh
+            run_tests.sh
+            diagnose_ios_install.sh
+            launch_ios_simple.sh
+            integrate_macos_ui.sh
+            test-compilation.sh
+            quick-sync.sh
 
       - name: Security audit for Python dependencies
         run: |
