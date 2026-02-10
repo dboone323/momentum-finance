@@ -26,31 +26,31 @@ public enum FinancialInsightType: String, Codable, CaseIterable {
 
     public var iconName: String {
         switch self {
-        case .spendingPattern: return "chart.bar.fill"
-        case .budgetAlert: return "exclamationmark.triangle.fill"
-        case .savingsOpportunity: return "dollarsign.circle.fill"
-        case .incomeOptimization: return "arrow.up.circle.fill"
-        case .expenseReduction: return "arrow.down.circle.fill"
-        case .investmentSuggestion: return "chart.line.uptrend.xyaxis"
-        case .anomaly: return "exclamationmark.circle.fill"
-        case .trend: return "chart.line.uptrend.xyaxis"
-        case .goalProgress: return "target"
-        case .subscriptionReview: return "calendar.badge.exclamationmark"
+        case .spendingPattern: "chart.bar.fill"
+        case .budgetAlert: "exclamationmark.triangle.fill"
+        case .savingsOpportunity: "dollarsign.circle.fill"
+        case .incomeOptimization: "arrow.up.circle.fill"
+        case .expenseReduction: "arrow.down.circle.fill"
+        case .investmentSuggestion: "chart.line.uptrend.xyaxis"
+        case .anomaly: "exclamationmark.circle.fill"
+        case .trend: "chart.line.uptrend.xyaxis"
+        case .goalProgress: "target"
+        case .subscriptionReview: "calendar.badge.exclamationmark"
         }
     }
 
     public var colorHex: String {
         switch self {
-        case .spendingPattern: return "#007AFF"
-        case .budgetAlert: return "#FF3B30"
-        case .savingsOpportunity: return "#34C759"
-        case .incomeOptimization: return "#5AC8FA"
-        case .expenseReduction: return "#FF9500"
-        case .investmentSuggestion: return "#AF52DE"
-        case .anomaly: return "#FF2D55"
-        case .trend: return "#FFCC00"
-        case .goalProgress: return "#32D74B"
-        case .subscriptionReview: return "#BF5AF2"
+        case .spendingPattern: "#007AFF"
+        case .budgetAlert: "#FF3B30"
+        case .savingsOpportunity: "#34C759"
+        case .incomeOptimization: "#5AC8FA"
+        case .expenseReduction: "#FF9500"
+        case .investmentSuggestion: "#AF52DE"
+        case .anomaly: "#FF2D55"
+        case .trend: "#FFCC00"
+        case .goalProgress: "#32D74B"
+        case .subscriptionReview: "#BF5AF2"
         }
     }
 }
@@ -64,19 +64,19 @@ public enum InsightPriority: String, Codable, CaseIterable {
 
     public var sortOrder: Int {
         switch self {
-        case .low: return 0
-        case .medium: return 1
-        case .high: return 2
-        case .critical: return 3
+        case .low: 0
+        case .medium: 1
+        case .high: 2
+        case .critical: 3
         }
     }
 
     public var colorHex: String {
         switch self {
-        case .low: return "#8E8E93"
-        case .medium: return "#FF9500"
-        case .high: return "#FF3B30"
-        case .critical: return "#FF2D55"
+        case .low: "#8E8E93"
+        case .medium: "#FF9500"
+        case .high: "#FF3B30"
+        case .critical: "#FF2D55"
         }
     }
 }
@@ -132,7 +132,7 @@ public struct FinancialInsight: Identifiable, Codable, Hashable {
 
     /// Formatted amount string
     public var formattedAmount: String? {
-        guard let amount = amount else { return nil }
+        guard let amount else { return nil }
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.currencyCode = "USD"
@@ -141,7 +141,7 @@ public struct FinancialInsight: Identifiable, Codable, Hashable {
 
     /// Formatted percentage string
     public var formattedPercentage: String? {
-        guard let percentage = percentage else { return nil }
+        guard let percentage else { return nil }
         let formatter = NumberFormatter()
         formatter.numberStyle = .percent
         formatter.minimumFractionDigits = 1
@@ -200,9 +200,9 @@ public enum TrendDirection: String, Codable {
 
     public var colorHex: String {
         switch self {
-        case .increasing: return "#FF3B30" // Red for increasing spending
-        case .decreasing: return "#34C759" // Green for decreasing spending
-        case .stable: return "#FF9500" // Orange for stable
+        case .increasing: "#FF3B30" // Red for increasing spending
+        case .decreasing: "#34C759" // Green for decreasing spending
+        case .stable: "#FF9500" // Orange for stable
         }
     }
 }
@@ -291,9 +291,9 @@ public struct AnomalyInsight: Codable {
     }
 }
 
-extension FinancialInsight {
+public extension FinancialInsight {
     /// Sample insights for previews and testing
-    public static var sampleSpendingAlert: FinancialInsight {
+    static var sampleSpendingAlert: FinancialInsight {
         FinancialInsight(
             type: .budgetAlert,
             title: "Budget Alert: Dining Out",
@@ -307,7 +307,7 @@ extension FinancialInsight {
         )
     }
 
-    public static var sampleSavingsOpportunity: FinancialInsight {
+    static var sampleSavingsOpportunity: FinancialInsight {
         FinancialInsight(
             type: .savingsOpportunity,
             title: "Coffee Savings",
@@ -320,7 +320,7 @@ extension FinancialInsight {
         )
     }
 
-    public static var sampleAnomaly: FinancialInsight {
+    static var sampleAnomaly: FinancialInsight {
         FinancialInsight(
             type: .anomaly,
             title: "Unusual Transaction",

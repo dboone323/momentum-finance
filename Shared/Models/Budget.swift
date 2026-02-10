@@ -176,7 +176,8 @@ public enum BudgetPeriod: String, Codable, CaseIterable {
 
 extension Date {
     var startOfWeek: Date {
-        Calendar.current.date(from: Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) ?? self
+        Calendar.current
+            .date(from: Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) ?? self
     }
 
     var startOfMonth: Date {
@@ -186,13 +187,21 @@ extension Date {
     var startOfQuarter: Date {
         let month = Calendar.current.component(.month, from: self)
         let quarterStartMonth = ((month - 1) / 3) * 3 + 1
-        return Calendar.current.date(from: DateComponents(year: Calendar.current.component(.year, from: self), month: quarterStartMonth, day: 1)) ?? self
+        return Calendar.current.date(from: DateComponents(
+            year: Calendar.current.component(.year, from: self),
+            month: quarterStartMonth,
+            day: 1
+        )) ?? self
     }
 
     var startOfSemester: Date {
         let month = Calendar.current.component(.month, from: self)
         let semesterStartMonth = month <= 6 ? 1 : 7
-        return Calendar.current.date(from: DateComponents(year: Calendar.current.component(.year, from: self), month: semesterStartMonth, day: 1)) ?? self
+        return Calendar.current.date(from: DateComponents(
+            year: Calendar.current.component(.year, from: self),
+            month: semesterStartMonth,
+            day: 1
+        )) ?? self
     }
 
     var startOfYear: Date {
@@ -200,9 +209,9 @@ extension Date {
     }
 }
 
-extension Budget {
+public extension Budget {
     /// Sample data for previews and testing
-    public static var sample: Budget {
+    static var sample: Budget {
         let startDate = Date()
         let endDate = Calendar.current.date(byAdding: .month, value: 1, to: startDate) ?? startDate
 
@@ -219,7 +228,7 @@ extension Budget {
         )
     }
 
-    public static var sampleOverBudget: Budget {
+    static var sampleOverBudget: Budget {
         let startDate = Date()
         let endDate = Calendar.current.date(byAdding: .month, value: 1, to: startDate) ?? startDate
 

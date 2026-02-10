@@ -30,7 +30,7 @@ public final class ErrorHandler: ObservableObject {
 
         // In debug mode, also print to console
         #if DEBUG
-        print("Error handled: \(appError.localizedDescription)")
+            print("Error handled: \(appError.localizedDescription)")
         #endif
     }
 
@@ -77,37 +77,37 @@ public enum AppError: LocalizedError, Identifiable {
 
     public var id: String {
         switch self {
-        case .network(let error): return "network_\(error.id)"
-        case .data(let error): return "data_\(error.id)"
-        case .validation(let error): return "validation_\(error.id)"
-        case .authentication(let error): return "auth_\(error.id)"
-        case .permission(let error): return "permission_\(error.id)"
-        case .custom: return "custom_\(UUID().uuidString)"
-        case .unknown: return "unknown_\(UUID().uuidString)"
+        case let .network(error): "network_\(error.id)"
+        case let .data(error): "data_\(error.id)"
+        case let .validation(error): "validation_\(error.id)"
+        case let .authentication(error): "auth_\(error.id)"
+        case let .permission(error): "permission_\(error.id)"
+        case .custom: "custom_\(UUID().uuidString)"
+        case .unknown: "unknown_\(UUID().uuidString)"
         }
     }
 
     public var errorDescription: String? {
         switch self {
-        case .network(let error): return error.errorDescription
-        case .data(let error): return error.errorDescription
-        case .validation(let error): return error.errorDescription
-        case .authentication(let error): return error.errorDescription
-        case .permission(let error): return error.errorDescription
-        case .custom(let message, _): return message
-        case .unknown(let error): return error.localizedDescription
+        case let .network(error): error.errorDescription
+        case let .data(error): error.errorDescription
+        case let .validation(error): error.errorDescription
+        case let .authentication(error): error.errorDescription
+        case let .permission(error): error.errorDescription
+        case let .custom(message, _): message
+        case let .unknown(error): error.localizedDescription
         }
     }
 
     public var failureReason: String? {
         switch self {
-        case .network(let error): return error.failureReason
-        case .data(let error): return error.failureReason
-        case .validation(let error): return error.failureReason
-        case .authentication(let error): return error.failureReason
-        case .permission(let error): return error.failureReason
-        case .custom(_, let underlying): return underlying?.localizedDescription
-        case .unknown(let error): return error.localizedDescription
+        case let .network(error): error.failureReason
+        case let .data(error): error.failureReason
+        case let .validation(error): error.failureReason
+        case let .authentication(error): error.failureReason
+        case let .permission(error): error.failureReason
+        case let .custom(_, underlying): underlying?.localizedDescription
+        case let .unknown(error): error.localizedDescription
         }
     }
 }
@@ -123,23 +123,23 @@ public enum NetworkError: LocalizedError, Identifiable {
 
     public var id: String {
         switch self {
-        case .noInternet: return "no_internet"
-        case .timeout: return "timeout"
-        case .serverError(let code): return "server_\(code)"
-        case .invalidResponse: return "invalid_response"
-        case .decodingFailed: return "decoding_failed"
-        case .encodingFailed: return "encoding_failed"
+        case .noInternet: "no_internet"
+        case .timeout: "timeout"
+        case let .serverError(code): "server_\(code)"
+        case .invalidResponse: "invalid_response"
+        case .decodingFailed: "decoding_failed"
+        case .encodingFailed: "encoding_failed"
         }
     }
 
     public var errorDescription: String? {
         switch self {
-        case .noInternet: return "No internet connection"
-        case .timeout: return "Request timed out"
-        case .serverError(let code): return "Server error (\(code))"
-        case .invalidResponse: return "Invalid server response"
-        case .decodingFailed: return "Failed to decode response"
-        case .encodingFailed: return "Failed to encode request"
+        case .noInternet: "No internet connection"
+        case .timeout: "Request timed out"
+        case let .serverError(code): "Server error (\(code))"
+        case .invalidResponse: "Invalid server response"
+        case .decodingFailed: "Failed to decode response"
+        case .encodingFailed: "Failed to encode request"
         }
     }
 }
@@ -155,23 +155,23 @@ public enum DataError: LocalizedError, Identifiable {
 
     public var id: String {
         switch self {
-        case .saveFailed: return "save_failed"
-        case .loadFailed: return "load_failed"
-        case .deleteFailed: return "delete_failed"
-        case .notFound: return "not_found"
-        case .duplicate: return "duplicate"
-        case .invalidData: return "invalid_data"
+        case .saveFailed: "save_failed"
+        case .loadFailed: "load_failed"
+        case .deleteFailed: "delete_failed"
+        case .notFound: "not_found"
+        case .duplicate: "duplicate"
+        case .invalidData: "invalid_data"
         }
     }
 
     public var errorDescription: String? {
         switch self {
-        case .saveFailed: return "Failed to save data"
-        case .loadFailed: return "Failed to load data"
-        case .deleteFailed: return "Failed to delete data"
-        case .notFound: return "Data not found"
-        case .duplicate: return "Duplicate data"
-        case .invalidData: return "Invalid data"
+        case .saveFailed: "Failed to save data"
+        case .loadFailed: "Failed to load data"
+        case .deleteFailed: "Failed to delete data"
+        case .notFound: "Data not found"
+        case .duplicate: "Duplicate data"
+        case .invalidData: "Invalid data"
         }
     }
 }
@@ -187,23 +187,23 @@ public enum ValidationError: LocalizedError, Identifiable {
 
     public var id: String {
         switch self {
-        case .required(let field): return "required_\(field)"
-        case .invalidFormat(let field): return "format_\(field)"
-        case .tooShort(let field, _): return "short_\(field)"
-        case .tooLong(let field, _): return "long_\(field)"
-        case .invalidValue(let field): return "value_\(field)"
-        case .outOfRange(let field, _, _): return "range_\(field)"
+        case let .required(field): "required_\(field)"
+        case let .invalidFormat(field): "format_\(field)"
+        case let .tooShort(field, _): "short_\(field)"
+        case let .tooLong(field, _): "long_\(field)"
+        case let .invalidValue(field): "value_\(field)"
+        case let .outOfRange(field, _, _): "range_\(field)"
         }
     }
 
     public var errorDescription: String? {
         switch self {
-        case .required(let field): return "\(field) is required"
-        case .invalidFormat(let field): return "Invalid \(field) format"
-        case .tooShort(let field, let min): return "\(field) must be at least \(min) characters"
-        case .tooLong(let field, let max): return "\(field) must be no more than \(max) characters"
-        case .invalidValue(let field): return "Invalid \(field) value"
-        case .outOfRange(let field, let min, let max): return "\(field) must be between \(min) and \(max)"
+        case let .required(field): "\(field) is required"
+        case let .invalidFormat(field): "Invalid \(field) format"
+        case let .tooShort(field, min): "\(field) must be at least \(min) characters"
+        case let .tooLong(field, max): "\(field) must be no more than \(max) characters"
+        case let .invalidValue(field): "Invalid \(field) value"
+        case let .outOfRange(field, min, max): "\(field) must be between \(min) and \(max)"
         }
     }
 }
@@ -218,21 +218,21 @@ public enum AuthenticationError: LocalizedError, Identifiable {
 
     public var id: String {
         switch self {
-        case .invalidCredentials: return "invalid_credentials"
-        case .sessionExpired: return "session_expired"
-        case .accountLocked: return "account_locked"
-        case .accountDisabled: return "account_disabled"
-        case .biometricFailed: return "biometric_failed"
+        case .invalidCredentials: "invalid_credentials"
+        case .sessionExpired: "session_expired"
+        case .accountLocked: "account_locked"
+        case .accountDisabled: "account_disabled"
+        case .biometricFailed: "biometric_failed"
         }
     }
 
     public var errorDescription: String? {
         switch self {
-        case .invalidCredentials: return "Invalid username or password"
-        case .sessionExpired: return "Your session has expired"
-        case .accountLocked: return "Account is locked"
-        case .accountDisabled: return "Account is disabled"
-        case .biometricFailed: return "Biometric authentication failed"
+        case .invalidCredentials: "Invalid username or password"
+        case .sessionExpired: "Your session has expired"
+        case .accountLocked: "Account is locked"
+        case .accountDisabled: "Account is disabled"
+        case .biometricFailed: "Biometric authentication failed"
         }
     }
 }
@@ -247,21 +247,21 @@ public enum PermissionError: LocalizedError, Identifiable {
 
     public var id: String {
         switch self {
-        case .cameraDenied: return "camera_denied"
-        case .photoLibraryDenied: return "photo_denied"
-        case .locationDenied: return "location_denied"
-        case .notificationDenied: return "notification_denied"
-        case .calendarDenied: return "calendar_denied"
+        case .cameraDenied: "camera_denied"
+        case .photoLibraryDenied: "photo_denied"
+        case .locationDenied: "location_denied"
+        case .notificationDenied: "notification_denied"
+        case .calendarDenied: "calendar_denied"
         }
     }
 
     public var errorDescription: String? {
         switch self {
-        case .cameraDenied: return "Camera access denied"
-        case .photoLibraryDenied: return "Photo library access denied"
-        case .locationDenied: return "Location access denied"
-        case .notificationDenied: return "Notification access denied"
-        case .calendarDenied: return "Calendar access denied"
+        case .cameraDenied: "Camera access denied"
+        case .photoLibraryDenied: "Photo library access denied"
+        case .locationDenied: "Location access denied"
+        case .notificationDenied: "Notification access denied"
+        case .calendarDenied: "Calendar access denied"
         }
     }
 }

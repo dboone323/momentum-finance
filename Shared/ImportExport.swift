@@ -26,7 +26,7 @@ public protocol Importable {
 }
 
 /// CSV export/import utilities
-public struct CSVUtilities {
+public enum CSVUtilities {
     /// Export data to CSV string
     public static func exportToCSV<T: Exportable>(_ items: [T]) -> String {
         var csvString = T.exportHeaders.joined(separator: ",") + "\n"
@@ -101,9 +101,9 @@ public struct CSVUtilities {
 }
 
 /// JSON export/import utilities
-public struct JSONUtilities {
+public enum JSONUtilities {
     /// Export data to JSON string
-    public static func exportToJSON<T: Encodable>(_ items: [T]) throws -> String {
+    public static func exportToJSON(_ items: [some Encodable]) throws -> String {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted
@@ -137,9 +137,9 @@ public enum ExportError: LocalizedError {
 
     public var errorDescription: String? {
         switch self {
-        case .encodingFailed: return "Failed to encode data"
-        case .fileWriteFailed: return "Failed to write file"
-        case .invalidData: return "Invalid data for export"
+        case .encodingFailed: "Failed to encode data"
+        case .fileWriteFailed: "Failed to write file"
+        case .invalidData: "Invalid data for export"
         }
     }
 }
@@ -153,16 +153,16 @@ public enum ImportError: LocalizedError {
 
     public var errorDescription: String? {
         switch self {
-        case .invalidFormat: return "Invalid file format"
-        case .invalidData: return "Invalid data in file"
-        case .decodingFailed: return "Failed to decode data"
-        case .validationFailed: return "Data validation failed"
+        case .invalidFormat: "Invalid file format"
+        case .invalidData: "Invalid data in file"
+        case .decodingFailed: "Failed to decode data"
+        case .validationFailed: "Data validation failed"
         }
     }
 }
 
 /// File system utilities for import/export
-public struct FileUtilities {
+public enum FileUtilities {
     /// Write string to file
     public static func writeToFile(_ content: String, at url: URL) throws {
         try content.write(to: url, atomically: true, encoding: .utf8)
@@ -186,7 +186,7 @@ public struct FileUtilities {
 }
 
 /// Date utilities for import/export
-public struct DateUtilities {
+public enum DateUtilities {
     /// Format date for export
     public static func formatForExport(_ date: Date) -> String {
         let formatter = ISO8601DateFormatter()
@@ -210,7 +210,7 @@ public struct DateUtilities {
 }
 
 /// Number utilities for import/export
-public struct NumberUtilities {
+public enum NumberUtilities {
     private static let currencyFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency

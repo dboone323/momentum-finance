@@ -71,7 +71,7 @@ public final class Subscription {
             return amount / 6
         case .annually:
             return amount / 12
-        case .custom(let interval):
+        case let .custom(interval):
             let daysInMonth = 30.44 // Average days per month
             return amount * (daysInMonth / Double(interval))
         }
@@ -81,24 +81,25 @@ public final class Subscription {
     public var yearlyCost: Double {
         switch billingCycle {
         case .weekly:
-            return amount * 52
+            amount * 52
         case .monthly:
-            return amount * 12
+            amount * 12
         case .quarterly:
-            return amount * 4
+            amount * 4
         case .semiAnnually:
-            return amount * 2
+            amount * 2
         case .annually:
-            return amount
-        case .custom(let interval):
-            return amount / Double(interval) * 365.25 // Average days per year
+            amount
+        case let .custom(interval):
+            amount / Double(interval) * 365.25 // Average days per year
         }
     }
 
     /// Check if a reminder should be sent
     public var shouldRemind: Bool {
         guard isActive else { return false }
-        let reminderDate = Calendar.current.date(byAdding: .day, value: -reminderDays, to: nextBillingDate) ?? nextBillingDate
+        let reminderDate = Calendar.current
+            .date(byAdding: .day, value: -reminderDays, to: nextBillingDate) ?? nextBillingDate
         return Date() >= reminderDate && Date() < nextBillingDate
     }
 
@@ -139,23 +140,23 @@ public enum BillingCycle: Codable, Hashable {
 
     public var displayName: String {
         switch self {
-        case .weekly: return "Weekly"
-        case .monthly: return "Monthly"
-        case .quarterly: return "Quarterly"
-        case .semiAnnually: return "Semi-Annually"
-        case .annually: return "Annually"
-        case .custom(let days): return "Every \(days) days"
+        case .weekly: "Weekly"
+        case .monthly: "Monthly"
+        case .quarterly: "Quarterly"
+        case .semiAnnually: "Semi-Annually"
+        case .annually: "Annually"
+        case let .custom(days): "Every \(days) days"
         }
     }
 
     public var days: Int {
         switch self {
-        case .weekly: return 7
-        case .monthly: return 30
-        case .quarterly: return 90
-        case .semiAnnually: return 180
-        case .annually: return 365
-        case .custom(let days): return days
+        case .weekly: 7
+        case .monthly: 30
+        case .quarterly: 90
+        case .semiAnnually: 180
+        case .annually: 365
+        case let .custom(days): days
         }
     }
 
@@ -165,9 +166,9 @@ public enum BillingCycle: Codable, Hashable {
     }
 }
 
-extension Subscription {
+public extension Subscription {
     /// Sample data for previews and testing
-    public static var sample: Subscription {
+    static var sample: Subscription {
         Subscription(
             name: "Netflix Premium",
             subscriptionDescription: "Streaming service subscription",
@@ -180,7 +181,7 @@ extension Subscription {
         )
     }
 
-    public static var sampleAnnual: Subscription {
+    static var sampleAnnual: Subscription {
         Subscription(
             name: "Adobe Creative Cloud",
             subscriptionDescription: "Design software suite",

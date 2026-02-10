@@ -147,7 +147,7 @@ final class PerformanceTests: XCTestCase {
             autoreleasepool {
                 transactions = testDataGenerator.generateTransactions(count: 10000)
                 // Force processing
-                let _ = transactions.filter { $0.amount > 100 }
+                _ = transactions.filter { $0.amount > 100 }
             }
         }
 
@@ -186,7 +186,7 @@ final class PerformanceTests: XCTestCase {
                 group.enter()
                 DispatchQueue.global().async {
                     let transactions = self.testDataGenerator.generateTransactions(count: 100)
-                    let _ = transactions.filter { $0.amount > Double(i * 10) }
+                    _ = transactions.filter { $0.amount > Double(i * 10) }
                     group.leave()
                 }
             }
@@ -274,6 +274,9 @@ class TestDataGenerator {
 
 private func createInMemoryModelContext() -> ModelContext {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: [FinancialTransaction.self, FinancialAccount.self, Budget.self], configurations: config)
+    let container = try! ModelContainer(
+        for: [FinancialTransaction.self, FinancialAccount.self, Budget.self],
+        configurations: config
+    )
     return ModelContext(container)
 }

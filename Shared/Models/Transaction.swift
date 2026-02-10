@@ -40,11 +40,11 @@ public struct Transaction: Identifiable, Codable, Hashable {
     public var signedAmount: Double {
         switch type {
         case .income:
-            return amount
+            amount
         case .expense:
-            return -amount
+            -amount
         case .transfer:
-            return amount
+            amount
         }
     }
 
@@ -81,9 +81,9 @@ public struct Transaction: Identifiable, Codable, Hashable {
     }
 }
 
-extension Transaction {
+public extension Transaction {
     /// Sample data for previews and testing
-    public static var sampleIncome: Transaction {
+    static var sampleIncome: Transaction {
         Transaction(
             title: "Salary Deposit",
             amount: 3500,
@@ -94,7 +94,7 @@ extension Transaction {
         )
     }
 
-    public static var sampleExpense: Transaction {
+    static var sampleExpense: Transaction {
         Transaction(
             title: "Grocery Shopping",
             amount: 85.50,

@@ -68,11 +68,11 @@ public final class FinancialTransaction {
     public var signedAmount: Double {
         switch transactionType {
         case .income:
-            return amount
+            amount
         case .expense:
-            return -amount
+            -amount
         case .transfer:
-            return amount // Transfers can be positive or negative based on context
+            amount // Transfers can be positive or negative based on context
         }
     }
 
@@ -121,9 +121,9 @@ public final class FinancialTransaction {
     public func matchesSearch(_ query: String) -> Bool {
         let searchTerm = query.lowercased()
         return title.lowercased().contains(searchTerm) ||
-               (notes?.lowercased().contains(searchTerm) ?? false) ||
-               (category?.lowercased().contains(searchTerm) ?? false) ||
-               tags.contains { $0.lowercased().contains(searchTerm) }
+            (notes?.lowercased().contains(searchTerm) ?? false) ||
+            (category?.lowercased().contains(searchTerm) ?? false) ||
+            tags.contains { $0.lowercased().contains(searchTerm) }
     }
 
     /// Create a copy with modified properties
@@ -167,17 +167,17 @@ public enum TransactionType: String, Codable, CaseIterable {
 
     public var colorHex: String {
         switch self {
-        case .income: return "#34C759" // Green
-        case .expense: return "#FF3B30" // Red
-        case .transfer: return "#007AFF" // Blue
+        case .income: "#34C759" // Green
+        case .expense: "#FF3B30" // Red
+        case .transfer: "#007AFF" // Blue
         }
     }
 
     public var iconName: String {
         switch self {
-        case .income: return "arrow.down.circle.fill"
-        case .expense: return "arrow.up.circle.fill"
-        case .transfer: return "arrow.left.arrow.right.circle.fill"
+        case .income: "arrow.down.circle.fill"
+        case .expense: "arrow.up.circle.fill"
+        case .transfer: "arrow.left.arrow.right.circle.fill"
         }
     }
 }
@@ -198,20 +198,20 @@ public enum RecurringFrequency: String, Codable, CaseIterable {
 
     public var days: Int {
         switch self {
-        case .daily: return 1
-        case .weekly: return 7
-        case .biweekly: return 14
-        case .monthly: return 30
-        case .quarterly: return 90
-        case .semiAnnually: return 180
-        case .annually: return 365
+        case .daily: 1
+        case .weekly: 7
+        case .biweekly: 14
+        case .monthly: 30
+        case .quarterly: 90
+        case .semiAnnually: 180
+        case .annually: 365
         }
     }
 }
 
-extension FinancialTransaction {
+public extension FinancialTransaction {
     /// Sample data for previews and testing
-    public static var sampleIncome: FinancialTransaction {
+    static var sampleIncome: FinancialTransaction {
         FinancialTransaction(
             title: "Salary Deposit",
             amount: 3500,
@@ -223,7 +223,7 @@ extension FinancialTransaction {
         )
     }
 
-    public static var sampleExpense: FinancialTransaction {
+    static var sampleExpense: FinancialTransaction {
         FinancialTransaction(
             title: "Grocery Shopping",
             amount: 85.50,
@@ -235,7 +235,7 @@ extension FinancialTransaction {
         )
     }
 
-    public static var sampleTransfer: FinancialTransaction {
+    static var sampleTransfer: FinancialTransaction {
         FinancialTransaction(
             title: "Transfer to Savings",
             amount: 500,

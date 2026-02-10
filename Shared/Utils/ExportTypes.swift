@@ -16,19 +16,19 @@ public enum ExportFormat: String, Codable, CaseIterable {
 
     public var fileExtension: String {
         switch self {
-        case .csv: return "csv"
-        case .json: return "json"
-        case .pdf: return "pdf"
-        case .excel: return "xlsx"
+        case .csv: "csv"
+        case .json: "json"
+        case .pdf: "pdf"
+        case .excel: "xlsx"
         }
     }
 
     public var mimeType: String {
         switch self {
-        case .csv: return "text/csv"
-        case .json: return "application/json"
-        case .pdf: return "application/pdf"
-        case .excel: return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        case .csv: "text/csv"
+        case .json: "application/json"
+        case .pdf: "application/pdf"
+        case .excel: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         }
     }
 }
@@ -68,10 +68,10 @@ public enum ImportFormat: String, Codable, CaseIterable {
 
     public var fileExtension: String {
         switch self {
-        case .csv: return "csv"
-        case .json: return "json"
-        case .qif: return "qif"
-        case .ofx: return "ofx"
+        case .csv: "csv"
+        case .json: "json"
+        case .qif: "qif"
+        case .ofx: "ofx"
         }
     }
 }

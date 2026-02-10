@@ -62,7 +62,7 @@ public final class SavingsGoal {
 
     /// Check if the goal is on track based on target date
     public var isOnTrack: Bool {
-        guard let targetDate = targetDate else { return true }
+        guard let targetDate else { return true }
 
         let daysRemaining = Calendar.current.dateComponents([.day], from: Date(), to: targetDate).day ?? 0
         guard daysRemaining > 0 else { return currentAmount >= targetAmount }
@@ -96,17 +96,17 @@ public enum GoalPriority: String, Codable, CaseIterable {
 
     public var sortOrder: Int {
         switch self {
-        case .low: return 0
-        case .medium: return 1
-        case .high: return 2
-        case .critical: return 3
+        case .low: 0
+        case .medium: 1
+        case .high: 2
+        case .critical: 3
         }
     }
 }
 
-extension SavingsGoal {
+public extension SavingsGoal {
     /// Sample data for previews and testing
-    public static var sample: SavingsGoal {
+    static var sample: SavingsGoal {
         SavingsGoal(
             title: "Emergency Fund",
             goalDescription: "6 months of expenses for financial security",
@@ -118,7 +118,7 @@ extension SavingsGoal {
         )
     }
 
-    public static var sampleCompleted: SavingsGoal {
+    static var sampleCompleted: SavingsGoal {
         SavingsGoal(
             title: "Vacation to Europe",
             goalDescription: "Summer vacation for the family",

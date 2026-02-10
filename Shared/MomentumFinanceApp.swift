@@ -156,7 +156,8 @@ public struct MomentumFinanceApp: App {
 
         // Create tenant-specific storage URL
         let appSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let tenantDirectory = appSupportURL.appendingPathComponent("MomentumFinance").appendingPathComponent("Tenants").appendingPathComponent(tenantId)
+        let tenantDirectory = appSupportURL.appendingPathComponent("MomentumFinance").appendingPathComponent("Tenants")
+            .appendingPathComponent(tenantId)
         let databaseURL = tenantDirectory.appendingPathComponent("MomentumFinance.sqlite")
 
         // Create tenant directory if it doesn't exist

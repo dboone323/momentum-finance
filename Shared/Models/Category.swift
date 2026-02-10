@@ -86,56 +86,98 @@ public enum CategoryType: String, Codable, CaseIterable {
 
     public var defaultColorHex: String {
         switch self {
-        case .expense: return "#FF3B30" // Red
-        case .income: return "#34C759" // Green
-        case .transfer: return "#007AFF" // Blue
-        case .savings: return "#FF9500" // Orange
-        case .investment: return "#AF52DE" // Purple
+        case .expense: "#FF3B30" // Red
+        case .income: "#34C759" // Green
+        case .transfer: "#007AFF" // Blue
+        case .savings: "#FF9500" // Orange
+        case .investment: "#AF52DE" // Purple
         }
     }
 
     public var defaultIconName: String {
         switch self {
-        case .expense: return "arrow.up.circle.fill"
-        case .income: return "arrow.down.circle.fill"
-        case .transfer: return "arrow.left.arrow.right.circle.fill"
-        case .savings: return "banknote.fill"
-        case .investment: return "chart.line.uptrend.xyaxis"
+        case .expense: "arrow.up.circle.fill"
+        case .income: "arrow.down.circle.fill"
+        case .transfer: "arrow.left.arrow.right.circle.fill"
+        case .savings: "banknote.fill"
+        case .investment: "chart.line.uptrend.xyaxis"
         }
     }
 }
 
-extension Category {
+public extension Category {
     /// Default expense categories
-    public static var defaultExpenseCategories: [Category] {
+    static var defaultExpenseCategories: [Category] {
         [
-            Category(name: "Food & Dining", colorHex: "#FF9500", iconName: "fork.knife", type: .expense, isDefault: true),
-            Category(name: "Transportation", colorHex: "#007AFF", iconName: "car.fill", type: .expense, isDefault: true),
+            Category(
+                name: "Food & Dining",
+                colorHex: "#FF9500",
+                iconName: "fork.knife",
+                type: .expense,
+                isDefault: true
+            ),
+            Category(
+                name: "Transportation",
+                colorHex: "#007AFF",
+                iconName: "car.fill",
+                type: .expense,
+                isDefault: true
+            ),
             Category(name: "Shopping", colorHex: "#AF52DE", iconName: "bag.fill", type: .expense, isDefault: true),
-            Category(name: "Entertainment", colorHex: "#FF3B30", iconName: "gamecontroller.fill", type: .expense, isDefault: true),
-            Category(name: "Bills & Utilities", colorHex: "#34C759", iconName: "house.fill", type: .expense, isDefault: true),
+            Category(
+                name: "Entertainment",
+                colorHex: "#FF3B30",
+                iconName: "gamecontroller.fill",
+                type: .expense,
+                isDefault: true
+            ),
+            Category(
+                name: "Bills & Utilities",
+                colorHex: "#34C759",
+                iconName: "house.fill",
+                type: .expense,
+                isDefault: true
+            ),
             Category(name: "Healthcare", colorHex: "#FF2D55", iconName: "heart.fill", type: .expense, isDefault: true),
             Category(name: "Education", colorHex: "#5AC8FA", iconName: "book.fill", type: .expense, isDefault: true),
             Category(name: "Travel", colorHex: "#FFCC00", iconName: "airplane", type: .expense, isDefault: true),
-            Category(name: "Personal Care", colorHex: "#FF6B9E", iconName: "person.fill", type: .expense, isDefault: true),
-            Category(name: "Other", colorHex: "#8E8E93", iconName: "circle.fill", type: .expense, isDefault: true)
+            Category(
+                name: "Personal Care",
+                colorHex: "#FF6B9E",
+                iconName: "person.fill",
+                type: .expense,
+                isDefault: true
+            ),
+            Category(name: "Other", colorHex: "#8E8E93", iconName: "circle.fill", type: .expense, isDefault: true),
         ]
     }
 
     /// Default income categories
-    public static var defaultIncomeCategories: [Category] {
+    static var defaultIncomeCategories: [Category] {
         [
             Category(name: "Salary", colorHex: "#34C759", iconName: "briefcase.fill", type: .income, isDefault: true),
             Category(name: "Freelance", colorHex: "#5AC8FA", iconName: "person.2.fill", type: .income, isDefault: true),
-            Category(name: "Business", colorHex: "#AF52DE", iconName: "building.2.fill", type: .income, isDefault: true),
-            Category(name: "Investments", colorHex: "#FF9500", iconName: "chart.line.uptrend.xyaxis", type: .income, isDefault: true),
+            Category(
+                name: "Business",
+                colorHex: "#AF52DE",
+                iconName: "building.2.fill",
+                type: .income,
+                isDefault: true
+            ),
+            Category(
+                name: "Investments",
+                colorHex: "#FF9500",
+                iconName: "chart.line.uptrend.xyaxis",
+                type: .income,
+                isDefault: true
+            ),
             Category(name: "Gifts", colorHex: "#FF3B30", iconName: "gift.fill", type: .income, isDefault: true),
-            Category(name: "Other", colorHex: "#8E8E93", iconName: "circle.fill", type: .income, isDefault: true)
+            Category(name: "Other", colorHex: "#8E8E93", iconName: "circle.fill", type: .income, isDefault: true),
         ]
     }
 
     /// Sample data for previews and testing
-    public static var sampleExpense: Category {
+    static var sampleExpense: Category {
         Category(
             name: "Groceries",
             description: "Weekly grocery shopping",
@@ -146,7 +188,7 @@ extension Category {
         )
     }
 
-    public static var sampleIncome: Category {
+    static var sampleIncome: Category {
         Category(
             name: "Salary",
             description: "Monthly salary payment",

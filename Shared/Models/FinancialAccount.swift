@@ -67,7 +67,7 @@ public final class FinancialAccount {
     public func totalIncome(in dateRange: ClosedRange<Date>? = nil) -> Double {
         let relevantTransactions = transactions.filter { transaction in
             transaction.transactionType == .income &&
-            (dateRange?.contains(transaction.date) ?? true)
+                (dateRange?.contains(transaction.date) ?? true)
         }
         return relevantTransactions.reduce(0) { $0 + $1.amount }
     }
@@ -76,7 +76,7 @@ public final class FinancialAccount {
     public func totalExpenses(in dateRange: ClosedRange<Date>? = nil) -> Double {
         let relevantTransactions = transactions.filter { transaction in
             transaction.transactionType == .expense &&
-            (dateRange?.contains(transaction.date) ?? true)
+                (dateRange?.contains(transaction.date) ?? true)
         }
         return relevantTransactions.reduce(0) { $0 + $1.amount }
     }
@@ -113,7 +113,7 @@ public final class FinancialAccount {
 
     /// Get masked account number for display
     public var maskedAccountNumber: String? {
-        guard let accountNumber = accountNumber else { return nil }
+        guard let accountNumber else { return nil }
         let lastFour = String(accountNumber.suffix(4))
         return "****\(lastFour)"
     }
@@ -135,50 +135,50 @@ public enum AccountType: String, Codable, CaseIterable {
 
     public var defaultColorHex: String {
         switch self {
-        case .checking: return "#007AFF" // Blue
-        case .savings: return "#34C759" // Green
-        case .creditCard: return "#FF3B30" // Red
-        case .investment: return "#AF52DE" // Purple
-        case .loan: return "#FF9500" // Orange
-        case .cash: return "#FFCC00" // Yellow
-        case .other: return "#8E8E93" // Gray
+        case .checking: "#007AFF" // Blue
+        case .savings: "#34C759" // Green
+        case .creditCard: "#FF3B30" // Red
+        case .investment: "#AF52DE" // Purple
+        case .loan: "#FF9500" // Orange
+        case .cash: "#FFCC00" // Yellow
+        case .other: "#8E8E93" // Gray
         }
     }
 
     public var defaultIconName: String {
         switch self {
-        case .checking: return "building.columns.fill"
-        case .savings: return "banknote.fill"
-        case .creditCard: return "creditcard.fill"
-        case .investment: return "chart.line.uptrend.xyaxis"
-        case .loan: return "dollarsign.circle.fill"
-        case .cash: return "banknote"
-        case .other: return "circle.fill"
+        case .checking: "building.columns.fill"
+        case .savings: "banknote.fill"
+        case .creditCard: "creditcard.fill"
+        case .investment: "chart.line.uptrend.xyaxis"
+        case .loan: "dollarsign.circle.fill"
+        case .cash: "banknote"
+        case .other: "circle.fill"
         }
     }
 
     public var isAsset: Bool {
         switch self {
         case .checking, .savings, .investment, .cash:
-            return true
+            true
         case .creditCard, .loan, .other:
-            return false
+            false
         }
     }
 
     public var isLiability: Bool {
         switch self {
         case .creditCard, .loan:
-            return true
+            true
         case .checking, .savings, .investment, .cash, .other:
-            return false
+            false
         }
     }
 }
 
-extension FinancialAccount {
+public extension FinancialAccount {
     /// Sample data for previews and testing
-    public static var sampleChecking: FinancialAccount {
+    static var sampleChecking: FinancialAccount {
         FinancialAccount(
             name: "Main Checking",
             accountType: .checking,
@@ -191,7 +191,7 @@ extension FinancialAccount {
         )
     }
 
-    public static var sampleSavings: FinancialAccount {
+    static var sampleSavings: FinancialAccount {
         FinancialAccount(
             name: "Emergency Fund",
             accountType: .savings,
@@ -204,7 +204,7 @@ extension FinancialAccount {
         )
     }
 
-    public static var sampleCreditCard: FinancialAccount {
+    static var sampleCreditCard: FinancialAccount {
         FinancialAccount(
             name: "Chase Freedom",
             accountType: .creditCard,

@@ -88,14 +88,14 @@ extension Features.Transactions {
                         ForEach(self.filteredTransactions) { transaction in
                             TransactionRowView(transaction: transaction, onTapped: {})
 
-                                    .swipeActions {
-                                        Button(role: .destructive) {
-                                            self.deleteTransaction(transaction)
-                                        } label: {
-                                            Label("Delete", systemImage: "trash")
-                                        }
-                                        .accessibilityLabel("Delete")
+                                .swipeActions {
+                                    Button(role: .destructive) {
+                                        self.deleteTransaction(transaction)
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
                                     }
+                                    .accessibilityLabel("Delete")
+                                }
                         }
                     }
                     .listStyle(.plain)

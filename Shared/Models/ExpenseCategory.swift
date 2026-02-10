@@ -66,7 +66,7 @@ public final class ExpenseCategory {
     /// Calculate total spent in this category for a given date range
     public func totalSpent(in dateRange: ClosedRange<Date>? = nil) -> Double {
         let relevantTransactions = transactions.filter { transaction in
-            if let dateRange = dateRange {
+            if let dateRange {
                 return dateRange.contains(transaction.date)
             }
             return true
@@ -112,8 +112,8 @@ public final class ExpenseCategory {
 }
 
 /// Default expense categories
-extension ExpenseCategory {
-    public static var defaultCategories: [ExpenseCategory] {
+public extension ExpenseCategory {
+    static var defaultCategories: [ExpenseCategory] {
         [
             ExpenseCategory(
                 name: "Food & Dining",
@@ -184,12 +184,12 @@ extension ExpenseCategory {
                 colorHex: "#8E8E93",
                 iconName: "circle.fill",
                 isDefault: true
-            )
+            ),
         ]
     }
 
     /// Sample data for previews and testing
-    public static var sample: ExpenseCategory {
+    static var sample: ExpenseCategory {
         ExpenseCategory(
             name: "Groceries",
             categoryDescription: "Weekly grocery shopping",
