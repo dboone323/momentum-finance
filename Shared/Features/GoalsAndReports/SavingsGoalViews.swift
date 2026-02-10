@@ -44,7 +44,7 @@ public struct SavingsGoalsSection: View {
 public struct SavingsGoalCard: View {
     let goal: SavingsGoal
 
-    // Cross-platform color support
+    /// Cross-platform color support
     private var backgroundColor: Color {
         #if canImport(UIKit)
             return Color(UIColor.systemBackground)

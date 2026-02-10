@@ -4,7 +4,7 @@ import XCTest
 class FISSpendingTests: XCTestCase {
     var service: FinancialIntelligenceService!
 
-    // Test computeMonthlySpendingByCategory
+    /// Test computeMonthlySpendingByCategory
     func testComputeMonthlySpendingByCategory() {
         let transactions: [FinancialTransaction] = [
             FinancialTransaction(amount: -100, date: Date(), category: ExpenseCategory(id: "category1", name: "Food")),
@@ -24,7 +24,7 @@ class FISSpendingTests: XCTestCase {
         XCTAssertEqual(service.fi_computeMonthlySpendingByCategory(transactions), expected)
     }
 
-    // Test generateSpendingInsightsFromMonthlyData
+    /// Test generateSpendingInsightsFromMonthlyData
     func testGenerateSpendingInsightsFromMonthlyData() {
         let transactions: [FinancialTransaction] = [
             FinancialTransaction(amount: -100, date: Date(), category: ExpenseCategory(id: "category1", name: "Food")),
@@ -73,7 +73,7 @@ class FISSpendingTests: XCTestCase {
         XCTAssertEqual(service.fi_generateSpendingInsightsFromMonthlyData(transactions, categories), expectedInsights)
     }
 
-    // Test topCategoriesInsight
+    /// Test topCategoriesInsight
     func testTopCategoriesInsight() {
         let transactions: [FinancialTransaction] = [
             FinancialTransaction(amount: -100, date: Date(), category: ExpenseCategory(id: "category1", name: "Food")),

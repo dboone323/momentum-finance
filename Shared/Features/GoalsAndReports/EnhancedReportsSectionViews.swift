@@ -20,7 +20,7 @@ extension Features.GoalsAndReports {
 
         @State private var selectedTimeframe: TimeFrame = .thisMonth
 
-        // Cross-platform color support
+        /// Cross-platform color support
         private var backgroundColor: Color {
             #if canImport(UIKit)
                 return Color(UIColor.systemBackground)
@@ -216,7 +216,7 @@ extension Features.GoalsAndReports {
         }
     }
 
-    // Simple Financial Summary Card
+    /// Simple Financial Summary Card
     struct EnhancedFinancialSummaryCard: View {
         let transactions: [FinancialTransaction]
         let timeframe: EnhancedReportsSection.TimeFrame
@@ -274,7 +274,7 @@ extension Features.GoalsAndReports {
         }
     }
 
-    // Helper views for enhanced reports section
+    /// Helper views for enhanced reports section
     struct SpendingByCategoryChart: View {
         let transactions: [FinancialTransaction]
 

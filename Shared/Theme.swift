@@ -2,7 +2,7 @@ import Foundation
 import MomentumFinanceCore
 import SwiftUI
 
-// Platform color helpers (now internal for cross-file use)
+/// Platform color helpers (now internal for cross-file use)
 func platformBackgroundColor() -> Color {
     #if os(iOS)
         return Color(.systemBackground)

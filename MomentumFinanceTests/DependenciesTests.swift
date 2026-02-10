@@ -4,7 +4,7 @@ import XCTest
 class DependenciesTests: XCTestCase {
     var dependencies: Dependencies!
 
-    // Test the default initializer
+    /// Test the default initializer
     func testDefaultInitialization() {
         let expectedPerformanceManager = PerformanceManager.shared
         let expectedLogger = Logger.shared
@@ -13,7 +13,7 @@ class DependenciesTests: XCTestCase {
         XCTAssertEqual(dependencies.logger, expectedLogger)
     }
 
-    // Test the log method with different levels
+    /// Test the log method with different levels
     func testLogMethodWithDifferentLevels() {
         let message = "Test Log Message"
         let level = LogLevel.info
@@ -28,7 +28,7 @@ class DependenciesTests: XCTestCase {
         )
     }
 
-    // Test the setOutputHandler method
+    /// Test the setOutputHandler method
     func testSetOutputHandler() {
         let mockHandler = MockLogger()
         dependencies.setOutputHandler(mockHandler.log)
@@ -42,7 +42,7 @@ class DependenciesTests: XCTestCase {
         )
     }
 
-    // Test the resetOutputHandler method
+    /// Test the resetOutputHandler method
     func testResetOutputHandler() {
         let mockHandler = MockLogger()
         dependencies.setOutputHandler(mockHandler.log)

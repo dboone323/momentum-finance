@@ -32,19 +32,19 @@ extension Features.Subscriptions {
 
         @State private var showingProcessPaymentConfirmation = false
 
-        // Initialize with direct subscription reference (for backward compatibility)
+        /// Initialize with direct subscription reference (for backward compatibility)
         init(subscription: Subscription) {
             self.subscription = subscription
             self.subscriptionId = subscription.persistentModelID
         }
 
-        // Initialize with subscription ID (for cross-module navigation)
+        /// Initialize with subscription ID (for cross-module navigation)
         init(subscriptionId: PersistentIdentifier) {
             self.subscriptionId = subscriptionId
             self.subscription = nil // Will be resolved in the resolvedSubscription property
         }
 
-        // Resolve the subscription from ID if needed
+        /// Resolve the subscription from ID if needed
         private var resolvedSubscription: Subscription? {
             if let subscription {
                 return subscription
@@ -285,7 +285,7 @@ extension Features.Subscriptions {
                 .sorted(by: { $0.date > $1.date })
         }
 
-        // Cross-platform background color
+        /// Cross-platform background color
         private var platformBackgroundColor: Color {
             #if canImport(UIKit)
                 return Color(uiColor: .systemBackground)

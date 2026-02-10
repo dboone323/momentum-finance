@@ -96,7 +96,7 @@ import SwiftUI
             }
         }
 
-        // Transaction Detail View optimized for macOS
+        /// Transaction Detail View optimized for macOS
         struct TransactionDetailView: View {
             let transactionId: String
 

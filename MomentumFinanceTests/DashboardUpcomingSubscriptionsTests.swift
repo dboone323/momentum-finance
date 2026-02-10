@@ -25,13 +25,13 @@ class DashboardUpcomingSubscriptionsTests: XCTestCase {
         onViewAllTap = { self.viewAllTappedFlag = true }
     }
 
-    // Test the formattedDateString method
+    /// Test the formattedDateString method
     func testFormattedDateString() {
         let date = Date()
         XCTAssertEqual(DashboardUpcomingSubscriptions().formattedDateString(date), "Aug 19")
     }
 
-    // Test the body of DashboardUpcomingSubscriptions view
+    /// Test the body of DashboardUpcomingSubscriptions view
     func testBody() {
         let viewModel = Dashboard.UpcomingSubscriptions(
             subscriptions: subscriptions,
@@ -51,7 +51,7 @@ class DashboardUpcomingSubscriptionsTests: XCTestCase {
         XCTAssertTrue(subscriptionTappedFlag)
     }
 
-    // Test the body of DashboardUpcomingSubscriptions view when no subscriptions are present
+    /// Test the body of DashboardUpcomingSubscriptions view when no subscriptions are present
     func testBodyNoSubscriptions() {
         let viewModel = Dashboard.UpcomingSubscriptions(
             subscriptions: [],
@@ -71,7 +71,7 @@ class DashboardUpcomingSubscriptionsTests: XCTestCase {
         XCTAssertFalse(subscriptionTappedFlag)
     }
 
-    // Test the body of DashboardUpcomingSubscriptions view when there are more than 3 subscriptions
+    /// Test the body of DashboardUpcomingSubscriptions view when there are more than 3 subscriptions
     func testBodyMoreThanThreeSubscriptions() {
         // Create four subscriptions for this test
         let subs = subscriptions + [Subscription(id: 4, name: "Extra Subscription", icon: "bell", amount: 150.0)]

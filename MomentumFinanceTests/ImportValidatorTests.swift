@@ -16,7 +16,7 @@ class ImportValidatorTests: XCTestCase {
         await self.modelContext.deleteAll()
     }
 
-    // Test isDuplicate method with a duplicate transaction
+    /// Test isDuplicate method with a duplicate transaction
     func testIsDuplicateWithDuplicateTransaction() async throws {
         let transaction = FinancialTransaction(
             title: "Test Transaction",
@@ -31,7 +31,7 @@ class ImportValidatorTests: XCTestCase {
         await XCTAssertTrue(ImportValidator.isDuplicate(transaction))
     }
 
-    // Test isDuplicate method with a non-duplicate transaction
+    /// Test isDuplicate method with a non-duplicate transaction
     func testIsDuplicateWithNonDuplicateTransaction() async throws {
         let transaction = FinancialTransaction(
             title: "Test Transaction",
@@ -50,7 +50,7 @@ class ImportValidatorTests: XCTestCase {
         )))
     }
 
-    // Test validateRequiredFields method with missing required fields
+    /// Test validateRequiredFields method with missing required fields
     func testValidateRequiredFieldsWithMissingRequiredFields() throws {
         let fields = ["", "2023-06-05", "Test Transaction"]
         let columnMapping = CSVColumnMapping(dateIndex: 1, titleIndex: 2)
@@ -63,7 +63,7 @@ class ImportValidatorTests: XCTestCase {
         }
     }
 
-    // Test validateRequiredFields method with empty required field
+    /// Test validateRequiredFields method with empty required field
     func testValidateRequiredFieldsWithEmptyRequiredField() throws {
         let fields = ["2023-06-05", "", "Test Transaction"]
         let columnMapping = CSVColumnMapping(dateIndex: 1, titleIndex: 2)
@@ -76,7 +76,7 @@ class ImportValidatorTests: XCTestCase {
         }
     }
 
-    // Test validateCSVFormat method with valid CSV content
+    /// Test validateCSVFormat method with valid CSV content
     func testValidateCSVFormatWithValidCSVContent() throws {
         let csvContent = """
         date,title,amount
@@ -91,7 +91,7 @@ class ImportValidatorTests: XCTestCase {
         }
     }
 
-    // Test validateCSVFormat method with invalid CSV content
+    /// Test validateCSVFormat method with invalid CSV content
     func testValidateCSVFormatWithInvalidCSVContent() throws {
         let csvContent = """
         date,title,amount
@@ -106,7 +106,7 @@ class ImportValidatorTests: XCTestCase {
         }
     }
 
-    // Test validateCSVFormat method with empty file content
+    /// Test validateCSVFormat method with empty file content
     func testValidateCSVFormatWithEmptyFileContent() throws {
         let csvContent = ""
 

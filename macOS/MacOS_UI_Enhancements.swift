@@ -10,7 +10,7 @@ import SwiftUI
 #if os(macOS)
     // List view components needed for the three-column macOS layout
 
-    // Dashboard list view for the middle column
+    /// Dashboard list view for the middle column
     extension Features.Dashboard {
         struct DashboardListView: View {
             @Environment(\.modelContext) private var modelContext
@@ -120,7 +120,7 @@ import SwiftUI
         }
     }
 
-    // Transactions list view for the middle column
+    /// Transactions list view for the middle column
     extension Features.Transactions {
         struct TransactionsListView: View {
             @Environment(\.modelContext) private var modelContext
@@ -223,7 +223,7 @@ import SwiftUI
             }
         }
 
-        // Transaction Detail View optimized for macOS
+        /// Transaction Detail View optimized for macOS
         struct TransactionDetailView: View {
             let transactionId: String
 
@@ -402,7 +402,7 @@ import SwiftUI
         }
     }
 
-    // Budgets list view for the middle column
+    /// Budgets list view for the middle column
     extension Features.Budgets {
         struct BudgetListView: View {
             @Environment(\.modelContext) private var modelContext
@@ -460,7 +460,7 @@ import SwiftUI
             }
         }
 
-        // Budget Detail View optimized for macOS
+        /// Budget Detail View optimized for macOS
         struct BudgetDetailView: View {
             let budgetId: String
 
@@ -683,7 +683,7 @@ import SwiftUI
         }
     }
 
-    // Subscriptions list view for the middle column
+    /// Subscriptions list view for the middle column
     extension Features.Subscriptions {
         struct SubscriptionListView: View {
             @Environment(\.modelContext) private var modelContext
@@ -845,7 +845,7 @@ import SwiftUI
         }
     }
 
-    // Goals list view for the middle column
+    /// Goals list view for the middle column
     extension Features.GoalsAndReports {
         struct GoalsListView: View {
             @Environment(\.modelContext) private var modelContext
@@ -1304,7 +1304,7 @@ import SwiftUI
         }
     }
 
-    // Sidebar navigation items
+    /// Sidebar navigation items
     enum SidebarItem: Hashable {
         case dashboard
         case transactions
@@ -1313,7 +1313,7 @@ import SwiftUI
         case goalsAndReports
     }
 
-    // Listable items for the content column
+    /// Listable items for the content column
     struct ListableItem: Identifiable, Hashable {
         let id: String?
         let name: String
@@ -1323,10 +1323,10 @@ import SwiftUI
             "\(self.type)_\(self.id ?? "unknown")"
         }
 
-        // Identifiable conformance
+        /// Identifiable conformance
         var identifierId: String { self.identifier }
 
-        // Hashable conformance
+        /// Hashable conformance
         /// <#Description#>
         /// - Returns: <#description#>
         func hash(into hasher: inout Hasher) {
@@ -1338,7 +1338,7 @@ import SwiftUI
         }
     }
 
-    // Types of items that can be displayed in the content column
+    /// Types of items that can be displayed in the content column
     enum ListItemType: Hashable {
         case account
         case transaction
@@ -1355,7 +1355,7 @@ import SwiftUI
         case amountAscending
     }
 
-    // macOS-specific content view implementation using NavigationSplitView
+    /// macOS-specific content view implementation using NavigationSplitView
     struct ContentViewMacOS: View {
         @State private var navigationCoordinator = NavigationCoordinator.shared
         @State private var selectedSidebarItem: SidebarItem? = .dashboard
@@ -1480,13 +1480,13 @@ import SwiftUI
             }
         }
 
-        // Helper method to create consistent sidebar items
+        /// Helper method to create consistent sidebar items
         private func sidebarItem(title: String, icon: String, item: SidebarItem) -> some View {
             Label(title, systemImage: self.selectedSidebarItem == item ? "\(icon).fill" : icon)
                 .tag(item)
         }
 
-        // Toggle the macOS sidebar
+        /// Toggle the macOS sidebar
         private func toggleSidebar() {
             NSApp.keyWindow?.firstResponder?.tryToPerform(
                 #selector(NSSplitViewController.toggleSidebar(_:)), with: nil
@@ -1494,7 +1494,7 @@ import SwiftUI
         }
     }
 
-    // macOS-specific UI components and helpers
+    /// macOS-specific UI components and helpers
     enum MacOSSpecificViews {
         /// macOS window configuration
         static func configureWindow() {
@@ -1524,7 +1524,7 @@ import SwiftUI
         }
     }
 
-    // macOS-specific view extensions
+    /// macOS-specific view extensions
     extension View {
         /// Add macOS-specific keyboard shortcuts
         /// <#Description#>

@@ -17,7 +17,7 @@ import SwiftUI
     struct SubscriptionLogo: View {
         let provider: String
 
-        // Map common providers to system images
+        /// Map common providers to system images
         private var iconName: String {
             switch provider.lowercased() {
             case "netflix": "play.tv"
@@ -93,7 +93,7 @@ import SwiftUI
     struct PaymentHistoryChart: View {
         let subscription: Subscription
 
-        // Sample data - would be real data in actual implementation
+        /// Sample data - would be real data in actual implementation
         func generateSampleData() -> [(month: String, amount: Double)] {
             [
                 (month: "Jun", amount: self.subscription.amount),
@@ -147,10 +147,10 @@ import SwiftUI
     struct ValueAssessmentView: View {
         let subscription: Subscription
 
-        // Sample usage data - in a real app, this would be tracked
+        /// Sample usage data - in a real app, this would be tracked
         @State private var usageRating: Double = 0.7 // 0-1 scale
 
-        // Calculate cost per use
+        /// Calculate cost per use
         private var costPerUse: Double {
             // Assuming monthly billing and usage 5 times per month
             self.subscription.amount / 5.0
@@ -411,7 +411,7 @@ import SwiftUI
         let subscription: Subscription?
         @Environment(\.dismiss) private var dismiss
 
-        // Sample alternatives data
+        /// Sample alternatives data
         let alternatives = [
             (
                 name: "CompetitorA", price: 7.99,

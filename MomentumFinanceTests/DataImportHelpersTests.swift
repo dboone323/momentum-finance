@@ -6,7 +6,7 @@ class DataImportHelpersTests: XCTestCase {
 
     // Test teardown
 
-    // Test public method: importData
+    /// Test public method: importData
     func testImportData() {
         // GIVEN
         let testData = [
@@ -28,7 +28,7 @@ class DataImportHelpersTests: XCTestCase {
         }
     }
 
-    // Test public property: currentData
+    /// Test public property: currentData
     func testCurrentData() {
         // GIVEN
         let testData = [
@@ -49,7 +49,7 @@ class DataImportHelpersTests: XCTestCase {
         }
     }
 
-    // Test public method: exportData
+    /// Test public method: exportData
     func testExportData() {
         // GIVEN
         let testData = [
@@ -70,7 +70,7 @@ class DataImportHelpersTests: XCTestCase {
         }
     }
 
-    // Test public property: importedData
+    /// Test public property: importedData
     func testImportedData() {
         // GIVEN
         let testData = [
@@ -91,7 +91,7 @@ class DataImportHelpersTests: XCTestCase {
         }
     }
 
-    // Test public method: clearData
+    /// Test public method: clearData
     func testClearData() {
         // GIVEN
         let testData = [
@@ -111,7 +111,7 @@ class DataImportHelpersTests: XCTestCase {
         }
     }
 
-    // Test public method: validateData
+    /// Test public method: validateData
     func testValidateData() {
         // GIVEN
         let testData = [

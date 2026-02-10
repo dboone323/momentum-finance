@@ -2,7 +2,7 @@ import XCTest
 @testable import MomentumFinance
 
 class SavingsGoalManagementViewsTests: XCTestCase {
-    // Test the AddSavingsGoalView
+    /// Test the AddSavingsGoalView
     func testAddSavingsGoalView() {
         // GIVEN
         let viewModel = AddSavingsGoalViewModel()
@@ -47,7 +47,7 @@ class SavingsGoalManagementViewsTests: XCTestCase {
         XCTAssertFalse(viewModel.isFormValid)
     }
 
-    // Test the SavingsGoalDetailView
+    /// Test the SavingsGoalDetailView
     func testSavingsGoalDetailView() {
         // GIVEN
         let goal = SavingsGoal(

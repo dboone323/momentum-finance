@@ -171,7 +171,7 @@ import SwiftUI
     struct CategorySpendingChart: View {
         let category: ExpenseCategory
 
-        // Sample data - would be real data in actual implementation
+        /// Sample data - would be real data in actual implementation
         let monthlyData = [
             (month: "Jan", amount: 78.50),
             (month: "Feb", amount: 92.30),
@@ -238,7 +238,7 @@ import SwiftUI
     struct MerchantSpendingChart: View {
         let merchantName: String
 
-        // Sample data - would be real data in actual implementation
+        /// Sample data - would be real data in actual implementation
         let transactions = [
             (date: "Feb 3", amount: 45.99),
             (date: "Mar 5", amount: 52.25),
@@ -317,7 +317,7 @@ import SwiftUI
         let transaction: FinancialTransaction
         @Environment(\.dismiss) private var dismiss
 
-        // Sample data - would be actual transactions in implementation
+        /// Sample data - would be actual transactions in implementation
         let relatedTransactions = [
             "January Grocery Shopping",
             "February Grocery Shopping",

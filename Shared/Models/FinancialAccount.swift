@@ -23,7 +23,7 @@ public final class FinancialAccount {
     public var createdDate: Date
     public var lastModifiedDate: Date
 
-    // Relationships
+    /// Relationships
     @Relationship(deleteRule: .nullify, inverse: \FinancialTransaction.account)
     public var transactions: [FinancialTransaction] = []
 

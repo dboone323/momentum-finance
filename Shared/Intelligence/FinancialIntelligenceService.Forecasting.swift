@@ -164,7 +164,7 @@ extension FinancialIntelligenceService {
         return insight
     }
 
-    // Main forecasting function for helpers
+    /// Main forecasting function for helpers
     func fi_generateForecasts(
         transactions: [FinancialTransaction], accounts: [FinancialAccount]
     ) -> [FinancialInsight] {

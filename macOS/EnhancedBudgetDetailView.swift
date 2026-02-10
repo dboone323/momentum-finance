@@ -596,7 +596,7 @@ import SwiftUI
                 let budget: Budget
                 let timeFrame: TimeFrame
 
-                // Sample data - would be real data in actual implementation
+                /// Sample data - would be real data in actual implementation
                 let dailyData = [
                     (day: "1", amount: 18.50),
                     (day: "5", amount: 42.30),
@@ -670,7 +670,7 @@ import SwiftUI
             private struct CategoryAnalysisChart: View {
                 let category: ExpenseCategory
 
-                // Sample data - would be real data in actual implementation
+                /// Sample data - would be real data in actual implementation
                 let monthlyData = [
                     (month: "Jan", amount: 312.50),
                     (month: "Feb", amount: 342.30),

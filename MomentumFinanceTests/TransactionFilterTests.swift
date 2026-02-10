@@ -6,7 +6,7 @@ class TransactionFilterTests: XCTestCase {
 
     // Test teardown method
 
-    // Test case for TransactionFilter.all
+    /// Test case for TransactionFilter.all
     func testAllTransactionFilter() {
         // GIVEN: A TransactionFilter instance with all value
         let filter = TransactionFilter.all
@@ -18,7 +18,7 @@ class TransactionFilterTests: XCTestCase {
         XCTAssertEqual(displayName, "All")
     }
 
-    // Test case for TransactionFilter.income
+    /// Test case for TransactionFilter.income
     func testIncomeTransactionFilter() {
         // GIVEN: A TransactionFilter instance with income value
         let filter = TransactionFilter.income
@@ -30,7 +30,7 @@ class TransactionFilterTests: XCTestCase {
         XCTAssertEqual(displayName, "Income")
     }
 
-    // Test case for TransactionFilter.expense
+    /// Test case for TransactionFilter.expense
     func testExpenseTransactionFilter() {
         // GIVEN: A TransactionFilter instance with expense value
         let filter = TransactionFilter.expense
@@ -42,7 +42,7 @@ class TransactionFilterTests: XCTestCase {
         XCTAssertEqual(displayName, "Expenses")
     }
 
-    // Test case for TransactionFilter.transfer
+    /// Test case for TransactionFilter.transfer
     func testTransferTransactionFilter() {
         // GIVEN: A TransactionFilter instance with transfer value
         let filter = TransactionFilter.transfer
@@ -54,7 +54,7 @@ class TransactionFilterTests: XCTestCase {
         XCTAssertEqual(displayName, "Transfers")
     }
 
-    // Test case for TransactionFilter.id
+    /// Test case for TransactionFilter.id
     func testIdTransactionFilter() {
         // GIVEN: A TransactionFilter instance with all value
         let filter = TransactionFilter.all

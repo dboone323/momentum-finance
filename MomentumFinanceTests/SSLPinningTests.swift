@@ -76,7 +76,7 @@ final class SSLPinningTests: XCTestCase {
         XCTAssertTrue(result)
     }
 
-    // Helper to create mock server trust for testing
+    /// Helper to create mock server trust for testing
     private func createMockServerTrust() -> SecTrust {
         // Create a minimal mock for testing
         var trust: SecTrust?

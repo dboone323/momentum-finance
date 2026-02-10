@@ -1,7 +1,7 @@
 import SwiftUI
 import WatchKit
 
-// Enhancement #77: Apple Watch Companion App
+/// Enhancement #77: Apple Watch Companion App
 @main
 struct MomentumFinanceWatchApp: App {
     var body: some Scene {

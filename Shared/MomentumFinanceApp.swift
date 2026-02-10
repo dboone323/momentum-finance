@@ -15,7 +15,7 @@ import SwiftUI
 // The top-level biometric settings access has been removed as it was redundant and replaced by the implementation
 // within MomentumFinanceApp.
 
-// Model references for SwiftData container
+/// Model references for SwiftData container
 private extension MomentumFinanceApp {
     enum ModelReferences {
         static let accounts = FinancialAccount.self

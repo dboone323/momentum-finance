@@ -29,12 +29,12 @@ extension Features.Transactions {
             private var categories: [ExpenseCategory] = []
         #endif
 
-        // Get the specific category
+        /// Get the specific category
         private var category: ExpenseCategory? {
             self.categories.first { $0.persistentModelID == self.categoryId }
         }
 
-        // Filter transactions by category
+        /// Filter transactions by category
         private var filteredTransactions: [FinancialTransaction] {
             guard let category else { return [] }
             return self.transactions.filter {
@@ -88,14 +88,14 @@ extension Features.Transactions {
                         ForEach(self.filteredTransactions) { transaction in
                             TransactionRowView(transaction: transaction, onTapped: {})
 
-                                .swipeActions {
-                                    Button(role: .destructive) {
-                                        self.deleteTransaction(transaction)
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
+                                    .swipeActions {
+                                        Button(role: .destructive) {
+                                            self.deleteTransaction(transaction)
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                        .accessibilityLabel("Delete")
                                     }
-                                    .accessibilityLabel("Delete")
-                                }
                         }
                     }
                     .listStyle(.plain)
@@ -110,7 +110,7 @@ extension Features.Transactions {
             .navigationTitle(self.category?.name ?? "Category Transactions")
         }
 
-        // Delete a transaction
+        /// Delete a transaction
         private func deleteTransaction(_ transaction: FinancialTransaction) {
             // Update account balance first
             if let account = transaction.account {
@@ -129,7 +129,7 @@ extension Features.Transactions {
             try? self.modelContext.save()
         }
 
-        // Calculate the total amount for this category
+        /// Calculate the total amount for this category
         private var totalAmount: Double {
             self.filteredTransactions.reduce(0) { result, transaction in
                 if transaction.transactionType == .expense {
@@ -140,7 +140,7 @@ extension Features.Transactions {
             }
         }
 
-        // Cross-platform background color
+        /// Cross-platform background color
         private var platformBackgroundColor: Color {
             #if canImport(UIKit)
                 return Color(uiColor: .systemBackground)

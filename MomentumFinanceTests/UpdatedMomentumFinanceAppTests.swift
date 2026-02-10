@@ -4,18 +4,18 @@ import XCTest
 class MomentumFinanceAppTestsDuplicate1: XCTestCase {
     var sharedModelContainer: ModelContainer!
 
-    // Test the sharedModelContainer creation
+    /// Test the sharedModelContainer creation
     func testSharedModelContainerCreation() {
         XCTAssertNotNil(self.sharedModelContainer, "The shared model container should not be nil")
     }
 
-    // Test a public method of MomentumFinanceApp
+    /// Test a public method of MomentumFinanceApp
     func testPublicMethod() {
         let result = self.sharedModelContainer.somePublicMethod()
         XCTAssertEqual(result, expectedValue, "Expected the method to return the correct value")
     }
 
-    // Test another public method with real data
+    /// Test another public method with real data
     func testAnotherPublicMethodWithRealData() {
         let account = FinancialAccount(name: "Test Account", balance: 1000)
         self.sharedModelContainer.add(account)

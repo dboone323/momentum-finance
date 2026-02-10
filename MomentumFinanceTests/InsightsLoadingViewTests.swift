@@ -4,7 +4,7 @@ import XCTest
 class InsightsLoadingViewTests: XCTestCase {
     var insightsLoadingView: InsightsLoadingView!
 
-    // Test the isAnimating property
+    /// Test the isAnimating property
     func testIsAnimatingProperty() {
         // GIVEN: The view is not animating initially
         XCTAssert(insightsLoadingView.isAnimating == false)
@@ -16,7 +16,7 @@ class InsightsLoadingViewTests: XCTestCase {
         XCTAssertTrue(insightsLoadingView.isAnimating == true)
     }
 
-    // Test the rotation effect of the circle
+    /// Test the rotation effect of the circle
     func testRotationEffect() {
         // GIVEN: The view is not animating initially
         XCTAssert(insightsLoadingView.isAnimating == false)
@@ -35,7 +35,7 @@ class InsightsLoadingViewTests: XCTestCase {
         XCTAssertTrue(insightsLoadingView.isAnimating == false)
     }
 
-    // Test the text labels
+    /// Test the text labels
     func testTextLabels() {
         // GIVEN: The view is not animating initially
         XCTAssert(insightsLoadingView.isAnimating == false)

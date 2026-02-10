@@ -4,7 +4,7 @@ import XCTest
 class TransactionPatternAnalyzerTests: XCTestCase {
     var analyzer: TransactionPatternAnalyzer!
 
-    // Test analyzePatterns method with real data
+    /// Test analyzePatterns method with real data
     func testAnalyzePatterns_withRealData() {
         let transactions = [
             FinancialTransaction(date: Date(), amount: -100.0, category: "Groceries"),
@@ -34,7 +34,7 @@ class TransactionPatternAnalyzerTests: XCTestCase {
         XCTAssertEqual(insights[1].data.count, 2)
     }
 
-    // Test analyzeWeekdaySpending method with real data
+    /// Test analyzeWeekdaySpending method with real data
     func testAnalyzeWeekdaySpending_withRealData() {
         let transactions = [
             FinancialTransaction(date: Date(), amount: -100.0, category: "Groceries"),

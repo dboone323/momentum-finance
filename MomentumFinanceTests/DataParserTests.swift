@@ -2,7 +2,7 @@ import XCTest
 @testable import MomentumFinance
 
 class DataParserTests: XCTestCase {
-    // Test parsing date strings
+    /// Test parsing date strings
     func testParseDate() throws {
         let dateString = "2023-10-05"
         let expectedDate = DateComponents(year: 2023, month: 10, day: 5).date!
@@ -25,7 +25,7 @@ class DataParserTests: XCTestCase {
         }
     }
 
-    // Test parsing amount strings
+    /// Test parsing amount strings
     func testParseAmount() throws {
         let amountString = "$100.50"
         let expectedAmount = 100.50
@@ -48,7 +48,7 @@ class DataParserTests: XCTestCase {
         }
     }
 
-    // Test parsing transaction type
+    /// Test parsing transaction type
     func testParseTransactionTypeIncome() throws {
         let typeString = "Salary"
         let expectedType = .income
@@ -85,7 +85,7 @@ class DataParserTests: XCTestCase {
         }
     }
 
-    // Test parsing with different amounts
+    /// Test parsing with different amounts
     func testParseTransactionTypeWithPositiveAmount() throws {
         let typeString = "Salary"
         let expectedType = .income
@@ -110,7 +110,7 @@ class DataParserTests: XCTestCase {
         }
     }
 
-    // Test parsing with zero amount
+    /// Test parsing with zero amount
     func testParseTransactionTypeWithZeroAmount() throws {
         let typeString = "Salary"
         let expectedType = .income
@@ -123,7 +123,7 @@ class DataParserTests: XCTestCase {
         }
     }
 
-    // Test parsing with negative amount
+    /// Test parsing with negative amount
     func testParseTransactionTypeWithNegativeAmount() throws {
         let typeString = "Payment"
         let expectedType = .expense

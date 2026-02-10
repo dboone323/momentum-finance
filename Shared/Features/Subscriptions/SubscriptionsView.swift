@@ -230,7 +230,7 @@ extension Features.Subscriptions {
         @State private var showingSearch = false
         @EnvironmentObject private var navigationCoordinator: NavigationCoordinator
 
-        // Cross-platform color support
+        /// Cross-platform color support
         private var backgroundColor: Color {
             #if canImport(UIKit)
                 return Color(UIColor.systemBackground)
@@ -323,8 +323,8 @@ extension Features.Subscriptions {
             }
         }
 
-        // Provide an explicit initializer so call sites can use `SubscriptionsView()`
-        // When SwiftData is available the @Query wrappers manage data; otherwise use provided defaults.
+        /// Provide an explicit initializer so call sites can use `SubscriptionsView()`
+        /// When SwiftData is available the @Query wrappers manage data; otherwise use provided defaults.
         init(
             subscriptions: [Subscription] = [], categories: [ExpenseCategory] = [],
             accounts: [FinancialAccount] = []

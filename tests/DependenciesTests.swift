@@ -66,7 +66,7 @@ class DependenciesTests: XCTestCase {
     }
 }
 
-// Mock classes to be used during testing
+/// Mock classes to be used during testing
 class MockPerformanceManager: PerformanceManager {
     override func recordFrame() {}
     override func getCurrentFPS() -> Double { 0.0 }

@@ -40,7 +40,7 @@ public struct ThemeSettingsView: View {
         }
     }
 
-    // Section for selecting theme mode
+    /// Section for selecting theme mode
     private var themeModeSection: some View {
         Section {
             ForEach(Array(ThemeMode.allCases), id: \.self) { mode in
@@ -73,7 +73,7 @@ public struct ThemeSettingsView: View {
         }
     }
 
-    // Section showing color palette preview
+    /// Section showing color palette preview
     private var colorPalettePreview: some View {
         Section {
             VStack(spacing: 16) {
@@ -113,7 +113,7 @@ public struct ThemeSettingsView: View {
         }
     }
 
-    // Helper to create color preview blocks
+    /// Helper to create color preview blocks
     private func colorBlock(_ color: Color, name: String) -> some View {
         VStack {
             RoundedRectangle(cornerRadius: 8)

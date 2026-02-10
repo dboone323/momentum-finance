@@ -294,7 +294,7 @@ public struct DataExportView: View {
         func updateUIViewController(_: UIActivityViewController, context _: Context) {}
     }
 #else
-    // macOS version of ShareSheet
+    /// macOS version of ShareSheet
     struct ShareSheet: View {
         let activityItems: [Any]
 

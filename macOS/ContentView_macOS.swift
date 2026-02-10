@@ -14,7 +14,7 @@ extension ContentView {
 }
 
 #if os(macOS)
-    // macOS-specific UI components and helpers
+    /// macOS-specific UI components and helpers
     struct MacOSSpecificViews: View {
         /// macOS window configuration
         static func configureWindow() {
@@ -38,7 +38,7 @@ extension ContentView {
         }
     }
 
-    // macOS-specific view extensions
+    /// macOS-specific view extensions
     extension View {
         /// Add macOS-specific keyboard shortcuts
         /// <#Description#>
@@ -56,7 +56,7 @@ extension ContentView {
         }
     }
 
-    // Settings view for macOS
+    /// Settings view for macOS
     struct SettingsView: View {
         @AppStorage("defaultCurrency")
         private var defaultCurrency = "USD"

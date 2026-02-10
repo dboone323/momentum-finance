@@ -11,7 +11,7 @@ import SwiftUI
 class ThemeManager: ObservableObject {
     @AppStorage("selectedTheme") var selectedTheme: String = "System"
 
-    // Financial apps often have "Green" (Growth) or "Blue" (Trust) themes
+    /// Financial apps often have "Green" (Growth) or "Blue" (Trust) themes
     let themes = ["System", "Mint", "Ocean", "Midnight"]
 
     func color(for name: String) -> Color {

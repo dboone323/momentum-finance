@@ -1,7 +1,7 @@
 import SwiftData
 import SwiftUI
 
-// Minimal test app to debug crash
+/// Minimal test app to debug crash
 @main
 public struct TestApp: App {
     var body: some Scene {

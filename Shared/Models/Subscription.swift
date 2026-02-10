@@ -24,7 +24,7 @@ public final class Subscription {
     public var createdDate: Date
     public var lastModifiedDate: Date
 
-    // Relationships
+    /// Relationships
     @Relationship(deleteRule: .nullify, inverse: \FinancialTransaction.subscription)
     public var transactions: [FinancialTransaction] = []
 

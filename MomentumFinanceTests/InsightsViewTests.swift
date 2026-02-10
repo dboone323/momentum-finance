@@ -6,7 +6,7 @@ class InsightsViewTests: XCTestCase {
     var intelligenceService: FinancialIntelligenceService!
     var modelContext: ModelContext!
 
-    // Test that the InsightsView displays insights when data is available
+    /// Test that the InsightsView displays insights when data is available
     func testInsightsDisplayWhenDataAvailable() async throws {
         // Given: An instance of InsightsView with some financial insights
         let insightsView = InsightsView()
@@ -25,7 +25,7 @@ class InsightsViewTests: XCTestCase {
         XCTAssertEqual(insightsView.sheet.isPresented, true)
     }
 
-    // Test that the InsightsView displays a loading view when data is not available
+    /// Test that the InsightsView displays a loading view when data is not available
     func testInsightsDisplayWhenDataNotAvailable() async throws {
         // Given: An instance of InsightsView with no financial insights
         let insightsView = InsightsView()
@@ -38,7 +38,7 @@ class InsightsViewTests: XCTestCase {
         XCTAssertTrue(insightsView.insightsLoadingView.isDisplayed)
     }
 
-    // Test that the InsightsView displays an empty state view when data is available but no insights are found
+    /// Test that the InsightsView displays an empty state view when data is available but no insights are found
     func testInsightsDisplayWhenDataAvailableButNoInsights() async throws {
         // Given: An instance of InsightsView with a modelContext containing no financial insights
         let insightsView = InsightsView()
@@ -51,7 +51,7 @@ class InsightsViewTests: XCTestCase {
         XCTAssertTrue(insightsView.insightsEmptyStateView.isDisplayed)
     }
 
-    // Test that the InsightsView displays insights based on filter criteria
+    /// Test that the InsightsView displays insights based on filter criteria
     func testInsightsDisplayWithFilter() async throws {
         // Given: An instance of InsightsView with some financial insights and filters applied
         let insightsView = InsightsView()
@@ -73,7 +73,7 @@ class InsightsViewTests: XCTestCase {
                        2) // Assuming there are 2 insights in the modelContext that match the filter criteria
     }
 
-    // Test that the InsightsView displays insights sorted by priority (critical first)
+    /// Test that the InsightsView displays insights sorted by priority (critical first)
     func testInsightsDisplaySortedByPriority() async throws {
         // Given: An instance of InsightsView with some financial insights and a sorted list
         let insightsView = InsightsView()

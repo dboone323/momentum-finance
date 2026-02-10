@@ -5,20 +5,20 @@ class DashboardAccountsSummaryTests: XCTestCase {
     var viewModel: DashboardAccountsSummaryViewModel!
     var accounts: [FinancialAccount]!
 
-    // Test that the total balance is calculated correctly
+    /// Test that the total balance is calculated correctly
     func testTotalBalance() {
         let expectedTotal = Decimal(3001.50) // 1000.50 + 500.75 + 1500.25
         XCTAssertEqual(viewModel.totalBalance, expectedTotal)
     }
 
-    // Test that the currency display is formatted correctly
+    /// Test that the currency display is formatted correctly
     func testCurrencyDisplay() {
         let amount = Decimal(3001.50)
         let expectedFormattedAmount = "$3,001.50"
         XCTAssertEqual(viewModel.currencyDisplay(amount: amount), expectedFormattedAmount)
     }
 
-    // Test that the account details are displayed correctly
+    /// Test that the account details are displayed correctly
     func testAccountDetails() {
         let account = accounts.first!
         let expectedName = "Checking"
@@ -30,7 +30,7 @@ class DashboardAccountsSummaryTests: XCTestCase {
         XCTAssertEqual(viewModel.account.balance, expectedBalance)
     }
 
-    // Test that the account details are displayed correctly with multiple accounts
+    /// Test that the account details are displayed correctly with multiple accounts
     func testMultipleAccounts() {
         let expectedNames = ["Checking", "Savings", "Investments"]
         let expectedIconNames = ["account", "bank", "money"]
@@ -41,7 +41,7 @@ class DashboardAccountsSummaryTests: XCTestCase {
         }
     }
 
-    // Test that the account details are displayed correctly with more than three accounts
+    /// Test that the account details are displayed correctly with more than three accounts
     func testMoreThanThreeAccounts() {
         let expectedNames = ["Checking", "Savings", "Investments", "Other"]
         let expectedIconNames = ["account", "bank", "money", "other"]
@@ -52,7 +52,7 @@ class DashboardAccountsSummaryTests: XCTestCase {
         }
     }
 
-    // Test that the account details are displayed correctly with a single account
+    /// Test that the account details are displayed correctly with a single account
     func testSingleAccount() {
         let expectedName = "Checking"
         let expectedIconName = "account"
@@ -63,7 +63,7 @@ class DashboardAccountsSummaryTests: XCTestCase {
         XCTAssertEqual(viewModel.accounts.first!.balance, expectedBalance)
     }
 
-    // Test that the account details are displayed correctly with no accounts
+    /// Test that the account details are displayed correctly with no accounts
     func testNoAccounts() {
         let viewModel = DashboardAccountsSummaryViewModel(accounts: [])
 

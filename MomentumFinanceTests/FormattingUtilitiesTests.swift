@@ -2,7 +2,7 @@ import XCTest
 @testable import MomentumFinance
 
 class FormattingUtilitiesTests: XCTestCase {
-    // Test case for fi_formatCurrency with optional currency code
+    /// Test case for fi_formatCurrency with optional currency code
     func testFiFormatCurrencyWithOptionalCode() {
         let amount = 1234.56
         let expectedCurrencyCode = "USD"
@@ -18,7 +18,7 @@ class FormattingUtilitiesTests: XCTestCase {
         XCTAssertEqual(result, "$1,234.56", "Expected default currency code to be USD")
     }
 
-    // Test case for fi_formatDateShort with a specific date
+    /// Test case for fi_formatDateShort with a specific date
     func testFiFormatDateShortWithSpecificDate() {
         let date = Date(timeIntervalSinceNow: 0)
         let expectedFormattedDate = "Today"
@@ -27,7 +27,7 @@ class FormattingUtilitiesTests: XCTestCase {
         XCTAssertEqual(result, expectedFormattedDate, "Expected formatted date to be 'Today'")
     }
 
-    // Test case for fi_formatMonthAbbrev with a specific date
+    /// Test case for fi_formatMonthAbbrev with a specific date
     func testFiFormatMonthAbbrevWithSpecificDate() {
         let date = Date(timeIntervalSinceNow: 0)
         let expectedFormattedMonth = "Jan"
@@ -36,7 +36,7 @@ class FormattingUtilitiesTests: XCTestCase {
         XCTAssertEqual(result, expectedFormattedMonth, "Expected formatted month to be 'Jan'")
     }
 
-    // Test case for formatCurrency with optional currency code
+    /// Test case for formatCurrency with optional currency code
     func testFormatCurrencyWithOptionalCode() {
         let amount = 1234.56
         let expectedCurrencyCode = "USD"
@@ -45,7 +45,7 @@ class FormattingUtilitiesTests: XCTestCase {
         XCTAssertEqual(result, "$1,234.56", "Expected currency code to be USD")
     }
 
-    // Test case for extractTransactionFeatures with a specific transaction
+    /// Test case for extractTransactionFeatures with a specific transaction
     func testExtractTransactionFeaturesWithSpecificTransaction() {
         let transaction = FinancialTransaction(title: "Groceries", amount: -100.0, date: Date(timeIntervalSinceNow: 0))
         let expectedFeatures = [
@@ -63,7 +63,7 @@ class FormattingUtilitiesTests: XCTestCase {
         )
     }
 
-    // Test case for formatCurrency with optional currency code
+    /// Test case for formatCurrency with optional currency code
     func testFormatCurrencyWithOptionalCode() {
         let amount = 1234.56
         let expectedCurrencyCode = "USD"

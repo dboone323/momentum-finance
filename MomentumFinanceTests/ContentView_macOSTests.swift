@@ -4,7 +4,7 @@ import XCTest
 class ContentViewMacOSTests: XCTestCase {
     var contentView: ContentView!
 
-    // macOS-specific view modifiers and optimizations
+    /// macOS-specific view modifiers and optimizations
     func test_macOSOptimizations() {
         let frameModifier = contentView.macOSOptimizations
 
@@ -14,7 +14,7 @@ class ContentViewMacOSTests: XCTestCase {
         XCTAssertEqual(frameModifier.tint, .blue)
     }
 
-    // macOS-specific UI components and helpers
+    /// macOS-specific UI components and helpers
     func test_macOSSpecificViews() {
         let configureWindow = macOSSpecificViews.configureWindow
         let configureToolbar = macOSSpecificViews.configureToolbar
@@ -29,7 +29,7 @@ class ContentViewMacOSTests: XCTestCase {
         XCTAssertTrue(!toolbar.items.isEmpty)
     }
 
-    // macOS-specific view extensions
+    /// macOS-specific view extensions
     func test_macOSSheetPresentation() {
         let sheetPresentation = contentView.macOSSheetPresentation()
 
@@ -37,7 +37,7 @@ class ContentViewMacOSTests: XCTestCase {
         XCTAssertEqual(sheetPresentation.frame.height, 400)
     }
 
-    // Settings view for macOS
+    /// Settings view for macOS
     func test_SettingsView() {
         let settingsView = SettingsView(
             defaultCurrency: .defaultCurrency,

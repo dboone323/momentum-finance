@@ -9,7 +9,7 @@ actor ExportEngineService {
     // modelContext is provided by @ModelActor macro
     // init(modelContainer:) is provided by @ModelActor macro
 
-    // Public API
+    /// Public API
     func export(settings: ExportSettings) async throws -> URL {
         switch settings.format {
         case .csv:
@@ -189,7 +189,7 @@ actor ExportEngineService {
             let nsContext = NSGraphicsContext(cgContext: pdfContext, flipped: false)
             NSGraphicsContext.current = nsContext
 
-            // Title
+            /// Title
             let titleAttributes: [NSAttributedString.Key: Any] = [
                 .font: NSFont.boldSystemFont(ofSize: 24),
                 .foregroundColor: NSColor.black,

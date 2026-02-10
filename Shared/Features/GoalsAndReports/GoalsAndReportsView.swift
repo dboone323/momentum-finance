@@ -121,7 +121,7 @@ extension Features.GoalsAndReports {
             @Binding var selectedTab: Int
             @Binding var showingAddGoal: Bool
 
-            // Cross-platform color support
+            /// Cross-platform color support
             private var backgroundColor: Color {
                 #if canImport(UIKit)
                     return Color(UIColor.systemBackground)

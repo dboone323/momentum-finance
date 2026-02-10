@@ -1,7 +1,7 @@
 import Foundation
 import Intents
 
-/// Siri Shortcuts integration for Momentum Finance
+// Siri Shortcuts integration for Momentum Finance
 
 @MainActor
 class FinanceIntentsHandler: NSObject {
@@ -79,7 +79,7 @@ class FinanceIntentsHandler: NSObject {
     }
 }
 
-// Intent definitions (would be in Intents.intentdefinition file)
+/// Intent definitions (would be in Intents.intentdefinition file)
 class AddTransactionIntent: INIntent {
     @NSManaged var amount: NSNumber?
     @NSManaged var category: String?

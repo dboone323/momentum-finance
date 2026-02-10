@@ -81,7 +81,7 @@ final class BudgetForecastingServiceTests: XCTestCase {
         XCTAssertGreaterThan(forecast.amount, 100) // Expectation is it continues rising
     }
 
-    // Helper to match service logic
+    /// Helper to match service logic
     private func seasonalFactor() -> Double {
         let month = Calendar.current.component(.month, from: Date())
         switch month {

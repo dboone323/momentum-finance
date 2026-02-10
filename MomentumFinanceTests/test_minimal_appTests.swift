@@ -6,7 +6,7 @@ class TestAppTests: XCTestCase {
 
     // Tear down method to clean up after each test case
 
-    // Test the App launch functionality
+    /// Test the App launch functionality
     func testAppLaunch() {
         // GIVEN: The app is launched successfully
         // WHEN: The app launches
@@ -21,7 +21,7 @@ class TestAppTests: XCTestCase {
         XCTAssertEqual(app.mainActor.printedMessages, ["App launched successfully"])
     }
 
-    // Test a public method of the App struct
+    /// Test a public method of the App struct
     func testPublicMethod() {
         // GIVEN: The app is launched successfully
         // WHEN: A public method is called
@@ -36,7 +36,7 @@ class TestAppTests: XCTestCase {
         XCTAssertEqual(result, "Expected Result")
     }
 
-    // Test a property of the App struct
+    /// Test a property of the App struct
     func testProperty() {
         // GIVEN: The app is launched successfully
         // WHEN: A property is accessed
@@ -51,7 +51,7 @@ class TestAppTests: XCTestCase {
         XCTAssertEqual(value, "Expected Value")
     }
 
-    // Test a complex scenario involving multiple methods and properties
+    /// Test a complex scenario involving multiple methods and properties
     func testComplexScenario() {
         // GIVEN: The app is launched successfully
         // WHEN: A series of operations are performed

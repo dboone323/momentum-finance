@@ -4,32 +4,32 @@ import XCTest
 class DashboardWelcomeHeaderTests: XCTestCase {
     var viewModel: Features.Dashboard.DashboardWelcomeHeader!
 
-    // Test the greeting property
+    /// Test the greeting property
     func testGreetingProperty() {
         XCTAssertEqual(viewModel.greeting, "Morning")
     }
 
-    // Test the wellnessPercentage property
+    /// Test the wellnessPercentage property
     func testWellnessPercentageProperty() {
         XCTAssertEqual(viewModel.wellnessPercentage, 85)
     }
 
-    // Test the totalBalance property
+    /// Test the totalBalance property
     func testTotalBalanceProperty() {
         XCTAssertEqual(viewModel.totalBalance, 10000.0)
     }
 
-    // Test the monthlyIncome property
+    /// Test the monthlyIncome property
     func testMonthlyIncomeProperty() {
         XCTAssertEqual(viewModel.monthlyIncome, 2000.0)
     }
 
-    // Test the monthlyExpenses property
+    /// Test the monthlyExpenses property
     func testMonthlyExpensesProperty() {
         XCTAssertEqual(viewModel.monthlyExpenses, 1500.0)
     }
 
-    // Test the body view with real data
+    /// Test the body view with real data
     func testBodyViewWithRealData() {
         let actualView = viewModel.body
 

@@ -62,7 +62,7 @@ import SwiftUI
         let account: FinancialAccount
         let timeFrame: TimeFrame
 
-        // Sample data - would be real data in actual implementation
+        /// Sample data - would be real data in actual implementation
         /// <#Description#>
         /// - Returns: <#description#>
         func generateSampleData() -> [(date: String, balance: Double)] {
@@ -104,7 +104,7 @@ import SwiftUI
                     // Average line
                     let average =
                         self.generateSampleData()
-                            .reduce(0.0) { $0 + $1.balance } / Double(self.generateSampleData().count)
+                        .reduce(0.0) { $0 + $1.balance } / Double(self.generateSampleData().count)
                     RuleMark(y: .value("Average", average))
                         .lineStyle(StrokeStyle(lineWidth: 1, dash: [5, 5]))
                         .foregroundStyle(.gray)
@@ -166,7 +166,7 @@ import SwiftUI
     struct SpendingBreakdownChart: View {
         let transactions: [FinancialTransaction]
 
-        // This would normally calculate categories from actual transactions
+        /// This would normally calculate categories from actual transactions
         private var categories: [CategoryData] {
             [
                 CategoryData(name: "Groceries", amount: 450.00, color: .green),

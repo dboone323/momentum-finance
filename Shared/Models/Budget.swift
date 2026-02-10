@@ -24,7 +24,7 @@ public final class Budget {
     public var createdDate: Date
     public var lastModifiedDate: Date
 
-    // Relationships
+    /// Relationships
     @Relationship(deleteRule: .nullify, inverse: \FinancialTransaction.budget)
     public var transactions: [FinancialTransaction] = []
 

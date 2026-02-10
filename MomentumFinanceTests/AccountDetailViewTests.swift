@@ -6,7 +6,7 @@ class AccountDetailViewTests: XCTestCase {
     var categories: [ExpenseCategory]!
     var accounts: [FinancialAccount]!
 
-    // Test the AccountDetailView constructor
+    /// Test the AccountDetailView constructor
     func testAccountDetailViewInitialization() {
         let accountDetailView = AccountDetailView(
             account: self.account,
@@ -19,7 +19,7 @@ class AccountDetailViewTests: XCTestCase {
         XCTAssertEqual(accountDetailView.accounts, self.accounts)
     }
 
-    // Test the filteredTransactions property
+    /// Test the filteredTransactions property
     func testFilteredTransactions() {
         let accountDetailView = AccountDetailView(
             account: self.account,
@@ -32,7 +32,7 @@ class AccountDetailViewTests: XCTestCase {
         XCTAssertTrue(accountDetailView.filteredTransactions[1].date >= Date().addingTimeInterval(-7 * 24 * 60 * 60))
     }
 
-    // Test the formattedCurrency method
+    /// Test the formattedCurrency method
     func testFormattedCurrency() {
         let accountDetailView = AccountDetailView(
             account: self.account,
@@ -44,7 +44,7 @@ class AccountDetailViewTests: XCTestCase {
         XCTAssertEqual(accountDetailView.formattedCurrency(-100.0), "-$100.00")
     }
 
-    // Test the ActivityChartView
+    /// Test the ActivityChartView
     func testActivityChartView() {
         let accountDetailView = AccountDetailView(
             account: self.account,

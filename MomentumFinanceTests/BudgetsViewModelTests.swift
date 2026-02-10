@@ -71,7 +71,7 @@ class BudgetsViewModelTests: XCTestCase {
 
     func testBudgetsForMonth() {
         let b1 = Budget(name: "This Month", limitAmount: 100, month: Date())
-        let b2 = Budget(name: "Next Month", limitAmount: 100, month: Date().addingTimeInterval(3600*24*40))
+        let b2 = Budget(name: "Next Month", limitAmount: 100, month: Date().addingTimeInterval(3600 * 24 * 40))
         let budgets = [b1, b2]
 
         let result = viewModel.budgetsForMonth(budgets, month: Date())

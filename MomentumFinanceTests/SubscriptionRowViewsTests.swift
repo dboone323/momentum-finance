@@ -4,7 +4,7 @@ import XCTest
 class SubscriptionRowViewsTests: XCTestCase {
     var viewModel: Features.Subscriptions.EnhancedSubscriptionRowViewModel!
 
-    // Test the EnhancedSubscriptionRowView with a valid subscription
+    /// Test the EnhancedSubscriptionRowView with a valid subscription
     func testEnhancedSubscriptionRowViewWithValidSubscription() {
         // GIVEN
         let expectedName = "Monthly Subscription"
@@ -22,7 +22,7 @@ class SubscriptionRowViewsTests: XCTestCase {
         XCTAssertEqual(result.daysUntilDue, expectedDaysUntilDue)
     }
 
-    // Test the EnhancedSubscriptionRowView with an inactive subscription
+    /// Test the EnhancedSubscriptionRowView with an inactive subscription
     func testEnhancedSubscriptionRowViewWithInactiveSubscription() {
         // GIVEN
         let subscription = Features.Subscriptions.Subscription(
@@ -42,7 +42,7 @@ class SubscriptionRowViewsTests: XCTestCase {
         XCTAssertEqual(result.statusText, "Inactive")
     }
 
-    // Test the EnhancedSubscriptionRowView with a subscription due soon
+    /// Test the EnhancedSubscriptionRowView with a subscription due soon
     func testEnhancedSubscriptionRowViewWithSubscriptionDueSoon() {
         // GIVEN
         let subscription = Features.Subscriptions.Subscription(
@@ -62,7 +62,7 @@ class SubscriptionRowViewsTests: XCTestCase {
         XCTAssertEqual(result.statusText, "Due Soon")
     }
 
-    // Test the EnhancedSubscriptionRowView with a subscription overdue
+    /// Test the EnhancedSubscriptionRowView with a subscription overdue
     func testEnhancedSubscriptionRowViewWithSubscriptionOverdue() {
         // GIVEN
         let subscription = Features.Subscriptions.Subscription(

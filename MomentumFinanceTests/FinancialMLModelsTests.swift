@@ -10,7 +10,7 @@ class FinancialMLModelsTests: XCTestCase {
         financialMLModels = FinancialMLModels.shared
     }
 
-    // Test case for analyzeSpendingPatterns
+    /// Test case for analyzeSpendingPatterns
     func testAnalyzeSpendingPatterns() {
         let transactions: [FinancialTransaction] = [
             FinancialTransaction(title: "Grocery", amount: -100.0, date: Date(), transactionType: .expense),
@@ -71,7 +71,7 @@ class FinancialMLModelsTests: XCTestCase {
         // XCTAssertEqual(result, expected, ...)
     }
 
-    // Test case for predictFutureSpending
+    /// Test case for predictFutureSpending
     func testPredictFutureSpending() {
         let historicalData: [Double] = [10.0, 20.0, 30.0, 40.0]
         let months = 5
@@ -84,7 +84,7 @@ class FinancialMLModelsTests: XCTestCase {
         // ...
     }
 
-    // Test case for classifyTransaction
+    /// Test case for classifyTransaction
     func testClassifyTransaction() {
         let transaction1 = FinancialTransaction(
             title: "Grocery",

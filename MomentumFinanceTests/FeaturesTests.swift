@@ -3,7 +3,7 @@ import XCTest
 @testable import MomentumFinance
 
 class FeaturesTests: XCTestCase {
-    // Test the Dashboard namespace
+    /// Test the Dashboard namespace
     func testDashboardNamespace() {
         // GIVEN: A valid instance of Dashboard
         let dashboard = Features.Dashboard()
@@ -13,7 +13,7 @@ class FeaturesTests: XCTestCase {
         XCTAssertTrue(dashboard is Features.Dashboard)
     }
 
-    // Test the Transactions namespace
+    /// Test the Transactions namespace
     func testTransactionsNamespace() {
         // GIVEN: A valid instance of Transactions
         let transactions = Features.Transactions()
@@ -23,7 +23,7 @@ class FeaturesTests: XCTestCase {
         XCTAssertTrue(transactions is Features.Transactions)
     }
 
-    // Test the Budgets namespace
+    /// Test the Budgets namespace
     func testBudgetsNamespace() {
         // GIVEN: A valid instance of Budgets
         let budgets = Features.Budgets()
@@ -33,7 +33,7 @@ class FeaturesTests: XCTestCase {
         XCTAssertTrue(budgets is Features.Budgets)
     }
 
-    // Test the Subscriptions namespace
+    /// Test the Subscriptions namespace
     func testSubscriptionsNamespace() {
         // GIVEN: A valid instance of Subscriptions
         let subscriptions = Features.Subscriptions()
@@ -43,7 +43,7 @@ class FeaturesTests: XCTestCase {
         XCTAssertTrue(subscriptions is Features.Subscriptions)
     }
 
-    // Test the GoalsAndReports namespace
+    /// Test the GoalsAndReports namespace
     func testGoalsAndReportsNamespace() {
         // GIVEN: A valid instance of GoalsAndReports
         let goalsAndReports = Features.GoalsAndReports()
@@ -53,7 +53,7 @@ class FeaturesTests: XCTestCase {
         XCTAssertTrue(goalsAndReports is Features.GoalsAndReports)
     }
 
-    // Test the Theme namespace
+    /// Test the Theme namespace
     func testThemeNamespace() {
         // GIVEN: A valid instance of Theme
         let theme = Features.Theme()
@@ -63,7 +63,7 @@ class FeaturesTests: XCTestCase {
         XCTAssertTrue(theme is Features.Theme)
     }
 
-    // Test the GlobalSearch namespace
+    /// Test the GlobalSearch namespace
     func testGlobalSearchNamespace() {
         // GIVEN: A valid instance of GlobalSearch
         let globalSearch = Features.GlobalSearch()
@@ -73,7 +73,7 @@ class FeaturesTests: XCTestCase {
         XCTAssertTrue(globalSearch is Features.GlobalSearch)
     }
 
-    // Test the GlobalSearchView
+    /// Test the GlobalSearchView
     func testGlobalSearchView() {
         // GIVEN: A valid instance of GlobalSearchView
         let view = GlobalSearchView()

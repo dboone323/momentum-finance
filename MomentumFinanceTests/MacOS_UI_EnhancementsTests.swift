@@ -14,7 +14,7 @@ class MacOSUIEnhancementsTests: XCTestCase {
         XCTAssertTrue(NSApp.mainWindow != nil, "Main window not found")
     }
 
-    // Test DashboardListView
+    /// Test DashboardListView
     func testDashboardListView() {
         let dashboardView = ContentView_macOS().environment(\.modelContext, modelContext)
 
@@ -23,7 +23,7 @@ class MacOSUIEnhancementsTests: XCTestCase {
         XCTAssertTrue(!dashboardView.recentTransactions.isEmpty, "No recent transactions found in the dashboard")
     }
 
-    // Test TransactionsListView
+    /// Test TransactionsListView
     func testTransactionsListView() {
         let transactionsView = ContentView_macOS().environment(\.modelContext, modelContext)
 
@@ -31,7 +31,7 @@ class MacOSUIEnhancementsTests: XCTestCase {
         XCTAssertTrue(!transactionsView.transactions.isEmpty, "No transactions found in the transactions")
     }
 
-    // Test Button actions
+    /// Test Button actions
     func testButtonActions() {
         let dashboardView = ContentView_macOS().environment(\.modelContext, modelContext)
 

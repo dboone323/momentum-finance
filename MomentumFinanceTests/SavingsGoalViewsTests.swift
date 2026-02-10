@@ -6,7 +6,7 @@ class SavingsGoalsSectionTests: XCTestCase {
     var showingAddGoal = false
     var selectedGoal: SavingsGoal?
 
-    // Test case for showingAddGoal property
+    /// Test case for showingAddGoal property
     func testShowingAddGoalProperty() {
         // GIVEN
         let section = SavingsGoalsSection(goals: [], showingAddGoal: false, selectedGoal: nil)
@@ -18,7 +18,7 @@ class SavingsGoalsSectionTests: XCTestCase {
         XCTAssertEqual(section.showingAddGoal, true)
     }
 
-    // Test case for selectedGoal property
+    /// Test case for selectedGoal property
     func testSelectedGoalProperty() {
         // GIVEN
         let section = SavingsGoalsSection(goals: [], showingAddGoal: false, selectedGoal: nil)
@@ -30,7 +30,7 @@ class SavingsGoalsSectionTests: XCTestCase {
         XCTAssertEqual(section.selectedGoal, goals.first)
     }
 
-    // Test case for body property
+    /// Test case for body property
     func testBodyProperty() {
         // GIVEN
         let section = SavingsGoalsSection(goals: [], showingAddGoal: false, selectedGoal: nil)
@@ -42,7 +42,7 @@ class SavingsGoalsSectionTests: XCTestCase {
         XCTAssertEqual(view, savingsGoalsSectionView)
     }
 
-    // Test case for LazyVStack and ForEach
+    /// Test case for LazyVStack and ForEach
     func testLazyVStackAndForEach() {
         // GIVEN
         let section = SavingsGoalsSection(goals: [], showingAddGoal: false, selectedGoal: nil)
@@ -54,7 +54,7 @@ class SavingsGoalsSectionTests: XCTestCase {
         XCTAssertEqual(view, savingsGoalsSectionView)
     }
 
-    // Test case for VStack and HStack
+    /// Test case for VStack and HStack
     func testVStackAndHStack() {
         // GIVEN
         let section = SavingsGoalsSection(goals: [], showingAddGoal: false, selectedGoal: nil)
@@ -66,7 +66,7 @@ class SavingsGoalsSectionTests: XCTestCase {
         XCTAssertEqual(view, savingsGoalsSectionView)
     }
 
-    // Test case for Text and Font
+    /// Test case for Text and Font
     func testTextAndFont() {
         // GIVEN
         let section = SavingsGoalsSection(goals: [], showingAddGoal: false, selectedGoal: nil)
@@ -78,7 +78,7 @@ class SavingsGoalsSectionTests: XCTestCase {
         XCTAssertEqual(view, savingsGoalsSectionView)
     }
 
-    // Test case for Image and Font
+    /// Test case for Image and Font
     func testImageAndFont() {
         // GIVEN
         let section = SavingsGoalsSection(goals: [], showingAddGoal: false, selectedGoal: nil)
@@ -90,7 +90,7 @@ class SavingsGoalsSectionTests: XCTestCase {
         XCTAssertEqual(view, savingsGoalsSectionView)
     }
 
-    // Test case for ProgressView and ProgressViewStyle
+    /// Test case for ProgressView and ProgressViewStyle
     func testProgressViewAndProgressViewStyle() {
         // GIVEN
         let section = SavingsGoalsSection(goals: [], showingAddGoal: false, selectedGoal: nil)
@@ -102,7 +102,7 @@ class SavingsGoalsSectionTests: XCTestCase {
         XCTAssertEqual(view, savingsGoalsSectionView)
     }
 
-    // Test case for VStack and Spacer
+    /// Test case for VStack and Spacer
     func testVStackAndSpacer() {
         // GIVEN
         let section = SavingsGoalsSection(goals: [], showingAddGoal: false, selectedGoal: nil)
@@ -114,7 +114,7 @@ class SavingsGoalsSectionTests: XCTestCase {
         XCTAssertEqual(view, savingsGoalsSectionView)
     }
 
-    // Test case for VStack and Padding
+    /// Test case for VStack and Padding
     func testVStackAndPadding() {
         // GIVEN
         let section = SavingsGoalsSection(goals: [], showingAddGoal: false, selectedGoal: nil)
@@ -126,7 +126,7 @@ class SavingsGoalsSectionTests: XCTestCase {
         XCTAssertEqual(view, savingsGoalsSectionView)
     }
 
-    // Test case for VStack and CornerRadius
+    /// Test case for VStack and CornerRadius
     func testVStackAndCornerRadius() {
         // GIVEN
         let section = SavingsGoalsSection(goals: [], showingAddGoal: false, selectedGoal: nil)
@@ -138,7 +138,7 @@ class SavingsGoalsSectionTests: XCTestCase {
         XCTAssertEqual(view, savingsGoalsSectionView)
     }
 
-    // Test case for VStack and Shadow
+    /// Test case for VStack and Shadow
     func testVStackAndShadow() {
         // GIVEN
         let section = SavingsGoalsSection(goals: [], showingAddGoal: false, selectedGoal: nil)

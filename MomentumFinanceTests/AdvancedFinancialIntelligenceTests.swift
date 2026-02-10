@@ -4,7 +4,7 @@ import XCTest
 class AdvancedFinancialIntelligenceTests: XCTestCase {
     var advancedFinancialIntelligence: AdvancedFinancialIntelligence!
 
-    // Test generateInsights method with real data
+    /// Test generateInsights method with real data
     func testGenerateInsightsWithRealData() async throws {
         let transactions = [
             Transaction(date: Date(), amount: 1000, category: "Groceries"),
@@ -42,7 +42,7 @@ class AdvancedFinancialIntelligenceTests: XCTestCase {
         XCTAssertTrue(!categoryInsights.isEmpty)
     }
 
-    // Test getInvestmentRecommendations method with real data
+    /// Test getInvestmentRecommendations method with real data
     func testGetInvestmentRecommendationsWithRealData() throws {
         let riskTolerance = RiskTolerance.moderate
         let timeHorizon = TimeHorizon.longTerm
@@ -73,7 +73,7 @@ class AdvancedFinancialIntelligenceTests: XCTestCase {
         XCTAssertEqual(recommendation.impactScore, 7.5)
     }
 
-    // Test predictCashFlow method with real data
+    /// Test predictCashFlow method with real data
     func testPredictCashFlowWithRealData() throws {
         let transactions = [
             Transaction(date: Date(), amount: 1000, category: "Groceries"),

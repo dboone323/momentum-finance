@@ -2,7 +2,7 @@ import Intents
 import SwiftUI
 import WidgetKit
 
-// Enhancement #76: Widget Support
+/// Enhancement #76: Widget Support
 struct MomentumFinanceWidget: Widget {
     let kind: String = "MomentumFinanceWidget"
 

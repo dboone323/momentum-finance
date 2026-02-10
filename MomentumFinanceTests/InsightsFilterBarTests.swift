@@ -5,7 +5,7 @@ class InsightsFilterBarTests: XCTestCase {
     var filterPriority: InsightPriority?
     var filterType: InsightType?
 
-    // Test the priority picker
+    /// Test the priority picker
     func testPriorityPicker() {
         // GIVEN: A default value for filterPriority is nil
         filterPriority = nil
@@ -32,7 +32,7 @@ class InsightsFilterBarTests: XCTestCase {
         XCTAssertEqual(Picker("Priority", selection: self.$filterPriority).selected, .Low)
     }
 
-    // Test the type picker
+    /// Test the type picker
     func testTypePicker() {
         // GIVEN: A default value for filterType is nil
         filterType = nil

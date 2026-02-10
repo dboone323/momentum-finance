@@ -6,7 +6,7 @@ class DashboardComponentsTests: XCTestCase {
     var accounts: [FinancialAccount]!
     var budgets: [Budget]!
 
-    // Test DashboardSubscriptionsSection
+    /// Test DashboardSubscriptionsSection
     func testDashboardSubscriptionsSection() {
         let view = DashboardSubscriptionsSection(
             subscriptions: subscriptions,
@@ -36,7 +36,7 @@ class DashboardComponentsTests: XCTestCase {
         XCTAssertEqual(actualTexts, expectedTexts)
     }
 
-    // Test DashboardAccountsSummary
+    /// Test DashboardAccountsSummary
     func testDashboardAccountsSummary() {
         let view = DashboardAccountsSummary(
             accounts: accounts,
@@ -59,7 +59,7 @@ class DashboardComponentsTests: XCTestCase {
         XCTAssertEqual(actualTexts, expectedTexts)
     }
 
-    // Test DashboardBudgetProgress
+    /// Test DashboardBudgetProgress
     func testDashboardBudgetProgress() {
         let view = DashboardBudgetProgress(
             budgets: budgets,

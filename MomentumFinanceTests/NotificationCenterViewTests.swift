@@ -5,7 +5,7 @@ class NotificationCenterViewTests: XCTestCase {
     var notificationManager: NotificationManager!
     var mockNotificationCenter: UNUserNotificationCenter!
 
-    // Test that the view loads notifications correctly
+    /// Test that the view loads notifications correctly
     func testLoadNotifications() async throws {
         // Arrange
         let expectedNotifications = [
@@ -32,7 +32,7 @@ class NotificationCenterViewTests: XCTestCase {
         }
     }
 
-    // Test that the view displays notifications correctly
+    /// Test that the view displays notifications correctly
     func testNotificationsList() throws {
         // Arrange
         let expectedNotifications = [
@@ -58,7 +58,7 @@ class NotificationCenterViewTests: XCTestCase {
         }
     }
 
-    // Test that the view dismisses notifications correctly
+    /// Test that the view dismisses notifications correctly
     func testDismissNotification() throws {
         // Arrange
         let notification = ScheduledNotification(id: "1", title: "Monthly Income Alert", scheduledDate: Date())
@@ -72,7 +72,7 @@ class NotificationCenterViewTests: XCTestCase {
         XCTAssertEqual(mockNotificationCenter.getPendingNotificationRequests(withIdentifiers: ["1"]).count, 0)
     }
 
-    // Test that the view handles empty notifications correctly
+    /// Test that the view handles empty notifications correctly
     func testEmptyNotificationsView() throws {
         // Arrange
         notificationManager.pendingNotifications = []

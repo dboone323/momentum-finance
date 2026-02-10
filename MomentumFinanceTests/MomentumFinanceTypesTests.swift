@@ -6,7 +6,7 @@ class MomentumFinanceTypesTests: XCTestCase {
 
     // Test teardown method to clean up after each test
 
-    // Test the NotificationPermissionManager class
+    /// Test the NotificationPermissionManager class
     func testNotificationPermissionManager() {
         // GIVEN: A notification permission manager instance
         let notificationPermissionManager = NotificationPermissionManager()
@@ -18,7 +18,7 @@ class MomentumFinanceTypesTests: XCTestCase {
         }
     }
 
-    // Test the BudgetNotificationScheduler class
+    /// Test the BudgetNotificationScheduler class
     func testBudgetNotificationScheduler() {
         // GIVEN: A budget notification scheduler instance
         let budgetNotificationScheduler = BudgetNotificationScheduler()
@@ -30,7 +30,7 @@ class MomentumFinanceTypesTests: XCTestCase {
         // Add assertions to verify the notification was sent at the expected time
     }
 
-    // Test the SubscriptionNotificationScheduler class
+    /// Test the SubscriptionNotificationScheduler class
     func testSubscriptionNotificationScheduler() {
         // GIVEN: A subscription notification scheduler instance
         let subscriptionNotificationScheduler = SubscriptionNotificationScheduler()
@@ -42,7 +42,7 @@ class MomentumFinanceTypesTests: XCTestCase {
         // Add assertions to verify the notification was sent at the expected time
     }
 
-    // Test the GoalNotificationScheduler class
+    /// Test the GoalNotificationScheduler class
     func testGoalNotificationScheduler() {
         // GIVEN: A goal notification scheduler instance
         let goalNotificationScheduler = GoalNotificationScheduler()
@@ -54,7 +54,7 @@ class MomentumFinanceTypesTests: XCTestCase {
         // Add assertions to verify the notification was sent at the expected time
     }
 
-    // Test the NotificationUrgency class
+    /// Test the NotificationUrgency class
     func testNotificationUrgency() {
         // GIVEN: A notification urgency instance
         let notificationUrgency = NotificationUrgency()
@@ -66,7 +66,7 @@ class MomentumFinanceTypesTests: XCTestCase {
         // Add assertions to verify the notification was sent at the expected time
     }
 
-    // Test the ScheduledNotification class
+    /// Test the ScheduledNotification class
     func testScheduledNotification() {
         // GIVEN: A scheduled notification instance
         let scheduledNotification = ScheduledNotification()

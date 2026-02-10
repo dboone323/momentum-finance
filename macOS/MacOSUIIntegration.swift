@@ -73,7 +73,7 @@ import SwiftUI
         @State private var searchText = ""
         @State private var isSearching = false
 
-        // Binding to sidebar selection that updates the NavigationCoordinator
+        /// Binding to sidebar selection that updates the NavigationCoordinator
         private var selectedSidebarItemBinding: Binding<SidebarItem?> {
             Binding(
                 get: { self.navigationCoordinator.selectedSidebarItem },
@@ -85,7 +85,7 @@ import SwiftUI
             )
         }
 
-        // Binding to list item selection that updates the NavigationCoordinator
+        /// Binding to list item selection that updates the NavigationCoordinator
         private var selectedListItemBinding: Binding<ListableItem?> {
             Binding(
                 get: { self.navigationCoordinator.selectedListItem },
@@ -93,7 +93,7 @@ import SwiftUI
             )
         }
 
-        // Binding to column visibility that updates the NavigationCoordinator
+        /// Binding to column visibility that updates the NavigationCoordinator
         private var columnVisibilityBinding: Binding<NavigationSplitViewVisibility> {
             Binding(
                 get: { self.navigationCoordinator.columnVisibility },

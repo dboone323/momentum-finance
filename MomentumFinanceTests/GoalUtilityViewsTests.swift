@@ -2,7 +2,7 @@ import XCTest
 @testable import MomentumFinance
 
 class GoalUtilityViewsTests: XCTestCase {
-    // Test the GoalHeaderView
+    /// Test the GoalHeaderView
     func testGoalHeaderView() {
         // Given
         let title = "Savings Goals"
@@ -25,7 +25,7 @@ class GoalUtilityViewsTests: XCTestCase {
         XCTAssertTrue(goalView.showingAddGoal == showingAddGoal)
     }
 
-    // Test the EmptyGoalsView
+    /// Test the EmptyGoalsView
     func testEmptyGoalsView() {
         // Given
         var showingAddGoal = false
@@ -37,7 +37,7 @@ class GoalUtilityViewsTests: XCTestCase {
         XCTAssertEqual(emptyGoalsView.showingAddGoal, showingAddGoal)
     }
 
-    // Test the EmptyReportsView
+    /// Test the EmptyReportsView
     func testEmptyReportsView() {
         // Given
 
@@ -48,7 +48,7 @@ class GoalUtilityViewsTests: XCTestCase {
         XCTAssertTrue(emptyReportsView.isEmpty)
     }
 
-    // Test the TabSelectionView
+    /// Test the TabSelectionView
     func testTabSelectionView() {
         // Given
         var selectedTab = 0

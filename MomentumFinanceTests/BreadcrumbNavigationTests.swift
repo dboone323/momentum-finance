@@ -5,7 +5,7 @@ class BreadcrumbNavigationTests: XCTestCase {
     var breadcrumbItems: [BreadcrumbItem]!
     var deepLinks: [DeepLink]!
 
-    // Test BreadcrumbItem properties
+    /// Test BreadcrumbItem properties
     func testBreadcrumbItemTitle() {
         XCTAssertEqual(breadcrumbItems[0].title, "Dashboard")
     }
@@ -19,12 +19,12 @@ class BreadcrumbNavigationTests: XCTestCase {
         XCTAssertTrue(timestamp > Date())
     }
 
-    // Test BreadcrumbItem hashable property
+    /// Test BreadcrumbItem hashable property
     func testBreadcrumbItemHashable() {
         XCTAssertEqual(breadcrumbItems[0].hashValue, breadcrumbItems[1].hashValue)
     }
 
-    // Test DeepLink properties
+    /// Test DeepLink properties
     func testDeepLinkPath() {
         XCTAssertEqual(deepLinks[0].path, "/dashboard")
     }

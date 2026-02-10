@@ -7,7 +7,7 @@ class EnhancedGoalsSectionViewsTests: XCTestCase {
     var showingAddGoal: Bool = false
     var selectedGoal: Features.GoalsAndReports.SavingsGoal?
 
-    // Test emptyGoalsView
+    /// Test emptyGoalsView
     func testEmptyGoalsView() {
         let view = viewModel.emptyGoalsView
 
@@ -55,7 +55,7 @@ class EnhancedGoalsSectionViewsTests: XCTestCase {
         """)
     }
 
-    // Test goalsContentView
+    /// Test goalsContentView
     func testGoalsContentView() {
         let view = viewModel.goalsContentView
 
@@ -71,7 +71,7 @@ class EnhancedGoalsSectionViewsTests: XCTestCase {
         """)
     }
 
-    // Test summarySection
+    /// Test summarySection
     func testSummarySection() {
         let view = viewModel.summarySection
 
@@ -95,7 +95,7 @@ class EnhancedGoalsSectionViewsTests: XCTestCase {
         """)
     }
 
-    // Test activeGoalsSection
+    /// Test activeGoalsSection
     func testActiveGoalsSection() {
         let view = viewModel.activeGoalsSection
 
@@ -130,7 +130,7 @@ class EnhancedGoalsSectionViewsTests: XCTestCase {
         """)
     }
 
-    // Test completedGoalsSection
+    /// Test completedGoalsSection
     func testCompletedGoalsSection() {
         let view = viewModel.completedGoalsSection
 

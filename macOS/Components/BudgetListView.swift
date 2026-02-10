@@ -58,7 +58,7 @@ import SwiftUI
             }
         }
 
-        // Budget Detail View optimized for macOS
+        /// Budget Detail View optimized for macOS
         struct BudgetDetailView: View {
             let budgetId: String
 

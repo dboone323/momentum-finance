@@ -13,7 +13,7 @@ extension ContentView {
 }
 
 #if os(iOS)
-    // iOS-specific UI components and helpers
+    /// iOS-specific UI components and helpers
     struct IOSSpecificViews: View {
         /// iOS navigation bar configuration
         static func configureNavigationBar() {
@@ -41,7 +41,7 @@ extension ContentView {
         }
     }
 
-    // iOS-specific view extensions
+    /// iOS-specific view extensions
     extension View {
         /// Add iOS-specific keyboard handling
         /// <#Description#>

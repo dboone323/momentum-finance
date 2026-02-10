@@ -5,7 +5,7 @@ import XCTest
 class DataExporterTests: XCTestCase {
     var dataExporter: DataExporter!
 
-    // Test that the configure method initializes the engine asynchronously when a ModelContext is available
+    /// Test that the configure method initializes the engine asynchronously when a ModelContext is available
     func testConfigureWithModelContext() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
@@ -14,7 +14,7 @@ class DataExporterTests: XCTestCase {
         XCTAssertEqual(modelContext, dataExporter.engine!.modelContext, "ModelContext should be set on the engine")
     }
 
-    // Test that the export method throws an error when the engine is nil
+    /// Test that the export method throws an error when the engine is nil
     func testExportWithInvalidSettings() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
@@ -27,7 +27,7 @@ class DataExporterTests: XCTestCase {
         }
     }
 
-    // Test that the export method returns a URL when successful
+    /// Test that the export method returns a URL when successful
     func testExportWithSuccess() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
@@ -42,7 +42,7 @@ class DataExporterTests: XCTestCase {
         }
     }
 
-    // Test that the engine is properly deallocated after use
+    /// Test that the engine is properly deallocated after use
     func testEngineDeallocated() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
@@ -56,7 +56,7 @@ class DataExporterTests: XCTestCase {
         XCTAssertNil(dataExporter.engine, "Engine should be deallocated after use")
     }
 
-    // Test that the engine is properly initialized when a ModelContext is available
+    /// Test that the engine is properly initialized when a ModelContext is available
     func testConfigureWithModelContextAsync() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
@@ -65,7 +65,7 @@ class DataExporterTests: XCTestCase {
         XCTAssertEqual(modelContext, dataExporter.engine!.modelContext, "ModelContext should be set on the engine")
     }
 
-    // Test that the export method throws an error when the engine is nil
+    /// Test that the export method throws an error when the engine is nil
     func testExportWithInvalidSettingsAsync() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
@@ -78,7 +78,7 @@ class DataExporterTests: XCTestCase {
         }
     }
 
-    // Test that the export method returns a URL when successful
+    /// Test that the export method returns a URL when successful
     func testExportWithSuccessAsync() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
@@ -93,7 +93,7 @@ class DataExporterTests: XCTestCase {
         }
     }
 
-    // Test that the engine is properly deallocated after use
+    /// Test that the engine is properly deallocated after use
     func testEngineDeallocatedAsync() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)

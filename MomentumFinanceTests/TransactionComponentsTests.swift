@@ -11,7 +11,7 @@ class TransactionComponentsTests: XCTestCase {
         view = TransactionEmptyStateView(viewModel: viewModel)
     }
 
-    // Test for the initial state of the view when searchText is empty
+    /// Test for the initial state of the view when searchText is empty
     func testInitialViewStateWhenSearchTextIsEmpty() {
         XCTAssertEqual(view.searchText, "")
         XCTAssertNotNil(view.onAddTransaction)
@@ -45,7 +45,7 @@ class TransactionComponentsTests: XCTestCase {
         """)
     }
 
-    // Test for the initial state of the view when searchText is not empty
+    /// Test for the initial state of the view when searchText is not empty
     func testInitialViewStateWhenSearchTextIsNotEmpty() {
         let searchText = "Test Search"
         viewModel.searchText = searchText
@@ -81,7 +81,7 @@ class TransactionComponentsTests: XCTestCase {
         """)
     }
 
-    // Test for the behavior of the onAddTransaction action
+    /// Test for the behavior of the onAddTransaction action
     func testOnAddTransactionAction() {
         let mockOnAddTransaction = MockFunction<Void>()
         viewModel.onAddTransaction = mockOnAddTransaction

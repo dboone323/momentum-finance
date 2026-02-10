@@ -1,6 +1,6 @@
 import AppIntents
 
-// Enhancement #78: Siri Shortcuts
+/// Enhancement #78: Siri Shortcuts
 struct OpenMomentumFinanceIntent: AppIntent {
     static var title: LocalizedStringResource = "Open MomentumFinance"
     static var openAppWhenRun: Bool = true

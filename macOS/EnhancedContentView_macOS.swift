@@ -6,7 +6,7 @@ import SwiftData
 import SwiftUI
 
 #if os(macOS)
-    // macOS-specific content view implementation using NavigationSplitView
+    /// macOS-specific content view implementation using NavigationSplitView
     struct ContentViewMacOS: View {
         @State private var navigationCoordinator = NavigationCoordinator.shared
         @State private var selectedSidebarItem: SidebarItem? = .dashboard
@@ -123,22 +123,22 @@ import SwiftUI
             }
         }
 
-        // Helper method to create consistent sidebar items
+        /// Helper method to create consistent sidebar items
         private func sidebarItem(title: String, icon: String, item: SidebarItem) -> some View {
             Label(title, systemImage: self.selectedSidebarItem == item ? "\(icon).fill" : icon)
                 .tag(item)
         }
 
-        // Toggle the macOS sidebar
+        /// Toggle the macOS sidebar
         private func toggleSidebar() {
             NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
         }
     }
 
-    // Typealias for backward compatibility with tests
+    /// Typealias for backward compatibility with tests
     typealias ContentViewMacOSAlias = ContentViewMacOS
 
-    // Sidebar navigation items
+    /// Sidebar navigation items
     enum SidebarItem: Hashable {
         case dashboard
         case transactions
@@ -147,13 +147,13 @@ import SwiftUI
         case goalsAndReports
     }
 
-    // Listable items for the content column
+    /// Listable items for the content column
     struct ListableItem: Identifiable, Hashable {
         let id: String?
         let name: String
         let type: ListItemType
 
-        // Hashable conformance
+        /// Hashable conformance
         /// <#Description#>
         /// - Returns: <#description#>
         func hash(into hasher: inout Hasher) {
@@ -166,7 +166,7 @@ import SwiftUI
         }
     }
 
-    // Types of items that can be displayed in the content column
+    /// Types of items that can be displayed in the content column
     enum ListItemType: Hashable {
         case account
         case transaction
@@ -176,7 +176,7 @@ import SwiftUI
         case report
     }
 
-    // macOS-specific UI components and helpers
+    /// macOS-specific UI components and helpers
     enum MacOSSpecificViews {
         /// macOS window configuration
         static func configureWindow() {
@@ -200,7 +200,7 @@ import SwiftUI
         }
     }
 
-    // macOS-specific view extensions
+    /// macOS-specific view extensions
     extension View {
         /// Add macOS-specific keyboard shortcuts
         /// <#Description#>

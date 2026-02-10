@@ -29,7 +29,7 @@ import SwiftUI
 // MARK: - Theme Types
 
 extension Features.Dashboard {
-    // Enum for dashboard destinations
+    /// Enum for dashboard destinations
     enum DashboardDestination: Hashable {
         case transactions
         case subscriptions
@@ -90,11 +90,11 @@ extension Features.Dashboard {
                         )
 
                         .transition(
-                            .asymmetric(
-                                insertion: .move(edge: .leading).combined(with: .opacity),
-                                removal: .move(edge: .trailing).combined(with: .opacity)
+                                .asymmetric(
+                                    insertion: .move(edge: .leading).combined(with: .opacity),
+                                    removal: .move(edge: .trailing).combined(with: .opacity)
+                                )
                             )
-                        )
 
                         // Upcoming Subscriptions
                         DashboardSubscriptionsSection(

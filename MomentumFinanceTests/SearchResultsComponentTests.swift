@@ -5,7 +5,7 @@ class SearchResultsComponentTests: XCTestCase {
     var component: SearchResultsComponent!
     var viewModel: MockSearchViewModel!
 
-    // Test case for the initializer
+    /// Test case for the initializer
     func testInitialization() {
         let results = [SearchResult(title: "Test Result 1", subtitle: "Subtitle 1", iconName: "star")]
         let isLoading = false
@@ -18,7 +18,7 @@ class SearchResultsComponentTests: XCTestCase {
         XCTAssertNil(component.onResultTapped)
     }
 
-    // Test case for the body view
+    /// Test case for the body view
     func testBodyView() {
         let results = [SearchResult(title: "Test Result 1", subtitle: "Subtitle 1", iconName: "star")]
         let isLoading = false
@@ -57,7 +57,7 @@ class SearchResultsComponentTests: XCTestCase {
         })
     }
 
-    // Test case for the SearchResultRow view
+    /// Test case for the SearchResultRow view
     func testSearchResultRowView() {
         let result = SearchResult(title: "Test Result 1", subtitle: "Subtitle 1", iconName: "star")
         let onResultTapped = nil

@@ -19,7 +19,7 @@ func fi_formatMonthAbbrev(_ date: Date) -> String {
     date.formatted(.dateTime.month(.abbreviated))
 }
 
-// Old helper compatibility shim used in forecasting helpers
+/// Old helper compatibility shim used in forecasting helpers
 func formatCurrency(_ amount: Double, code: String? = nil) -> String {
     fi_formatCurrency(amount, code: code)
 }

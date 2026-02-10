@@ -55,7 +55,7 @@ final class ColorTheme {
 
     // MARK: - Semantic Colors (Delegate to ColorDefinitions)
 
-    // Background colors
+    /// Background colors
     var background: Color {
         self.themeColor(light: ColorDefinitions.background(.light), dark: ColorDefinitions.background(.dark))
     }
@@ -82,7 +82,7 @@ final class ColorTheme {
         self.background
     }
 
-    // Text colors
+    /// Text colors
     var primaryText: Color {
         self.themeColor(light: ColorDefinitions.text(.primary, .light), dark: ColorDefinitions.text(.primary, .dark))
     }
@@ -98,7 +98,7 @@ final class ColorTheme {
         self.themeColor(light: ColorDefinitions.text(.tertiary, .light), dark: ColorDefinitions.text(.tertiary, .dark))
     }
 
-    // Accent colors
+    /// Accent colors
     var accentPrimary: Color {
         self.themeColor(
             light: ColorDefinitions.accent(.primary, .light),
@@ -113,7 +113,7 @@ final class ColorTheme {
         )
     }
 
-    // Financial colors
+    /// Financial colors
     var income: Color {
         self.themeColor(
             light: ColorDefinitions.financial(.income, .light),
@@ -149,7 +149,7 @@ final class ColorTheme {
         )
     }
 
-    // Budget progress colors
+    /// Budget progress colors
     var budgetUnder: Color {
         self.themeColor(light: ColorDefinitions.budget(.under, .light), dark: ColorDefinitions.budget(.under, .dark))
     }
@@ -162,7 +162,7 @@ final class ColorTheme {
         self.themeColor(light: ColorDefinitions.budget(.over, .light), dark: ColorDefinitions.budget(.over, .dark))
     }
 
-    // Category colors - used for visualizations and charts
+    /// Category colors - used for visualizations and charts
     var categoryColors: [Color] {
         ColorDefinitions.categoryColors
     }

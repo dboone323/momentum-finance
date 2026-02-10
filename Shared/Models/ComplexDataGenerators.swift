@@ -224,8 +224,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
         let calendar = Calendar.current
         let today = Date()
 
-        /// <#Description#>
-        /// - Returns: <#description#>
+        // <#Description#>
+        // - Returns: <#description#>
         func safeDateByAdding(days: Int, to date: Date) -> Date {
             calendar.date(byAdding: .day, value: days, to: date) ?? date
         }
@@ -272,8 +272,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
         let calendar = Calendar.current
         let today = Date()
 
-        /// <#Description#>
-        /// - Returns: <#description#>
+        // <#Description#>
+        // - Returns: <#description#>
         func safeDateByAdding(days: Int, to date: Date) -> Date {
             calendar.date(byAdding: .day, value: days, to: date) ?? date
         }
@@ -318,8 +318,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
         let calendar = Calendar.current
         let today = Date()
 
-        /// <#Description#>
-        /// - Returns: <#description#>
+        // <#Description#>
+        // - Returns: <#description#>
         func safeDateByAdding(days: Int, to date: Date) -> Date {
             calendar.date(byAdding: .day, value: days, to: date) ?? date
         }
@@ -346,8 +346,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
         let calendar = Calendar.current
         let today = Date()
 
-        /// <#Description#>
-        /// - Returns: <#description#>
+        // <#Description#>
+        // - Returns: <#description#>
         func safeDateByAdding(days: Int, to date: Date) -> Date {
             calendar.date(byAdding: .day, value: days, to: date) ?? date
         }

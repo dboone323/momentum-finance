@@ -109,7 +109,7 @@ public struct FinancialSummaryCard: View {
     let transactions: [FinancialTransaction]
     let timeframe: ReportsSection.TimeFrame
 
-    // Cross-platform color support
+    /// Cross-platform color support
     private var backgroundColor: Color {
         #if canImport(UIKit)
             return Color(UIColor.systemBackground)
@@ -185,7 +185,7 @@ public struct SpendingByCategoryCard: View {
     let transactions: [FinancialTransaction]
     let categories: [ExpenseCategory]
 
-    // Cross-platform color support
+    /// Cross-platform color support
     private var backgroundColor: Color {
         #if canImport(UIKit)
             return Color(UIColor.systemBackground)
@@ -262,7 +262,7 @@ public struct SpendingByCategoryCard: View {
 public struct BudgetPerformanceCard: View {
     let budgets: [Budget]
 
-    // Cross-platform color support
+    /// Cross-platform color support
     private var backgroundColor: Color {
         #if canImport(UIKit)
             return Color(UIColor.systemBackground)
@@ -346,7 +346,7 @@ public struct BudgetPerformanceCard: View {
 public struct RecentTransactionsCard: View {
     let transactions: [FinancialTransaction]
 
-    // Cross-platform color support
+    /// Cross-platform color support
     private var backgroundColor: Color {
         #if canImport(UIKit)
             return Color(UIColor.systemBackground)

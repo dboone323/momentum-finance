@@ -35,7 +35,7 @@ public struct SimpleColorDefinitions: Sendable {
     public static let success = Color.green
     public static let info = Color.blue
 
-    // Functions to match the expected interface
+    /// Functions to match the expected interface
     public static func background(_ mode: SimpleThemeMode) -> Color {
         switch mode {
         case .light:
@@ -102,7 +102,7 @@ public struct SimpleColorDefinitions: Sendable {
         Color.gray,
     ]
 
-    // Additional methods for complex color system
+    /// Additional methods for complex color system
     public static func text(_ type: SimpleTextType, _ mode: SimpleThemeMode) -> Color {
         switch (type, mode) {
         case (.primary, .light):
@@ -156,7 +156,7 @@ public struct SimpleColorDefinitions: Sendable {
     public init() {}
 }
 
-// Supporting enums for ColorDefinitions
+/// Supporting enums for ColorDefinitions
 public enum SimpleTextType: Sendable {
     case primary, secondary, tertiary
 }

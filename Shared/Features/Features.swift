@@ -7,37 +7,37 @@ import SwiftUI
 
 public enum Features {}
 
-// Dashboard namespace
+/// Dashboard namespace
 public extension Features {
     enum Dashboard {}
 }
 
-// Transactions namespace
+/// Transactions namespace
 public extension Features {
     enum Transactions {}
 }
 
-// Budgets namespace
+/// Budgets namespace
 public extension Features {
     enum Budgets {}
 }
 
-// Subscriptions namespace
+/// Subscriptions namespace
 public extension Features {
     enum Subscriptions {}
 }
 
-// GoalsAndReports namespace
+/// GoalsAndReports namespace
 public extension Features {
     enum GoalsAndReports {}
 }
 
-// Theme namespace
+/// Theme namespace
 public extension Features {
     enum Theme {}
 }
 
-// Global Search namespace
+/// Global Search namespace
 public extension Features {
     enum GlobalSearch {
         // Global search coordinator with advanced filtering and navigation

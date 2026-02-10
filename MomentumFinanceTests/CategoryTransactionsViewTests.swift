@@ -6,7 +6,7 @@ class CategoryTransactionsViewTests: XCTestCase {
     var viewModel: Features.Transactions.CategoryTransactionsViewModel!
     var mockModelContext: MockModelContext!
 
-    // Test that the view displays a category header with icon and stats
+    /// Test that the view displays a category header with icon and stats
     func testCategoryHeaderDisplay() {
         let expectedIconName = "account.circle"
         let expectedName = "Expenses"

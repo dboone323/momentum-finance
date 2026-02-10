@@ -21,7 +21,7 @@ public final class SavingsGoal {
     public var priority: GoalPriority
     public var category: String?
 
-    // Relationships
+    /// Relationships
     @Relationship(deleteRule: .nullify, inverse: \FinancialTransaction.savingsGoal)
     public var transactions: [FinancialTransaction] = []
 

@@ -6,13 +6,13 @@ class AddTransactionViewTests: XCTestCase {
     var addTransactionView: AddTransactionView!
     var modelContext: ModelContext!
 
-    // Test that the view displays the correct title and amount fields
+    /// Test that the view displays the correct title and amount fields
     func testTitleAndAmountFieldsDisplay() {
         XCTAssertEqual(addTransactionView.title, "")
         XCTAssertEqual(addTransactionView.amount, "")
     }
 
-    // Test that the picker for transaction type is populated with all available types
+    /// Test that the picker for transaction type is populated with all available types
     func testTransactionTypePickerPopulated() {
         let expectedTypes = [TransactionType.expense, TransactionType.income]
 
@@ -21,7 +21,7 @@ class AddTransactionViewTests: XCTestCase {
         XCTAssertEqual(addTransactionView.accounts.count, 2)
     }
 
-    // Test that the picker for category is populated with all available categories
+    /// Test that the picker for category is populated with all available categories
     func testCategoryPickerPopulated() {
         let expectedCategories = [
             ExpenseCategory(name: "Groceries", id: UUID()),
@@ -33,7 +33,7 @@ class AddTransactionViewTests: XCTestCase {
         XCTAssertEqual(addTransactionView.accounts.count, 2)
     }
 
-    // Test that the picker for account is populated with all available accounts
+    /// Test that the picker for account is populated with all available accounts
     func testAccountPickerPopulated() {
         let expectedAccounts = [
             FinancialAccount(name: "Checking Account", id: UUID(), balance: 1000),
@@ -45,7 +45,7 @@ class AddTransactionViewTests: XCTestCase {
         XCTAssertEqual(addTransactionView.accounts.count, 2)
     }
 
-    // Test that the form is valid when all fields are filled
+    /// Test that the form is valid when all fields are filled
     func testFormIsValidWhenAllFieldsAreFilled() {
         addTransactionView.title = "Groceries"
         addTransactionView.amount = "10.50"
@@ -56,7 +56,7 @@ class AddTransactionViewTests: XCTestCase {
         XCTAssertTrue(addTransactionView.isFormValid)
     }
 
-    // Test that the form is not valid when any field is empty
+    /// Test that the form is not valid when any field is empty
     func testFormIsNotValidWhenAnyFieldIsEmpty() {
         addTransactionView.title = ""
         addTransactionView.amount = "10.50"
@@ -67,7 +67,7 @@ class AddTransactionViewTests: XCTestCase {
         XCTAssertFalse(addTransactionView.isFormValid)
     }
 
-    // Test that the form is not valid when the amount is not a number
+    /// Test that the form is not valid when the amount is not a number
     func testFormIsNotValidWhenAmountIsNotANumber() {
         addTransactionView.title = "Groceries"
         addTransactionView.amount = "abc"
@@ -78,7 +78,7 @@ class AddTransactionViewTests: XCTestCase {
         XCTAssertFalse(addTransactionView.isFormValid)
     }
 
-    // Test that the form is not valid when the selected account is nil
+    /// Test that the form is not valid when the selected account is nil
     func testFormIsNotValidWhenSelectedAccountIsNull() {
         addTransactionView.title = "Groceries"
         addTransactionView.amount = "10.50"
@@ -88,7 +88,7 @@ class AddTransactionViewTests: XCTestCase {
         XCTAssertFalse(addTransactionView.isFormValid)
     }
 
-    // Test that the form is not valid when the selected category is nil
+    /// Test that the form is not valid when the selected category is nil
     func testFormIsNotValidWhenSelectedCategoryIsNull() {
         addTransactionView.title = "Groceries"
         addTransactionView.amount = "10.50"

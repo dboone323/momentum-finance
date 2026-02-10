@@ -4,7 +4,7 @@ import XCTest
 class InsightsEmptyStateViewTests: XCTestCase {
     // Mocks for dependencies if needed
 
-    // Test case to check the appearance of the image and text
+    /// Test case to check the appearance of the image and text
     func testInsightsEmptyStateViewAppearance() {
         let view = InsightsEmptyStateView()
 
@@ -27,7 +27,7 @@ class InsightsEmptyStateViewTests: XCTestCase {
         XCTAssertEqual(view.text3.textColor.opacity, 0.5)
     }
 
-    // Test case to check the appearance of the tips section
+    /// Test case to check the appearance of the tips section
     func testInsightsEmptyStateViewTipsSection() {
         let view = InsightsEmptyStateView()
 
@@ -52,7 +52,7 @@ class InsightsEmptyStateViewTests: XCTestCase {
         XCTAssertEqual(view.tip3.icon.image.foregroundColor.opacity, 0.5)
     }
 
-    // Test case to check the appearance of the background and corner radius
+    /// Test case to check the appearance of the background and corner radius
     func testInsightsEmptyStateViewBackgroundAndCornerRadius() {
         let view = InsightsEmptyStateView()
 
@@ -63,7 +63,7 @@ class InsightsEmptyStateViewTests: XCTestCase {
         XCTAssertEqual(view.cornerRadius, 12)
     }
 
-    // Test case to check the appearance of the padding
+    /// Test case to check the appearance of the padding
     func testInsightsEmptyStateViewPadding() {
         let view = InsightsEmptyStateView()
 

@@ -5,7 +5,7 @@ import SwiftData
 import SwiftUI
 
 extension Features.GoalsAndReports {
-    // Helper views extracted from GoalsAndReportsView for better code organization and reduced type body length
+    /// Helper views extracted from GoalsAndReportsView for better code organization and reduced type body length
     struct GoalHeaderView: View {
         let title: String
         let subtitle: String

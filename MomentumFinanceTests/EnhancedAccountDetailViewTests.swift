@@ -5,7 +5,7 @@ import XCTest
 class EnhancedAccountDetailViewTests: XCTestCase {
     var enhancedAccountDetailView: EnhancedAccountDetailView!
 
-    // Test the account detail view's top toolbar actions
+    /// Test the account detail view's top toolbar actions
     func testToolbarActions() {
         let account = FinancialAccount(id: "12345", name: "Test Account", type: .checking)
         let transactions = [FinancialTransaction(date: Date(), amount: 100, account: account)]
@@ -35,7 +35,7 @@ class EnhancedAccountDetailViewTests: XCTestCase {
         XCTAssertFalse(enhancedAccountDetailView.showingExportOptions)
     }
 
-    // Test the account detail view's time frame picker
+    /// Test the account detail view's time frame picker
     func testTimeFramePicker() {
         let account = FinancialAccount(id: "12345", name: "Test Account", type: .checking)
         let transactions = [FinancialTransaction(date: Date(), amount: 100, account: account)]
@@ -52,7 +52,7 @@ class EnhancedAccountDetailViewTests: XCTestCase {
         XCTAssertEqual(enhancedAccountDetailView.selectedTimeFrame, .last90Days)
     }
 
-    // Test the account detail view's transaction list
+    /// Test the account detail view's transaction list
     func testTransactionList() {
         let account = FinancialAccount(id: "12345", name: "Test Account", type: .checking)
         let transactions = [FinancialTransaction(date: Date(), amount: 100, account: account)]

@@ -6,7 +6,7 @@ class TabSectionTests: XCTestCase {
 
     // Test teardown method to clean up after each test
 
-    // Test case for title property of AppTabSection enum
+    /// Test case for title property of AppTabSection enum
     func testTitleProperty() {
         // GIVEN - An instance of AppTabSection
         let tabSection = AppTabSection.dashboard
@@ -18,7 +18,7 @@ class TabSectionTests: XCTestCase {
         XCTAssertEqual(tabSection.title, expectedTitle)
     }
 
-    // Test case for title property with different values
+    /// Test case for title property with different values
     func testTitlePropertyWithDifferentValues() {
         // GIVEN - An instance of AppTabSection
         let tabSection = AppTabSection.transactions
@@ -30,7 +30,7 @@ class TabSectionTests: XCTestCase {
         XCTAssertEqual(tabSection.title, expectedTitle)
     }
 
-    // Test case for title property with default value
+    /// Test case for title property with default value
     func testTitlePropertyWithDefaultValue() {
         // GIVEN - An instance of AppTabSection with a default value
         let tabSection = AppTabSection.budgets
@@ -42,7 +42,7 @@ class TabSectionTests: XCTestCase {
         XCTAssertEqual(tabSection.title, expectedTitle)
     }
 
-    // Test case for title property with invalid value
+    /// Test case for title property with invalid value
     func testTitlePropertyWithInvalidValue() {
         // GIVEN - An instance of AppTabSection with an invalid value
         let tabSection = AppTabSection.unknown

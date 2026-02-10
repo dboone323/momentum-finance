@@ -78,7 +78,7 @@ import UniformTypeIdentifiers
 
     // MARK: - Drag & Drop Support Extensions for Models
 
-    // Extension for FinancialAccount
+    /// Extension for FinancialAccount
     extension FinancialAccount {
         /// Custom NSItemProvider representation
         /// <#Description#>
@@ -116,7 +116,7 @@ import UniformTypeIdentifiers
         }
     }
 
-    // Extension for FinancialTransaction
+    /// Extension for FinancialTransaction
     extension FinancialTransaction {
         /// Custom NSItemProvider representation
         /// <#Description#>
@@ -339,11 +339,11 @@ import UniformTypeIdentifiers
                     return true
                 }
                 .onChange(of: self.isDraggingOver.wrappedValue) { _, _ in
-                    // Apply visual state changes when drag enters/exits
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        // Visual feedback can be applied in the calling code using the isTargeted binding
+                        // Apply visual state changes when drag enters/exits
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            // Visual feedback can be applied in the calling code using the isTargeted binding
+                        }
                     }
-                }
         }
     }
 

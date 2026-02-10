@@ -152,7 +152,7 @@ struct NetWorthChart: View {
     }
 }
 
-/// Preview helper
+// Preview helper
 #Preview {
     let sampleData: [FinancialDataPoint] = {
         var data: [FinancialDataPoint] = []

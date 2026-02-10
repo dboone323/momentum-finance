@@ -29,7 +29,7 @@ enum Currency: String, CaseIterable, Identifiable {
 class CurrencyService {
     @MainActor static let shared = CurrencyService()
 
-    // Mock exchange rates (Base: USD)
+    /// Mock exchange rates (Base: USD)
     private let rates: [Currency: Decimal] = [
         .usd: 1.0,
         .eur: 0.92,

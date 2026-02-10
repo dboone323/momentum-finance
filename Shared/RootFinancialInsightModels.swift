@@ -2,7 +2,7 @@ import MomentumFinanceCore
 import SwiftData
 import SwiftUI
 
-/// Data models and enums for financial insights and analysis results
+// Data models and enums for financial insights and analysis results
 
 public struct FinancialInsightModels {
     // This serves as a namespace for insight-related types

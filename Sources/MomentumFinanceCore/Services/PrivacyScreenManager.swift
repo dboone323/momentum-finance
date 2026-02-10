@@ -113,7 +113,7 @@ public final class PrivacyScreenManager {
             hidePrivacyScreen()
         }
     #else
-        // macOS stub
+        /// macOS stub
         public func configure(window: Any) {
             print("[PrivacyScreen] Privacy screen not supported on macOS")
         }

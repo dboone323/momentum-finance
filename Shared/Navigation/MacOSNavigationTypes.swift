@@ -4,7 +4,7 @@
 import SwiftUI
 
 #if os(macOS)
-    // Sidebar navigation items
+    /// Sidebar navigation items
     public enum SidebarItem: Hashable {
         case dashboard
         case transactions
@@ -13,7 +13,7 @@ import SwiftUI
         case goalsAndReports
     }
 
-    // Listable items for the content column
+    /// Listable items for the content column
     public struct ListableItem: Identifiable, Hashable {
         public let id: String?
         public let name: String
@@ -23,10 +23,10 @@ import SwiftUI
             "\(self.type)_\(self.id ?? "unknown")"
         }
 
-        // Identifiable conformance
+        /// Identifiable conformance
         public var identifierId: String { self.identifier }
 
-        // Hashable conformance
+        /// Hashable conformance
         public func hash(into hasher: inout Hasher) {
             hasher.combine(self.identifier)
         }
@@ -42,7 +42,7 @@ import SwiftUI
         }
     }
 
-    // Types of items that can be displayed in the content column
+    /// Types of items that can be displayed in the content column
     public enum ListItemType: Hashable {
         case account
         case transaction

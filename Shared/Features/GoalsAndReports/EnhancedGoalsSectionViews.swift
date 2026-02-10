@@ -18,7 +18,7 @@ extension Features.GoalsAndReports {
         @Binding var showingAddGoal: Bool
         @Binding var selectedGoal: SavingsGoal?
 
-        // Cross-platform color support
+        /// Cross-platform color support
         private var backgroundColor: Color {
             #if canImport(UIKit)
                 return Color(UIColor.systemBackground)
@@ -237,7 +237,7 @@ extension Features.GoalsAndReports {
     struct EnhancedSavingsGoalCard: View {
         let goal: SavingsGoal
 
-        // Cross-platform color support
+        /// Cross-platform color support
         private var backgroundColor: Color {
             #if canImport(UIKit)
                 return Color(UIColor.systemBackground)

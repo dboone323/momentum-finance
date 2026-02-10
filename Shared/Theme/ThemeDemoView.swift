@@ -17,7 +17,7 @@ public struct ThemeDemoView: View {
     @State private var showSheet = false
     @State private var sliderValue: Double = 0.75
 
-    // Sample financial data for demo
+    /// Sample financial data for demo
     private let accounts = [
         ("Checking", "banknote", 1250.50),
         ("Savings", "dollarsign.circle", 4320.75),

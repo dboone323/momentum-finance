@@ -13,7 +13,7 @@ final class ErrorHandler {
     var currentError: AppError?
     var isShowingError = false
 
-    // Error recovery options
+    /// Error recovery options
     var recoveryOptions: [ErrorRecoveryOption] = []
 
     // Error analytics
@@ -305,7 +305,7 @@ public enum AppError: LocalizedError, Identifiable {
         }
     }
 
-    // Convert any error to an AppError
+    /// Convert any error to an AppError
     static func from(_ error: Error, context: String = "") -> AppError {
         // If it's already an AppError, return it
         if let appError = error as? AppError {

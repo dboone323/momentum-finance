@@ -20,7 +20,7 @@ public final class ExpenseCategory {
     public var createdDate: Date
     public var lastModifiedDate: Date
 
-    // Relationships
+    /// Relationships
     @Relationship(deleteRule: .nullify, inverse: \ExpenseCategory.parentCategory)
     public var subcategories: [ExpenseCategory] = []
 

@@ -4,7 +4,7 @@ import XCTest
 class InsightRowViewTests: XCTestCase {
     var insightRowView: InsightRowView!
 
-    // Test the body of the InsightRowView
+    /// Test the body of the InsightRowView
     func testBody() {
         // GIVEN
         let mockInsight = FinancialInsight(
@@ -25,7 +25,7 @@ class InsightRowViewTests: XCTestCase {
         XCTAssertTrue(body.description.contains("This is a test insight."))
     }
 
-    // Test the priorityColor method
+    /// Test the priorityColor method
     func testPriorityColor() {
         // GIVEN
         let mockInsight = FinancialInsight(
@@ -42,7 +42,7 @@ class InsightRowViewTests: XCTestCase {
         XCTAssertEqual(color, .red)
     }
 
-    // Test the action method
+    /// Test the action method
     func testAction() {
         // GIVEN
         let mockInsight = FinancialInsight(

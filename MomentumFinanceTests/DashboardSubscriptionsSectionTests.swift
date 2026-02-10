@@ -27,7 +27,7 @@ class DashboardSubscriptionsSectionTests: XCTestCase {
         onAddTapped = {}
     }
 
-    // Test case for the body of DashboardSubscriptionsSection
+    /// Test case for the body of DashboardSubscriptionsSection
     func testBody() {
         let view = DashboardSubscriptionsSection(
             subscriptions: subscriptions,
@@ -69,7 +69,7 @@ class DashboardSubscriptionsSectionTests: XCTestCase {
         XCTAssertEqual(result.background.inset(cornerRadius: 12), Color.secondary.opacity(0.3))
     }
 
-    // Test case for the categoryColor method
+    /// Test case for the categoryColor method
     func testCategoryColor() {
         let colors = [.blue, .green, .orange, .purple, .pink, .red]
         for index in 0..<colors.count {
@@ -78,7 +78,7 @@ class DashboardSubscriptionsSectionTests: XCTestCase {
         }
     }
 
-    // Test case for the subscriptionIcon method
+    /// Test case for the subscriptionIcon method
     func testSubscriptionIcon() {
         let subscription1 = Subscription(
             name: "Netflix", amount: 15.99, billingCycle: .monthly,
@@ -93,7 +93,7 @@ class DashboardSubscriptionsSectionTests: XCTestCase {
         XCTAssertEqual(DashboardSubscriptionsSection.subscriptionIcon(subscription2), "music.note")
     }
 
-    // Test case for the formattedDateString method
+    /// Test case for the formattedDateString method
     func testFormattedDateString() {
         let date = Date().addingTimeInterval(86400 * 3)
         let dateString = DashboardSubscriptionsSection.formattedDateString(date)

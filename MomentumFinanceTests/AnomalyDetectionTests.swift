@@ -4,7 +4,7 @@ import XCTest
 class AnomalyDetectionTests: XCTestCase {
     var service: FinancialIntelligenceService!
 
-    // Test for fi_detectCategoryOutliers
+    /// Test for fi_detectCategoryOutliers
     func testFiDetectCategoryOutliers() {
         let transactions = [
             FinancialTransaction(amount: -100, category: nil),
@@ -43,7 +43,7 @@ class AnomalyDetectionTests: XCTestCase {
         }
     }
 
-    // Test for fi_detectRecentFrequencyAnomalies
+    /// Test for fi_detectRecentFrequencyAnomalies
     func testFiDetectRecentFrequencyAnomalies() {
         let transactions = [
             FinancialTransaction(amount: -100, date: Date()),

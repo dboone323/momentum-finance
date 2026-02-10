@@ -4,7 +4,7 @@ import XCTest
 class FinancialIntelligenceServiceTests: XCTestCase {
     var service: FinancialIntelligenceService!
 
-    // Test generateForecasts method with sample data
+    /// Test generateForecasts method with sample data
     func testGenerateForecasts() throws {
         let transactions = [
             FinancialTransaction(date: Date(), amount: 100.0, account: FinancialAccount(id: "1", name: "Checking")),
@@ -25,7 +25,7 @@ class FinancialIntelligenceServiceTests: XCTestCase {
         XCTAssertTrue(insights[1].type == .forecast)
     }
 
-    // Test generateAccountForecastInsight method with sample data
+    /// Test generateAccountForecastInsight method with sample data
     func testGenerateAccountForecastInsight() throws {
         let account = FinancialAccount(id: "1", name: "Checking", currencyCode: "USD")
         let transactions = [
@@ -44,7 +44,7 @@ class FinancialIntelligenceServiceTests: XCTestCase {
         XCTAssertTrue(insight?.priority == .medium)
     }
 
-    // Test generateForecasts method with no transactions
+    /// Test generateForecasts method with no transactions
     func testGenerateForecastsNoTransactions() throws {
         let transactions = []
         let accounts = [
@@ -56,7 +56,7 @@ class FinancialIntelligenceServiceTests: XCTestCase {
         XCTAssertEqual(insights.count, 0)
     }
 
-    // Test generateAccountForecastInsight method with no account
+    /// Test generateAccountForecastInsight method with no account
     func testGenerateAccountForecastInsightNoAccount() throws {
         let account = FinancialAccount(id: "1", name: "Checking", currencyCode: "USD")
         let transactions = [

@@ -4,7 +4,7 @@ import XCTest
 class ReportsSectionTests: XCTestCase {
     var reportsSection: ReportsSection!
 
-    // Test filteredTransactions method
+    /// Test filteredTransactions method
     func testFilteredTransactions() {
         let expectedTransactions = [
             FinancialTransaction(date: Date(), transactionType: .income, amount: 100.0),
@@ -14,7 +14,7 @@ class ReportsSectionTests: XCTestCase {
         XCTAssertEqual(reportsSection.filteredTransactions, expectedTransactions)
     }
 
-    // Test currentPeriodBudgets method
+    /// Test currentPeriodBudgets method
     func testCurrentPeriodBudgets() {
         let expectedBudgets = [
             Budget(month: "January", totalAmount: 1000.0),
@@ -24,7 +24,7 @@ class ReportsSectionTests: XCTestCase {
         XCTAssertEqual(reportsSection.currentPeriodBudgets, expectedBudgets)
     }
 
-    // Test FinancialSummaryCard
+    /// Test FinancialSummaryCard
     func testFinancialSummaryCard() {
         let expectedTitle = "Financial Summary - This Month"
         let expectedIncomeText = "$150.00"
@@ -37,7 +37,7 @@ class ReportsSectionTests: XCTestCase {
         XCTAssertEqual(reportsSection.netIncomeText, expectedNetIncomeText)
     }
 
-    // Test SpendingByCategoryCard
+    /// Test SpendingByCategoryCard
     func testSpendingByCategoryCard() {
         let expectedCategories = [
             ExpenseCategory(name: "Food", amountSpent: 300.0),
@@ -47,7 +47,7 @@ class ReportsSectionTests: XCTestCase {
         XCTAssertEqual(reportsSection.categories, expectedCategories)
     }
 
-    // Test BudgetPerformanceCard
+    /// Test BudgetPerformanceCard
     func testBudgetPerformanceCard() {
         let expectedBudgets = [
             Budget(month: "January", totalAmount: 1000.0),

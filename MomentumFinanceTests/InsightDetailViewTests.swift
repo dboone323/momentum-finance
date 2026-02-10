@@ -5,7 +5,7 @@ class InsightDetailViewTests: XCTestCase {
     var insight: FinancialInsight!
     var viewModel: InsightViewModel!
 
-    // Test the body view of InsightDetailView
+    /// Test the body view of InsightDetailView
     func testBodyView() {
         let sut = InsightDetailView(insight: insight)
         let result = sut.body
@@ -13,7 +13,7 @@ class InsightDetailViewTests: XCTestCase {
         XCTAssertNotNil(result)
     }
 
-    // Test the header section of InsightDetailView
+    /// Test the header section of InsightDetailView
     func testHeaderSection() {
         let sut = InsightDetailView(insight: insight)
         let result = sut.body
@@ -21,7 +21,7 @@ class InsightDetailViewTests: XCTestCase {
         XCTAssertNotNil(result)
     }
 
-    // Test the type and category section of InsightDetailView
+    /// Test the type and category section of InsightDetailView
     func testTypeAndCategorySection() {
         let sut = InsightDetailView(insight: insight)
         let result = sut.body
@@ -29,7 +29,7 @@ class InsightDetailViewTests: XCTestCase {
         XCTAssertNotNil(result)
     }
 
-    // Test the related items section of InsightDetailView
+    /// Test the related items section of InsightDetailView
     func testRelatedItemsSection() {
         let sut = InsightDetailView(insight: insight)
         let result = sut.body
@@ -37,7 +37,7 @@ class InsightDetailViewTests: XCTestCase {
         XCTAssertNotNil(result)
     }
 
-    // Test the data visualization info section of InsightDetailView
+    /// Test the data visualization info section of InsightDetailView
     func testVisualizationInfoSection() {
         let sut = InsightDetailView(insight: insight)
         let result = sut.body
@@ -45,7 +45,7 @@ class InsightDetailViewTests: XCTestCase {
         XCTAssertNotNil(result)
     }
 
-    // Test the data points section of InsightDetailView
+    /// Test the data points section of InsightDetailView
     func testDataPointsSection() {
         let sut = InsightDetailView(insight: insight)
         let result = sut.body
@@ -57,7 +57,7 @@ class InsightDetailViewTests: XCTestCase {
         )
     }
 
-    // Test the priority badge
+    /// Test the priority badge
     func testPriorityBadge() {
         let sut = PriorityBadge(priority: .medium)
         let result = sut.body

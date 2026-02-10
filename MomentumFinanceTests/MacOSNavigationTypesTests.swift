@@ -3,7 +3,7 @@
     @testable import MomentumFinance
 
     class MacOSNavigationTypesTests: XCTestCase {
-        // Test SidebarItem enum
+        /// Test SidebarItem enum
         func testSidebarItems() {
             // GIVEN
             let expectedSidebarItems = [
@@ -24,7 +24,7 @@
             }
         }
 
-        // Test ListableItem struct
+        /// Test ListableItem struct
         func testListableItemIdentifiers() {
             // GIVEN
             let items = [
@@ -42,7 +42,7 @@
             }
         }
 
-        // Test ListItemType enum
+        /// Test ListItemType enum
         func testListItemTypes() {
             // GIVEN
             let expectedListItemTypes = [
@@ -64,7 +64,7 @@
             }
         }
 
-        // Test SidebarItem and ListableItem with real test data
+        /// Test SidebarItem and ListableItem with real test data
         func testSidebarItemsWithRealData() {
             // GIVEN
             let sidebarItems = [

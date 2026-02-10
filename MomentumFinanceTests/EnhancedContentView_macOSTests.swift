@@ -4,7 +4,7 @@ import XCTest
 class EnhancedContentViewMacOSTests: XCTestCase {
     var contentView: ContentView_macOS!
 
-    // Test sidebar item functionality
+    /// Test sidebar item functionality
     func testSidebarItem() {
         let sidebarItems = [
             SidebarItem(title: "Dashboard", icon: "house", item: .dashboard),
@@ -18,7 +18,7 @@ class EnhancedContentViewMacOSTests: XCTestCase {
         }
     }
 
-    // Test navigation coordinator functionality
+    /// Test navigation coordinator functionality
     func testNavigationCoordinator() {
         let expectedState = NavigationSplitViewVisibility.all
         XCTAssertEqual(contentView.columnVisibility, expectedState)
@@ -27,7 +27,7 @@ class EnhancedContentViewMacOSTests: XCTestCase {
         XCTAssertEqual(contentView.columnVisibility, !expectedState)
     }
 
-    // Test list view functionality
+    /// Test list view functionality
     func testListView() {
         let listItem = ListableItem(type: .account, id: "123")
         contentView.selectedListItem = listItem
@@ -39,7 +39,7 @@ class EnhancedContentViewMacOSTests: XCTestCase {
         }
     }
 
-    // Test detail view functionality
+    /// Test detail view functionality
     func testDetailView() {
         let listItem = ListableItem(type: .transaction, id: "456")
         contentView.selectedListItem = listItem
@@ -49,7 +49,7 @@ class EnhancedContentViewMacOSTests: XCTestCase {
         }
     }
 
-    // Test budget view functionality
+    /// Test budget view functionality
     func testBudgetView() {
         let listItem = ListableItem(type: .budget, id: "789")
         contentView.selectedListItem = listItem
@@ -59,7 +59,7 @@ class EnhancedContentViewMacOSTests: XCTestCase {
         }
     }
 
-    // Test subscription view functionality
+    /// Test subscription view functionality
     func testSubscriptionView() {
         let listItem = ListableItem(type: .subscription, id: "101")
         contentView.selectedListItem = listItem
@@ -69,7 +69,7 @@ class EnhancedContentViewMacOSTests: XCTestCase {
         }
     }
 
-    // Test goal view functionality
+    /// Test goal view functionality
     func testGoalView() {
         let listItem = ListableItem(type: .goal, id: "202")
         contentView.selectedListItem = listItem
@@ -79,7 +79,7 @@ class EnhancedContentViewMacOSTests: XCTestCase {
         }
     }
 
-    // Test report view functionality
+    /// Test report view functionality
     func testReportView() {
         let listItem = ListableItem(type: .report, id: "303")
         contentView.selectedListItem = listItem
@@ -89,7 +89,7 @@ class EnhancedContentViewMacOSTests: XCTestCase {
         }
     }
 
-    // Test default view functionality
+    /// Test default view functionality
     func testDefaultView() {
         let expectedState = NavigationSplitViewVisibility.all
         XCTAssertEqual(contentView.columnVisibility, expectedState)

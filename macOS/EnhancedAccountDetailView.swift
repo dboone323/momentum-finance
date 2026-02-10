@@ -861,7 +861,7 @@ import SwiftUI
         }
     }
 
-    // Extension to add ordinal suffix to numbers
+    /// Extension to add ordinal suffix to numbers
     extension Int {
         var ordinal: String {
             let formatter = NumberFormatter()

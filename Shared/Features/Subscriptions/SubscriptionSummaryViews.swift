@@ -23,7 +23,7 @@ extension Features.Subscriptions {
     struct EnhancedSubscriptionSummaryView: View {
         let subscriptions: [Subscription]
 
-        // Cross-platform color support
+        /// Cross-platform color support
         private var backgroundColor: Color {
             #if canImport(UIKit)
                 return Color(UIColor.systemBackground)
@@ -188,7 +188,7 @@ extension Features.Subscriptions {
     struct SubscriptionSummaryView: View {
         let subscriptions: [Subscription]
 
-        // Cross-platform color support
+        /// Cross-platform color support
         private var backgroundColor: Color {
             #if canImport(UIKit)
                 return Color(UIColor.systemGroupedBackground)

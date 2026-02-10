@@ -4,7 +4,7 @@ import XCTest
 class SearchEngineServiceTests: XCTestCase {
     var service: SearchEngineService!
 
-    // Test searchAll method
+    /// Test searchAll method
     func testSearchAll() throws {
         // GIVEN
         let query = "example"
@@ -17,7 +17,7 @@ class SearchEngineServiceTests: XCTestCase {
         XCTAssertEqual(results.count, expectedResults)
     }
 
-    // Test searchAccounts method
+    /// Test searchAccounts method
     func testSearchAccounts() throws {
         // GIVEN
         let query = "example"
@@ -30,7 +30,7 @@ class SearchEngineServiceTests: XCTestCase {
         XCTAssertEqual(results.count, expectedResults)
     }
 
-    // Test searchTransactions method
+    /// Test searchTransactions method
     func testSearchTransactions() throws {
         // GIVEN
         let query = "example"
@@ -43,7 +43,7 @@ class SearchEngineServiceTests: XCTestCase {
         XCTAssertEqual(results.count, expectedResults)
     }
 
-    // Test searchSubscriptions method
+    /// Test searchSubscriptions method
     func testSearchSubscriptions() throws {
         // GIVEN
         let query = "example"
@@ -56,7 +56,7 @@ class SearchEngineServiceTests: XCTestCase {
         XCTAssertEqual(results.count, expectedResults)
     }
 
-    // Test searchBudgets method
+    /// Test searchBudgets method
     func testSearchBudgets() throws {
         // GIVEN
         let query = "example"

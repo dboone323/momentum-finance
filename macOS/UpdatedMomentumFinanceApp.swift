@@ -5,7 +5,7 @@ import Foundation
 import SwiftData
 import SwiftUI
 
-// Model references for SwiftData container
+/// Model references for SwiftData container
 private extension MomentumFinanceApp {
     enum ModelReferences {
         static let accounts = FinancialAccount.self

@@ -6,7 +6,7 @@ class InsightsWidgetTests: XCTestCase {
     var insightsService: FinancialIntelligenceService!
     var modelContext: ModelContext!
 
-    // Test that the InsightsWidget displays the correct header and buttons
+    /// Test that the InsightsWidget displays the correct header and buttons
     func testInsightsWidgetDisplay() {
         let widget = InsightsWidget()
 
@@ -14,7 +14,7 @@ class InsightsWidgetTests: XCTestCase {
         XCTAssertTrue(widget.showAllButton)
     }
 
-    // Test that the InsightsWidget shows loading content while analyzing data
+    /// Test that the InsightsWidget shows loading content while analyzing data
     func testLoadingContent() {
         insightsService.isAnalyzing = true
 
@@ -25,7 +25,7 @@ class InsightsWidgetTests: XCTestCase {
         XCTAssertTrue(view.progressView.isIndeterminate)
     }
 
-    // Test that the InsightsWidget shows an empty content when no insights are available
+    /// Test that the InsightsWidget shows an empty content when no insights are available
     func testEmptyContent() {
         insightsService.insights.removeAll()
 
@@ -36,7 +36,7 @@ class InsightsWidgetTests: XCTestCase {
         XCTAssertTrue(view.chartBarDocHorizontalImage.isShowing)
     }
 
-    // Test that the InsightsWidget displays the correct insights content
+    /// Test that the InsightsWidget displays the correct insights content
     func testInsightsContent() {
         let insight1 = FinancialInsight(priority: .high, description: "High Risk Investment", value: 5000.00)
         let insight2 = FinancialInsight(priority: .medium, description: "Medium Risk Investment", value: 3000.00)
@@ -52,7 +52,7 @@ class InsightsWidgetTests: XCTestCase {
         XCTAssertTrue(view[0].value == insight1.value)
     }
 
-    // Test that the InsightsWidget displays all insights when showAllButton is tapped
+    /// Test that the InsightsWidget displays all insights when showAllButton is tapped
     func testShowAllInsights() {
         insightsService.insights.removeAll()
 

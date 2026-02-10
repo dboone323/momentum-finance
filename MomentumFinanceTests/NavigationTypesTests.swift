@@ -6,7 +6,7 @@ class NavigationTypesTests: XCTestCase {
 
     // Test teardown method to clean up after each test
 
-    // Test case for TransactionsDestination enum
+    /// Test case for TransactionsDestination enum
     func testTransactionsDestinationEnum() {
         // GIVEN: A valid account ID
         let accountId = "12345"
@@ -18,7 +18,7 @@ class NavigationTypesTests: XCTestCase {
         XCTAssertEqual(destination, .accountDetail(accountId))
     }
 
-    // Test case for BudgetsDestination enum
+    /// Test case for BudgetsDestination enum
     func testBudgetsDestinationEnum() {
         // GIVEN: A valid category ID
         let categoryId = "67890"
@@ -30,7 +30,7 @@ class NavigationTypesTests: XCTestCase {
         XCTAssertEqual(destination, .categoryDetail(categoryId))
     }
 
-    // Test case for SubscriptionsDestination enum
+    /// Test case for SubscriptionsDestination enum
     func testSubscriptionsDestinationEnum() {
         // GIVEN: A valid subscription ID
         let subscriptionId = "54321"
@@ -42,7 +42,7 @@ class NavigationTypesTests: XCTestCase {
         XCTAssertEqual(destination, .subscriptionDetail(subscriptionId))
     }
 
-    // Test case for GoalsDestination enum
+    /// Test case for GoalsDestination enum
     func testGoalsDestinationEnum() {
         // GIVEN: A valid goal ID
         let goalId = "98765"
@@ -54,7 +54,7 @@ class NavigationTypesTests: XCTestCase {
         XCTAssertEqual(destination, .goalDetail(goalId))
     }
 
-    // Test case for NavigationContext struct
+    /// Test case for NavigationContext struct
     func testNavigationContextStruct() {
         // GIVEN: A valid breadcrumb title, source module, and optional metadata
         let breadcrumbTitle = "Transactions"
@@ -74,7 +74,7 @@ class NavigationTypesTests: XCTestCase {
         XCTAssertEqual(context.metadata, metadata)
     }
 
-    // Test case for SearchResult enum
+    /// Test case for SearchResult enum
     func testSearchResultEnum() {
         // GIVEN: A valid category ID and transaction ID
         let categoryId = "12345"

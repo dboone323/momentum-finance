@@ -4,7 +4,7 @@ import XCTest
 class BudgetRecommendationsTests: XCTestCase {
     var budgetRecommendations: BudgetRecommendations!
 
-    // Test case for fi_findBudgetRecommendations with real data
+    /// Test case for fi_findBudgetRecommendations with real data
     func testFindBudgetRecommendationsWithRealData() {
         let transactions: [FinancialTransaction] = [
             FinancialTransaction(amount: -100, date: Date(), category: Category(name: "Groceries")),
@@ -44,7 +44,7 @@ class BudgetRecommendationsTests: XCTestCase {
         XCTAssertEqual(data[1].value, 310.00)
     }
 
-    // Test case for fi_findBudgetRecommendations with no budget set
+    /// Test case for fi_findBudgetRecommendations with no budget set
     func testFindBudgetRecommendationsWithNoBudgetSet() {
         let transactions: [FinancialTransaction] = [
             FinancialTransaction(amount: -100, date: Date(), category: Category(name: "Groceries")),

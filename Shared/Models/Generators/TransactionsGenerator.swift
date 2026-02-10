@@ -65,7 +65,7 @@ final class TransactionsGenerator: DataGenerator {
             for week in 0..<4 {
                 let payDate =
                     calendar.date(byAdding: .day, value: week * 7 + 1, to: startOfMonth)
-                        ?? startOfMonth
+                    ?? startOfMonth
                 let income = FinancialTransaction(
                     title: "Salary Deposit",
                     amount: 3200.0,

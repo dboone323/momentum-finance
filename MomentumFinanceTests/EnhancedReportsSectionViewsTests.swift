@@ -4,7 +4,7 @@ import XCTest
 class EnhancedReportsSectionViewsTests: XCTestCase {
     var viewModel: Features.GoalsAndReports.EnhancedReportsSectionViewModel!
 
-    // Test the header section
+    /// Test the header section
     func testHeaderSection() {
         let expectedTitle = "Financial Reports"
         let expectedSubtitle = "Analyze your financial patterns"
@@ -13,7 +13,7 @@ class EnhancedReportsSectionViewsTests: XCTestCase {
         XCTAssertEqual(viewModel.headerSubtitle, expectedSubtitle)
     }
 
-    // Test the timeframe picker
+    /// Test the timeframe picker
     func testTimeframePicker() {
         let expectedTimeframes = ["This Week", "This Month", "Last 3 Months", "This Year"]
 
@@ -23,7 +23,7 @@ class EnhancedReportsSectionViewsTests: XCTestCase {
         }
     }
 
-    // Test the content section
+    /// Test the content section
     func testContentSection() {
         let expectedSummaryCard = EnhancedFinancialSummaryCard(transactions: [], timeframe: .thisMonth)
         let expectedSpendingChart = SpendingByCategoryChart(transactions: [])
@@ -38,7 +38,7 @@ class EnhancedReportsSectionViewsTests: XCTestCase {
         })
     }
 
-    // Test the empty state section
+    /// Test the empty state section
     func testEmptyStateSection() {
         let expectedTitle = "No Transactions"
         let expectedSubtitle = "Start by adding some transactions"

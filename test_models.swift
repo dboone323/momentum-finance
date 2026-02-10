@@ -4,7 +4,7 @@
 import SwiftData
 import SwiftUI
 
-// Test compilation of models
+/// Test compilation of models
 /// <#Description#>
 /// - Returns: <#description#>
 func testModels() {

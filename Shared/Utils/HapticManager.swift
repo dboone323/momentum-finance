@@ -61,7 +61,7 @@ public class HapticManager: ObservableObject {
 
     // MARK: - Impact Feedback
 
-    /// Provides impact haptic feedback with varying intensity
+    // Provides impact haptic feedback with varying intensity
     #if os(iOS)
         /// <#Description#>
         /// - Returns: <#description#>
@@ -305,7 +305,7 @@ public struct SuccessHapticModifier: ViewModifier {
 }
 
 extension View {
-    /// Adds haptic feedback when the trigger value changes
+    // Adds haptic feedback when the trigger value changes
     #if os(iOS)
         /// <#Description#>
         /// - Returns: <#description#>
@@ -336,7 +336,7 @@ extension View {
         modifier(SuccessHapticModifier(trigger: trigger))
     }
 
-    /// Adds tap haptic feedback to any view
+    // Adds tap haptic feedback to any view
     #if os(iOS)
         /// <#Description#>
         /// - Returns: <#description#>

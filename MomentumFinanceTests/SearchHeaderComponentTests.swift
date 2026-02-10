@@ -6,13 +6,13 @@ class SearchHeaderComponentTests: XCTestCase {
     var searchTextBinding: Binding<String>!
     var selectedFilterBinding: Binding<SearchFilter>!
 
-    // Test Case 1: Initial State
+    /// Test Case 1: Initial State
     func testInitialState() {
         XCTAssertEqual(searchTextBinding.wrappedValue, "")
         XCTAssertEqual(selectedFilterBinding.wrappedValue, .all)
     }
 
-    // Test Case 2: Search Text Field
+    /// Test Case 2: Search Text Field
     func testSearchTextField() {
         let textField = sut.body.findFirst(ofType: TextField.self)!
 
@@ -22,7 +22,7 @@ class SearchHeaderComponentTests: XCTestCase {
         XCTAssertEqual(textField.onChange(of: searchTextBinding)!.count, 1)
     }
 
-    // Test Case 3: Filter Picker
+    /// Test Case 3: Filter Picker
     func testFilterPicker() {
         let filterPicker = sut.body.findFirst(ofType: Picker.self)!
 
@@ -30,7 +30,7 @@ class SearchHeaderComponentTests: XCTestCase {
         XCTAssertEqual(filterPicker.pickerStyle, .segmented)
     }
 
-    // Test Case 4: Search Text Field Change
+    /// Test Case 4: Search Text Field Change
     func testSearchTextFieldChange() {
         searchTextBinding.wrappedValue = "Test"
         XCTAssertEqual(searchTextBinding.wrappedValue, "Test")
@@ -39,7 +39,7 @@ class SearchHeaderComponentTests: XCTestCase {
         XCTAssertEqual(textField.text, searchTextBinding.wrappedValue)
     }
 
-    // Test Case 5: Filter Picker Change
+    /// Test Case 5: Filter Picker Change
     func testFilterPickerChange() {
         selectedFilterBinding.wrappedValue = .crypto
         XCTAssertEqual(selectedFilterBinding.wrappedValue, .crypto)
@@ -48,7 +48,7 @@ class SearchHeaderComponentTests: XCTestCase {
         XCTAssertEqual(filterPicker.selection, selectedFilterBinding.wrappedValue)
     }
 
-    // Test Case 6: Clear Search Text Field
+    /// Test Case 6: Clear Search Text Field
     func testClearSearchTextField() {
         searchTextBinding.wrappedValue = "Test"
         sut.searchText = ""

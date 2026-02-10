@@ -2,7 +2,7 @@ import XCTest
 @testable import MomentumFinance
 
 class ModelsTests: XCTestCase {
-    // Test compilation of models
+    /// Test compilation of models
     func testModels() {
         // GIVEN: A FinancialAccount with specific values
         let account = FinancialAccount(name: "Test", accountType: .checking, balance: 100.0)

@@ -32,7 +32,7 @@ class NetWorthCalculator {
     }
 }
 
-// Placeholder Account struct
+/// Placeholder Account struct
 struct NetWorthAccount: Identifiable {
     let id = UUID()
     let name: String

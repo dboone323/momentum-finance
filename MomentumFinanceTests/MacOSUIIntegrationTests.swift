@@ -7,7 +7,7 @@
         var modelContext: ModelContext!
         var navigationCoordinator: NavigationCoordinator!
 
-        // Test navigateToDetail method
+        /// Test navigateToDetail method
         func testNavigateToDetail() {
             // Create a sample ListableItem for testing
             let sampleListItem = ListableItem(type: .account, id: "12345")
@@ -22,7 +22,7 @@
             XCTAssertEqual(navigationCoordinator.transactionsNavPath, [TransactionsDestination.accountDetail(id)])
         }
 
-        // Test clearDetailSelection method
+        /// Test clearDetailSelection method
         func testClearDetailSelection() {
             // Set a sample ListableItem for testing
             let sampleListItem = ListableItem(type: .account, id: "12345")
@@ -40,7 +40,7 @@
             XCTAssertNil(navigationCoordinator.selectedListItem)
         }
 
-        // Test navigateToDetail with a transaction item
+        /// Test navigateToDetail with a transaction item
         func testNavigateToTransaction() {
             // Create a sample ListableItem for testing
             let sampleListItem = ListableItem(type: .transaction, id: "67890")
@@ -55,7 +55,7 @@
             XCTAssertEqual(navigationCoordinator.transactionsNavPath, [TransactionsDestination.transactionDetail(id)])
         }
 
-        // Test navigateToDetail with a budget item
+        /// Test navigateToDetail with a budget item
         func testNavigateToBudget() {
             // Create a sample ListableItem for testing
             let sampleListItem = ListableItem(type: .budget, id: "54321")
@@ -70,7 +70,7 @@
             XCTAssertEqual(navigationCoordinator.budgetsNavPath, [BudgetsDestination.categoryDetail(id)])
         }
 
-        // Test navigateToDetail with a subscription item
+        /// Test navigateToDetail with a subscription item
         func testNavigateToSubscription() {
             // Create a sample ListableItem for testing
             let sampleListItem = ListableItem(type: .subscription, id: "98765")

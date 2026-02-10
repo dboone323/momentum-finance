@@ -6,7 +6,7 @@ class DashboardViewTests: XCTestCase {
     var dashboardView: DashboardView!
     var modelContext: ModelContext!
 
-    // Test case for the timeOfDayGreeting property
+    /// Test case for the timeOfDayGreeting property
     func testTimeOfDayGreeting() {
         // GIVEN
         let now = Date()
@@ -25,7 +25,7 @@ class DashboardViewTests: XCTestCase {
         XCTAssertEqual(eveningGreeting, "Good evening!")
     }
 
-    // Test case for the totalBalanceDouble property
+    /// Test case for the totalBalanceDouble property
     func testTotalBalanceDouble() {
         // GIVEN
         let account1 = FinancialAccount(id: UUID(), name: "Checking", balance: 500.0)
@@ -40,7 +40,7 @@ class DashboardViewTests: XCTestCase {
         XCTAssertEqual(totalBalanceDouble, 200.0)
     }
 
-    // Test case for the monthlyIncomeDouble property
+    /// Test case for the monthlyIncomeDouble property
     func testMonthlyIncomeDouble() {
         // GIVEN
         let income1 = Income(id: UUID(), amount: 500.0, date: Date())
@@ -55,7 +55,7 @@ class DashboardViewTests: XCTestCase {
         XCTAssertEqual(monthlyIncomeDouble, 200.0)
     }
 
-    // Test case for the monthlyExpensesDouble property
+    /// Test case for the monthlyExpensesDouble property
     func testMonthlyExpensesDouble() {
         // GIVEN
         let expense1 = Expense(id: UUID(), amount: 500.0, date: Date())
@@ -70,7 +70,7 @@ class DashboardViewTests: XCTestCase {
         XCTAssertEqual(monthlyExpensesDouble, 200.0)
     }
 
-    // Test case for the loadData method
+    /// Test case for the loadData method
     func testLoadData() {
         // GIVEN
         let account1 = FinancialAccount(id: UUID(), name: "Checking", balance: 500.0)
@@ -87,7 +87,7 @@ class DashboardViewTests: XCTestCase {
         XCTAssertEqual(self.budgets.count, 0)
     }
 
-    // Test case for the accountDetail navigation action
+    /// Test case for the accountDetail navigation action
     func testAccountDetailNavigationAction() {
         // GIVEN
         let accountId = UUID()

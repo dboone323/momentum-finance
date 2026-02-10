@@ -7,7 +7,7 @@ import SwiftUI
 // Momentum Finance - Insights View
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
-// Import the canonical financial insight models
+/// Import the canonical financial insight models
 /// View that displays financial insights and recommendations
 public struct InsightsView: View {
     @StateObject private var intelligenceService = FinancialIntelligenceService.shared

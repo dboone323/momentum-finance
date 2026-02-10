@@ -4,7 +4,7 @@ import XCTest
 class SubscriptionManagementViewsTests: XCTestCase {
     var subscriptionViewModel: SubscriptionViewModel!
 
-    // Test the AddSubscriptionView's name field
+    /// Test the AddSubscriptionView's name field
     func testAddSubscriptionViewNameField() {
         // GIVEN
         let expectedName = "Groceries"
@@ -17,7 +17,7 @@ class SubscriptionManagementViewsTests: XCTestCase {
         XCTAssertEqual(actualName, expectedName)
     }
 
-    // Test the AddSubscriptionView's amount field
+    /// Test the AddSubscriptionView's amount field
     func testAddSubscriptionViewAmountField() {
         // GIVEN
         let expectedAmount = "100.00"
@@ -30,7 +30,7 @@ class SubscriptionManagementViewsTests: XCTestCase {
         XCTAssertEqual(actualAmount, expectedAmount)
     }
 
-    // Test the AddSubscriptionView's frequency field
+    /// Test the AddSubscriptionView's frequency field
     func testAddSubscriptionViewFrequencyField() {
         // GIVEN
         let expectedFrequency = BillingCycle.monthly
@@ -43,7 +43,7 @@ class SubscriptionManagementViewsTests: XCTestCase {
         XCTAssertEqual(actualFrequency, expectedFrequency)
     }
 
-    // Test the AddSubscriptionView's nextDueDate field
+    /// Test the AddSubscriptionView's nextDueDate field
     func testAddSubscriptionViewNextDueDateField() {
         // GIVEN
         let expectedNextDueDate = Date()
@@ -56,7 +56,7 @@ class SubscriptionManagementViewsTests: XCTestCase {
         XCTAssertEqual(actualNextDueDate, expectedNextDueDate)
     }
 
-    // Test the AddSubscriptionView's selectedCategory field
+    /// Test the AddSubscriptionView's selectedCategory field
     func testAddSubscriptionViewSelectedCategoryField() {
         // GIVEN
         let expectedCategory = ExpenseCategory(name: "Groceries", isActive: true)
@@ -69,7 +69,7 @@ class SubscriptionManagementViewsTests: XCTestCase {
         XCTAssertEqual(actualCategory, expectedCategory)
     }
 
-    // Test the AddSubscriptionView's selectedAccount field
+    /// Test the AddSubscriptionView's selectedAccount field
     func testAddSubscriptionViewSelectedAccountField() {
         // GIVEN
         let expectedAccount = FinancialAccount(name: "Checking Account", isActive: true)
@@ -82,7 +82,7 @@ class SubscriptionManagementViewsTests: XCTestCase {
         XCTAssertEqual(actualAccount, expectedAccount)
     }
 
-    // Test the AddSubscriptionView's notes field
+    /// Test the AddSubscriptionView's notes field
     func testAddSubscriptionViewNotesField() {
         // GIVEN
         let expectedNotes = "Monthly groceries"
@@ -95,7 +95,7 @@ class SubscriptionManagementViewsTests: XCTestCase {
         XCTAssertEqual(actualNotes, expectedNotes)
     }
 
-    // Test the AddSubscriptionView's isActive field
+    /// Test the AddSubscriptionView's isActive field
     func testAddSubscriptionViewIsActiveField() {
         // GIVEN
         let expectedActive = true
@@ -108,7 +108,7 @@ class SubscriptionManagementViewsTests: XCTestCase {
         XCTAssertEqual(actualActive, expectedActive)
     }
 
-    // Test the AddSubscriptionView's isValidForm property
+    /// Test the AddSubscriptionView's isValidForm property
     func testAddSubscriptionViewIsValidFormProperty() {
         // GIVEN
         let expectedName = "Groceries"

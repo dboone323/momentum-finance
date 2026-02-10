@@ -7,13 +7,13 @@ class BudgetsViewTests: XCTestCase {
     var modelContext: ModelContext!
     var viewModel: BudgetsViewModel!
 
-    // Test that the empty state view is displayed when there are no budgets
+    /// Test that the empty state view is displayed when there are no budgets
     func testEmptyStateView() {
         let emptyStateView = sut.emptyStateView
         XCTAssertEqual(emptyStateView, BudgetsView.emptyStateView)
     }
 
-    // Test that the budget list section displays the correct budgets
+    /// Test that the budget list section displays the correct budgets
     func testBudgetListSection() {
         let budgetListSection = sut.budgetListSection
 
@@ -28,7 +28,7 @@ class BudgetsViewTests: XCTestCase {
         }
     }
 
-    // Test that the summary section displays the correct total amount
+    /// Test that the summary section displays the correct total amount
     func testSummarySection() {
         let summarySection = sut.summarySection
 
@@ -36,7 +36,7 @@ class BudgetsViewTests: XCTestCase {
         XCTAssertEqual(summarySection.totalAmount, 1200) // 1000 + 200
     }
 
-    // Test that the add budget button navigates to the add budget view
+    /// Test that the add budget button navigates to the add budget view
     func testAddBudgetButton() {
         let addBudgetButton = sut.addBudgetButton
 
@@ -47,7 +47,7 @@ class BudgetsViewTests: XCTestCase {
         XCTAssertEqual(NavigationCoordinator.shared.isActive, true)
     }
 
-    // Test that the search functionality works correctly
+    /// Test that the search functionality works correctly
     func testSearchFunctionality() {
         let searchQuery = "Groceries"
         sut.searchQuery = searchQuery
@@ -58,7 +58,7 @@ class BudgetsViewTests: XCTestCase {
         XCTAssertEqual(filteredBudgets.first?.name, "Groceries")
     }
 
-    // Test that the view model schedules budget notifications when the view appears
+    /// Test that the view model schedules budget notifications when the view appears
     func testScheduleBudgetNotifications() {
         let expectation = XCTestExpectation(description: "Notification Scheduled")
         sut.$modelContext.willChange { context in

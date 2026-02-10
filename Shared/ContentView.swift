@@ -6,7 +6,7 @@ import MomentumFinanceCore
 import SwiftData
 import SwiftUI
 
-// Temporary placeholder views until namespace issues are resolved
+/// Temporary placeholder views until namespace issues are resolved
 public struct DashboardView: View {
     public var body: some View {
         Features.Dashboard.DashboardView()
