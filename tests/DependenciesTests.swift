@@ -1,4 +1,5 @@
 import XCTest
+
 @testable import MomentumFinance
 
 class DependenciesTests: XCTestCase {
@@ -38,9 +39,18 @@ class DependenciesTests: XCTestCase {
 
     func testLogLevelConversion() {
         let mockLogger = MockLogger()
-        XCTAssertEqual(mockLogger.formattedMessage("Test message", level: .info), "[2023-10-05T12:34:56.789Z] [INFO] Test message"]
-        XCTAssertEqual(mockLogger.formattedMessage("Test warning", level: .warning), "[2023-10-05T12:34:56.789Z] [WARNING] Test warning")
-        XCTAssertEqual(mockLogger.formattedMessage("Test error", level: .error), "[2023-10-05T12:34:56.789Z] [ERROR] Test error"]
+        XCTAssertEqual(
+            mockLogger.formattedMessage("Test message", level: .info),
+            "[2023-10-05T12:34:56.789Z] [INFO] Test message"
+        )
+        XCTAssertEqual(
+            mockLogger.formattedMessage("Test warning", level: .warning),
+            "[2023-10-05T12:34:56.789Z] [WARNING] Test warning"
+        )
+        XCTAssertEqual(
+            mockLogger.formattedMessage("Test error", level: .error),
+            "[2023-10-05T12:34:56.789Z] [ERROR] Test error"
+        )
     }
 
     func testOutputHandlerReset() {
@@ -59,11 +69,11 @@ class DependenciesTests: XCTestCase {
 // Mock classes to be used during testing
 class MockPerformanceManager: PerformanceManager {
     override func recordFrame() {}
-    override func getCurrentFPS() -> Double { return 0.0 }
+    override func getCurrentFPS() -> Double { 0.0 }
     override func getCurrentFPS(completion: @escaping (Double) -> Void) {}
-    override func getMemoryUsage() -> Double { return 0.0 }
+    override func getMemoryUsage() -> Double { 0.0 }
     override func getMemoryUsage(completion: @escaping (Double) -> Void) {}
-    override func isPerformanceDegraded() -> Bool { return false }
+    override func isPerformanceDegraded() -> Bool { false }
     override func isPerformanceDegraded(completion: @escaping (Bool) -> Void) {}
 }
 
