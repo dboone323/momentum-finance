@@ -1,5 +1,6 @@
 #!/bin/bash
-# Simple MCP health check for MomentumFinance
+# shellcheck disable=SC2154
+# Simple MCP health check for HabitQuest
 # Verifies connectivity to MCP server and Ollama
 
 set -e
