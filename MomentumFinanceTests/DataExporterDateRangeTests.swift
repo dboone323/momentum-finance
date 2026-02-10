@@ -16,7 +16,7 @@ final class DataExporterDateRangeTests: XCTestCase {
         )
         let context = ModelContext(container)
         // Seed transactions across dates
-        let dates: [Date] = (-5...5).compactMap {
+        let dates: [Date] = (-5 ... 5).compactMap {
             Calendar.current.date(byAdding: .day, value: $0, to: Date())
         }
         for (i, d) in dates.enumerated() {

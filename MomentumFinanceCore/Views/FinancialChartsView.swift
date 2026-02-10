@@ -159,12 +159,12 @@ struct NetWorthChart: View {
         let calendar = Calendar.current
         let categories = ["Food", "Transport", "Shopping", "Bills"]
 
-        for i in 0..<30 {
+        for i in 0 ..< 30 {
             let date = calendar.date(byAdding: .day, value: -i, to: Date())!
             for category in categories {
                 data.append(FinancialDataPoint(
                     date: date,
-                    value: Double.random(in: 10...100),
+                    value: Double.random(in: 10 ... 100),
                     category: category
                 ))
             }

@@ -58,7 +58,7 @@ public final class RecurringTransactionDetector {
     private func calculateIntervals(_ dates: [Date]) -> [TimeInterval] {
         guard dates.count > 1 else { return [] }
         var intervals: [TimeInterval] = []
-        for i in 1..<dates.count {
+        for i in 1 ..< dates.count {
             intervals.append(dates[i].timeIntervalSince(dates[i - 1]))
         }
         return intervals

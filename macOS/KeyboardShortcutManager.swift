@@ -357,21 +357,21 @@ import SwiftUI
         func body(content: Content) -> some View {
             content
                 // Tab navigation shortcuts
-                    .keyboardShortcut("1", modifiers: [.command], action: { self.navigateToTab(0) })
-                    .keyboardShortcut("2", modifiers: [.command], action: { self.navigateToTab(1) })
-                    .keyboardShortcut("3", modifiers: [.command], action: { self.navigateToTab(2) })
-                    .keyboardShortcut("4", modifiers: [.command], action: { self.navigateToTab(3) })
-                    .keyboardShortcut("5", modifiers: [.command], action: { self.navigateToTab(4) })
-                    // Sidebar toggle
-                    .keyboardShortcut("s", modifiers: [.command], action: { self.toggleSidebar() })
-                    // Search
-                    .keyboardShortcut("f", modifiers: [.command], action: { self.activateSearch() })
-                    // Refresh data
-                    .keyboardShortcut("r", modifiers: [.command], action: { self.refreshData() })
-                    .onAppear {
-                        // Setup notification listeners
-                        self.setupNotificationHandlers()
-                    }
+                .keyboardShortcut("1", modifiers: [.command], action: { self.navigateToTab(0) })
+                .keyboardShortcut("2", modifiers: [.command], action: { self.navigateToTab(1) })
+                .keyboardShortcut("3", modifiers: [.command], action: { self.navigateToTab(2) })
+                .keyboardShortcut("4", modifiers: [.command], action: { self.navigateToTab(3) })
+                .keyboardShortcut("5", modifiers: [.command], action: { self.navigateToTab(4) })
+                // Sidebar toggle
+                .keyboardShortcut("s", modifiers: [.command], action: { self.toggleSidebar() })
+                // Search
+                .keyboardShortcut("f", modifiers: [.command], action: { self.activateSearch() })
+                // Refresh data
+                .keyboardShortcut("r", modifiers: [.command], action: { self.refreshData() })
+                .onAppear {
+                    // Setup notification listeners
+                    self.setupNotificationHandlers()
+                }
         }
 
         private func navigateToTab(_ index: Int) {

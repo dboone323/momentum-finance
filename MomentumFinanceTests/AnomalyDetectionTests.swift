@@ -32,7 +32,7 @@ class AnomalyDetectionTests: XCTestCase {
         let insights = service.fi_detectCategoryOutliers(transactions)
 
         XCTAssertEqual(insights.count, expectedInsights.count)
-        for i in 0..<insights.count {
+        for i in 0 ..< insights.count {
             XCTAssertEqual(insights[i].title, expectedInsights[i].title)
             XCTAssertEqual(insights[i].description, expectedInsights[i].description)
             XCTAssertEqual(insights[i].priority, expectedInsights[i].priority)
@@ -70,7 +70,7 @@ class AnomalyDetectionTests: XCTestCase {
         let insights = service.fi_detectRecentFrequencyAnomalies(transactions)
 
         XCTAssertEqual(insights.count, expectedInsights.count)
-        for i in 0..<insights.count {
+        for i in 0 ..< insights.count {
             XCTAssertEqual(insights[i].title, expectedInsights[i].title)
             XCTAssertEqual(insights[i].description, expectedInsights[i].description)
             XCTAssertEqual(insights[i].priority, expectedInsights[i].priority)

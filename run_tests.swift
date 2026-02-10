@@ -619,7 +619,7 @@ runTest("testLargeDatasetPerformance") {
 
     // Simulate inserting 1000 transactions
     var transactions: [Transaction] = []
-    for i in 1...1000 {
+    for i in 1 ... 1000 {
         let transaction = Transaction(
             amount: Double(i),
             description: "Transaction \(i)",
@@ -647,7 +647,7 @@ runTest("testBulkOperationsPerformance") {
 
     // Simulate creating multiple accounts
     var accounts: [FinancialAccount] = []
-    for i in 1...100 {
+    for i in 1 ... 100 {
         let account = FinancialAccount(
             name: "Account \(i)",
             balance: Double(i * 100),
@@ -659,7 +659,7 @@ runTest("testBulkOperationsPerformance") {
 
     // Simulate creating multiple transactions
     var transactions: [FinancialTransaction] = []
-    for i in 1...500 {
+    for i in 1 ... 500 {
         let transaction = FinancialTransaction(
             title: "Transaction \(i)",
             amount: Double(i),
@@ -671,7 +671,7 @@ runTest("testBulkOperationsPerformance") {
 
     // Simulate creating multiple categories
     var categories: [ExpenseCategory] = []
-    for i in 1...50 {
+    for i in 1 ... 50 {
         let category = ExpenseCategory(
             name: "Category \(i)",
             iconName: "circle",

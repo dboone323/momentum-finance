@@ -484,7 +484,7 @@ import SwiftUI
                     .cornerRadius(8)
 
                     // Alternatives columns
-                    ForEach(0..<self.alternatives.count, id: \.self) { index in
+                    ForEach(0 ..< self.alternatives.count, id: \.self) { index in
                         let alternative = self.alternatives[index]
                         VStack(spacing: 0) {
                             Text("Alternative")

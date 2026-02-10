@@ -158,9 +158,9 @@ public struct ThemeComponents: @unchecked Sendable {
         let ratio = (total == 0) ? Decimal(0) : (spent / total)
         let progress = min(1.0, Double(NSDecimalNumber(decimal: ratio).doubleValue))
         let color: Color = switch progress {
-        case 0..<0.8:
+        case 0 ..< 0.8:
             theme.budgetUnder
-        case 0.8..<1.0:
+        case 0.8 ..< 1.0:
             theme.budgetNear
         default:
             theme.budgetOver

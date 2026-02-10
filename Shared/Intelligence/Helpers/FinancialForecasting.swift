@@ -140,7 +140,7 @@ func fi_projectedBalances(
     var projectedBalance = startingBalance
     guard let currentMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: Date()))
     else { return [] }
-    for monthIndex in 0..<months {
+    for monthIndex in 0 ..< months {
         guard
             let futureMonth = calendar.date(
                 byAdding: .month, value: monthIndex + 1, to: currentMonth

@@ -35,7 +35,7 @@ class DashboardAccountsSummaryTests: XCTestCase {
         let expectedNames = ["Checking", "Savings", "Investments"]
         let expectedIconNames = ["account", "bank", "money"]
 
-        for i in 0..<3 {
+        for i in 0 ..< 3 {
             XCTAssertEqual(viewModel.accounts[i].name, expectedNames[i])
             XCTAssertEqual(viewModel.accounts[i].iconName, expectedIconNames[i])
         }
@@ -46,7 +46,7 @@ class DashboardAccountsSummaryTests: XCTestCase {
         let expectedNames = ["Checking", "Savings", "Investments", "Other"]
         let expectedIconNames = ["account", "bank", "money", "other"]
 
-        for i in 0..<4 {
+        for i in 0 ..< 4 {
             XCTAssertEqual(viewModel.accounts[i].name, expectedNames[i])
             XCTAssertEqual(viewModel.accounts[i].iconName, expectedIconNames[i])
         }

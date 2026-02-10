@@ -425,7 +425,7 @@ import SwiftUI
 
                     // This would show other transactions in the series
                     List {
-                        ForEach(0..<5) { i in
+                        ForEach(0 ..< 5) { i in
                             HStack {
                                 Image(systemName: "calendar")
                                     .foregroundStyle(.blue)

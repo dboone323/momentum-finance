@@ -204,7 +204,7 @@ final class RootSearchEngineServiceTests: XCTestCase {
 
     func testMaxResultsLimit() {
         // Given: More items than max results
-        for i in 0..<100 {
+        for i in 0 ..< 100 {
             let account = FinancialAccount(name: "Account \(i)", balance: Double(i * 100), accountType: .checking)
             modelContext.insert(account)
         }

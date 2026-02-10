@@ -6,7 +6,7 @@
 import Foundation
 import SwiftUI
 
-/* 
+/*
  Integration example showing how to use all security services together.
 
  Use this as a reference when integrating security into MomentumFinanceApp.

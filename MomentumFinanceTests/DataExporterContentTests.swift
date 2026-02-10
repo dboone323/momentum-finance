@@ -15,7 +15,7 @@ final class DataExporterContentTests: XCTestCase {
         )
         let context = ModelContext(container)
         // Seed 3 transactions (2 incomes, 1 expense)
-        for i in 0..<3 {
+        for i in 0 ..< 3 {
             let tx = FinancialTransaction(
                 title: "SeedTx\(i)",
                 amount: Double(100 + i),

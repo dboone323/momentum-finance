@@ -133,7 +133,7 @@ final class PerformanceRegressionTests: XCTestCase {
         let searchEngine = RootSearchEngineService(modelContext: modelContext)
 
         measure(metrics: [XCTMemoryMetric()]) {
-            for i in 0..<100 {
+            for i in 0 ..< 100 {
                 _ = searchEngine.search(query: "test\(i)", filter: .all, maxResults: 10)
             }
         }
@@ -147,7 +147,7 @@ final class PerformanceRegressionTests: XCTestCase {
 
         measure(metrics: [XCTMemoryMetric()]) {
             Task {
-                for _ in 0..<10 {
+                for _ in 0 ..< 10 {
                     _ = await mlService.analyzeSpendingPatterns()
                 }
             }
@@ -177,10 +177,10 @@ final class PerformanceRegressionTests: XCTestCase {
         modelContext.insert(account)
         modelContext.insert(category)
 
-        for i in 0..<count {
+        for i in 0 ..< count {
             let transaction = FinancialTransaction(
                 title: "Transaction \(i)",
-                amount: -Double.random(in: 10...500),
+                amount: -Double.random(in: 10 ... 500),
                 date: Date().addingTimeInterval(TimeInterval(-i * 86400)),
                 transactionType: .expense
             )

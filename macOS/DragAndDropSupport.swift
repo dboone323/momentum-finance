@@ -339,11 +339,11 @@ import UniformTypeIdentifiers
                     return true
                 }
                 .onChange(of: self.isDraggingOver.wrappedValue) { _, _ in
-                        // Apply visual state changes when drag enters/exits
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            // Visual feedback can be applied in the calling code using the isTargeted binding
-                        }
+                    // Apply visual state changes when drag enters/exits
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        // Visual feedback can be applied in the calling code using the isTargeted binding
                     }
+                }
         }
     }
 
