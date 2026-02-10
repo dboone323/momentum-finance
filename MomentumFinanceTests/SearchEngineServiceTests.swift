@@ -5,7 +5,7 @@ class SearchEngineServiceTests: XCTestCase {
     var service: SearchEngineService!
 
     /// Test searchAll method
-    func testSearchAll() throws {
+    func testSearchAll() {
         // GIVEN
         let query = "example"
         let expectedResults = 50 // Assuming we have at least 50 transactions
@@ -18,7 +18,7 @@ class SearchEngineServiceTests: XCTestCase {
     }
 
     /// Test searchAccounts method
-    func testSearchAccounts() throws {
+    func testSearchAccounts() {
         // GIVEN
         let query = "example"
         let expectedResults = 10 // Assuming we have at least 10 accounts
@@ -31,7 +31,7 @@ class SearchEngineServiceTests: XCTestCase {
     }
 
     /// Test searchTransactions method
-    func testSearchTransactions() throws {
+    func testSearchTransactions() {
         // GIVEN
         let query = "example"
         let expectedResults = 50 // Assuming we have at least 50 transactions
@@ -44,7 +44,7 @@ class SearchEngineServiceTests: XCTestCase {
     }
 
     /// Test searchSubscriptions method
-    func testSearchSubscriptions() throws {
+    func testSearchSubscriptions() {
         // GIVEN
         let query = "example"
         let expectedResults = 10 // Assuming we have at least 10 subscriptions
@@ -57,7 +57,7 @@ class SearchEngineServiceTests: XCTestCase {
     }
 
     /// Test searchBudgets method
-    func testSearchBudgets() throws {
+    func testSearchBudgets() {
         // GIVEN
         let query = "example"
         let expectedResults = 10 // Assuming we have at least 10 budgets

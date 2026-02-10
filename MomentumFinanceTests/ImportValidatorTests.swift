@@ -17,7 +17,7 @@ class ImportValidatorTests: XCTestCase {
     }
 
     /// Test isDuplicate method with a duplicate transaction
-    func testIsDuplicateWithDuplicateTransaction() async throws {
+    func testIsDuplicateWithDuplicateTransaction() async {
         let transaction = FinancialTransaction(
             title: "Test Transaction",
             amount: 100.0,
@@ -32,7 +32,7 @@ class ImportValidatorTests: XCTestCase {
     }
 
     /// Test isDuplicate method with a non-duplicate transaction
-    func testIsDuplicateWithNonDuplicateTransaction() async throws {
+    func testIsDuplicateWithNonDuplicateTransaction() async {
         let transaction = FinancialTransaction(
             title: "Test Transaction",
             amount: 200.0,

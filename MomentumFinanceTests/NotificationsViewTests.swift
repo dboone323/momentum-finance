@@ -6,7 +6,7 @@ class NotificationsViewTests: XCTestCase {
 
     // MARK: - Test LoadNotifications()
 
-    func testLoadNotifications() async throws {
+    func testLoadNotifications() async {
         // GIVEN: A mock notification manager that returns a list of scheduled notifications
         let mockNotificationManager = MockNotificationManager()
         mockNotificationManager.scheduledNotifications = [
@@ -50,7 +50,7 @@ class NotificationsViewTests: XCTestCase {
 
     // MARK: - Test Clear All Notifications
 
-    func testClearAllNotifications() async throws {
+    func testClearAllNotifications() async {
         // GIVEN: A mock notification manager that returns a list of scheduled notifications
         let mockNotificationManager = MockNotificationManager()
         mockNotificationManager.scheduledNotifications = [

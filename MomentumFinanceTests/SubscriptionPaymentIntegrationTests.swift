@@ -69,7 +69,7 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
         XCTAssertEqual(transactions.first?.title, "Test Sub", "Transaction title should match subscription name")
     }
 
-    func testProcessPayment_WeeklyCycle() throws {
+    func testProcessPayment_WeeklyCycle() {
         // Given
         let startDate = Date()
         let subscription = Subscription(
@@ -93,7 +93,7 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
         )
     }
 
-    func testProcessPayment_YearlyCycle() throws {
+    func testProcessPayment_YearlyCycle() {
         // Given
         let startDate = Date()
         let subscription = Subscription(

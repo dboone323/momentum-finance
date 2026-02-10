@@ -282,11 +282,10 @@ public struct DataExportView: View {
         /// <#Description#>
         /// - Returns: <#description#>
         func makeUIViewController(context _: Context) -> UIActivityViewController {
-            let controller = UIActivityViewController(
+            UIActivityViewController(
                 activityItems: activityItems,
                 applicationActivities: nil
             )
-            return controller
         }
 
         /// <#Description#>

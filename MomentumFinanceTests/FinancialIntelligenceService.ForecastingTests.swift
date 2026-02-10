@@ -5,7 +5,7 @@ class FinancialIntelligenceServiceTests: XCTestCase {
     var service: FinancialIntelligenceService!
 
     /// Test generateForecasts method with sample data
-    func testGenerateForecasts() throws {
+    func testGenerateForecasts() {
         let transactions = [
             FinancialTransaction(date: Date(), amount: 100.0, account: FinancialAccount(id: "1", name: "Checking")),
             FinancialTransaction(
@@ -26,7 +26,7 @@ class FinancialIntelligenceServiceTests: XCTestCase {
     }
 
     /// Test generateAccountForecastInsight method with sample data
-    func testGenerateAccountForecastInsight() throws {
+    func testGenerateAccountForecastInsight() {
         let account = FinancialAccount(id: "1", name: "Checking", currencyCode: "USD")
         let transactions = [
             FinancialTransaction(date: Date(), amount: 100.0, account: account),
@@ -45,7 +45,7 @@ class FinancialIntelligenceServiceTests: XCTestCase {
     }
 
     /// Test generateForecasts method with no transactions
-    func testGenerateForecastsNoTransactions() throws {
+    func testGenerateForecastsNoTransactions() {
         let transactions = []
         let accounts = [
             FinancialAccount(id: "1", name: "Checking", currencyCode: "USD"),
@@ -57,7 +57,7 @@ class FinancialIntelligenceServiceTests: XCTestCase {
     }
 
     /// Test generateAccountForecastInsight method with no account
-    func testGenerateAccountForecastInsightNoAccount() throws {
+    func testGenerateAccountForecastInsightNoAccount() {
         let account = FinancialAccount(id: "1", name: "Checking", currencyCode: "USD")
         let transactions = [
             FinancialTransaction(date: Date(), amount: 100.0, account: account),

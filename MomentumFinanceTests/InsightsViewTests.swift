@@ -7,7 +7,7 @@ class InsightsViewTests: XCTestCase {
     var modelContext: ModelContext!
 
     /// Test that the InsightsView displays insights when data is available
-    func testInsightsDisplayWhenDataAvailable() async throws {
+    func testInsightsDisplayWhenDataAvailable() async {
         // Given: An instance of InsightsView with some financial insights
         let insightsView = InsightsView()
 
@@ -26,7 +26,7 @@ class InsightsViewTests: XCTestCase {
     }
 
     /// Test that the InsightsView displays a loading view when data is not available
-    func testInsightsDisplayWhenDataNotAvailable() async throws {
+    func testInsightsDisplayWhenDataNotAvailable() async {
         // Given: An instance of InsightsView with no financial insights
         let insightsView = InsightsView()
 
@@ -39,7 +39,7 @@ class InsightsViewTests: XCTestCase {
     }
 
     /// Test that the InsightsView displays an empty state view when data is available but no insights are found
-    func testInsightsDisplayWhenDataAvailableButNoInsights() async throws {
+    func testInsightsDisplayWhenDataAvailableButNoInsights() async {
         // Given: An instance of InsightsView with a modelContext containing no financial insights
         let insightsView = InsightsView()
 
@@ -52,7 +52,7 @@ class InsightsViewTests: XCTestCase {
     }
 
     /// Test that the InsightsView displays insights based on filter criteria
-    func testInsightsDisplayWithFilter() async throws {
+    func testInsightsDisplayWithFilter() async {
         // Given: An instance of InsightsView with some financial insights and filters applied
         let insightsView = InsightsView()
         let insight1 = FinancialInsight(priority: .critical, type: .expense)
@@ -74,7 +74,7 @@ class InsightsViewTests: XCTestCase {
     }
 
     /// Test that the InsightsView displays insights sorted by priority (critical first)
-    func testInsightsDisplaySortedByPriority() async throws {
+    func testInsightsDisplaySortedByPriority() async {
         // Given: An instance of InsightsView with some financial insights and a sorted list
         let insightsView = InsightsView()
         let insight1 = FinancialInsight(priority: .critical, type: .expense)

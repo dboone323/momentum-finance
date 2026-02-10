@@ -19,7 +19,7 @@ final class MomentumFinanceUITests: XCTestCase {
     // MARK: - App Launch and Navigation Tests
 
     @MainActor
-    func testAppLaunchesSuccessfully() throws {
+    func testAppLaunchesSuccessfully() {
         // Verify the app launches and main UI is visible
         XCTAssertTrue(self.app.state == .runningForeground, "App should be running in foreground")
 
@@ -29,7 +29,7 @@ final class MomentumFinanceUITests: XCTestCase {
     }
 
     @MainActor
-    func testMainNavigationTabs() throws {
+    func testMainNavigationTabs() {
         // Test main tab navigation
         let tabBar = self.app.tabBars.firstMatch
         XCTAssertTrue(tabBar.exists, "App should have a tab bar")
@@ -48,7 +48,7 @@ final class MomentumFinanceUITests: XCTestCase {
     // MARK: - Transaction Management Tests
 
     @MainActor
-    func testTransactionListDisplay() throws {
+    func testTransactionListDisplay() {
         // Navigate to transactions if needed
         let transactionsTab = self.app.tabBars.buttons["Transactions"].firstMatch
         if transactionsTab.exists {
@@ -67,7 +67,7 @@ final class MomentumFinanceUITests: XCTestCase {
     }
 
     @MainActor
-    func testAddTransactionFlow() throws {
+    func testAddTransactionFlow() {
         // Test adding a new transaction
         let addButton = self.app.buttons["Add Transaction"].firstMatch
         if addButton.exists {
@@ -86,7 +86,7 @@ final class MomentumFinanceUITests: XCTestCase {
     }
 
     @MainActor
-    func testTransactionFiltering() throws {
+    func testTransactionFiltering() {
         // Test transaction filtering functionality
         let filterButton = self.app.buttons["Filter"].firstMatch
         if filterButton.exists {
@@ -107,7 +107,7 @@ final class MomentumFinanceUITests: XCTestCase {
     // MARK: - Account Management Tests
 
     @MainActor
-    func testAccountOverview() throws {
+    func testAccountOverview() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -123,7 +123,7 @@ final class MomentumFinanceUITests: XCTestCase {
     }
 
     @MainActor
-    func testAccountBalanceDisplay() throws {
+    func testAccountBalanceDisplay() {
         // Test that account balances are displayed correctly
         let balanceLabels = self.app.staticTexts.matching(identifier: "balance").allElementsBoundByIndex
         XCTAssertGreaterThan(balanceLabels.count, 0, "Should display account balances")
@@ -136,7 +136,7 @@ final class MomentumFinanceUITests: XCTestCase {
     }
 
     @MainActor
-    func testAddAccountFlow() throws {
+    func testAddAccountFlow() {
         // Test adding a new account
         let addAccountButton = self.app.buttons["Add Account"].firstMatch
         if addAccountButton.exists {
@@ -157,7 +157,7 @@ final class MomentumFinanceUITests: XCTestCase {
     // MARK: - Budget Management Tests
 
     @MainActor
-    func testBudgetOverview() throws {
+    func testBudgetOverview() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -172,7 +172,7 @@ final class MomentumFinanceUITests: XCTestCase {
     }
 
     @MainActor
-    func testBudgetProgressIndicators() throws {
+    func testBudgetProgressIndicators() {
         // Test budget progress visualization
         let progressBars = self.app.progressIndicators.allElementsBoundByIndex
         let progressViews = self.app.otherElements.matching(identifier: "progress")
@@ -185,7 +185,7 @@ final class MomentumFinanceUITests: XCTestCase {
     }
 
     @MainActor
-    func testCreateBudgetFlow() throws {
+    func testCreateBudgetFlow() {
         // Test creating a new budget
         let createBudgetButton = self.app.buttons["Create Budget"].firstMatch
         if createBudgetButton.exists {
@@ -206,7 +206,7 @@ final class MomentumFinanceUITests: XCTestCase {
     // MARK: - Reports and Analytics Tests
 
     @MainActor
-    func testReportsView() throws {
+    func testReportsView() {
         // Navigate to reports
         let reportsTab = self.app.tabBars.buttons["Reports"].firstMatch
         if reportsTab.exists {
@@ -221,14 +221,14 @@ final class MomentumFinanceUITests: XCTestCase {
     }
 
     @MainActor
-    func testChartDisplay() throws {
+    func testChartDisplay() {
         // Test chart/graph display in reports
         let chartViews = self.app.otherElements.matching(identifier: "chart").allElementsBoundByIndex
         XCTAssertGreaterThan(chartViews.count, 0, "Should display charts in reports")
     }
 
     @MainActor
-    func testDateRangeSelection() throws {
+    func testDateRangeSelection() {
         // Test date range picker for reports
         let datePicker = self.app.datePickers.firstMatch
         let dateRangeButton = self.app.buttons["Date Range"].firstMatch
@@ -241,7 +241,7 @@ final class MomentumFinanceUITests: XCTestCase {
     // MARK: - Settings and Preferences Tests
 
     @MainActor
-    func testSettingsAccess() throws {
+    func testSettingsAccess() {
         // Test accessing settings
         let settingsButton = self.app.buttons["Settings"].firstMatch
         if settingsButton.exists {
@@ -254,7 +254,7 @@ final class MomentumFinanceUITests: XCTestCase {
     }
 
     @MainActor
-    func testCurrencySettings() throws {
+    func testCurrencySettings() {
         // Test currency selection
         let currencyPicker = self.app.popUpButtons["Currency"].firstMatch
         if currencyPicker.exists {
@@ -271,7 +271,7 @@ final class MomentumFinanceUITests: XCTestCase {
     // MARK: - Search and Filter Tests
 
     @MainActor
-    func testSearchFunctionality() throws {
+    func testSearchFunctionality() {
         // Test search functionality
         let searchField = self.app.searchFields.firstMatch
         if searchField.exists {
@@ -289,7 +289,7 @@ final class MomentumFinanceUITests: XCTestCase {
     // MARK: - Data Export Tests
 
     @MainActor
-    func testExportFunctionality() throws {
+    func testExportFunctionality() {
         // Test data export features
         let exportButton = self.app.buttons["Export"].firstMatch
         if exportButton.exists {
@@ -306,14 +306,14 @@ final class MomentumFinanceUITests: XCTestCase {
     // MARK: - Performance Tests
 
     @MainActor
-    func testAppLaunchPerformance() throws {
+    func testAppLaunchPerformance() {
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             XCUIApplication().launch()
         }
     }
 
     @MainActor
-    func testTransactionListPerformance() throws {
+    func testTransactionListPerformance() {
         // Navigate to transactions
         let transactionsTab = self.app.tabBars.buttons["Transactions"].firstMatch
         if transactionsTab.exists {
@@ -332,7 +332,7 @@ final class MomentumFinanceUITests: XCTestCase {
     // MARK: - Accessibility Tests
 
     @MainActor
-    func testAccessibilityLabels() throws {
+    func testAccessibilityLabels() {
         // Test accessibility of key UI elements
         let buttons = self.app.buttons.allElementsBoundByIndex
         let textFields = self.app.textFields.allElementsBoundByIndex
@@ -357,7 +357,7 @@ final class MomentumFinanceUITests: XCTestCase {
     // MARK: - Error Handling Tests
 
     @MainActor
-    func testInvalidInputHandling() throws {
+    func testInvalidInputHandling() {
         // Test handling of invalid inputs
         let amountField = self.app.textFields["Amount"].firstMatch
         if amountField.exists {
@@ -378,7 +378,7 @@ final class MomentumFinanceUITests: XCTestCase {
     // MARK: - Memory and Resource Tests
 
     @MainActor
-    func testMemoryUsage() throws {
+    func testMemoryUsage() {
         let initialMemory = self.app.memoryUsage
 
         // Perform various operations

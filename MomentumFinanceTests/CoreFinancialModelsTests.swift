@@ -41,7 +41,7 @@ final class CoreFinancialModelsTests: XCTestCase {
         XCTAssertEqual(cash.accountType, .cash)
     }
 
-    func testFinancialAccountCodable() throws {
+    func testFinancialAccountCodable() {
         // @Model classes are Codable if properties are Codable, but SwiftData handling is different.
         // Assuming we just test basic encoding/decoding if they conform to Codable.
         // But FinancialAccount class in Models.swift does NOT explicitly conform to Codable.
@@ -76,7 +76,7 @@ final class CoreFinancialModelsTests: XCTestCase {
         XCTAssertEqual(category.iconName, "tag")
     }
 
-    func testExpenseCategoryCodable() throws {
+    func testExpenseCategoryCodable() {
         // Commenting out Codable test for SwiftData model
     }
 
@@ -129,7 +129,7 @@ final class CoreFinancialModelsTests: XCTestCase {
         XCTAssertEqual(transfer.transactionType, .transfer)
     }
 
-    func testFinancialTransactionCodable() throws {
+    func testFinancialTransactionCodable() {
         // Commenting out Codable test
     }
 

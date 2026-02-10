@@ -6,7 +6,7 @@ class FinancialForecastingTests: XCTestCase {
 
     // MARK: - Income Forecasting Tests
 
-    func test_incomeForecasting_withNoIncomeTransactions() throws {
+    func test_incomeForecasting_withNoIncomeTransactions() {
         let transactions = []
         let accounts = []
 
@@ -15,7 +15,7 @@ class FinancialForecastingTests: XCTestCase {
         XCTAssertEqual(insights.count, 0)
     }
 
-    func test_incomeForecasting_withSinglePositiveTransaction() throws {
+    func test_incomeForecasting_withSinglePositiveTransaction() {
         let transactions = [FinancialTransaction(amount: 1000, date: Date())]
         let accounts = []
 
@@ -33,7 +33,7 @@ class FinancialForecastingTests: XCTestCase {
         XCTAssertEqual(insights[0].data.count, 2)
     }
 
-    func test_incomeForecasting_withMultipleIncomeTransactions() throws {
+    func test_incomeForecasting_withMultipleIncomeTransactions() {
         let transactions = [
             FinancialTransaction(amount: 1000, date: Date()),
             FinancialTransaction(amount: -500, date: Date()),
@@ -57,7 +57,7 @@ class FinancialForecastingTests: XCTestCase {
 
     // MARK: - Spending Forecasting Tests
 
-    func test_spendingForecasting_withNoExpenseTransactions() throws {
+    func test_spendingForecasting_withNoExpenseTransactions() {
         let transactions = []
         let accounts = []
 
@@ -66,7 +66,7 @@ class FinancialForecastingTests: XCTestCase {
         XCTAssertEqual(insights.count, 0)
     }
 
-    func test_spendingForecasting_withSingleNegativeTransaction() throws {
+    func test_spendingForecasting_withSingleNegativeTransaction() {
         let transactions = [FinancialTransaction(amount: -1000, date: Date())]
         let accounts = []
 
@@ -84,7 +84,7 @@ class FinancialForecastingTests: XCTestCase {
         XCTAssertEqual(insights[0].data.count, 2)
     }
 
-    func test_spendingForecasting_withMultipleExpenseTransactions() throws {
+    func test_spendingForecasting_withMultipleExpenseTransactions() {
         let transactions = [
             FinancialTransaction(amount: -1000, date: Date()),
             FinancialTransaction(amount: 500, date: Date()),

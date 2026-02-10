@@ -3,7 +3,7 @@ import XCTest
 
 class DataParserTests: XCTestCase {
     /// Test parsing date strings
-    func testParseDate() throws {
+    func testParseDate() {
         let dateString = "2023-10-05"
         let expectedDate = DateComponents(year: 2023, month: 10, day: 5).date!
 
@@ -15,7 +15,7 @@ class DataParserTests: XCTestCase {
         }
     }
 
-    func testParseDateInvalidFormat() throws {
+    func testParseDateInvalidFormat() {
         let dateString = "10/05/2023"
         do {
             DataParser.parseDate(dateString)
@@ -26,7 +26,7 @@ class DataParserTests: XCTestCase {
     }
 
     /// Test parsing amount strings
-    func testParseAmount() throws {
+    func testParseAmount() {
         let amountString = "$100.50"
         let expectedAmount = 100.50
 
@@ -38,7 +38,7 @@ class DataParserTests: XCTestCase {
         }
     }
 
-    func testParseAmountInvalidFormat() throws {
+    func testParseAmountInvalidFormat() {
         let amountString = "100,50"
         do {
             DataParser.parseAmount(amountString)
@@ -49,7 +49,7 @@ class DataParserTests: XCTestCase {
     }
 
     /// Test parsing transaction type
-    func testParseTransactionTypeIncome() throws {
+    func testParseTransactionTypeIncome() {
         let typeString = "Salary"
         let expectedType = .income
 
@@ -61,7 +61,7 @@ class DataParserTests: XCTestCase {
         }
     }
 
-    func testParseTransactionTypeExpense() throws {
+    func testParseTransactionTypeExpense() {
         let typeString = "Payment"
         let expectedType = .expense
 
@@ -73,7 +73,7 @@ class DataParserTests: XCTestCase {
         }
     }
 
-    func testParseTransactionTypeInvalidType() throws {
+    func testParseTransactionTypeInvalidType() {
         let typeString = "Unknown"
         let expectedType = .expense
 
@@ -86,7 +86,7 @@ class DataParserTests: XCTestCase {
     }
 
     /// Test parsing with different amounts
-    func testParseTransactionTypeWithPositiveAmount() throws {
+    func testParseTransactionTypeWithPositiveAmount() {
         let typeString = "Salary"
         let expectedType = .income
 
@@ -98,7 +98,7 @@ class DataParserTests: XCTestCase {
         }
     }
 
-    func testParseTransactionTypeWithNegativeAmount() throws {
+    func testParseTransactionTypeWithNegativeAmount() {
         let typeString = "Payment"
         let expectedType = .expense
 
@@ -111,7 +111,7 @@ class DataParserTests: XCTestCase {
     }
 
     /// Test parsing with zero amount
-    func testParseTransactionTypeWithZeroAmount() throws {
+    func testParseTransactionTypeWithZeroAmount() {
         let typeString = "Salary"
         let expectedType = .income
 
@@ -124,7 +124,7 @@ class DataParserTests: XCTestCase {
     }
 
     /// Test parsing with negative amount
-    func testParseTransactionTypeWithNegativeAmount() throws {
+    func testParseTransactionTypeWithNegativeAmount() {
         let typeString = "Payment"
         let expectedType = .expense
 

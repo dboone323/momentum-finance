@@ -26,7 +26,7 @@ final class PerformanceManagerTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(fps, 0)
     }
 
-    func testGetCurrentFPSClosure() async throws {
+    func testGetCurrentFPSClosure() async {
         let expectation = XCTestExpectation(description: "FPS should be calculated")
         performanceManager.getCurrentFPS { fps in
             XCTAssertGreaterThanOrEqual(fps, 0)
@@ -40,7 +40,7 @@ final class PerformanceManagerTests: XCTestCase {
         XCTAssertGreaterThan(memoryUsage, 0)
     }
 
-    func testGetMemoryUsageClosure() async throws {
+    func testGetMemoryUsageClosure() async {
         let expectation = XCTestExpectation(description: "Memory usage should be calculated")
         performanceManager.getMemoryUsage { usage in
             XCTAssertGreaterThan(usage, 0)
@@ -65,7 +65,7 @@ final class PerformanceManagerTests: XCTestCase {
         XCTAssertTrue(isDegraded, "Should be degraded with FPS below threshold")
     }
 
-    func testIsPerformanceDegradedClosure() async throws {
+    func testIsPerformanceDegradedClosure() async {
         for _ in 0 ..< 35 {
             performanceManager.recordFrame()
         }
@@ -77,7 +77,7 @@ final class PerformanceManagerTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 1.0)
     }
 
-    func testIsPerformanceDegradedWithLowFPSClosure() async throws {
+    func testIsPerformanceDegradedWithLowFPSClosure() async {
         for _ in 0 ..< 5 {
             performanceManager.recordFrame()
         }

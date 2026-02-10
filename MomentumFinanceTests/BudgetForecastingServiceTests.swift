@@ -26,7 +26,7 @@ final class BudgetForecastingServiceTests: XCTestCase {
         XCTAssertEqual(forecast.trend, .stable)
     }
 
-    func testForecastNextMonth_StableSpending() async throws {
+    func testForecastNextMonth_StableSpending() async {
         // Given: 3 months of consistent spending ($100 each month)
         let dates = [
             Calendar.current.date(byAdding: .month, value: -1, to: Date())!,
@@ -55,7 +55,7 @@ final class BudgetForecastingServiceTests: XCTestCase {
         XCTAssertEqual(forecast.amount, 100.0 * seasonalFactor(), accuracy: 5.0)
     }
 
-    func testForecastNextMonth_IncreasingTrend() async throws {
+    func testForecastNextMonth_IncreasingTrend() async {
         // Given: Spending increasing over 3 months (50 -> 100 -> 150)
         let today = Date()
         let oneMonthAgo = Calendar.current.date(byAdding: .month, value: -1, to: today)!

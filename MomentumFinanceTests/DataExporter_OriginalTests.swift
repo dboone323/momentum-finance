@@ -6,7 +6,7 @@ class DataExporterTests: XCTestCase {
     var dataExporter: DataExporter!
 
     /// Test that the configure method initializes the engine asynchronously when a ModelContext is available
-    func testConfigureWithModelContext() async throws {
+    func testConfigureWithModelContext() async {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
 
@@ -15,7 +15,7 @@ class DataExporterTests: XCTestCase {
     }
 
     /// Test that the export method throws an error when the engine is nil
-    func testExportWithInvalidSettings() async throws {
+    func testExportWithInvalidSettings() async {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
 
@@ -57,7 +57,7 @@ class DataExporterTests: XCTestCase {
     }
 
     /// Test that the engine is properly initialized when a ModelContext is available
-    func testConfigureWithModelContextAsync() async throws {
+    func testConfigureWithModelContextAsync() async {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
 

@@ -49,7 +49,7 @@ final class PerformanceRegressionTests: XCTestCase {
 
     // MARK: - Export Performance
 
-    func testCSVExportPerformance() async throws {
+    func testCSVExportPerformance() async {
         createTestTransactions(count: 5000)
 
         let exportService = SwiftDataExportEngineService(modelContext: modelContext)
@@ -61,7 +61,7 @@ final class PerformanceRegressionTests: XCTestCase {
         // Baseline: 5000 transactions should export in < 2s
     }
 
-    func testJSONExportPerformance() async throws {
+    func testJSONExportPerformance() async {
         createTestTransactions(count: 5000)
 
         let exportService = SwiftDataExportEngineService(modelContext: modelContext)
@@ -104,7 +104,7 @@ final class PerformanceRegressionTests: XCTestCase {
 
     // MARK: - SwiftData Fetch Performance
 
-    func testLargeFetchPerformance() throws {
+    func testLargeFetchPerformance() {
         createTestTransactions(count: 10000)
 
         measure(metrics: [XCTClockMetric(), XCTMemoryMetric()]) {
@@ -114,7 +114,7 @@ final class PerformanceRegressionTests: XCTestCase {
         // Baseline: 10K records in < 0.3s
     }
 
-    func testFilteredFetchPerformance() throws {
+    func testFilteredFetchPerformance() {
         createTestTransactions(count: 10000)
 
         let startDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())!

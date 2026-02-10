@@ -96,8 +96,7 @@ import SwiftUI
     /// Preview extensions for ColorTheme
     extension ColorTheme {
         static var preview: ColorTheme {
-            let theme = ColorTheme()
-            return theme
+            ColorTheme()
         }
 
         static var previewDark: ColorTheme {

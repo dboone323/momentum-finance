@@ -8,7 +8,7 @@ class FISTestsDuplicate2: XCTestCase {
 
     // MARK: - Test Cases
 
-    func testAnalyzeFinancialData() throws {
+    func testAnalyzeFinancialData() {
         // GIVEN
         let transactions = [
             FinancialTransaction(amount: 100, category: .food, date: Date()),
@@ -32,7 +32,7 @@ class FISTestsDuplicate2: XCTestCase {
         }
     }
 
-    func testSuggestCategoryForTransaction() throws {
+    func testSuggestCategoryForTransaction() {
         // GIVEN
         let transaction = FinancialTransaction(amount: 100, category: .food, date: Date())
 
@@ -43,7 +43,7 @@ class FISTestsDuplicate2: XCTestCase {
         XCTAssertEqual(category?.name, "Food") // Correct category should be suggested
     }
 
-    func testAnalyzeSpendingPatterns() throws {
+    func testAnalyzeSpendingPatterns() {
         // GIVEN
         let transactions = [
             FinancialTransaction(amount: 100, category: .food, date: Date()),
@@ -67,7 +67,7 @@ class FISTestsDuplicate2: XCTestCase {
         }
     }
 
-    func testDetectAnomalies() throws {
+    func testDetectAnomalies() {
         // GIVEN
         let transactions = [
             FinancialTransaction(amount: 100, category: .food, date: Date()),
@@ -87,7 +87,7 @@ class FISTestsDuplicate2: XCTestCase {
         }
     }
 
-    func testAnalyzeBudgets() throws {
+    func testAnalyzeBudgets() {
         // GIVEN
         let transactions = [
             FinancialTransaction(amount: 100, category: .food, date: Date()),

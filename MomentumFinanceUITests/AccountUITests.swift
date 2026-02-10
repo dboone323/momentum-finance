@@ -19,7 +19,7 @@ final class AccountUITests: XCTestCase {
     // MARK: - Account Creation Tests
 
     @MainActor
-    func testCreateCheckingAccount() throws {
+    func testCreateCheckingAccount() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -69,7 +69,7 @@ final class AccountUITests: XCTestCase {
     }
 
     @MainActor
-    func testCreateSavingsAccount() throws {
+    func testCreateSavingsAccount() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -121,7 +121,7 @@ final class AccountUITests: XCTestCase {
     // MARK: - Account Balance Tests
 
     @MainActor
-    func testAccountBalanceDisplay() throws {
+    func testAccountBalanceDisplay() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -145,7 +145,7 @@ final class AccountUITests: XCTestCase {
     }
 
     @MainActor
-    func testAccountBalanceUpdate() throws {
+    func testAccountBalanceUpdate() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -186,7 +186,7 @@ final class AccountUITests: XCTestCase {
     // MARK: - Account Editing Tests
 
     @MainActor
-    func testEditAccountDetails() throws {
+    func testEditAccountDetails() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -229,7 +229,7 @@ final class AccountUITests: XCTestCase {
     // MARK: - Account Deletion Tests
 
     @MainActor
-    func testDeleteAccount() throws {
+    func testDeleteAccount() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -269,7 +269,7 @@ final class AccountUITests: XCTestCase {
     // MARK: - Account Transfer Tests
 
     @MainActor
-    func testTransferBetweenAccounts() throws {
+    func testTransferBetweenAccounts() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -321,7 +321,7 @@ final class AccountUITests: XCTestCase {
     // MARK: - Account Summary Tests
 
     @MainActor
-    func testAccountSummaryView() throws {
+    func testAccountSummaryView() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -357,7 +357,7 @@ final class AccountUITests: XCTestCase {
     // MARK: - Account Filtering Tests
 
     @MainActor
-    func testFilterAccountsByType() throws {
+    func testFilterAccountsByType() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -401,7 +401,7 @@ final class AccountUITests: XCTestCase {
     // MARK: - Account Search Tests
 
     @MainActor
-    func testSearchAccounts() throws {
+    func testSearchAccounts() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -432,7 +432,7 @@ final class AccountUITests: XCTestCase {
     // MARK: - Account Validation Tests
 
     @MainActor
-    func testInvalidAccountNameValidation() throws {
+    func testInvalidAccountNameValidation() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -464,7 +464,7 @@ final class AccountUITests: XCTestCase {
     }
 
     @MainActor
-    func testDuplicateAccountNameValidation() throws {
+    func testDuplicateAccountNameValidation() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -516,7 +516,7 @@ final class AccountUITests: XCTestCase {
     // MARK: - Performance Tests
 
     @MainActor
-    func testAccountListScrollingPerformance() throws {
+    func testAccountListScrollingPerformance() {
         // Navigate to accounts
         let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch
         if accountsTab.exists {
@@ -534,7 +534,7 @@ final class AccountUITests: XCTestCase {
     }
 
     @MainActor
-    func testAccountCreationPerformance() throws {
+    func testAccountCreationPerformance() {
         measure {
             // Navigate to accounts
             let accountsTab = self.app.tabBars.buttons["Accounts"].firstMatch

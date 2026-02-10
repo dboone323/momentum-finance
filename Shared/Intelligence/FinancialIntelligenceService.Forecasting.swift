@@ -152,7 +152,7 @@ extension FinancialIntelligenceService {
             description = "Your \(account.name) balance is stable."
         }
 
-        let insight = FinancialInsight(
+        return FinancialInsight(
             title: title,
             description: description,
             priority: priority,
@@ -161,7 +161,6 @@ extension FinancialIntelligenceService {
             visualizationType: VisualizationType.lineChart,
             chartData: forecastData.map { ChartDataPoint(label: $0.0, value: $0.1) }
         )
-        return insight
     }
 
     /// Main forecasting function for helpers

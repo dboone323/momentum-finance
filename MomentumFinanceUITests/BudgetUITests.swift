@@ -19,7 +19,7 @@ final class BudgetUITests: XCTestCase {
     // MARK: - Budget Creation Tests
 
     @MainActor
-    func testCreateMonthlyBudget() throws {
+    func testCreateMonthlyBudget() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -78,7 +78,7 @@ final class BudgetUITests: XCTestCase {
     }
 
     @MainActor
-    func testCreateCategoryBudget() throws {
+    func testCreateCategoryBudget() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -130,7 +130,7 @@ final class BudgetUITests: XCTestCase {
     // MARK: - Budget Progress Tests
 
     @MainActor
-    func testBudgetProgressDisplay() throws {
+    func testBudgetProgressDisplay() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -159,7 +159,7 @@ final class BudgetUITests: XCTestCase {
     }
 
     @MainActor
-    func testBudgetProgressUpdate() throws {
+    func testBudgetProgressUpdate() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -211,7 +211,7 @@ final class BudgetUITests: XCTestCase {
     // MARK: - Budget Editing Tests
 
     @MainActor
-    func testEditBudgetAmount() throws {
+    func testEditBudgetAmount() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -254,7 +254,7 @@ final class BudgetUITests: XCTestCase {
     // MARK: - Budget Deletion Tests
 
     @MainActor
-    func testDeleteBudget() throws {
+    func testDeleteBudget() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -294,7 +294,7 @@ final class BudgetUITests: XCTestCase {
     // MARK: - Budget Alert Tests
 
     @MainActor
-    func testBudgetAlertDisplay() throws {
+    func testBudgetAlertDisplay() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -312,7 +312,7 @@ final class BudgetUITests: XCTestCase {
     }
 
     @MainActor
-    func testBudgetOverLimitAlert() throws {
+    func testBudgetOverLimitAlert() {
         // Create a budget and exceed it with transactions
         // This test assumes some transactions exist that would exceed budget
 
@@ -335,7 +335,7 @@ final class BudgetUITests: XCTestCase {
     // MARK: - Budget Category Tests
 
     @MainActor
-    func testBudgetByCategory() throws {
+    func testBudgetByCategory() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -358,7 +358,7 @@ final class BudgetUITests: XCTestCase {
     // MARK: - Budget Summary Tests
 
     @MainActor
-    func testBudgetSummaryView() throws {
+    func testBudgetSummaryView() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -378,7 +378,7 @@ final class BudgetUITests: XCTestCase {
     // MARK: - Budget Filtering Tests
 
     @MainActor
-    func testFilterBudgetsByPeriod() throws {
+    func testFilterBudgetsByPeriod() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -422,7 +422,7 @@ final class BudgetUITests: XCTestCase {
     // MARK: - Budget Validation Tests
 
     @MainActor
-    func testInvalidBudgetAmountValidation() throws {
+    func testInvalidBudgetAmountValidation() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -454,7 +454,7 @@ final class BudgetUITests: XCTestCase {
     }
 
     @MainActor
-    func testZeroBudgetAmountValidation() throws {
+    func testZeroBudgetAmountValidation() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -489,7 +489,7 @@ final class BudgetUITests: XCTestCase {
     // MARK: - Performance Tests
 
     @MainActor
-    func testBudgetListScrollingPerformance() throws {
+    func testBudgetListScrollingPerformance() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -507,7 +507,7 @@ final class BudgetUITests: XCTestCase {
     }
 
     @MainActor
-    func testBudgetCreationPerformance() throws {
+    func testBudgetCreationPerformance() {
         measure {
             // Navigate to budgets
             let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
@@ -543,7 +543,7 @@ final class BudgetUITests: XCTestCase {
     // MARK: - Budget Report Tests
 
     @MainActor
-    func testBudgetReportGeneration() throws {
+    func testBudgetReportGeneration() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {
@@ -568,7 +568,7 @@ final class BudgetUITests: XCTestCase {
     }
 
     @MainActor
-    func testBudgetComparisonView() throws {
+    func testBudgetComparisonView() {
         // Navigate to budgets
         let budgetsTab = self.app.tabBars.buttons["Budgets"].firstMatch
         if budgetsTab.exists {

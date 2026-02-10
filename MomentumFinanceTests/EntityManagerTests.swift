@@ -16,7 +16,7 @@ class EntityManagerTests: XCTestCase {
 
     // MARK: - Test getOrCreateAccount
 
-    func testGetOrCreateAccountWithExistingAccount() async throws {
+    func testGetOrCreateAccountWithExistingAccount() async {
         // GIVEN
         let fields = ["Imported Account", "100.00"]
         let columnMapping = CSVColumnMapping(accountIndex: 0, categoryIndex: 1)
@@ -31,7 +31,7 @@ class EntityManagerTests: XCTestCase {
         XCTAssertEqual(account.balance, expectedBalance)
     }
 
-    func testGetOrCreateAccountWithNewAccount() async throws {
+    func testGetOrCreateAccountWithNewAccount() async {
         // GIVEN
         let fields = ["New Account", "200.00"]
         let columnMapping = CSVColumnMapping(accountIndex: 0, categoryIndex: 1)
@@ -46,7 +46,7 @@ class EntityManagerTests: XCTestCase {
         XCTAssertEqual(account.balance, expectedBalance)
     }
 
-    func testGetOrCreateAccountWithInvalidData() async throws {
+    func testGetOrCreateAccountWithInvalidData() async {
         // GIVEN
         let fields = ["", "300.00"]
         let columnMapping = CSVColumnMapping(accountIndex: 0, categoryIndex: 1)
@@ -62,7 +62,7 @@ class EntityManagerTests: XCTestCase {
 
     // MARK: - Test getOrCreateCategory
 
-    func testGetOrCreateCategoryWithExistingCategory() async throws {
+    func testGetOrCreateCategoryWithExistingCategory() async {
         // GIVEN
         let fields = ["Other Income", "400.00"]
         let columnMapping = CSVColumnMapping(accountIndex: 0, categoryIndex: 1)
@@ -77,7 +77,7 @@ class EntityManagerTests: XCTestCase {
         XCTAssertEqual(category.iconName, expectedIconName)
     }
 
-    func testGetOrCreateCategoryWithNewCategory() async throws {
+    func testGetOrCreateCategoryWithNewCategory() async {
         // GIVEN
         let fields = ["Other Expenses", "500.00"]
         let columnMapping = CSVColumnMapping(accountIndex: 0, categoryIndex: 1)
@@ -92,7 +92,7 @@ class EntityManagerTests: XCTestCase {
         XCTAssertEqual(category.iconName, expectedIconName)
     }
 
-    func testGetOrCreateCategoryWithInvalidData() async throws {
+    func testGetOrCreateCategoryWithInvalidData() async {
         // GIVEN
         let fields = ["", "600.00"]
         let columnMapping = CSVColumnMapping(accountIndex: 0, categoryIndex: 1)
@@ -108,7 +108,7 @@ class EntityManagerTests: XCTestCase {
 
     // MARK: - Object Pooling
 
-    func testObjectPooling() async throws {
+    func testObjectPooling() async {
         // GIVEN
         let expectedCount = 50
 
