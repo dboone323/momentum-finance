@@ -54,7 +54,7 @@ class PortfolioManager {
         for (type, value) in allocationByType {
             let percentage =
                 (Double(truncating: value as NSDecimalNumber)
-                    / Double(truncating: totalValue as NSDecimalNumber)) * 100
+                        / Double(truncating: totalValue as NSDecimalNumber)) * 100
             percentageAllocation[type] = percentage
         }
 

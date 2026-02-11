@@ -27,7 +27,7 @@ class SpendingAnalyzer {
             let categoryTotal = txs.reduce(0) { $0 + $1.amount }
             let percentage =
                 (Double(truncating: categoryTotal as NSNumber)
-                    / Double(truncating: totalSpending as NSNumber)) * 100
+                        / Double(truncating: totalSpending as NSNumber)) * 100
             return CategorySpending(
                 categoryId: categoryId, totalAmount: categoryTotal, percentage: percentage
             )
@@ -73,7 +73,7 @@ class SpendingAnalyzer {
         let savings = income - expenses
         let savingRate =
             (Double(truncating: savings as NSDecimalNumber)
-                / Double(truncating: income as NSDecimalNumber)) * 100
+                    / Double(truncating: income as NSDecimalNumber)) * 100
 
         return max(0, min(100, savingRate)) // Clamp between 0 and 100
     }
