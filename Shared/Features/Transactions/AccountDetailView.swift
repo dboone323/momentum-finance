@@ -90,7 +90,8 @@ public struct AccountDetailView: View {
 
                         Text(
                             self.formattedCurrency(
-                                Double(truncating: self.account.balance as NSDecimalNumber))
+                                Double(truncating: self.account.balance as NSDecimalNumber)
+                            )
                         )
                         .font(.largeTitle)
                         .fontWeight(.bold)

@@ -207,7 +207,8 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         for budget in budgets {
             let spent = self.calculateSpentAmount(transactions, for: budget)
             let percentageUsed = Double(
-                truncating: (spent / budget.limitAmount * 100) as NSDecimalNumber)
+                truncating: (spent / budget.limitAmount * 100) as NSDecimalNumber
+            )
 
             if percentageUsed > 90 {
                 insights.append(

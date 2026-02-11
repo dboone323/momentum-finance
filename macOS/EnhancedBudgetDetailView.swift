@@ -46,7 +46,9 @@ import SwiftUI
                 case yearToDate = "Year to Date"
                 case custom = "Custom Range"
 
-                var id: String { rawValue }
+                var id: String {
+                    rawValue
+                }
             }
 
             var body: some View {

@@ -12,7 +12,9 @@ struct NetWorthPoint: Identifiable {
     let date: Date
     let assets: Decimal
     let liabilities: Decimal
-    var netWorth: Decimal { assets - liabilities }
+    var netWorth: Decimal {
+        assets - liabilities
+    }
 }
 
 @MainActor

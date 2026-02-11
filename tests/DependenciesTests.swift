@@ -68,11 +68,20 @@ class DependenciesTests: XCTestCase {
 /// Mock classes to be used during testing
 class MockPerformanceManager: PerformanceManager {
     override func recordFrame() {}
-    override func getCurrentFPS() -> Double { 0.0 }
+    override func getCurrentFPS() -> Double {
+        0.0
+    }
+
     override func getCurrentFPS(completion: @escaping (Double) -> Void) {}
-    override func getMemoryUsage() -> Double { 0.0 }
+    override func getMemoryUsage() -> Double {
+        0.0
+    }
+
     override func getMemoryUsage(completion: @escaping (Double) -> Void) {}
-    override func isPerformanceDegraded() -> Bool { false }
+    override func isPerformanceDegraded() -> Bool {
+        false
+    }
+
     override func isPerformanceDegraded(completion: @escaping (Bool) -> Void) {}
 }
 
@@ -81,5 +90,7 @@ class MockLogger: Logger {
         super.logSync(message, level: level)
     }
 
-    override var formattedMessage: ((String, LogLevel) -> String)? { nil }
+    override var formattedMessage: ((String, LogLevel) -> String)? {
+        nil
+    }
 }

@@ -14,7 +14,10 @@ enum Currency: String, CaseIterable, Identifiable {
     case jpy = "JPY"
     case cad = "CAD"
 
-    var id: String { rawValue }
+    var id: String {
+        rawValue
+    }
+
     var symbol: String {
         switch self {
         case .usd, .cad: "$"

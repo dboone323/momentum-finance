@@ -133,8 +133,3 @@ public struct SimpleDashboardView: View {
         }
     }
 }
-
-/// Connect to Features.Dashboard namespace
-extension Features.Dashboard {
-    // Remove conflicting typealias to prevent DashboardView redeclaration error
-}

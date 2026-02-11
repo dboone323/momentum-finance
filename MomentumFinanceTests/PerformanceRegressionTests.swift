@@ -49,7 +49,7 @@ final class PerformanceRegressionTests: XCTestCase {
 
     // MARK: - Export Performance
 
-    func testCSVExportPerformance() async {
+    func testCSVExportPerformance() {
         createTestTransactions(count: 5000)
 
         let exportService = SwiftDataExportEngineService(modelContext: modelContext)
@@ -61,7 +61,7 @@ final class PerformanceRegressionTests: XCTestCase {
         // Baseline: 5000 transactions should export in < 2s
     }
 
-    func testJSONExportPerformance() async {
+    func testJSONExportPerformance() {
         createTestTransactions(count: 5000)
 
         let exportService = SwiftDataExportEngineService(modelContext: modelContext)
@@ -76,7 +76,7 @@ final class PerformanceRegressionTests: XCTestCase {
 
     // MARK: - ML Performance
 
-    func testMLSpendingPredictionPerformance() async {
+    func testMLSpendingPredictionPerformance() {
         createTestTransactions(count: 500)
 
         let mlService = SwiftDataFinancialMLService(modelContext: modelContext)
@@ -90,7 +90,7 @@ final class PerformanceRegressionTests: XCTestCase {
         // Baseline: < 0.5s
     }
 
-    func testMLPatternAnalysisPerformance() async {
+    func testMLPatternAnalysisPerformance() {
         createTestTransactions(count: 1000)
 
         let mlService = SwiftDataFinancialMLService(modelContext: modelContext)
@@ -141,7 +141,7 @@ final class PerformanceRegressionTests: XCTestCase {
         // Memory should not grow significantly
     }
 
-    func testNoMemoryLeaksInMLAnalysis() async {
+    func testNoMemoryLeaksInMLAnalysis() {
         createTestTransactions(count: 500)
         let mlService = SwiftDataFinancialMLService(modelContext: modelContext)
 

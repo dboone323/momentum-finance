@@ -21,7 +21,9 @@ import SwiftUI
         case lastYear = "Last Year"
         case allTime = "All Time"
 
-        var id: String { rawValue }
+        var id: String {
+            rawValue
+        }
     }
 
     struct AccountTypeBadge: View {
@@ -321,7 +323,8 @@ import SwiftUI
                         y: center.y - innerRadius,
                         width: innerRadius * 2,
                         height: innerRadius * 2
-                    ))
+                    )
+                )
                 context.fill(innerCirclePath, with: .color(.white))
             }
         }
@@ -350,7 +353,8 @@ import SwiftUI
                         DetailField(
                             label: "Available Credit",
                             value: availableCredit.formatted(
-                                .currency(code: self.account.currencyCode))
+                                .currency(code: self.account.currencyCode)
+                            )
                         )
                     }
 
@@ -376,7 +380,8 @@ import SwiftUI
                             .tint(
                                 self.getCreditUtilizationColor(
                                     used: abs(self.account.balance), limit: creditLimit
-                                ))
+                                )
+                            )
 
                         HStack {
                             Text(

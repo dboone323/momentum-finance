@@ -13,8 +13,13 @@ struct Holding: Identifiable {
     let quantity: Double
     let costBasis: Decimal
     let currentPrice: Decimal
-    var marketValue: Decimal { Decimal(quantity) * currentPrice }
-    var gainLoss: Decimal { marketValue - costBasis }
+    var marketValue: Decimal {
+        Decimal(quantity) * currentPrice
+    }
+
+    var gainLoss: Decimal {
+        marketValue - costBasis
+    }
 }
 
 @MainActor

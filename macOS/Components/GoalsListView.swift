@@ -80,7 +80,8 @@ import SwiftUI
                                     Spacer()
 
                                     let percentage = Int(
-                                        (goal.currentAmount / goal.targetAmount) * 100)
+                                        (goal.currentAmount / goal.targetAmount) * 100
+                                    )
                                     Text("\(percentage)%")
                                         .font(.caption)
                                         .bold()
@@ -224,7 +225,8 @@ import SwiftUI
                                         Spacer()
 
                                         let percentage = Int(
-                                            (goal.currentAmount / goal.targetAmount) * 100)
+                                            (goal.currentAmount / goal.targetAmount) * 100
+                                        )
                                         Text("\(percentage)% Complete")
                                             .foregroundStyle(.blue)
                                             .bold()

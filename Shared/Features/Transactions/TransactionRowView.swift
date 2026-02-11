@@ -39,7 +39,8 @@ public extension Features.Transactions {
                         Text(self.transaction.formattedAmount)
                             .font(.headline)
                             .foregroundColor(
-                                self.transaction.transactionType == .income ? .green : .red)
+                                self.transaction.transactionType == .income ? .green : .red
+                            )
 
                         Text(self.transaction.formattedDate)
                             .font(.caption)

@@ -50,7 +50,9 @@ import SwiftUI
                 case twoYears = "2 Years"
                 case allTime = "All Time"
 
-                var id: String { rawValue }
+                var id: String {
+                    rawValue
+                }
             }
 
             var body: some View {
@@ -178,7 +180,8 @@ import SwiftUI
                             "Subscription Not Found",
                             systemImage: "exclamationmark.triangle",
                             description: Text(
-                                "The subscription you're looking for could not be found.")
+                                "The subscription you're looking for could not be found."
+                            )
                         )
                     )
                 }
@@ -223,13 +226,15 @@ import SwiftUI
                                             Text(
                                                 subscription.amount
                                                     .formatted(
-                                                        .currency(code: subscription.currencyCode))
+                                                        .currency(code: subscription.currencyCode)
+                                                    )
                                             )
                                             .font(.system(size: 28, weight: .bold))
 
                                             Text(
                                                 self.formatBillingCycle(
-                                                    subscription.billingCycle.rawValue.lowercased())
+                                                    subscription.billingCycle.rawValue.lowercased()
+                                                )
                                             )
                                             .font(.subheadline)
                                             .foregroundStyle(.secondary)
@@ -248,14 +253,16 @@ import SwiftUI
                                                 label: "Monthly Cost",
                                                 value: self.calculateMonthlyCost(subscription)
                                                     .formatted(
-                                                        .currency(code: subscription.currencyCode))
+                                                        .currency(code: subscription.currencyCode)
+                                                    )
                                             )
 
                                             SubscriptionDetailField(
                                                 label: "Annual Cost",
                                                 value: self.calculateAnnualCost(subscription)
                                                     .formatted(
-                                                        .currency(code: subscription.currencyCode))
+                                                        .currency(code: subscription.currencyCode)
+                                                    )
                                             )
                                         }
 
@@ -314,7 +321,8 @@ import SwiftUI
                                             Text(
                                                 self.calculateTotalSpent(subscription)
                                                     .formatted(
-                                                        .currency(code: subscription.currencyCode))
+                                                        .currency(code: subscription.currencyCode)
+                                                    )
                                             )
                                             .font(.headline)
                                         }
@@ -328,7 +336,8 @@ import SwiftUI
                                             Text(
                                                 self.calculateMonthlyCost(subscription)
                                                     .formatted(
-                                                        .currency(code: subscription.currencyCode))
+                                                        .currency(code: subscription.currencyCode)
+                                                    )
                                             )
                                             .font(.headline)
                                         }
@@ -405,7 +414,8 @@ import SwiftUI
                                                         subscription.amount
                                                             .formatted(
                                                                 .currency(
-                                                                    code: subscription.currencyCode)
+                                                                    code: subscription.currencyCode
+                                                                )
                                                             )
                                                     )
                                                     .foregroundStyle(i == 0 ? .primary : .secondary)

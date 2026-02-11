@@ -6,7 +6,7 @@ import Foundation
 // This will create a simple Xcode project programmatically
 print("Creating Xcode project...")
 
-// We'll use xcodegen or create a minimal project structure
+/// We'll use xcodegen or create a minimal project structure
 let projectContent = """
 // !$*UTF8*$!
 {

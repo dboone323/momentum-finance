@@ -499,7 +499,9 @@ import SwiftUI
             var modifiers: EventModifiers = []
             var action: (() -> Void)?
 
-            override var acceptsFirstResponder: Bool { true }
+            override var acceptsFirstResponder: Bool {
+                true
+            }
 
             override func keyDown(with event: NSEvent) {
                 let pressedKey = event.charactersIgnoringModifiers?.lowercased() ?? ""

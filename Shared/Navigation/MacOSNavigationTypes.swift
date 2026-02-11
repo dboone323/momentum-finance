@@ -24,7 +24,9 @@ import SwiftUI
         }
 
         /// Identifiable conformance
-        public var identifierId: String { self.identifier }
+        public var identifierId: String {
+            self.identifier
+        }
 
         /// Hashable conformance
         public func hash(into hasher: inout Hasher) {

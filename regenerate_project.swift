@@ -6,7 +6,7 @@ import Foundation
 let projectDir = "/Users/danielstevens/Desktop/MomentumFinaceApp"
 let projectName = "MomentumFinance"
 
-// Create a new project.pbxproj content
+/// Create a new project.pbxproj content
 let pbxprojContent = """
 // !$*UTF8*$!
 {
@@ -399,7 +399,7 @@ let pbxprojContent = """
 """
 // swiftlint:enable line_length file_length
 
-// Write the new project file
+/// Write the new project file
 let projectPath = "\\(projectDir)/MomentumFinance.xcodeproj/project.pbxproj"
 try pbxprojContent.write(toFile: projectPath, atomically: true, encoding: .utf8)
 

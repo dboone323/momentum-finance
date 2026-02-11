@@ -70,7 +70,8 @@ import SwiftUI
                     Button(
                         action: {
                             self.isEditing.toggle().accessibilityLabel("Button").accessibilityLabel(
-                                "Button")
+                                "Button"
+                            )
                         },
                         label: {
                             Text(self.isEditing ? "Done" : "Edit")
@@ -189,7 +190,8 @@ import SwiftUI
                                     VStack(alignment: .trailing, spacing: 4) {
                                         Text(
                                             account.balance.formatted(
-                                                .currency(code: account.currencyCode))
+                                                .currency(code: account.currencyCode)
+                                            )
                                         )
                                         .font(.system(size: 36, weight: .bold))
                                         .foregroundStyle(account.balance >= 0 ? .green : .red)

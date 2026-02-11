@@ -60,7 +60,8 @@ final class DashboardViewModel {
         Array(
             transactions
                 .sorted { $0.date > $1.date }
-                .prefix(limit))
+                .prefix(limit)
+        )
     }
 
     /// Check for overdue subscriptions and process them

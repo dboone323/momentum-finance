@@ -8,7 +8,9 @@ import Foundation
     @MainActor
     public class DataImporter {
         private let modelContainer: ModelContainer
-        public init(modelContainer: ModelContainer) { self.modelContainer = modelContainer }
+        public init(modelContainer: ModelContainer) {
+            self.modelContainer = modelContainer
+        }
 
         public func importFromCSV(_ content: String) async throws -> ImportResult {
             let lines = content.components(separatedBy: .newlines).filter { !$0.isEmpty }

@@ -64,7 +64,8 @@ public struct InsightsWidget: View {
             Task {
                 if self.intelligenceService.insights.isEmpty {
                     await self.intelligenceService.analyzeFinancialData(
-                        modelContext: self.modelContext)
+                        modelContext: self.modelContext
+                    )
                 }
             }
         }

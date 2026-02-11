@@ -129,7 +129,8 @@ import SwiftUI
                         Text("\(Int((self.budgetSpent / self.budgetTotal) * 100))% Used")
                             .font(.caption)
                             .foregroundStyle(
-                                self.getBudgetColor(self.budgetSpent / self.budgetTotal))
+                                self.getBudgetColor(self.budgetSpent / self.budgetTotal)
+                            )
                     }
                 }
 

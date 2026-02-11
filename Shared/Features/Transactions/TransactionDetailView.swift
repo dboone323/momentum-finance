@@ -24,7 +24,8 @@ extension Features.Transactions {
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(
-                                self.transaction.transactionType == .income ? .green : .red)
+                                self.transaction.transactionType == .income ? .green : .red
+                            )
 
                         Text(self.transaction.transactionType.rawValue)
                             .font(.headline)

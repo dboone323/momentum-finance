@@ -210,7 +210,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
         )
         let personal = self.createPersonalSubscriptions(checkingAccount: checkingAccount)
         let transportation = self.createTransportationSubscriptions(
-            checkingAccount: checkingAccount)
+            checkingAccount: checkingAccount
+        )
 
         return entertainment + utilities + personal + transportation
     }
@@ -224,8 +225,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
         let calendar = Calendar.current
         let today = Date()
 
-        // <#Description#>
-        // - Returns: <#description#>
+        /// <#Description#>
+        /// - Returns: <#description#>
         func safeDateByAdding(days: Int, to date: Date) -> Date {
             calendar.date(byAdding: .day, value: days, to: date) ?? date
         }
@@ -272,8 +273,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
         let calendar = Calendar.current
         let today = Date()
 
-        // <#Description#>
-        // - Returns: <#description#>
+        /// <#Description#>
+        /// - Returns: <#description#>
         func safeDateByAdding(days: Int, to date: Date) -> Date {
             calendar.date(byAdding: .day, value: days, to: date) ?? date
         }
@@ -318,8 +319,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
         let calendar = Calendar.current
         let today = Date()
 
-        // <#Description#>
-        // - Returns: <#description#>
+        /// <#Description#>
+        /// - Returns: <#description#>
         func safeDateByAdding(days: Int, to date: Date) -> Date {
             calendar.date(byAdding: .day, value: days, to: date) ?? date
         }
@@ -346,8 +347,8 @@ public class SubscriptionsDataGenerator: DataGenerator {
         let calendar = Calendar.current
         let today = Date()
 
-        // <#Description#>
-        // - Returns: <#description#>
+        /// <#Description#>
+        /// - Returns: <#description#>
         func safeDateByAdding(days: Int, to date: Date) -> Date {
             calendar.date(byAdding: .day, value: days, to: date) ?? date
         }

@@ -47,33 +47,73 @@ import UniformTypeIdentifiers
     // MARK: - Model Extensions
 
     extension FinancialAccount: DraggableFinanceItem {
-        var dragItemType: FinanceDragItemType { .account }
-        var dragItemTitle: String { name }
-        var dragItemIconName: String { type == .checking ? "banknote" : "creditcard" }
+        var dragItemType: FinanceDragItemType {
+            .account
+        }
+
+        var dragItemTitle: String {
+            name
+        }
+
+        var dragItemIconName: String {
+            type == .checking ? "banknote" : "creditcard"
+        }
     }
 
     extension FinancialTransaction: DraggableFinanceItem {
-        var dragItemType: FinanceDragItemType { .transaction }
-        var dragItemTitle: String { name }
-        var dragItemIconName: String { amount < 0 ? "arrow.down" : "arrow.up" }
+        var dragItemType: FinanceDragItemType {
+            .transaction
+        }
+
+        var dragItemTitle: String {
+            name
+        }
+
+        var dragItemIconName: String {
+            amount < 0 ? "arrow.down" : "arrow.up"
+        }
     }
 
     extension Budget: DraggableFinanceItem {
-        var dragItemType: FinanceDragItemType { .budget }
-        var dragItemTitle: String { name }
-        var dragItemIconName: String { "chart.pie" }
+        var dragItemType: FinanceDragItemType {
+            .budget
+        }
+
+        var dragItemTitle: String {
+            name
+        }
+
+        var dragItemIconName: String {
+            "chart.pie"
+        }
     }
 
     extension Subscription: DraggableFinanceItem {
-        var dragItemType: FinanceDragItemType { .subscription }
-        var dragItemTitle: String { name }
-        var dragItemIconName: String { "calendar.badge.clock" }
+        var dragItemType: FinanceDragItemType {
+            .subscription
+        }
+
+        var dragItemTitle: String {
+            name
+        }
+
+        var dragItemIconName: String {
+            "calendar.badge.clock"
+        }
     }
 
     extension SavingsGoal: DraggableFinanceItem {
-        var dragItemType: FinanceDragItemType { .goal }
-        var dragItemTitle: String { name }
-        var dragItemIconName: String { "target" }
+        var dragItemType: FinanceDragItemType {
+            .goal
+        }
+
+        var dragItemTitle: String {
+            name
+        }
+
+        var dragItemIconName: String {
+            "target"
+        }
     }
 
     // MARK: - Drag & Drop Support Extensions for Models
@@ -161,11 +201,25 @@ import UniformTypeIdentifiers
     // MARK: - UTType Extensions
 
     extension UTType {
-        static var financeAccount: UTType { UTType("com.momentumfinance.account")! }
-        static var financeTransaction: UTType { UTType("com.momentumfinance.transaction")! }
-        static var financeBudget: UTType { UTType("com.momentumfinance.budget")! }
-        static var financeSubscription: UTType { UTType("com.momentumfinance.subscription")! }
-        static var financeGoal: UTType { UTType("com.momentumfinance.goal")! }
+        static var financeAccount: UTType {
+            UTType("com.momentumfinance.account")!
+        }
+
+        static var financeTransaction: UTType {
+            UTType("com.momentumfinance.transaction")!
+        }
+
+        static var financeBudget: UTType {
+            UTType("com.momentumfinance.budget")!
+        }
+
+        static var financeSubscription: UTType {
+            UTType("com.momentumfinance.subscription")!
+        }
+
+        static var financeGoal: UTType {
+            UTType("com.momentumfinance.goal")!
+        }
     }
 
     // MARK: - Drag Preview Providers

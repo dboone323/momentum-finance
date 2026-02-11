@@ -72,7 +72,6 @@ public struct NotificationCenterView: View {
             await self.notificationManager.getPendingNotifications()
     }
 
-    @ViewBuilder
     private func notificationsList() -> some View {
         List {
             ForEach(self.notificationManager.pendingNotifications, id: \.id) { notification in

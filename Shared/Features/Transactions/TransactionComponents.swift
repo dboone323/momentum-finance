@@ -163,12 +163,17 @@ public struct AddTransactionView: View {
         }
     }
 
-    private func saveTransaction() { self.dismiss() }
+    private func saveTransaction() {
+        self.dismiss()
+    }
 }
 
 public struct TransactionDetailView: View {
     let transaction: FinancialTransaction
-    public init(transaction: FinancialTransaction) { self.transaction = transaction }
+    public init(transaction: FinancialTransaction) {
+        self.transaction = transaction
+    }
+
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -202,7 +207,10 @@ public struct TransactionDetailView: View {
 
 public struct TransactionStatsCard: View {
     let transactions: [FinancialTransaction]
-    public init(transactions: [FinancialTransaction]) { self.transactions = transactions }
+    public init(transactions: [FinancialTransaction]) {
+        self.transactions = transactions
+    }
+
     private var totalIncome: Double {
         self.transactions.filter { $0.transactionType == .income }.reduce(0) { $0 + $1.amount }
     }

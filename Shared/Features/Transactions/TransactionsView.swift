@@ -94,7 +94,6 @@ extension Features.Transactions {
             }
         }
 
-        @ViewBuilder
         private var headerSection: some View {
             VStack(spacing: 20) {
                 TransactionStatsCard(transactions: self.filteredTransactions)

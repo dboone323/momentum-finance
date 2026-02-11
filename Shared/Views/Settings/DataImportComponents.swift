@@ -15,7 +15,10 @@ public struct DataImportHeaderComponent: View {
 
 public struct FileSelectionComponent: View {
     @Binding var showingFilePicker: Bool
-    public init(showingFilePicker: Binding<Bool>) { _showingFilePicker = showingFilePicker }
+    public init(showingFilePicker: Binding<Bool>) {
+        _showingFilePicker = showingFilePicker
+    }
+
     public var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "doc.badge.plus").font(.system(size: 48)).foregroundColor(.blue)
@@ -38,7 +41,10 @@ public struct FileSelectionComponent: View {
 
 public struct ImportProgressComponent: View {
     let progress: Double
-    public init(progress: Double) { self.progress = progress }
+    public init(progress: Double) {
+        self.progress = progress
+    }
+
     public var body: some View {
         VStack(spacing: 16) {
             ProgressView(value: self.progress, total: 1.0).progressViewStyle(

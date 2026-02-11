@@ -83,7 +83,8 @@ import SwiftUI
                             .tag(
                                 ListableItem(
                                     id: transaction.id, name: transaction.name, type: .transaction
-                                ))
+                                )
+                            )
                         }
                     }
 
@@ -197,7 +198,8 @@ import SwiftUI
                         .tag(
                             ListableItem(
                                 id: transaction.id, name: transaction.name, type: .transaction
-                            ))
+                            )
+                        )
                     }
                 }
                 .navigationTitle("Transactions")
@@ -275,7 +277,8 @@ import SwiftUI
                                             Text(
                                                 transaction.date.formatted(
                                                     date: .long, time: .shortened
-                                                ))
+                                                )
+                                            )
                                         }
 
                                         VStack(alignment: .leading) {
@@ -302,7 +305,8 @@ import SwiftUI
                                                 transaction.isReconciled ? "Reconciled" : "Pending"
                                             )
                                             .foregroundStyle(
-                                                transaction.isReconciled ? .green : .orange)
+                                                transaction.isReconciled ? .green : .orange
+                                            )
                                         }
                                     }
                                 }
@@ -368,7 +372,8 @@ import SwiftUI
                             "Transaction Not Found",
                             systemImage: "exclamationmark.triangle",
                             description: Text(
-                                "The transaction you're looking for could not be found.")
+                                "The transaction you're looking for could not be found."
+                            )
                         )
                     }
                 }
@@ -430,7 +435,8 @@ import SwiftUI
                                     .tint(
                                         self.getBudgetColor(
                                             spent: budget.spent, total: budget.amount
-                                        ))
+                                        )
+                                    )
                             }
                             .padding(.vertical, 4)
                         }
@@ -726,7 +732,8 @@ import SwiftUI
                                         VStack(alignment: .trailing) {
                                             Text(
                                                 subscription.amount.formatted(
-                                                    .currency(code: "USD"))
+                                                    .currency(code: "USD")
+                                                )
                                             )
                                             .font(.subheadline)
 
@@ -741,7 +748,8 @@ import SwiftUI
                                     ListableItem(
                                         id: subscription.id, name: subscription.name,
                                         type: .subscription
-                                    ))
+                                    )
+                                )
                             }
                         }
                     }
@@ -917,7 +925,8 @@ import SwiftUI
                                     Spacer()
 
                                     let percentage = Int(
-                                        (goal.currentAmount / goal.targetAmount) * 100)
+                                        (goal.currentAmount / goal.targetAmount) * 100
+                                    )
                                     Text("\(percentage)%")
                                         .font(.caption)
                                         .bold()
@@ -1061,7 +1070,8 @@ import SwiftUI
                                         Spacer()
 
                                         let percentage = Int(
-                                            (goal.currentAmount / goal.targetAmount) * 100)
+                                            (goal.currentAmount / goal.targetAmount) * 100
+                                        )
                                         Text("\(percentage)% Complete")
                                             .foregroundStyle(.blue)
                                             .bold()
@@ -1154,7 +1164,8 @@ import SwiftUI
                             "Goal Not Found",
                             systemImage: "exclamationmark.triangle",
                             description: Text(
-                                "The savings goal you're looking for could not be found.")
+                                "The savings goal you're looking for could not be found."
+                            )
                         )
                     }
                 }
@@ -1324,7 +1335,9 @@ import SwiftUI
         }
 
         /// Identifiable conformance
-        var identifierId: String { self.identifier }
+        var identifierId: String {
+            self.identifier
+        }
 
         /// Hashable conformance
         /// <#Description#>
@@ -1441,7 +1454,8 @@ import SwiftUI
                             }
                         case .report:
                             Features.GoalsAndReports.ReportDetailView(
-                                reportType: listItem.id ?? "spending")
+                                reportType: listItem.id ?? "spending"
+                            )
                         }
                     } else {
                         // Default view when no item is selected

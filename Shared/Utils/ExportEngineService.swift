@@ -136,7 +136,8 @@ actor ExportEngineService {
             let isActive = subscription.isActive ? "Yes" : "No"
 
             csvLines.append(
-                "\(name),\(amount),\(cycle),\(nextDue),\(category),\(account),\(isActive)")
+                "\(name),\(amount),\(cycle),\(nextDue),\(category),\(account),\(isActive)"
+            )
         }
 
         return csvLines.joined(separator: "\n") + "\n"
@@ -189,7 +190,7 @@ actor ExportEngineService {
             let nsContext = NSGraphicsContext(cgContext: pdfContext, flipped: false)
             NSGraphicsContext.current = nsContext
 
-            /// Title
+            // Title
             let titleAttributes: [NSAttributedString.Key: Any] = [
                 .font: NSFont.boldSystemFont(ofSize: 24),
                 .foregroundColor: NSColor.black,
@@ -496,7 +497,8 @@ actor ExportEngineService {
 
     private func saveToFile(content: String, filename: String) throws -> URL {
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[
-            0]
+            0
+        ]
         let fileURL = documentsPath.appendingPathComponent(filename)
         try content.write(to: fileURL, atomically: true, encoding: .utf8)
         return fileURL
@@ -504,7 +506,8 @@ actor ExportEngineService {
 
     private func saveToFile(data: Data, filename: String) throws -> URL {
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[
-            0]
+            0
+        ]
         let fileURL = documentsPath.appendingPathComponent(filename)
         try data.write(to: fileURL)
         return fileURL

@@ -5,7 +5,7 @@ class AdvancedFinancialIntelligenceTests: XCTestCase {
     var advancedFinancialIntelligence: AdvancedFinancialIntelligence!
 
     /// Test generateInsights method with real data
-    func testGenerateInsightsWithRealData() async {
+    func testGenerateInsightsWithRealData() {
         let transactions = [
             Transaction(date: Date(), amount: 1000, category: "Groceries"),
             Transaction(date: Date(), amount: 2000, category: "Entertainment"),

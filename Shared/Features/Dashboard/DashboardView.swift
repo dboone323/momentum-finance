@@ -13,13 +13,33 @@ import SwiftUI
     @MainActor
     struct DebugColorThemeStub {
         static let shared = DebugColorThemeStub()
-        var background: Color { Color.gray.opacity(0.1) }
-        var secondaryBackground: Color { Color.gray.opacity(0.05) }
-        var primaryText: Color { Color.primary }
-        var secondaryText: Color { Color.secondary }
-        var accentPrimary: Color { Color.blue }
-        var cardBackground: Color { Color.white }
-        var isDarkMode: Bool { false }
+        var background: Color {
+            Color.gray.opacity(0.1)
+        }
+
+        var secondaryBackground: Color {
+            Color.gray.opacity(0.05)
+        }
+
+        var primaryText: Color {
+            Color.primary
+        }
+
+        var secondaryText: Color {
+            Color.secondary
+        }
+
+        var accentPrimary: Color {
+            Color.blue
+        }
+
+        var cardBackground: Color {
+            Color.white
+        }
+
+        var isDarkMode: Bool {
+            false
+        }
     }
 #endif
 
@@ -81,7 +101,8 @@ extension Features.Dashboard {
                             onAccountTap: { (account: FinancialAccount) in
                                 self.navigationPath.append(
                                     DashboardDestination.accountDetail(
-                                        String(describing: account.persistentModelID))
+                                        String(describing: account.persistentModelID)
+                                    )
                                 )
                             },
                             onViewAllTap: {

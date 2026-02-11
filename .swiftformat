@@ -74,7 +74,7 @@
 # Enabled Rules
 --enable isEmpty
 --enable hoistPatternLet
-# --enable wrapMultilineStatementBraces
+--enable wrapMultilineStatementBraces
 --enable blankLinesBetweenScopes
 --enable consecutiveSpaces
 --enable duplicateImports
@@ -91,14 +91,14 @@
 --enable redundantThrows
 --enable blankLinesBetweenImports
 --enable noForceUnwrapInTests
-# --enable wrap
+--enable wrap
 
 # Disabled Rules
 --disable andOperator
 --disable blankLinesAtStartOfScope
 --disable blankLinesAtEndOfScope
 --disable redundantSelf
---disable wrapEnumCases
 
 # Exclusions
 --exclude .build,Package.swift,node_modules,.swiftpm,Tools
+--enable wrapFunctionBodies

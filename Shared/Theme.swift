@@ -35,7 +35,10 @@ func platformSecondaryGrayColor() -> Color {
 
 public enum ThemeMode: String, CaseIterable, Identifiable, Hashable {
     case light, dark, system
-    public var id: String { rawValue }
+    public var id: String {
+        rawValue
+    }
+
     var displayName: String {
         switch self {
         case .light: "Light"
@@ -55,5 +58,7 @@ public enum ThemeMode: String, CaseIterable, Identifiable, Hashable {
 
 public enum DarkModePreference: String, CaseIterable {
     case system, light, dark
-    var displayName: String { rawValue.capitalized }
+    var displayName: String {
+        rawValue.capitalized
+    }
 }

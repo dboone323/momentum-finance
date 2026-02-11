@@ -22,7 +22,9 @@ public enum ComponentThemeMode: String, CaseIterable, Identifiable, Hashable {
     case dark
     case system
 
-    public var id: String { rawValue }
+    public var id: String {
+        rawValue
+    }
 
     var displayName: String {
         switch self {

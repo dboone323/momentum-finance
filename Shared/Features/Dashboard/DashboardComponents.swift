@@ -290,7 +290,6 @@ public struct DashboardQuickActions: View {
         .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
     }
 
-    @ViewBuilder
     private func quickAction(
         icon: String, title: String, color: Color, action: @escaping () -> Void
     ) -> some View {

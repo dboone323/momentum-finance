@@ -23,7 +23,7 @@ func runTest(_ name: String, test: () throws -> Void) {
     }
 }
 
-// Mock models for testing (simplified versions)
+/// Mock models for testing (simplified versions)
 enum TransactionType {
     case income, expense
 }

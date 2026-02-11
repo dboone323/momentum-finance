@@ -19,7 +19,9 @@ public enum RiskLevel: String, CaseIterable, Identifiable, Codable {
     case veryHigh
     case critical
 
-    public var id: String { rawValue }
+    public var id: String {
+        rawValue
+    }
 
     /// Color associated with the risk level
     public var color: Color {
@@ -67,7 +69,9 @@ public enum InsightPriority: String, CaseIterable, Comparable, Identifiable, Cod
     case medium
     case low
 
-    public var id: String { rawValue }
+    public var id: String {
+        rawValue
+    }
 
     /// Color associated with the priority level
     public var color: Color {
@@ -136,7 +140,9 @@ public enum InsightType: String, CaseIterable, Identifiable, Codable {
     case creditUtilization
     case duplicatePayment
 
-    public var id: String { rawValue }
+    public var id: String {
+        rawValue
+    }
 
     /// System icon for the insight type
     public var icon: String {
@@ -189,7 +195,9 @@ public enum InsightCategory: String, CaseIterable, Identifiable, Codable {
     case wealth
     case financial
 
-    public var id: String { rawValue }
+    public var id: String {
+        rawValue
+    }
 
     public var displayName: String {
         switch self {

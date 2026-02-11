@@ -226,7 +226,8 @@ import SwiftUI
 
                             Text(
                                 self.subscription.amount.formatted(
-                                    .currency(code: self.subscription.currencyCode))
+                                    .currency(code: self.subscription.currencyCode)
+                                )
                             )
                             .font(.title2)
                         }
@@ -238,7 +239,8 @@ import SwiftUI
 
                             Text(
                                 self.costPerUse.formatted(
-                                    .currency(code: self.subscription.currencyCode))
+                                    .currency(code: self.subscription.currencyCode)
+                                )
                             )
                             .font(.title3)
                         }
@@ -459,7 +461,8 @@ import SwiftUI
                         Text(
                             self.subscription?.amount
                                 .formatted(
-                                    .currency(code: self.subscription?.currencyCode ?? "USD"))
+                                    .currency(code: self.subscription?.currencyCode ?? "USD")
+                                )
                                 ?? "$0.00"
                         )
                         .font(.title3)

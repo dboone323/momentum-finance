@@ -81,7 +81,8 @@ public struct InsightsView: View {
             Task {
                 if self.intelligenceService.insights.isEmpty {
                     await self.intelligenceService.analyzeFinancialData(
-                        modelContext: self.modelContext)
+                        modelContext: self.modelContext
+                    )
                 }
             }
         }

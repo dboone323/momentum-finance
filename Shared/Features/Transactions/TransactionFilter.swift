@@ -2,7 +2,10 @@ import Foundation
 
 public enum TransactionFilter: String, CaseIterable, Identifiable {
     case all, income, expense, transfer
-    public var id: String { rawValue }
+    public var id: String {
+        rawValue
+    }
+
     public var displayName: String {
         switch self {
         case .all: "All"

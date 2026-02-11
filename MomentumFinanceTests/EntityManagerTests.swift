@@ -108,7 +108,7 @@ class EntityManagerTests: XCTestCase {
 
     // MARK: - Object Pooling
 
-    func testObjectPooling() async {
+    func testObjectPooling() {
         // GIVEN
         let expectedCount = 50
 

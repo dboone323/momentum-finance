@@ -74,7 +74,7 @@ class FeaturesTests: XCTestCase {
     }
 
     /// Test the GlobalSearchView
-    func testGlobalSearchView() {
+    func testGlobalSearchView() throws {
         // GIVEN: A valid instance of GlobalSearchView
         let view = GlobalSearchView()
 
@@ -83,7 +83,7 @@ class FeaturesTests: XCTestCase {
         XCTAssertTrue(view is GlobalSearchView)
 
         // GIVEN: Real data for testing
-        let container = try! ModelContainer(
+        let container = try ModelContainer(
             for: FinancialAccount.self, FinancialTransaction.self
         )
         _searchEngine = StateObject(

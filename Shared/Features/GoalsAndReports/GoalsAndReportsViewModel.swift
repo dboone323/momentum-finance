@@ -181,7 +181,8 @@ final class GoalsAndReportsViewModel {
         return (0..<months).compactMap { i in
             guard let monthDate = calendar.date(byAdding: .month, value: -i, to: now),
                   let monthKey = calendar.date(
-                      from: calendar.dateComponents([.year, .month], from: monthDate))
+                      from: calendar.dateComponents([.year, .month], from: monthDate)
+                  )
             else {
                 return nil
             }

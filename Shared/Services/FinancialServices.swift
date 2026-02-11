@@ -8,10 +8,10 @@ import SwiftData
 public protocol EntityManager: Sendable {
     func save() throws
     func delete(_ entity: some PersistentModel) throws
-    func fetch<T>(_ type: T.Type) throws -> [T] where T: PersistentModel
-    func getOrCreateAccount(
-        from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping
-    ) throws
+    func fetch<T: PersistentModel>(_ type: T.Type) throws -> [T] where
+        func getOrCreateAccount(
+            from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping
+        ) throws
         -> FinancialAccount?
     func getOrCreateCategory(
         from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping,
@@ -38,7 +38,7 @@ public final class SwiftDataEntityManager: EntityManager {
         try self.modelContext.save()
     }
 
-    public func fetch<T>(_: T.Type) throws -> [T] where T: PersistentModel {
+    public func fetch<T: PersistentModel>(_: T.Type) throws -> [T] {
         let descriptor = FetchDescriptor<T>()
         return try self.modelContext.fetch(descriptor)
     }
@@ -94,7 +94,8 @@ public final class SwiftDataEntityManager: EntityManager {
         }
 
         let categoryName = fields[categoryColumnIndex].trimmingCharacters(
-            in: .whitespacesAndNewlines)
+            in: .whitespacesAndNewlines
+        )
         if categoryName.isEmpty {
             return self.getDefaultCategory(for: transactionType)
         }
@@ -165,7 +166,8 @@ public final class SwiftDataExportEngineService {
 
         let csvString = self.createCSVString(from: transactions)
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
-            "transactions_export.csv")
+            "transactions_export.csv"
+        )
 
         try csvString.write(to: tempURL, atomically: true, encoding: .utf8)
         return tempURL
@@ -194,7 +196,8 @@ public final class SwiftDataExportEngineService {
 
         let jsonData = try encoder.encode(transactions)
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
-            "transactions_export.json")
+            "transactions_export.json"
+        )
 
         try jsonData.write(to: tempURL)
         return tempURL
@@ -205,7 +208,8 @@ public final class SwiftDataExportEngineService {
         // This avoids complex cross-platform PDFKit dependencies in the core service layer.
         let transactions = try modelContext.fetch(FetchDescriptor<FinancialTransaction>())
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
-            "transactions_report.html")
+            "transactions_report.html"
+        )
 
         var html = """
         <!DOCTYPE html>
@@ -359,7 +363,8 @@ public final class SwiftDataFinancialMLService {
                         transaction: transaction,
                         type: .unusuallyHighAmount,
                         severity: .medium
-                    ))
+                    )
+                )
             }
 
             return anomalies

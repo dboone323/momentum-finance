@@ -78,7 +78,6 @@ extension Features.Transactions {
             }
         }
 
-        @ViewBuilder
         private var detailsSection: some View {
             Section(header: Text("Transaction Details")) {
                 TextField("Title", text: self.$title)
@@ -102,7 +101,6 @@ extension Features.Transactions {
             }
         }
 
-        @ViewBuilder
         private var classificationSection: some View {
             Section(header: Text("Category & Account")) {
                 Picker("Category", selection: self.$selectedCategory) {
@@ -121,7 +119,6 @@ extension Features.Transactions {
             }
         }
 
-        @ViewBuilder
         private var notesSection: some View {
             Section(header: Text("Notes (Optional)")) {
                 TextField("Add notes...", text: self.$notes, axis: .vertical)
