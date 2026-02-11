@@ -4,9 +4,10 @@ import MomentumFinanceCore
 // MARK: - Optimization Suggestions
 
 /// Suggest insights for idle cash optimization
-func fi_suggestIdleCashInsights(transactions: [FinancialTransaction],
-                                accounts: [FinancialAccount]) -> [FinancialInsight]
-{
+func fi_suggestIdleCashInsights(
+    transactions: [FinancialTransaction],
+    accounts: [FinancialAccount]
+) -> [FinancialInsight] {
     var insights: [FinancialInsight] = []
 
     let checkingAccounts = accounts.filter { $0.accountType == .checking }

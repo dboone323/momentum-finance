@@ -4,9 +4,10 @@ import MomentumFinanceCore
 // MARK: - Financial Forecasting
 
 /// Generate financial forecasts based on historical data
-func fi_generateFinancialForecasts(transactions: [FinancialTransaction],
-                                   accounts _: [FinancialAccount]) -> [FinancialInsight]
-{
+func fi_generateFinancialForecasts(
+    transactions: [FinancialTransaction],
+    accounts _: [FinancialAccount]
+) -> [FinancialInsight] {
     var insights: [FinancialInsight] = []
 
     let calendar = Calendar.current

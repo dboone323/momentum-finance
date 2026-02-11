@@ -55,8 +55,11 @@ class DashboardViewModelTests: XCTestCase {
     func testCurrentMonthBudgets() {
         // Arrange
         let b1 = Budget(name: "Budget 1", limitAmount: 100.0, month: Date())
-        let b2 = Budget(name: "Budget 2", limitAmount: 50.0,
-                        month: Date().addingTimeInterval(3600 * 24 * 40)) // Next month approx
+        let b2 = Budget(
+            name: "Budget 2",
+            limitAmount: 50.0,
+            month: Date().addingTimeInterval(3600 * 24 * 40)
+        ) // Next month approx
 
         let budgets = [b1, b2]
 

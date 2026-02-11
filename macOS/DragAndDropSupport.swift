@@ -104,9 +104,10 @@ import UniformTypeIdentifiers
 
             // Add plain text representation
             provider
-                .registerDataRepresentation(forTypeIdentifier: UTType.plainText.identifier,
-                                            visibility: .all)
-                { completion in
+                .registerDataRepresentation(
+                    forTypeIdentifier: UTType.plainText.identifier,
+                    visibility: .all
+                ) { completion in
                     let text = "Account: \(self.name) - \(self.balance) \(self.currencyCode)"
                     completion(text.data(using: .utf8), nil)
                     return nil
@@ -142,9 +143,10 @@ import UniformTypeIdentifiers
 
             // Add plain text representation
             provider
-                .registerDataRepresentation(forTypeIdentifier: UTType.plainText.identifier,
-                                            visibility: .all)
-                { completion in
+                .registerDataRepresentation(
+                    forTypeIdentifier: UTType.plainText.identifier,
+                    visibility: .all
+                ) { completion in
                     let text = "Transaction: \(self.name) - \(self.amount) \(self.date.formatted(date: .abbreviated, time: .shortened))"
                     completion(text.data(using: .utf8), nil)
                     return nil
@@ -273,9 +275,10 @@ import UniformTypeIdentifiers
         /// - Returns: <#description#>
         func body(content: Content) -> some View {
             content
-                .onDrop(of: self.acceptedTypes.map(\.uniformType),
-                        isTargeted: self.isDraggingOver)
-                { providers, location in
+                .onDrop(
+                    of: self.acceptedTypes.map(\.uniformType),
+                    isTargeted: self.isDraggingOver
+                ) { providers, location in
                     Task {
                         var droppedItems: [T] = []
                         for provider in providers {
@@ -307,7 +310,8 @@ import UniformTypeIdentifiers
                         // For simplicity and to match the user's provided structure, we'll assume the completion
                         // handlers
                         // will eventually populate droppedItems before the return.
-                        // In a real-world scenario, you'd need to use async/await or dispatch groups to ensure all data
+                        // In a real-world scenario, you'd need to use async/await or dispatch groups to ensure all
+                        // data
                         // is loaded.
 
                         // The original code used `try await provider.loadDataRepresentation`, which is better for

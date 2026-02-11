@@ -27,9 +27,10 @@ class BiometricAuthManager: ObservableObject {
             let reason = "Identify yourself!"
 
             context
-                .evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
-                                localizedReason: reason)
-                { [weak self] success, _ in
+                .evaluatePolicy(
+                    .deviceOwnerAuthenticationWithBiometrics,
+                    localizedReason: reason
+                ) { [weak self] success, _ in
                     DispatchQueue.main.async {
                         if success {
                             self?.isAuthenticated = true

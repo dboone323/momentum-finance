@@ -83,9 +83,11 @@ class MockLAContextProtocol: NSObject, LAContextProtocol {
         canEvaluatePolicyReturnValue
     }
 
-    func evaluatePolicy(_ policy: LAPolicy, localizedReason: String,
-                        reply: @escaping @Sendable (Bool, Error?) -> Void)
-    {
+    func evaluatePolicy(
+        _ policy: LAPolicy,
+        localizedReason: String,
+        reply: @escaping @Sendable (Bool, Error?) -> Void
+    ) {
         // Simulate async completion of the authentication process
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             reply(self.canEvaluatePolicyReturnValue, nil)
