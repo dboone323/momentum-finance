@@ -182,7 +182,7 @@ final class PerformanceTests: XCTestCase {
             let group = DispatchGroup()
 
             // Simulate concurrent operations
-            for i in 0 ..< 10 {
+            for i in 0..<10 {
                 group.enter()
                 DispatchQueue.global().async {
                     let transactions = self.testDataGenerator.generateTransactions(count: 100)
@@ -214,10 +214,10 @@ class TestDataGenerator {
     func generateTransactions(count: Int) -> [FinancialTransaction] {
         var transactions: [FinancialTransaction] = []
 
-        for i in 0 ..< count {
+        for i in 0..<count {
             let transaction = FinancialTransaction(
                 title: "Test Transaction \(i)",
-                amount: Double.random(in: 1 ... 1000),
+                amount: Double.random(in: 1...1000),
                 date: Date().addingTimeInterval(Double(i) * 86400), // Spread over days
                 transactionType: transactionTypes.randomElement()!
             )
@@ -239,11 +239,11 @@ class TestDataGenerator {
     func generateAccounts(count: Int) -> [FinancialAccount] {
         var accounts: [FinancialAccount] = []
 
-        for i in 0 ..< count {
+        for i in 0..<count {
             let account = FinancialAccount(
                 name: "Test Account \(i)",
                 accountType: .checking,
-                balance: Double.random(in: 0 ... 10000),
+                balance: Double.random(in: 0...10000),
                 currency: "USD"
             )
             accounts.append(account)
@@ -255,11 +255,11 @@ class TestDataGenerator {
     func generateBudgets(count: Int) -> [Budget] {
         var budgets: [Budget] = []
 
-        for i in 0 ..< count {
+        for i in 0..<count {
             let budget = Budget(
                 name: "Test Budget \(i)",
-                amount: Double.random(in: 100 ... 1000),
-                spent: Double.random(in: 0 ... 500),
+                amount: Double.random(in: 100...1000),
+                spent: Double.random(in: 0...500),
                 category: categories.randomElement()!,
                 period: .monthly
             )

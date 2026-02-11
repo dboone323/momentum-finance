@@ -57,7 +57,7 @@ public struct AddSavingsGoalView: View {
                     TextField("Add notes about this goal...", text: self.$notes, axis: .vertical)
                         .accessibilityLabel("Text Field")
                         .accessibilityLabel("Text Field")
-                        .lineLimit(3 ... 6)
+                        .lineLimit(3...6)
                 }
             }
             .navigationTitle("Add Savings Goal")

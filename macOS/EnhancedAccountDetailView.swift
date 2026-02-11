@@ -559,7 +559,7 @@ import SwiftUI
                                     set: { self.editedAccount?.dueDate = $0 }
                                 )
                             ) {
-                                ForEach(1 ... 31, id: \.self) { day in
+                                ForEach(1...31, id: \.self) { day in
                                     Text("\(day)").tag(day)
                                 }
                             }

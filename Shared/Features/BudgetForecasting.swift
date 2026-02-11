@@ -73,7 +73,7 @@ public final class BudgetForecastingService {
 
         // Simple linear regression slope
         let n = Double(values.count)
-        let x = Array(1 ... values.count).map { Double($0) }
+        let x = Array(1...values.count).map { Double($0) }
         let y = values
 
         let sumX = x.reduce(0, +)

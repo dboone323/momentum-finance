@@ -26,7 +26,7 @@ final class TransactionsGenerator: DataGenerator {
         let now = Date()
 
         // Generate transactions for the past 3 months
-        for monthOffset in 0 ..< 3 {
+        for monthOffset in 0..<3 {
             guard let monthDate = calendar.date(byAdding: .month, value: -monthOffset, to: now)
             else { continue }
 
@@ -62,10 +62,10 @@ final class TransactionsGenerator: DataGenerator {
         if let incomeCategory = categories["Income"],
            let checkingAccount = accounts["Checking Account"]
         {
-            for week in 0 ..< 4 {
+            for week in 0..<4 {
                 let payDate =
                     calendar.date(byAdding: .day, value: week * 7 + 1, to: startOfMonth)
-                        ?? startOfMonth
+                    ?? startOfMonth
                 let income = FinancialTransaction(
                     title: "Salary Deposit",
                     amount: 3200.0,
@@ -102,7 +102,7 @@ final class TransactionsGenerator: DataGenerator {
             if let category = categories[categoryName],
                let account = accounts["Checking Account"] ?? accounts.values.first
             {
-                let randomDay = Int.random(in: 1 ... daysInMonth)
+                let randomDay = Int.random(in: 1...daysInMonth)
                 let transactionDate =
                     calendar
                         .date(byAdding: .day, value: randomDay - 1, to: startOfMonth) ?? startOfMonth

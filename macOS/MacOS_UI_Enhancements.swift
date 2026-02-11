@@ -1275,8 +1275,8 @@ import SwiftUI
                     // Real functional chart using GeometryReader
                     GeometryReader { _ in
                         HStack(alignment: .bottom, spacing: 8) {
-                            ForEach(0 ..< 7) { index in
-                                let height = Double.random(in: 20 ... 150)
+                            ForEach(0..<7) { index in
+                                let height = Double.random(in: 20...150)
                                 VStack {
                                     Spacer()
                                     Rectangle()

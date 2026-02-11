@@ -50,7 +50,7 @@ final class TransactionPatternAnalyzer {
             let weekday = calendar.component(.weekday, from: transaction.date)
             spendingByWeekday[weekday] =
                 (spendingByWeekday[weekday] ?? 0)
-                    + Double(truncating: abs(transaction.amount) as NSDecimalNumber)
+                + Double(truncating: abs(transaction.amount) as NSDecimalNumber)
             countByWeekday[weekday] = (countByWeekday[weekday] ?? 0) + 1
         }
 
@@ -90,7 +90,7 @@ final class TransactionPatternAnalyzer {
             let day = calendar.component(.day, from: transaction.date)
             spendingByDay[day] =
                 (spendingByDay[day] ?? 0)
-                    + Double(truncating: abs(transaction.amount) as NSDecimalNumber)
+                + Double(truncating: abs(transaction.amount) as NSDecimalNumber)
         }
 
         guard let maxDay = spendingByDay.max(by: { $0.value < $1.value })?.key else {

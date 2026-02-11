@@ -67,7 +67,7 @@ import SwiftUI
                     Section("Category Colors") {
                         ScrollView(.horizontal) {
                             HStack(spacing: 10) {
-                                ForEach(0 ..< self.theme.categoryColors.count, id: \.self) { index in
+                                ForEach(0..<self.theme.categoryColors.count, id: \.self) { index in
                                     Circle()
                                         .fill(self.theme.categoryColors[index])
                                         .frame(width: 40, height: 40)

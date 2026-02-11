@@ -336,7 +336,7 @@ import SwiftUI
                     HStack {
                         Text(name)
                         Spacer()
-                        Text("$\(Int.random(in: 45 ... 95)).\(Int.random(in: 10 ... 99))")
+                        Text("$\(Int.random(in: 45...95)).\(Int.random(in: 10...99))")
                             .foregroundStyle(.red)
                     }
                 }

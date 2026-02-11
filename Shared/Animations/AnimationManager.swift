@@ -291,7 +291,7 @@ public struct LoadingIndicator: View {
             switch self.style {
             case .dots:
                 HStack(spacing: 4) {
-                    ForEach(0 ..< 3, id: \.self) { index in
+                    ForEach(0..<3, id: \.self) { index in
                         Circle()
                             .fill(Color.accentColor)
                             .frame(width: 8, height: 8)

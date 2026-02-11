@@ -125,7 +125,7 @@ extension Features.Transactions {
         private var notesSection: some View {
             Section(header: Text("Notes (Optional)")) {
                 TextField("Add notes...", text: self.$notes, axis: .vertical)
-                    .lineLimit(3 ... 6)
+                    .lineLimit(3...6)
             }
         }
 

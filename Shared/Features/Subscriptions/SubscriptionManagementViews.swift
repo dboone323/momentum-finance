@@ -108,7 +108,7 @@ extension Features.Subscriptions {
                             text: self.$notes,
                             axis: .vertical
                         )
-                        .lineLimit(3 ... 6)
+                        .lineLimit(3...6)
                         .accessibilityLabel("Text Field")
                     }
                 }

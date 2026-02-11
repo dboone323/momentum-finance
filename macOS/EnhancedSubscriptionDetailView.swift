@@ -376,7 +376,7 @@ import SwiftUI
                                             .font(.headline)
 
                                         VStack(spacing: 10) {
-                                            ForEach(0 ..< 4) { i in
+                                            ForEach(0..<4) { i in
                                                 HStack {
                                                     if i == 0 {
                                                         Text(

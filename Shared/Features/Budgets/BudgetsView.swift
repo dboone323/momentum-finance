@@ -287,9 +287,9 @@ extension Features.Budgets {
 
         private var spentColor: Color {
             switch self.spentPercentage {
-            case 0 ..< 0.5:
+            case 0..<0.5:
                 .green
-            case 0.5 ..< 0.8:
+            case 0.5..<0.8:
                 .orange
             default:
                 .red
@@ -370,9 +370,9 @@ extension Features.Budgets {
 
         private var spentColor: Color {
             switch self.spentPercentage {
-            case 0 ..< 50:
+            case 0..<50:
                 .green
-            case 50 ..< 80:
+            case 50..<80:
                 .orange
             default:
                 .red
@@ -435,7 +435,7 @@ extension Features.Budgets {
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
 
-                                Slider(value: self.$maxRolloverPercentage, in: 0.1 ... 1.0, step: 0.1)
+                                Slider(value: self.$maxRolloverPercentage, in: 0.1...1.0, step: 0.1)
                                     .accessibilityLabel("Max Rollover Percentage")
 
                                 Text(

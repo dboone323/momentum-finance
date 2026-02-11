@@ -17,7 +17,7 @@ final class PerformanceManagerTests: XCTestCase {
 
     func testRecordFrame() {
         // Record enough frames to calculate FPS
-        for _ in 0 ..< 20 {
+        for _ in 0..<20 {
             performanceManager.recordFrame()
             // Sleep slightly to simulate time passing
             usleep(10000) // 10ms

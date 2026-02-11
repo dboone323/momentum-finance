@@ -140,7 +140,7 @@ final class FinancialServicesTests: XCTestCase {
         let account = FinancialAccount(name: "Test", balance: 0, accountType: .checking)
         modelContext.insert(account)
 
-        for i in 1 ... 30 {
+        for i in 1...30 {
             let transaction = FinancialTransaction(
                 title: "Expense \(i)",
                 amount: -50,
@@ -208,7 +208,7 @@ final class FinancialServicesTests: XCTestCase {
         modelContext.insert(account)
 
         // Create recurring transaction
-        for i in 1 ... 3 {
+        for i in 1...3 {
             let transaction = FinancialTransaction(
                 title: "Netflix Subscription",
                 amount: -15.99,
@@ -254,7 +254,7 @@ final class FinancialServicesTests: XCTestCase {
         try await entityManager.save()
 
         // 2. Add transactions
-        for i in 1 ... 10 {
+        for i in 1...10 {
             let transaction = FinancialTransaction(
                 title: "Transaction \(i)",
                 amount: -Double(i * 10),

@@ -90,11 +90,11 @@ extension Features.Dashboard {
                         )
 
                         .transition(
-                            .asymmetric(
-                                insertion: .move(edge: .leading).combined(with: .opacity),
-                                removal: .move(edge: .trailing).combined(with: .opacity)
+                                .asymmetric(
+                                    insertion: .move(edge: .leading).combined(with: .opacity),
+                                    removal: .move(edge: .trailing).combined(with: .opacity)
+                                )
                             )
-                        )
 
                         // Upcoming Subscriptions
                         DashboardSubscriptionsSection(
@@ -198,8 +198,8 @@ extension Features.Dashboard {
         private var timeOfDayGreeting: String {
             let hour = Calendar.current.component(.hour, from: Date())
             switch hour {
-            case 0 ..< 12: return "Morning"
-            case 12 ..< 17: return "Afternoon"
+            case 0..<12: return "Morning"
+            case 12..<17: return "Afternoon"
             default: return "Evening"
             }
         }

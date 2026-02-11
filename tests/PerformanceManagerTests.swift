@@ -13,7 +13,7 @@ final class PerformanceManagerTests: XCTestCase {
     }
 
     func testRecordFrame() {
-        for _ in 0 ..< 150 {
+        for _ in 0..<150 {
             performanceManager.recordFrame()
         }
         XCTAssertEqual(performanceManager.frameTimes.count, 120)
@@ -49,7 +49,7 @@ final class PerformanceManagerTests: XCTestCase {
     }
 
     func testIsPerformanceDegraded() {
-        for _ in 0 ..< 35 {
+        for _ in 0..<35 {
             performanceManager.recordFrame()
         }
         let isDegraded = performanceManager.isPerformanceDegraded()
@@ -57,7 +57,7 @@ final class PerformanceManagerTests: XCTestCase {
     }
 
     func testIsPerformanceDegradedWithLowFPS() {
-        for _ in 0 ..< 5 {
+        for _ in 0..<5 {
             performanceManager.recordFrame()
         }
         let isDegraded = performanceManager.isPerformanceDegraded()
@@ -65,7 +65,7 @@ final class PerformanceManagerTests: XCTestCase {
     }
 
     func testIsPerformanceDegradedClosure() async {
-        for _ in 0 ..< 35 {
+        for _ in 0..<35 {
             performanceManager.recordFrame()
         }
         let expectation = XCTestExpectation(description: "Performance degradation check should complete")
@@ -77,7 +77,7 @@ final class PerformanceManagerTests: XCTestCase {
     }
 
     func testIsPerformanceDegradedWithLowFPSClosure() async {
-        for _ in 0 ..< 5 {
+        for _ in 0..<5 {
             performanceManager.recordFrame()
         }
         let expectation = XCTestExpectation(description: "Performance degradation check should complete")

@@ -145,7 +145,7 @@ public struct DataImportView: View {
         do {
             let importer = DataImporter(modelContainer: modelContext.container)
 
-            for i in 1 ... 10 {
+            for i in 1...10 {
                 try await Task.sleep(nanoseconds: 100_000_000)
                 self.importProgress = Double(i) / 10.0
             }

@@ -490,7 +490,7 @@ final class TransactionUITests: XCTestCase {
     @MainActor
     func testBulkTransactionCreationPerformance() {
         measure {
-            for i in 1 ... 10 {
+            for i in 1...10 {
                 let addButton = self.app.buttons["Add Transaction"].firstMatch
                 if addButton.exists {
                     addButton.tap()

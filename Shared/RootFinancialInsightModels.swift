@@ -302,11 +302,11 @@ public enum AIConfidenceLevel: String, CaseIterable, Codable {
 
     public var range: ClosedRange<Double> {
         switch self {
-        case .veryHigh: 0.90 ... 1.0
-        case .high: 0.80 ... 0.89
-        case .medium: 0.60 ... 0.79
-        case .low: 0.40 ... 0.59
-        case .veryLow: 0.0 ... 0.39
+        case .veryHigh: 0.90...1.0
+        case .high: 0.80...0.89
+        case .medium: 0.60...0.79
+        case .low: 0.40...0.59
+        case .veryLow: 0.0...0.39
         }
     }
 

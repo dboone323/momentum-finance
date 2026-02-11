@@ -72,7 +72,7 @@ class DashboardSubscriptionsSectionTests: XCTestCase {
     /// Test case for the categoryColor method
     func testCategoryColor() {
         let colors = [.blue, .green, .orange, .purple, .pink, .red]
-        for index in 0 ..< colors.count {
+        for index in 0..<colors.count {
             let color = DashboardSubscriptionsSection.categoryColor(for: index)
             XCTAssertEqual(color, colors[index])
         }

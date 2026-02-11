@@ -22,7 +22,7 @@ class NotificationCenterViewTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(notificationManager.pendingNotifications.count, expectedNotifications.count)
-        for i in 0 ..< expectedNotifications.count {
+        for i in 0..<expectedNotifications.count {
             XCTAssertEqual(notificationManager.pendingNotifications[i].id, expectedNotifications[i].id)
             XCTAssertEqual(notificationManager.pendingNotifications[i].title, expectedNotifications[i].title)
             XCTAssertEqual(
@@ -51,7 +51,7 @@ class NotificationCenterViewTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(view.notificationsList.count, expectedNotifications.count)
-        for i in 0 ..< expectedNotifications.count {
+        for i in 0..<expectedNotifications.count {
             XCTAssertEqual(view.notificationsList[i].notification.id, expectedNotifications[i].id)
             XCTAssertEqual(view.notificationsList[i].notification.title, expectedNotifications[i].title)
             XCTAssertEqual(view.notificationsList[i].notification.scheduledDate, expectedNotifications[i].scheduledDate)

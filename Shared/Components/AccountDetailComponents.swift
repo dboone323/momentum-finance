@@ -104,7 +104,7 @@ import SwiftUI
                     // Average line
                     let average =
                         self.generateSampleData()
-                            .reduce(0.0) { $0 + $1.balance } / Double(self.generateSampleData().count)
+                        .reduce(0.0) { $0 + $1.balance } / Double(self.generateSampleData().count)
                     RuleMark(y: .value("Average", average))
                         .lineStyle(StrokeStyle(lineWidth: 1, dash: [5, 5]))
                         .foregroundStyle(.gray)
