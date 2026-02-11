@@ -6,12 +6,16 @@ class DataExporterTests: XCTestCase {
     var dataExporter: DataExporter!
 
     /// Test that the configure method initializes the engine asynchronously when a ModelContext is available
-    func testConfigureWithModelContext() async {
+    func testConfigureWithModelContext() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
 
         XCTAssertNotNil(dataExporter.engine, "Engine should be initialized")
-        XCTAssertEqual(modelContext, dataExporter.engine!.modelContext, "ModelContext should be set on the engine")
+        XCTAssertEqual(
+            modelContext,
+            try XCTUnwrap(dataExporter.engine?.modelContext),
+            "ModelContext should be set on the engine"
+        )
     }
 
     /// Test that the export method throws an error when the engine is nil
@@ -33,7 +37,7 @@ class DataExporterTests: XCTestCase {
         await dataExporter.configure(with: modelContext)
 
         let settings = ExportSettings()
-        let expectedURL = URL(string: "https://example.com/exported-file")!
+        let expectedURL = try XCTUnwrap(URL(string: "https://example.com/exported-file"))
         do {
             let url = try await dataExporter.export(with: settings)
             XCTAssertEqual(url, expectedURL, "Expected to return the correct URL")
@@ -57,12 +61,16 @@ class DataExporterTests: XCTestCase {
     }
 
     /// Test that the engine is properly initialized when a ModelContext is available
-    func testConfigureWithModelContextAsync() async {
+    func testConfigureWithModelContextAsync() async throws {
         let modelContext = MockModelContext()
         await dataExporter.configure(with: modelContext)
 
         XCTAssertNotNil(dataExporter.engine, "Engine should be initialized")
-        XCTAssertEqual(modelContext, dataExporter.engine!.modelContext, "ModelContext should be set on the engine")
+        XCTAssertEqual(
+            modelContext,
+            try XCTUnwrap(dataExporter.engine?.modelContext),
+            "ModelContext should be set on the engine"
+        )
     }
 
     /// Test that the export method throws an error when the engine is nil
@@ -84,7 +92,7 @@ class DataExporterTests: XCTestCase {
         await dataExporter.configure(with: modelContext)
 
         let settings = ExportSettings()
-        let expectedURL = URL(string: "https://example.com/exported-file")!
+        let expectedURL = try XCTUnwrap(URL(string: "https://example.com/exported-file"))
         do {
             let url = try await dataExporter.export(with: settings)
             XCTAssertEqual(url, expectedURL, "Expected to return the correct URL")

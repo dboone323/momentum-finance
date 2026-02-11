@@ -114,10 +114,10 @@ final class PerformanceRegressionTests: XCTestCase {
         // Baseline: 10K records in < 0.3s
     }
 
-    func testFilteredFetchPerformance() {
+    func testFilteredFetchPerformance() throws {
         createTestTransactions(count: 10000)
 
-        let startDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
+        let startDate = try XCTUnwrap(Calendar.current.date(byAdding: .month, value: -1, to: Date()))
 
         measure {
             let descriptor = FetchDescriptor<FinancialTransaction>(

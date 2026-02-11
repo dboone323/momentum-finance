@@ -46,54 +46,54 @@ class AddTransactionViewTests: XCTestCase {
     }
 
     /// Test that the form is valid when all fields are filled
-    func testFormIsValidWhenAllFieldsAreFilled() {
+    func testFormIsValidWhenAllFieldsAreFilled() throws {
         addTransactionView.title = "Groceries"
         addTransactionView.amount = "10.50"
         addTransactionView.selectedTransactionType = .expense
-        addTransactionView.selectedCategory = categories.first!
-        addTransactionView.selectedAccount = accounts.first!
+        addTransactionView.selectedCategory = try XCTUnwrap(categories.first)
+        addTransactionView.selectedAccount = try XCTUnwrap(accounts.first)
 
         XCTAssertTrue(addTransactionView.isFormValid)
     }
 
     /// Test that the form is not valid when any field is empty
-    func testFormIsNotValidWhenAnyFieldIsEmpty() {
+    func testFormIsNotValidWhenAnyFieldIsEmpty() throws {
         addTransactionView.title = ""
         addTransactionView.amount = "10.50"
         addTransactionView.selectedTransactionType = .expense
-        addTransactionView.selectedCategory = categories.first!
-        addTransactionView.selectedAccount = accounts.first!
+        addTransactionView.selectedCategory = try XCTUnwrap(categories.first)
+        addTransactionView.selectedAccount = try XCTUnwrap(accounts.first)
 
         XCTAssertFalse(addTransactionView.isFormValid)
     }
 
     /// Test that the form is not valid when the amount is not a number
-    func testFormIsNotValidWhenAmountIsNotANumber() {
+    func testFormIsNotValidWhenAmountIsNotANumber() throws {
         addTransactionView.title = "Groceries"
         addTransactionView.amount = "abc"
         addTransactionView.selectedTransactionType = .expense
-        addTransactionView.selectedCategory = categories.first!
-        addTransactionView.selectedAccount = accounts.first!
+        addTransactionView.selectedCategory = try XCTUnwrap(categories.first)
+        addTransactionView.selectedAccount = try XCTUnwrap(accounts.first)
 
         XCTAssertFalse(addTransactionView.isFormValid)
     }
 
     /// Test that the form is not valid when the selected account is nil
-    func testFormIsNotValidWhenSelectedAccountIsNull() {
+    func testFormIsNotValidWhenSelectedAccountIsNull() throws {
         addTransactionView.title = "Groceries"
         addTransactionView.amount = "10.50"
         addTransactionView.selectedTransactionType = .expense
-        addTransactionView.selectedCategory = categories.first!
+        addTransactionView.selectedCategory = try XCTUnwrap(categories.first)
 
         XCTAssertFalse(addTransactionView.isFormValid)
     }
 
     /// Test that the form is not valid when the selected category is nil
-    func testFormIsNotValidWhenSelectedCategoryIsNull() {
+    func testFormIsNotValidWhenSelectedCategoryIsNull() throws {
         addTransactionView.title = "Groceries"
         addTransactionView.amount = "10.50"
         addTransactionView.selectedTransactionType = .expense
-        addTransactionView.selectedAccount = accounts.first!
+        addTransactionView.selectedAccount = try XCTUnwrap(accounts.first)
 
         XCTAssertFalse(addTransactionView.isFormValid)
     }

@@ -63,9 +63,9 @@ final class RecurringTransactionServiceTests: XCTestCase {
         XCTAssertTrue(transactions.isEmpty)
     }
 
-    func testProcessFutureTransaction() {
+    func testProcessFutureTransaction() throws {
         // Given: A recurring transaction not yet due
-        let futureRecurring = RecurringTransaction(
+        let futureRecurring = try RecurringTransaction(
             id: UUID(),
             name: "Future",
             amount: 50,
@@ -73,7 +73,7 @@ final class RecurringTransactionServiceTests: XCTestCase {
             accountId: UUID(),
             interval: .monthly,
             startDate: Date(),
-            nextDueDate: Calendar.current.date(byAdding: .day, value: 10, to: Date())!,
+            nextDueDate: XCTUnwrap(Calendar.current.date(byAdding: .day, value: 10, to: Date())),
             isActive: true
         )
 

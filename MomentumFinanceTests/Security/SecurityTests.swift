@@ -2,7 +2,6 @@
 // Copyright © 2026 Momentum Finance. All rights reserved.
 
 import XCTest
-
 @testable import MomentumFinanceCore
 
 /// Comprehensive security test suite for MomentumFinance.

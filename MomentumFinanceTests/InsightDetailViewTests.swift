@@ -52,7 +52,7 @@ class InsightDetailViewTests: XCTestCase {
 
         XCTAssertEqual(result, expectation(for: "InsightDetailView body view", predicate: { $0 is VStack }))
         XCTAssertEqual(
-            result as! VStack,
+            result as? VStack,
             expectation(for: "VStack in InsightDetailView body view", predicate: { $0.count == 2 })
         )
     }

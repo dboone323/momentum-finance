@@ -15,10 +15,10 @@ class DragAndDropSupportTests: XCTestCase {
 
     func testDragItemTypes() {
         let accountType = FinanceDragItemType.account
-        XCTAssertEqual(accountType.uniformType.identifier, UTType("com.momentumfinance.account")!.identifier)
+        XCTAssertEqual(accountType.uniformType.identifier, UTType("com.momentumfinance.account")?.identifier)
 
         let transactionType = FinanceDragItemType.transaction
-        XCTAssertEqual(transactionType.uniformType.identifier, UTType("com.momentumfinance.transaction")!.identifier)
+        XCTAssertEqual(transactionType.uniformType.identifier, UTType("com.momentumfinance.transaction")?.identifier)
     }
 
     // MARK: - Model Extensions
@@ -63,6 +63,6 @@ class DragAndDropSupportTests: XCTestCase {
 
     func testFinanceAccountUTType() {
         let accountType = FinanceDragItemType.account
-        XCTAssertEqual(accountType.uniformType.identifier, UTType("com.momentumfinance.account")!.identifier)
+        XCTAssertEqual(accountType.uniformType.identifier, UTType("com.momentumfinance.account")?.identifier)
     }
 }

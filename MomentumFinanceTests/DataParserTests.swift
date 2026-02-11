@@ -3,9 +3,9 @@ import XCTest
 
 class DataParserTests: XCTestCase {
     /// Test parsing date strings
-    func testParseDate() {
+    func testParseDate() throws {
         let dateString = "2023-10-05"
-        let expectedDate = DateComponents(year: 2023, month: 10, day: 5).date!
+        let expectedDate = try XCTUnwrap(DateComponents(year: 2023, month: 10, day: 5).date)
 
         do {
             let parsedDate = DataParser.parseDate(dateString)

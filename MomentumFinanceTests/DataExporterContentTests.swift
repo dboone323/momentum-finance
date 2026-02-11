@@ -29,8 +29,8 @@ final class DataExporterContentTests: XCTestCase {
     }
 
     func testExporterIncludesHeaderAndRows() async throws {
-        let start = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        let end = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+        let start = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -1, to: Date()))
+        let end = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: Date()))
         let settings = ExportSettings(
             format: .csv,
             startDate: start,
@@ -59,8 +59,8 @@ final class DataExporterContentTests: XCTestCase {
         let emptyContainer = try ModelContainer(
             for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
-        let start = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        let end = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+        let start = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -1, to: Date()))
+        let end = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: Date()))
         let settings = ExportSettings(
             format: .csv,
             startDate: start,

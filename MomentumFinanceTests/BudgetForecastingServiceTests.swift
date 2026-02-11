@@ -26,12 +26,12 @@ final class BudgetForecastingServiceTests: XCTestCase {
         XCTAssertEqual(forecast.trend, .stable)
     }
 
-    func testForecastNextMonth_StableSpending() async {
+    func testForecastNextMonth_StableSpending() async throws {
         // Given: 3 months of consistent spending ($100 each month)
-        let dates = [
-            Calendar.current.date(byAdding: .month, value: -1, to: Date())!,
-            Calendar.current.date(byAdding: .month, value: -2, to: Date())!,
-            Calendar.current.date(byAdding: .month, value: -3, to: Date())!,
+        let dates = try [
+            XCTUnwrap(Calendar.current.date(byAdding: .month, value: -1, to: Date())),
+            XCTUnwrap(Calendar.current.date(byAdding: .month, value: -2, to: Date())),
+            XCTUnwrap(Calendar.current.date(byAdding: .month, value: -3, to: Date())),
         ]
 
         for date in dates {
@@ -55,12 +55,12 @@ final class BudgetForecastingServiceTests: XCTestCase {
         XCTAssertEqual(forecast.amount, 100.0 * seasonalFactor(), accuracy: 5.0)
     }
 
-    func testForecastNextMonth_IncreasingTrend() async {
+    func testForecastNextMonth_IncreasingTrend() async throws {
         // Given: Spending increasing over 3 months (50 -> 100 -> 150)
         let today = Date()
-        let oneMonthAgo = Calendar.current.date(byAdding: .month, value: -1, to: today)!
-        let twoMonthsAgo = Calendar.current.date(byAdding: .month, value: -2, to: today)!
-        let threeMonthsAgo = Calendar.current.date(byAdding: .month, value: -3, to: today)!
+        let oneMonthAgo = try XCTUnwrap(Calendar.current.date(byAdding: .month, value: -1, to: today))
+        let twoMonthsAgo = try XCTUnwrap(Calendar.current.date(byAdding: .month, value: -2, to: today))
+        let threeMonthsAgo = try XCTUnwrap(Calendar.current.date(byAdding: .month, value: -3, to: today))
 
         let t1 = FinancialTransaction(title: "T1", amount: -50, date: threeMonthsAgo, transactionType: .expense)
         t1.category = category

@@ -15,12 +15,12 @@ class ContentViewMacOSTests: XCTestCase {
     }
 
     /// macOS-specific UI components and helpers
-    func test_macOSSpecificViews() {
+    func test_macOSSpecificViews() throws {
         let configureWindow = macOSSpecificViews.configureWindow
         let configureToolbar = macOSSpecificViews.configureToolbar
 
         // Test window configuration
-        let window = NSApp.mainWindow!
+        let window = try XCTUnwrap(NSApp.mainWindow)
         XCTAssertEqual(window.frame.width, 800)
         XCTAssertEqual(window.frame.height, 600)
 

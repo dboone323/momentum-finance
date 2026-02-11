@@ -1,5 +1,4 @@
 import XCTest
-
 @testable import MomentumFinance
 
 class DependenciesTests: XCTestCase {

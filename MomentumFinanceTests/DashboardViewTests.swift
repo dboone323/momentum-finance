@@ -7,12 +7,12 @@ class DashboardViewTests: XCTestCase {
     var modelContext: ModelContext!
 
     /// Test case for the timeOfDayGreeting property
-    func testTimeOfDayGreeting() {
+    func testTimeOfDayGreeting() throws {
         // GIVEN
         let now = Date()
-        let morning = Calendar.current.date(byAdding: .hours, value: 6, to: now)!
-        let afternoon = Calendar.current.date(byAdding: .hours, value: 12, to: now)!
-        let evening = Calendar.current.date(byAdding: .hours, value: 18, to: now)!
+        let morning = try XCTUnwrap(Calendar.current.date(byAdding: .hours, value: 6, to: now))
+        let afternoon = try XCTUnwrap(Calendar.current.date(byAdding: .hours, value: 12, to: now))
+        let evening = try XCTUnwrap(Calendar.current.date(byAdding: .hours, value: 18, to: now))
 
         // WHEN
         let greeting = dashboardView.timeOfDayGreeting(for: morning)

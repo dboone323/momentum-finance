@@ -13,47 +13,47 @@ class SearchHeaderComponentTests: XCTestCase {
     }
 
     /// Test Case 2: Search Text Field
-    func testSearchTextField() {
-        let textField = sut.body.findFirst(ofType: TextField.self)!
+    func testSearchTextField() throws {
+        let textField = try XCTUnwrap(sut.body.findFirst(ofType: TextField.self))
 
         XCTAssertEqual(textField.text, searchTextBinding.wrappedValue)
         XCTAssertEqual(textField.accessibilityLabel, "Text Field")
         XCTAssertEqual(textField.textFieldStyle, .plain)
-        XCTAssertEqual(textField.onChange(of: searchTextBinding)!.count, 1)
+        XCTAssertEqual(textField.onChange(of: searchTextBinding)?.count, 1)
     }
 
     /// Test Case 3: Filter Picker
-    func testFilterPicker() {
-        let filterPicker = sut.body.findFirst(ofType: Picker.self)!
+    func testFilterPicker() throws {
+        let filterPicker = try XCTUnwrap(sut.body.findFirst(ofType: Picker.self))
 
         XCTAssertEqual(filterPicker.selection, selectedFilterBinding.wrappedValue)
         XCTAssertEqual(filterPicker.pickerStyle, .segmented)
     }
 
     /// Test Case 4: Search Text Field Change
-    func testSearchTextFieldChange() {
+    func testSearchTextFieldChange() throws {
         searchTextBinding.wrappedValue = "Test"
         XCTAssertEqual(searchTextBinding.wrappedValue, "Test")
 
-        let textField = sut.body.findFirst(ofType: TextField.self)!
+        let textField = try XCTUnwrap(sut.body.findFirst(ofType: TextField.self))
         XCTAssertEqual(textField.text, searchTextBinding.wrappedValue)
     }
 
     /// Test Case 5: Filter Picker Change
-    func testFilterPickerChange() {
+    func testFilterPickerChange() throws {
         selectedFilterBinding.wrappedValue = .crypto
         XCTAssertEqual(selectedFilterBinding.wrappedValue, .crypto)
 
-        let filterPicker = sut.body.findFirst(ofType: Picker.self)!
+        let filterPicker = try XCTUnwrap(sut.body.findFirst(ofType: Picker.self))
         XCTAssertEqual(filterPicker.selection, selectedFilterBinding.wrappedValue)
     }
 
     /// Test Case 6: Clear Search Text Field
-    func testClearSearchTextField() {
+    func testClearSearchTextField() throws {
         searchTextBinding.wrappedValue = "Test"
         sut.searchText = ""
 
-        let textField = sut.body.findFirst(ofType: TextField.self)!
+        let textField = try XCTUnwrap(sut.body.findFirst(ofType: TextField.self))
         XCTAssertEqual(textField.text, "")
     }
 }

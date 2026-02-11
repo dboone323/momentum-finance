@@ -19,8 +19,8 @@ class DashboardAccountsSummaryTests: XCTestCase {
     }
 
     /// Test that the account details are displayed correctly
-    func testAccountDetails() {
-        let account = accounts.first!
+    func testAccountDetails() throws {
+        let account = try XCTUnwrap(accounts.first)
         let expectedName = "Checking"
         let expectedIconName = "account"
         let expectedBalance = "$1,000.50"
@@ -58,9 +58,9 @@ class DashboardAccountsSummaryTests: XCTestCase {
         let expectedIconName = "account"
         let expectedBalance = "$1,000.50"
 
-        XCTAssertEqual(viewModel.accounts.first!.name, expectedName)
-        XCTAssertEqual(viewModel.accounts.first!.iconName, expectedIconName)
-        XCTAssertEqual(viewModel.accounts.first!.balance, expectedBalance)
+        XCTAssertEqual(viewModel.accounts.first?.name, expectedName)
+        XCTAssertEqual(viewModel.accounts.first?.iconName, expectedIconName)
+        XCTAssertEqual(viewModel.accounts.first?.balance, expectedBalance)
     }
 
     /// Test that the account details are displayed correctly with no accounts

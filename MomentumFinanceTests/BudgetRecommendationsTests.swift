@@ -5,7 +5,7 @@ class BudgetRecommendationsTests: XCTestCase {
     var budgetRecommendations: BudgetRecommendations!
 
     /// Test case for fi_findBudgetRecommendations with real data
-    func testFindBudgetRecommendationsWithRealData() {
+    func testFindBudgetRecommendationsWithRealData() throws {
         let transactions: [FinancialTransaction] = [
             FinancialTransaction(amount: -100, date: Date(), category: Category(name: "Groceries")),
             FinancialTransaction(amount: 200, date: Date(), category: Category(name: "Entertainment")),
@@ -22,7 +22,7 @@ class BudgetRecommendationsTests: XCTestCase {
 
         XCTAssertEqual(insights.count, 1)
 
-        let insight = insights.first!
+        let insight = try XCTUnwrap(insights.first)
         XCTAssertEqual(insight.title, "Budget Recommendation: Groceries")
         XCTAssertEqual(
             insight.description,
@@ -45,7 +45,7 @@ class BudgetRecommendationsTests: XCTestCase {
     }
 
     /// Test case for fi_findBudgetRecommendations with no budget set
-    func testFindBudgetRecommendationsWithNoBudgetSet() {
+    func testFindBudgetRecommendationsWithNoBudgetSet() throws {
         let transactions: [FinancialTransaction] = [
             FinancialTransaction(amount: -100, date: Date(), category: Category(name: "Groceries")),
             FinancialTransaction(amount: 200, date: Date(), category: Category(name: "Entertainment")),
@@ -62,7 +62,7 @@ class BudgetRecommendationsTests: XCTestCase {
 
         XCTAssertEqual(insights.count, 1)
 
-        let insight = insights.first!
+        let insight = try XCTUnwrap(insights.first)
         XCTAssertEqual(insight.title, "Budget Recommendation: Groceries")
         XCTAssertEqual(
             insight.description,

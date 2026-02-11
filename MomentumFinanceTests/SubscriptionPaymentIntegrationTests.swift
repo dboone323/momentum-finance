@@ -53,7 +53,7 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
         XCTAssertEqual(account.balance, 990.0, "Account balance should decrease by subscription amount")
 
         // 2. Next due date should be 1 month later
-        let expectedDate = Calendar.current.date(byAdding: .month, value: 1, to: startDate)!
+        let expectedDate = try XCTUnwrap(Calendar.current.date(byAdding: .month, value: 1, to: startDate))
         XCTAssertEqual(
             subscription.nextDueDate.timeIntervalSince1970,
             expectedDate.timeIntervalSince1970,
@@ -69,7 +69,7 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
         XCTAssertEqual(transactions.first?.title, "Test Sub", "Transaction title should match subscription name")
     }
 
-    func testProcessPayment_WeeklyCycle() {
+    func testProcessPayment_WeeklyCycle() throws {
         // Given
         let startDate = Date()
         let subscription = Subscription(
@@ -84,7 +84,7 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
         subscription.processPayment(modelContext: modelContext)
 
         // Then
-        let expectedDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: startDate)!
+        let expectedDate = try XCTUnwrap(Calendar.current.date(byAdding: .weekOfYear, value: 1, to: startDate))
         XCTAssertEqual(
             subscription.nextDueDate.timeIntervalSince1970,
             expectedDate.timeIntervalSince1970,
@@ -93,7 +93,7 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
         )
     }
 
-    func testProcessPayment_YearlyCycle() {
+    func testProcessPayment_YearlyCycle() throws {
         // Given
         let startDate = Date()
         let subscription = Subscription(
@@ -108,7 +108,7 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
         subscription.processPayment(modelContext: modelContext)
 
         // Then
-        let expectedDate = Calendar.current.date(byAdding: .year, value: 1, to: startDate)!
+        let expectedDate = try XCTUnwrap(Calendar.current.date(byAdding: .year, value: 1, to: startDate))
         XCTAssertEqual(
             subscription.nextDueDate.timeIntervalSince1970,
             expectedDate.timeIntervalSince1970,

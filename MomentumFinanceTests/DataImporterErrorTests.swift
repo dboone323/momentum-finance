@@ -1,6 +1,5 @@
 import SwiftData
 import XCTest
-
 @testable import MomentumFinance
 
 final class DataImporterErrorTests: XCTestCase {

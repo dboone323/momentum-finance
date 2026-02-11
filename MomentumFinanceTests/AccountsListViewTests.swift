@@ -16,9 +16,9 @@ class AccountsListViewTests: XCTestCase {
         XCTAssertEqual(view.totalBalance, 800.75) // Total balance should be the sum of all balances
     }
 
-    func testAccountCard() {
+    func testAccountCard() throws {
         let view = AccountsListView(categories: categories, accounts: accounts)
-        let account = accounts.first!
+        let account = try XCTUnwrap(accounts.first)
         let expectedTitle = "Checking"
         let expectedLastUpdated = "Last updated 1 day ago" // Example last updated date
         let expectedBalance = "$1000.50"

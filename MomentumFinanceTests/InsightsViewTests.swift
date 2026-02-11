@@ -7,7 +7,7 @@ class InsightsViewTests: XCTestCase {
     var modelContext: ModelContext!
 
     /// Test that the InsightsView displays insights when data is available
-    func testInsightsDisplayWhenDataAvailable() async {
+    func testInsightsDisplayWhenDataAvailable() async throws {
         // Given: An instance of InsightsView with some financial insights
         let insightsView = InsightsView()
 
@@ -18,7 +18,7 @@ class InsightsViewTests: XCTestCase {
         XCTAssertEqual(insightsView.insightsList.count, 3) // Assuming there are 3 insights in the modelContext
 
         // Test that clicking on an insight opens the InsightDetailView
-        let insight = insightsView.intelligenceService.insights.first!
+        let insight = try XCTUnwrap(insightsView.intelligenceService.insights.first)
         insightsView.selectedInsight = insight
         await insightsView.loadView()
 

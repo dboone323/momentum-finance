@@ -161,12 +161,12 @@ class DashboardViewModelTests: XCTestCase {
     }
 
     /// Test netIncomeThisMonth method
-    func testNetIncomeThisMonth() {
+    func testNetIncomeThisMonth() throws {
         // Arrange
         let t1 = FinancialTransaction(title: "Income", amount: 2000.0, date: Date(), transactionType: .income)
         let t2 = FinancialTransaction(title: "Expense", amount: 500.0, date: Date(), transactionType: .expense)
 
-        let lastMonth = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
+        let lastMonth = try XCTUnwrap(Calendar.current.date(byAdding: .month, value: -1, to: Date()))
         let t3 = FinancialTransaction(title: "Old Income", amount: 1000.0, date: lastMonth, transactionType: .income)
 
         let transactions = [t1, t2, t3]

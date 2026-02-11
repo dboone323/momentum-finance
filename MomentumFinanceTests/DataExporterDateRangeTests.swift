@@ -1,6 +1,5 @@
 import SwiftData
 import XCTest
-
 @testable import MomentumFinance
 
 @MainActor
@@ -30,8 +29,8 @@ final class DataExporterDateRangeTests: XCTestCase {
     }
 
     func testExportFiltersByDateRange() async throws {
-        let start = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
-        let end = Calendar.current.date(byAdding: .day, value: 2, to: Date())!
+        let start = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -2, to: Date()))
+        let end = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 2, to: Date()))
         let settings = ExportSettings(
             format: .csv,
             startDate: start,
