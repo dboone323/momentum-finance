@@ -2,7 +2,6 @@ import XCTest
 @testable import MomentumFinance
 
 class DependenciesTests: XCTestCase {
-
     var dependencies: Dependencies!
 
     override func setUp() {

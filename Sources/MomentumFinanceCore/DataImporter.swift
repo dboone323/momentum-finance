@@ -78,7 +78,11 @@ import Foundation
             try context.save()
 
             return ImportResult(
-                success: errors.isEmpty, itemsImported: imported, errors: errors, warnings: warnings
+                success: errors.isEmpty,
+                itemsImported: imported,
+                itemsFailed: errors.count,
+                errors: errors,
+                warnings: warnings
             )
         }
 

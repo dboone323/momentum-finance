@@ -154,7 +154,6 @@
 		C54A38B410DD4974B37F8EF7 /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E4C176188F4C82A930A11B /* EntityManager.swift */; };
 		A5A7895105014CD6958AD4E1 /* ImportError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FA46AB16345229D1228B5 /* ImportError.swift */; };
 		EBB97F5687E24737AAA3B9CE /* NavigationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6464AEB30A4A428B1F2A04 /* NavigationModels.swift */; };
-		38FEBEBA59F243379588C2E1 /* DataImportModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D0B35DE444C4F9DDAC40A /* DataImportModels.swift */; };
 		6B70F723732440AB8F5D3E78 /* FinancialIntelligenceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56960E2AD8B74F2CA72B82F7 /* FinancialIntelligenceModels.swift */; };
 		A1292F0A55494BC99F61A815 /* TransactionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3026B12FB34F8EB2F0EA45 /* TransactionModels.swift */; };
 		D66570B2911F43BF964AB650 /* NotificationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CEAC4107354A359DA23D8B /* NotificationModels.swift */; };
@@ -183,7 +182,6 @@
 		492B3BC34EC847B4927AEFEB /* SecuritySettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665667AC84E64D37850CEBEF /* SecuritySettingsSection.swift */; };
 		3A0113B42C51490C8AC97784 /* ExportDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B96E0FC83AD4CE3A64B70E0 /* ExportDataView.swift */; };
 		5112782EF9CC49E7BFA9AF11 /* AppearanceSettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15654090FF274A93B1CFE577 /* AppearanceSettingsSection.swift */; };
-		9E9AC39D2DCA48DC859FE78D /* SettingsImportResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A7D9C48F64A8B96ED9438 /* SettingsImportResultView.swift */; };
 		52E6E89400C84075B3E7C8C5 /* DataManagementSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9937E1D57642EFA45C4B85 /* DataManagementSection.swift */; };
 		A4E47C02588148729FD56A65 /* ImportDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC83A100F8DE465C81C3AD9C /* ImportDataView.swift */; };
 		D139DAB63FC24211B5FA69E7 /* AccessibilitySettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A4792E7DF74F498919AFC6 /* AccessibilitySettingsSection.swift */; };
@@ -762,8 +760,7 @@
 				665667AC84E64D37850CEBEF /* SecuritySettingsSection.swift */,
 				1B96E0FC83AD4CE3A64B70E0 /* ExportDataView.swift */,
 				15654090FF274A93B1CFE577 /* AppearanceSettingsSection.swift */,
-				BF3A7D9C48F64A8B96ED9438 /* SettingsImportResultView.swift */,
-				4B9937E1D57642EFA45C4B85 /* DataManagementSection.swift */,
+					4B9937E1D57642EFA45C4B85 /* DataManagementSection.swift */,
 				DC83A100F8DE465C81C3AD9C /* ImportDataView.swift */,
 				90A4792E7DF74F498919AFC6 /* AccessibilitySettingsSection.swift */,
 				96676CF99B9B47E980D503C3 /* ImportExportSection.swift */,
@@ -813,8 +810,7 @@
 				B7E4C176188F4C82A930A11B /* EntityManager.swift */,
 				273FA46AB16345229D1228B5 /* ImportError.swift */,
 				CD6464AEB30A4A428B1F2A04 /* NavigationModels.swift */,
-				180D0B35DE444C4F9DDAC40A /* DataImportModels.swift */,
-				A6AEF0EC4F2D488385EF4044 /* InsightsEmptyStateView.swift */,
+					A6AEF0EC4F2D488385EF4044 /* InsightsEmptyStateView.swift */,
 				46823FA8642C46BF821003E8 /* InsightDetailView.swift */,
 				A534E2B774704C1C86440FDC /* InsightsSummaryWidget.swift */,
 				1C1B9C0F9F544639883359A7 /* InsightsView.swift */,
@@ -1252,8 +1248,7 @@
 				492B3BC34EC847B4927AEFEB /* SecuritySettingsSection.swift in Sources */,
 				3A0113B42C51490C8AC97784 /* ExportDataView.swift in Sources */,
 				5112782EF9CC49E7BFA9AF11 /* AppearanceSettingsSection.swift in Sources */,
-				9E9AC39D2DCA48DC859FE78D /* SettingsImportResultView.swift in Sources */,
-				52E6E89400C84075B3E7C8C5 /* DataManagementSection.swift in Sources */,
+					52E6E89400C84075B3E7C8C5 /* DataManagementSection.swift in Sources */,
 				A4E47C02588148729FD56A65 /* ImportDataView.swift in Sources */,
 				D139DAB63FC24211B5FA69E7 /* AccessibilitySettingsSection.swift in Sources */,
 				CD83D986E81B4C69A222E269 /* ImportExportSection.swift in Sources */,
