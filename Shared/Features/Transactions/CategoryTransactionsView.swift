@@ -13,101 +13,84 @@ extension Features.Transactions {
         @Environment(\.dismiss)
         private var dismiss
 
-        let categoryId: PersistentIdentifier
+        let categoryName: String
 
         // Query transactions but we'll filter in computed property
         #if canImport(SwiftData)
             #if canImport(SwiftData)
                 private var transactions: [FinancialTransaction] = []
-                private var categories: [ExpenseCategory] = []
             #else
                 private var transactions: [FinancialTransaction] = []
-                private var categories: [ExpenseCategory] = []
             #endif
         #else
             private var transactions: [FinancialTransaction] = []
-            private var categories: [ExpenseCategory] = []
         #endif
-
-        /// Get the specific category
-        private var category: ExpenseCategory? {
-            self.categories.first { $0.persistentModelID == self.categoryId }
-        }
 
         /// Filter transactions by category
         private var filteredTransactions: [FinancialTransaction] {
-            guard let category else { return [] }
             return self.transactions.filter {
-                $0.category?.persistentModelID == category.persistentModelID
+                $0.category == self.categoryName
             }
             .sorted { $0.date > $1.date }
         }
 
         var body: some View {
             VStack {
-                if let category {
-                    // Category header with icon and stats
-                    VStack(spacing: 16) {
-                        HStack {
-                            // Category icon
-                            Image(systemName: category.iconName)
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .frame(width: 50, height: 50)
-                                .background(Circle().fill(Color.blue))
+                // Category header with icon and stats
+                VStack(spacing: 16) {
+                    HStack {
+                        // Category icon
+                        Image(systemName: "tag.fill")
+                            .font(.title)
+                            .foregroundColor(.white)
+                            .frame(width: 50, height: 50)
+                            .background(Circle().fill(Color.blue))
 
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(category.name)
-                                    .font(.headline)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(self.categoryName)
+                                .font(.headline)
 
-                                Text("\(self.filteredTransactions.count) transactions")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                            }
-
-                            Spacer()
-
-                            // Total amount for this category
-                            VStack(alignment: .trailing) {
-                                Text(self.totalAmount.formatted(.currency(code: "USD")))
-                                    .font(.headline)
-                                    .foregroundColor(self.totalAmount < 0 ? .red : .primary)
-                            }
+                            Text("\(self.filteredTransactions.count) transactions")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
                         }
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(self.platformBackgroundColor)
-                                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-                        )
-                        .padding(.horizontal)
-                    }
 
-                    // Transactions list
-                    List {
-                        ForEach(self.filteredTransactions) { transaction in
-                            TransactionRowView(transaction: transaction, onTapped: {})
+                        Spacer()
 
-                                .swipeActions {
-                                    Button(role: .destructive) {
-                                        self.deleteTransaction(transaction)
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                    .accessibilityLabel("Delete")
-                                }
+                        // Total amount for this category
+                        VStack(alignment: .trailing) {
+                            Text(self.totalAmount.formatted(.currency(code: "USD")))
+                                .font(.headline)
+                                .foregroundColor(self.totalAmount < 0 ? .red : .primary)
                         }
                     }
-                    .listStyle(.plain)
-                } else {
-                    ContentUnavailableView(
-                        "Category Not Found",
-                        systemImage: "tag.slash",
-                        description: Text("The selected category could not be found")
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(self.platformBackgroundColor)
+                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                     )
+                    .padding(.horizontal)
                 }
+
+                // Transactions list
+                List {
+                    ForEach(self.filteredTransactions) { transaction in
+                        TransactionRowView(transaction: transaction, onTapped: {})
+
+                            .swipeActions {
+                                Button(role: .destructive) {
+                                    self.deleteTransaction(transaction)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                                .accessibilityLabel("Delete")
+                            }
+                    }
+                }
+                .listStyle(.plain)
             }
-            .navigationTitle(self.category?.name ?? "Category Transactions")
+            .navigationTitle(self.categoryName)
         }
 
         /// Delete a transaction

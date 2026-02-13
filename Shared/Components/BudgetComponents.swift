@@ -15,8 +15,8 @@ struct BudgetRow: View {
     let budget: Budget
 
     var progress: Double {
-        guard budget.limitAmount > 0 else { return 0 }
-        return min(budget.spentAmount / budget.limitAmount, 1.0)
+        guard budget.totalAmount > 0 else { return 0 }
+        return min(budget.spentAmount / budget.totalAmount, 1.0)
     }
 
     var progressColor: Color {
@@ -32,13 +32,13 @@ struct BudgetRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text(budget.category?.name ?? "Uncategorized")
+                Text(budget.category ?? "Uncategorized")
                     .font(.headline)
 
                 Spacer()
 
                 Text(
-                    "$\(budget.spentAmount, specifier: "%.2f") / $\(budget.limitAmount, specifier: "%.2f")"
+                    "$\(budget.spentAmount, specifier: "%.2f") / $\(budget.totalAmount, specifier: "%.2f")"
                 )
                 .font(.subheadline)
                 .foregroundStyle(.secondary)

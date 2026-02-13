@@ -72,7 +72,7 @@ extension Features.Transactions {
                     .fill(Color.blue.opacity(0.2))
                     .frame(width: 40, height: 40)
                     .overlay {
-                        Image(systemName: account.iconName)
+                        Image(systemName: account.iconName ?? "creditcard.fill")
                             .foregroundColor(.blue)
                     }
 

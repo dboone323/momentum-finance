@@ -61,7 +61,7 @@ final class SubscriptionsViewModel {
             .filter(\.isActive)
             .reduce(0.0) { total, subscription in
                 // Convert subscription amount to monthly equivalent
-                let subscriptionAmount = Double(truncating: subscription.amount as NSDecimalNumber)
+                let subscriptionAmount = subscription.amount
                 let monthlyAmount: Double =
                     switch subscription.billingCycle {
                     case .daily:
@@ -72,8 +72,12 @@ final class SubscriptionsViewModel {
                         subscriptionAmount
                     case .quarterly:
                         subscriptionAmount / 3.0
-                    case .yearly:
+                    case .semiAnnually:
+                        subscriptionAmount / 6.0
+                    case .yearly, .annually:
                         subscriptionAmount / 12.0
+                    case let .custom(days):
+                        subscriptionAmount * (30.44 / Double(days))
                     }
 
                 return total + monthlyAmount

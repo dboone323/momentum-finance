@@ -93,8 +93,14 @@ final class FinancialMLModels {
     /// Suggests a category for a transaction based on its classification
     func suggestCategoryForTransaction(_ transaction: FinancialTransaction) -> ExpenseCategory? {
         let categoryName = self.classifyTransaction(transaction)
-        // Note: In a real app we'd fetch from context,
-        // but for now we return a stub or nil if not found
-        return transaction.category
+        if let currentCategory = transaction.expenseCategory {
+            return currentCategory
+        }
+
+        if let categoryLabel = transaction.category, !categoryLabel.isEmpty {
+            return ExpenseCategory(name: categoryLabel)
+        }
+
+        return ExpenseCategory(name: categoryName)
     }
 }

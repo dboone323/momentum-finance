@@ -10,10 +10,12 @@ import XCTest
 final class AccountUITests: XCTestCase {
     var app: XCUIApplication!
 
+    @MainActor
     override func setUpWithError() throws {
         continueAfterFailure = false
         app = XCUIApplication()
         self.app.launch()
+        dismissSystemPermissionAlertsIfPresent(in: self.app)
     }
 
     // MARK: - Account Creation Tests

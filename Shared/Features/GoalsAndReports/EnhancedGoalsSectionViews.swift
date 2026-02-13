@@ -258,16 +258,20 @@ extension Features.GoalsAndReports {
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
 
-                        let targetDate = goal.targetDate
                         HStack(spacing: 4) {
                             Image(systemName: "calendar")
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
 
-                            Text(
-                                "Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))"
-                            )
-                            .font(.caption)
+                            if let targetDate = goal.targetDate {
+                                Text(
+                                    "Target: \(targetDate.formatted(date: .abbreviated, time: .omitted))"
+                                )
+                                .font(.caption)
+                            } else {
+                                Text("No target date")
+                                    .font(.caption)
+                            }
                         }
                     }
 

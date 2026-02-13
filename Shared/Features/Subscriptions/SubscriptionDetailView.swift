@@ -90,7 +90,7 @@ extension Features.Subscriptions {
                             SubscriptionDetailRow(title: "Name", value: subscription.name)
 
                             if let category = subscription.category {
-                                SubscriptionDetailRow(title: "Category", value: category.name)
+                                SubscriptionDetailRow(title: "Category", value: category)
                             }
 
                             if let account = subscription.account {
@@ -248,6 +248,12 @@ extension Features.Subscriptions {
                 "Billed Yearly"
             case .quarterly:
                 "Billed Quarterly"
+            case .semiAnnually:
+                "Billed Semi-Annually"
+            case .annually:
+                "Billed Annually"
+            case let .custom(days):
+                "Billed Every \(days) Days"
             }
         }
 

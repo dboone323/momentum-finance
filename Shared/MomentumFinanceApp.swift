@@ -1,8 +1,12 @@
 import Foundation
+import AppIntents
 import MomentumFinanceCore
 import os
 import SwiftData
 import SwiftUI
+#if os(macOS)
+import AppKit
+#endif
 
 // Import KeychainHelper for secure storage
 // import KeychainHelper // This line is commented out and will be removed as per instruction
@@ -43,37 +47,19 @@ public struct MomentumFinanceApp: App {
 
         // Initialize user preferences
         self.initializeUserPreferences()
-
-        // Initialize network security
-        NetworkSecurityManager.shared.initialize()
     }
 
     // MARK: - Secure Settings Access
 
     /// Securely access biometric authentication setting from Keychain
     var isBiometricAuthEnabled: Bool {
-        do {
-            return try SecureCredentialManager.shared.retrieveBool(.biometricEnabled) ?? false
-        } catch {
-            os_log(
-                "Failed to retrieve biometric setting from Keychain: %@", log: .default,
-                type: .error, error.localizedDescription
-            )
-            return false
-        }
+        UserDefaults.standard.bool(forKey: "biometricAuthEnabled")
     }
 
     /// Securely set biometric authentication setting in Keychain
     /// - Parameter enabled: Whether biometric auth should be enabled
     func setBiometricAuthEnabled(_ enabled: Bool) {
-        do {
-            try SecureCredentialManager.shared.store(enabled, forKey: .biometricEnabled)
-        } catch {
-            os_log(
-                "Failed to store biometric setting in Keychain: %@", log: .default, type: .error,
-                error.localizedDescription
-            )
-        }
+        UserDefaults.standard.set(enabled, forKey: "biometricAuthEnabled")
     }
 
     private func trackAppLaunch() {
@@ -129,47 +115,16 @@ public struct MomentumFinanceApp: App {
             defaults.set(true, forKey: "notificationsEnabled")
         }
 
-        // Migrate biometric auth setting from UserDefaults to Keychain if needed
-        if defaults.object(forKey: "biometricAuthEnabled") != nil {
-            let enabled = defaults.bool(forKey: "biometricAuthEnabled")
-            do {
-                try SecureCredentialManager.shared.store(enabled, forKey: .biometricEnabled)
-                defaults.removeObject(forKey: "biometricAuthEnabled")
-                print("MomentumFinanceApp: Migrated biometric preference to Keychain")
-            } catch {
-                print("MomentumFinanceApp: Failed to migrate biometric preference: \(error)")
-            }
-        }
-
-        // Set default biometric auth preference in Keychain if not already set
-        if !SecureCredentialManager.shared.exists(.biometricEnabled) {
-            try? SecureCredentialManager.shared.store(false, forKey: .biometricEnabled)
+        if defaults.object(forKey: "biometricAuthEnabled") == nil {
+            defaults.set(false, forKey: "biometricAuthEnabled")
         }
 
         defaults.synchronize()
         print("MomentumFinanceApp: User preferences initialized")
     }
 
-    private func createTenantAwareModelConfiguration(schema: Schema) -> ModelConfiguration {
-        // Get current tenant for database isolation
-        let tenantId = "personal-finance-default" // Default tenant
-
-        // Create tenant-specific storage URL
-        let appSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let tenantDirectory = appSupportURL.appendingPathComponent("MomentumFinance").appendingPathComponent("Tenants")
-            .appendingPathComponent(tenantId)
-        let databaseURL = tenantDirectory.appendingPathComponent("MomentumFinance.sqlite")
-
-        // Create tenant directory if it doesn't exist
-        try? FileManager.default.createDirectory(at: tenantDirectory, withIntermediateDirectories: true)
-
-        return ModelConfiguration(
-            schema: schema,
-            url: databaseURL,
-            isStoredInMemoryOnly: false,
-            allowsSave: true,
-            cloudKitDatabase: .none // Could be tenant-specific in enterprise setup
-        )
+    private static func createTenantAwareModelConfiguration(schema: Schema) -> ModelConfiguration {
+        ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
     }
 
     var sharedModelContainer: ModelContainer? = {
@@ -187,7 +142,7 @@ public struct MomentumFinanceApp: App {
         print("MomentumFinanceApp: Schema created")
 
         // Create tenant-aware model configuration
-        let modelConfiguration = createTenantAwareModelConfiguration(schema: schema)
+        let modelConfiguration = Self.createTenantAwareModelConfiguration(schema: schema)
 
         print("MomentumFinanceApp: ModelConfiguration created")
 

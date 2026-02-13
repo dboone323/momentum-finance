@@ -78,17 +78,17 @@ final class BudgetsViewModel {
 
         let calendar = Calendar.current
         let budgetExists = existingBudgets.contains { budget in
-            budget.category?.name == category.name
+            budget.category == category.name
                 && calendar.isDate(budget.month, equalTo: month, toGranularity: .month)
         }
 
         if budgetExists {
-            Logger.logBusiness("Budget already exists for \(category.name) in \(month)")
+            Logger.info("Budget already exists for \(category.name) in \(month)")
             return
         }
 
         let budget = Budget(name: "\(category.name) Budget", limitAmount: limitAmount, month: month)
-        budget.category = category
+        budget.category = category.name
 
         modelContext.insert(budget)
 
@@ -135,7 +135,7 @@ final class BudgetsViewModel {
 
         let totalBudgeted = monthBudgets.reduce(0) { $0 + $1.limitAmount }
         let totalSpent = monthBudgets.reduce(0) { $0 + $1.spentAmount }
-        let onTrackCount = monthBudgets.count(where: { !$0.isOverBudget })
+        let onTrackCount = monthBudgets.filter { !$0.isOverBudget }.count
         let overBudgetCount = monthBudgets.filter(\.isOverBudget).count
 
         return BudgetProgressSummary(
@@ -162,7 +162,10 @@ final class BudgetsViewModel {
                 continue
             }
 
-            let spent = category.totalSpent(for: monthDate)
+            let monthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: monthDate))
+                ?? monthDate
+            let monthEnd = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: monthStart) ?? monthStart
+            let spent = category.totalSpent(in: monthStart...monthEnd)
             let monthSpending = MonthlySpending(
                 month: monthDate,
                 amount: spent,
@@ -207,7 +210,7 @@ final class BudgetsViewModel {
         let existingBudgets = (try? modelContext.fetch(existingBudgetDescriptor)) ?? []
 
         let nextPeriodBudgetExists = existingBudgets.contains { existingBudget in
-            existingBudget.category?.name == budget.category?.name
+            existingBudget.category == budget.category
                 && calendar.isDate(existingBudget.month, equalTo: nextMonth, toGranularity: .month)
         }
 
@@ -285,7 +288,7 @@ struct MonthlySpending {
 }
 
 struct BudgetRolloverSummary {
-    let budgetId: PersistentIdentifier
+    let budgetId: UUID
     let unusedAmount: Double
     let potentialRollover: Double
     let rolloverEnabled: Bool

@@ -1,3 +1,4 @@
+import MomentumFinanceCore
 import SwiftUI
 
 public struct SearchHeaderComponent: View {

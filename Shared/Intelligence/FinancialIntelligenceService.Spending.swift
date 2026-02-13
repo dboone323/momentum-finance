@@ -9,10 +9,9 @@ func fi_computeMonthlySpendingByCategory(transactions: [FinancialTransaction]) -
 
     for txn in transactions where txn.amount < 0 {
         guard let category = txn.category else { continue }
-        let categoryId = category.id.hashValue.description
         let month = calendar.date(from: calendar.dateComponents([.year, .month], from: txn.date))!
-        monthlySpendingByCategory[categoryId, default: [:]][month] =
-            (monthlySpendingByCategory[categoryId]?[month] ?? 0) + abs(txn.amount)
+        monthlySpendingByCategory[category, default: [:]][month] =
+            (monthlySpendingByCategory[category]?[month] ?? 0) + abs(txn.amount)
     }
 
     return monthlySpendingByCategory
@@ -24,9 +23,8 @@ func fi_generateSpendingInsightsFromMonthlyData(
 ) -> [FinancialInsight] {
     var insights: [FinancialInsight] = []
 
-    for (categoryId, monthlySpending) in monthlySpendingByCategory {
-        guard let category = categories.first(where: { $0.id.hashValue.description == categoryId })
-        else { continue }
+    for (categoryName, monthlySpending) in monthlySpendingByCategory {
+        let resolvedCategoryName = categories.first(where: { $0.name == categoryName })?.name ?? categoryName
 
         let sorted = monthlySpending.sorted { $0.key < $1.key }
         guard sorted.count >= 2 else { continue }
@@ -41,12 +39,12 @@ func fi_generateSpendingInsightsFromMonthlyData(
             let percentIncrease = prev > 0 ? Int(((last - prev) / prev) * 100) : 0
             insights.append(
                 FinancialInsight(
-                    title: "Increased Spending in \(category.name)",
+                    title: "Increased Spending in \(resolvedCategoryName)",
                     description:
-                    "Your spending in \(category.name) increased by \(percentIncrease)% last month.",
+                    "Your spending in \(resolvedCategoryName) increased by \(percentIncrease)% last month.",
                     priority: .medium,
                     type: .spendingPattern,
-                    relatedCategoryId: categoryId,
+                    relatedCategoryId: categoryName,
                     visualizationType: .lineChart,
                     chartData: sorted.map {
                         ChartDataPoint(
@@ -60,12 +58,12 @@ func fi_generateSpendingInsightsFromMonthlyData(
             let percentDecrease = prev > 0 ? Int(((prev - last) / prev) * 100) : 0
             insights.append(
                 FinancialInsight(
-                    title: "Reduced Spending in \(category.name)",
+                    title: "Reduced Spending in \(resolvedCategoryName)",
                     description:
-                    "Your spending in \(category.name) decreased by \(percentDecrease)% last month.",
+                    "Your spending in \(resolvedCategoryName) decreased by \(percentDecrease)% last month.",
                     priority: .low,
                     type: .positiveSpendingTrend,
-                    relatedCategoryId: categoryId,
+                    relatedCategoryId: categoryName,
                     visualizationType: .lineChart,
                     chartData: sorted.map {
                         ChartDataPoint(
@@ -89,10 +87,9 @@ func fi_topCategoriesInsight(
     guard !sorted.isEmpty else { return nil }
 
     let top = sorted.prefix(3)
-    let topCategoryData = top.compactMap { categoryId, total -> (String, Double)? in
-        guard let category = categories.first(where: { $0.id.hashValue.description == categoryId })
-        else { return nil }
-        return (category.name, total)
+    let topCategoryData = top.map { categoryName, total -> (String, Double) in
+        let resolvedCategoryName = categories.first(where: { $0.name == categoryName })?.name ?? categoryName
+        return (resolvedCategoryName, total)
     }
     guard !topCategoryData.isEmpty else { return nil }
 
@@ -148,12 +145,11 @@ func fi_analyzeSpendingPatterns(
 func fi_checkBudgetExceeded(
     budget: Budget, totalSpent: Double, categoryId _: String
 ) -> FinancialInsight? {
-    guard totalSpent >= budget.limitAmount else { return nil }
+    guard totalSpent >= budget.totalAmount else { return nil }
 
-    let overspent = totalSpent - budget.limitAmount
-    let overspentFormatted = overspent.formatted(
-        .currency(code: Locale.current.currency?.identifier ?? "USD")
-    )
+    let currencyCode = Locale.current.currency?.identifier ?? "USD"
+    let overspent = totalSpent - budget.totalAmount
+    let overspentFormatted = fi_formatCurrency(overspent, code: currencyCode)
 
     return FinancialInsight(
         title: "Budget Exceeded",
@@ -163,7 +159,7 @@ func fi_checkBudgetExceeded(
         relatedBudgetId: budget.id.hashValue.description,
         visualizationType: .progressBar,
         chartData: [
-            ChartDataPoint(label: "Budget", value: budget.limitAmount),
+            ChartDataPoint(label: "Budget", value: budget.totalAmount),
             ChartDataPoint(label: "Spent", value: totalSpent),
             ChartDataPoint(label: "Overspent", value: overspent),
         ]
@@ -187,16 +183,13 @@ func fi_checkBudgetAtRisk(context: BudgetAnalysisContext) -> FinancialInsight? {
 
     let projectedTotal =
         context.totalSpent * Double(context.daysInMonth) / Double(max(1, context.day - 1))
-    guard projectedTotal > context.budget.limitAmount else { return nil }
+    guard projectedTotal > context.budget.totalAmount else { return nil }
 
-    let projectedOverage = projectedTotal - context.budget.limitAmount
-    let remainingBudget = context.budget.limitAmount - context.totalSpent
-    let projectedOverageFormatted = projectedOverage.formatted(
-        .currency(code: Locale.current.currency?.identifier ?? "USD")
-    )
-    let remainingBudgetFormatted = remainingBudget.formatted(
-        .currency(code: Locale.current.currency?.identifier ?? "USD")
-    )
+    let currencyCode = Locale.current.currency?.identifier ?? "USD"
+    let projectedOverage = projectedTotal - context.budget.totalAmount
+    let remainingBudget = context.budget.totalAmount - context.totalSpent
+    let projectedOverageFormatted = fi_formatCurrency(projectedOverage, code: currencyCode)
+    let remainingBudgetFormatted = fi_formatCurrency(remainingBudget, code: currencyCode)
 
     let baseMessage =
         "At your current rate, you'll exceed your \(context.budget.name) budget by \(projectedOverageFormatted)."
@@ -212,7 +205,7 @@ func fi_checkBudgetAtRisk(context: BudgetAnalysisContext) -> FinancialInsight? {
         relatedBudgetId: context.budget.id.hashValue.description,
         visualizationType: .progressBar,
         chartData: [
-            ChartDataPoint(label: "Budget", value: context.budget.limitAmount),
+            ChartDataPoint(label: "Budget", value: context.budget.totalAmount),
             ChartDataPoint(label: "Spent", value: context.totalSpent),
             ChartDataPoint(label: "Projected", value: projectedTotal),
         ]
@@ -238,9 +231,9 @@ func fi_checkBudgetUnderutilized(
         relatedBudgetId: budget.id.hashValue.description,
         visualizationType: .progressBar,
         chartData: [
-            ChartDataPoint(label: "Budget", value: budget.limitAmount),
+            ChartDataPoint(label: "Budget", value: budget.totalAmount),
             ChartDataPoint(label: "Spent", value: totalSpent),
-            ChartDataPoint(label: "Remaining", value: budget.limitAmount - totalSpent),
+            ChartDataPoint(label: "Remaining", value: budget.totalAmount - totalSpent),
         ]
     )
 }
@@ -261,13 +254,12 @@ func fi_analyzeBudgets(transactions: [FinancialTransaction], budgets: [Budget])
 
     for budget in budgets {
         guard let category = budget.category else { continue }
-        let categoryId = category.id.hashValue.description
 
         let categoryTransactions = currentMonthTransactions.filter {
-            $0.category?.id.hashValue.description == categoryId && $0.amount < 0
+            $0.category == category && $0.amount < 0
         }
         let totalSpent = categoryTransactions.reduce(0) { $0 + abs($1.amount) }
-        let percentUsed = totalSpent / budget.limitAmount
+        let percentUsed = budget.totalAmount > 0 ? totalSpent / budget.totalAmount : 0
 
         let today = Date()
         let daysInMonth = calendar.range(of: .day, in: .month, for: Date())?.count ?? 30
@@ -286,7 +278,7 @@ func fi_analyzeBudgets(transactions: [FinancialTransaction], budgets: [Budget])
         )
 
         if let exceededInsight = fi_checkBudgetExceeded(
-            budget: budget, totalSpent: totalSpent, categoryId: categoryId
+            budget: budget, totalSpent: totalSpent, categoryId: category
         ) {
             insights.append(exceededInsight)
         } else if let atRiskInsight = fi_checkBudgetAtRisk(context: context) {

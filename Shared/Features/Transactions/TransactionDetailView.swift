@@ -20,7 +20,11 @@ extension Features.Transactions {
                 VStack(spacing: 20) {
                     // Amount Display
                     VStack(spacing: 8) {
-                        Text(self.transaction.formattedAmount)
+                        Text(
+                            self.transaction.formattedAmount(
+                                currency: self.transaction.account?.currency ?? "USD"
+                            )
+                        )
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(
@@ -36,10 +40,13 @@ extension Features.Transactions {
                     // Details
                     VStack(alignment: .leading, spacing: 16) {
                         DetailRow(label: "Title", value: self.transaction.title)
-                        DetailRow(label: "Date", value: self.transaction.formattedDate)
+                        DetailRow(
+                            label: "Date",
+                            value: self.transaction.date.formatted(date: .abbreviated, time: .omitted)
+                        )
 
                         if let category = transaction.category {
-                            DetailRow(label: "Category", value: category.name)
+                            DetailRow(label: "Category", value: category)
                         }
 
                         if let account = transaction.account {

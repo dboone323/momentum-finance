@@ -477,7 +477,7 @@ extension Features.Budgets {
             let currentMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: Date()))!
 
             let budget = Budget(name: name, limitAmount: limit, month: currentMonth)
-            budget.category = category
+            budget.category = category.name
             budget.rolloverEnabled = self.rolloverEnabled
             budget.maxRolloverPercentage = self.maxRolloverPercentage
 
@@ -496,12 +496,12 @@ public struct BudgetSearchView: View {
         if self.searchText.isEmpty {
             self.budgets
         } else {
-            self.budgets.filter { budget in
-                budget.name.localizedCaseInsensitiveContains(self.searchText)
-                    || budget.category?.name.localizedCaseInsensitiveContains(self.searchText)
+                self.budgets.filter { budget in
+                    budget.name.localizedCaseInsensitiveContains(self.searchText)
+                    || budget.category?.localizedCaseInsensitiveContains(self.searchText)
                     ?? false
+                }
             }
-        }
     }
 
     public var body: some View {
@@ -516,7 +516,7 @@ public struct BudgetSearchView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(budget.name)
                                 .font(.headline)
-                            if let categoryName = budget.category?.name {
+                            if let categoryName = budget.category {
                                 Text("Category: \(categoryName)")
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)

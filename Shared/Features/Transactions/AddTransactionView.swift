@@ -81,7 +81,7 @@ extension Features.Transactions {
         private var detailsSection: some View {
             Section(header: Text("Transaction Details")) {
                 TextField("Title", text: self.$title)
-                    .onChange(of: self.title) { _ in
+                    .onChange(of: self.title) {
                         self.handleTitleChange()
                     }
 
@@ -143,9 +143,7 @@ extension Features.Transactions {
 
                 // Only auto-categorize if not already selected
                 if self.selectedCategory == nil {
-                    if let predicted = AICategorizationService.predictCategory(
-                        for: newValue, categories: self.categories
-                    ) {
+                    if let predicted = self.predictCategory(for: newValue) {
                         await MainActor.run {
                             withAnimation {
                                 self.selectedCategory = predicted
@@ -169,16 +167,31 @@ extension Features.Transactions {
                 notes: notes.isEmpty ? nil : self.notes
             )
 
-            transaction.category = self.selectedCategory
+            transaction.category = self.selectedCategory?.name
             transaction.account = account
 
             // Update account balance
-            account.updateBalance(for: transaction)
+            account.updateBalance(with: transaction)
 
             self.modelContext.insert(transaction)
 
             try? self.modelContext.save()
             self.dismiss()
+        }
+
+        private func predictCategory(for title: String) -> ExpenseCategory? {
+            let normalizedTitle = title.lowercased()
+
+            return self.categories.first { category in
+                let normalizedCategory = category.name.lowercased()
+                if normalizedTitle.contains(normalizedCategory) {
+                    return true
+                }
+
+                return normalizedCategory.split(separator: " ").contains { token in
+                    normalizedTitle.contains(token)
+                }
+            }
         }
     }
 }

@@ -29,7 +29,7 @@ final class DashboardViewModel {
     func upcomingSubscriptions(_ subscriptions: [Subscription]) -> [Subscription] {
         subscriptions
             .filter(\.isActive)
-            .sorted { $0.nextDueDate < $1.nextDueDate }
+            .sorted { $0.nextBillingDate < $1.nextBillingDate }
     }
 
     /// Get budgets for the current month
@@ -40,7 +40,7 @@ final class DashboardViewModel {
         let now = Date()
 
         return budgets.filter { budget in
-            calendar.isDate(budget.month, equalTo: now, toGranularity: .month)
+            calendar.isDate(budget.startDate, equalTo: now, toGranularity: .month)
         }
     }
 
@@ -71,7 +71,7 @@ final class DashboardViewModel {
         guard let modelContext else { return }
 
         let overdueSubscriptions = subscriptions.filter { subscription in
-            subscription.isActive && subscription.nextDueDate <= Date()
+            subscription.isActive && subscription.nextBillingDate <= Date()
         }
 
         for subscription in overdueSubscriptions {
@@ -81,7 +81,7 @@ final class DashboardViewModel {
 
     /// Process a single subscription payment
     private func processSubscription(_ subscription: Subscription, modelContext: ModelContext) async {
-        subscription.processPayment(modelContext: modelContext)
+        subscription.updateNextBillingDate()
 
         do {
             try modelContext.save()
@@ -109,7 +109,7 @@ final class DashboardViewModel {
 
         var spendingByCategory: [String: Double] = [:]
         for transaction in currentMonthTransactions {
-            let categoryName = transaction.category?.name ?? "Uncategorized"
+            let categoryName = transaction.category ?? "Uncategorized"
             spendingByCategory[categoryName, default: 0] += transaction.amount
         }
 

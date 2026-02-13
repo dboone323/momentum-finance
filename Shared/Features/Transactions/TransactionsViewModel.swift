@@ -38,7 +38,7 @@ extension Features.Transactions {
 
             return transactions.filter { transaction in
                 transaction.title.localizedCaseInsensitiveContains(query)
-                    || transaction.category?.name.localizedCaseInsensitiveContains(query) == true
+                    || transaction.category?.localizedCaseInsensitiveContains(query) == true
                     || transaction.notes?.localizedCaseInsensitiveContains(query) == true
             }
         }
@@ -61,7 +61,7 @@ extension Features.Transactions {
         /// <#Description#>
         /// - Returns: <#description#>
         func totalIncome(_ transactions: [FinancialTransaction], for period: DateInterval? = nil)
-            -> Decimal
+            -> Double
         {
             let filteredTransactions: [FinancialTransaction] =
                 if let period {
@@ -75,14 +75,14 @@ extension Features.Transactions {
             return
                 filteredTransactions
                     .filter { $0.transactionType == .income }
-                    .reduce(Decimal(0)) { $0 + $1.amount }
+                    .reduce(0) { $0 + $1.amount }
         }
 
         /// Get total expenses for a period
         /// <#Description#>
         /// - Returns: <#description#>
         func totalExpenses(_ transactions: [FinancialTransaction], for period: DateInterval? = nil)
-            -> Decimal
+            -> Double
         {
             let filteredTransactions: [FinancialTransaction] =
                 if let period {
@@ -96,14 +96,14 @@ extension Features.Transactions {
             return
                 filteredTransactions
                     .filter { $0.transactionType == .expense }
-                    .reduce(Decimal(0)) { $0 + $1.amount }
+                    .reduce(0) { $0 + $1.amount }
         }
 
         /// Get net income for a period
         /// <#Description#>
         /// - Returns: <#description#>
         func netIncome(_ transactions: [FinancialTransaction], for period: DateInterval? = nil)
-            -> Decimal
+            -> Double
         {
             self.totalIncome(transactions, for: period)
                 - self.totalExpenses(transactions, for: period)
@@ -167,7 +167,7 @@ extension Features.Transactions {
         /// Create a new transaction
         func createTransaction(
             title: String,
-            amount: Decimal,
+            amount: Double,
             type: TransactionType,
             category: ExpenseCategory?,
             account: FinancialAccount,
@@ -184,11 +184,11 @@ extension Features.Transactions {
                 notes: notes
             )
 
-            transaction.category = category
+            transaction.category = category?.name
             transaction.account = account
 
             // Update account balance
-            account.updateBalance(for: transaction)
+            account.updateBalance(with: transaction)
 
             modelContext.insert(transaction)
 
@@ -204,7 +204,7 @@ extension Features.Transactions {
         /// - Returns: <#description#>
         func spendingByCategory(
             _ transactions: [FinancialTransaction], for period: DateInterval? = nil
-        ) -> [String: Decimal] {
+        ) -> [String: Double] {
             let filteredTransactions: [FinancialTransaction] =
                 if let period {
                     transactions.filter { transaction in
@@ -214,11 +214,11 @@ extension Features.Transactions {
                     transactions.filter { $0.transactionType == .expense }
                 }
 
-            var spending: [String: Decimal] = [:]
+            var spending: [String: Double] = [:]
 
             for transaction in filteredTransactions {
-                let categoryName = transaction.category?.name ?? "Uncategorized"
-                spending[categoryName, default: Decimal(0)] += transaction.amount
+                let categoryName = transaction.category ?? "Uncategorized"
+                spending[categoryName, default: 0] += transaction.amount
             }
 
             return spending

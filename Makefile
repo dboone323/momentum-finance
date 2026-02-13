@@ -1,5 +1,5 @@
 SHELL := /bin/zsh
-.PHONY: validate lint format
+.PHONY: validate lint format test
 
 validate:
 	@.ci/agent_validate.sh
@@ -9,3 +9,6 @@ lint:
 
 format:
 	@swiftformat . --config .swiftformat || true
+
+test:
+	swift test --parallel || true

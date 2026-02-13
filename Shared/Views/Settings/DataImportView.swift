@@ -143,15 +143,21 @@ public struct DataImportView: View {
         #endif
 
         do {
-            let importer = DataImporter(modelContainer: modelContext.container)
-
-            for i in 1...10 {
-                try await Task.sleep(nanoseconds: 100_000_000)
-                self.importProgress = Double(i) / 10.0
+            let service = ImportExportService(modelContext: modelContext)
+            let internalResult = try await service.importWithProgress(from: fileURL) { progress in
+                Task { @MainActor in
+                    self.importProgress = progress
+                }
             }
 
-            let content = try String(contentsOf: fileURL, encoding: .utf8)
-            let result = try await importer.importFromCSV(content)
+            let result = ImportResult(
+                success: internalResult.failureCount == 0,
+                itemsImported: internalResult.successCount,
+                itemsFailed: internalResult.failureCount,
+                errors: internalResult.errors.map { error in
+                    "Row \(error.row + 1): \(error.error.localizedDescription)"
+                }
+            )
             self.importResult = result
             self.showingResult = true
             #if os(iOS)

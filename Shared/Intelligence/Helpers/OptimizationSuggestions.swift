@@ -60,28 +60,32 @@ func fi_suggestIdleCashInsights(
 func fi_suggestCreditUtilizationInsights(accounts: [FinancialAccount]) -> [FinancialInsight] {
     var insights: [FinancialInsight] = []
 
-    let creditAccounts = accounts.filter { $0.accountType == .credit }
+    let creditAccounts = accounts.filter { $0.accountType == .creditCard }
     for account in creditAccounts {
-        guard let creditLimit = account.creditLimit, creditLimit > 0 else { continue }
-
         let balance = abs(account.balance)
-        let utilization = balance / creditLimit
+        guard balance > 0 else { continue }
 
-        if utilization > 0.3 {
-            let utilDescription = "Your credit utilization on \(account.name) is \(Int(utilization * 100))%. "
-                + "It's recommended to keep this under 30% to maintain a good credit score."
+        // Current account model does not store credit limit, so use a conservative
+        // high-balance threshold to surface repayment guidance.
+        let suggestedMaxRevolvingBalance = 1000.0
+        if balance > suggestedMaxRevolvingBalance {
+            let utilDescription = "Your outstanding balance on \(account.name) is "
+                + fi_formatCurrency(balance, code: account.currencyCode)
+                + ". Paying this down can help improve credit health and reduce interest charges."
 
             let insight = FinancialInsight(
-                title: "High Credit Utilization",
+                title: "High Credit Balance",
                 description: utilDescription,
-                priority: utilization > 0.7 ? .critical : .high,
-                type: .optimization,
+                priority: balance > 2500 ? .critical : .high,
+                type: .creditUtilization,
                 relatedAccountId: String(account.id.hashValue),
                 visualizationType: .progressBar,
                 chartData: [
                     ChartDataPoint(label: "Balance", value: balance),
-                    ChartDataPoint(label: "Credit Limit", value: creditLimit),
-                    ChartDataPoint(label: "Utilization", value: utilization),
+                    ChartDataPoint(
+                        label: "Suggested Max Revolving Balance",
+                        value: suggestedMaxRevolvingBalance
+                    ),
                 ]
             )
             insights.append(insight)

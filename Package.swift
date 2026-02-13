@@ -17,7 +17,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../shared-kit")
+        .package(path: "../Shared-Kit")
     ],
     targets: [
         .target(
@@ -36,17 +36,10 @@ let package = Package(
                 .product(name: "SharedKit", package: "shared-kit"),
                 .product(name: "EnterpriseScalingFramework", package: "shared-kit"),
             ],
-            path: "Shared",
-            exclude: ["Package.swift", ".build", "README.md"],
-            resources: [],
+            path: "Sources/MomentumFinanceShared",
             swiftSettings: [
                 .enableUpcomingFeature("StrictConcurrency")
             ]
-        ),
-        .testTarget(
-            name: "MomentumFinanceTests",
-            dependencies: ["MomentumFinanceCore", "Shared"],
-            path: "MomentumFinanceTests"
         ),
     ]
 )

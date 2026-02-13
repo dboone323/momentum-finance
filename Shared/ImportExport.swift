@@ -134,12 +134,14 @@ public enum ExportError: LocalizedError {
     case encodingFailed
     case fileWriteFailed
     case invalidData
+    case pdfGenerationFailed
 
     public var errorDescription: String? {
         switch self {
         case .encodingFailed: "Failed to encode data"
         case .fileWriteFailed: "Failed to write file"
         case .invalidData: "Invalid data for export"
+        case .pdfGenerationFailed: "Failed to generate PDF document"
         }
     }
 }

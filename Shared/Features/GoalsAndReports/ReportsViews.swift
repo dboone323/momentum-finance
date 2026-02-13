@@ -202,7 +202,7 @@ public struct SpendingByCategoryCard: View {
 
     private var categorySpending: [(String, Double)] {
         let spending = Dictionary(grouping: expenseTransactions) { transaction in
-            transaction.category?.name ?? "Uncategorized"
+            transaction.category ?? "Uncategorized"
         }.mapValues { transactions in
             transactions.reduce(0) { $0 + $1.amount }
         }
@@ -319,9 +319,9 @@ public struct BudgetPerformanceCard: View {
                                 .font(.caption)
                                 .foregroundColor(.secondary)
 
-                            ForEach(Array(self.overBudgets.prefix(3)), id: \.createdDate) { budget in
+                            ForEach(Array(self.overBudgets.prefix(3)), id: \.id) { budget in
                                 HStack {
-                                    Text(budget.category?.name ?? "Unknown")
+                                    Text(budget.category ?? "Unknown")
                                         .font(.caption)
                                     Spacer()
                                     let overAmount = budget.spentAmount - budget.limitAmount
@@ -371,21 +371,21 @@ public struct RecentTransactionsCard: View {
                     .padding()
             } else {
                 VStack(spacing: 8) {
-                    ForEach(self.transactions, id: \.date) { transaction in
+                    ForEach(self.transactions, id: \.id) { transaction in
                         HStack {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(transaction.title)
                                     .font(.body)
                                     .fontWeight(.medium)
 
-                                Text(transaction.formattedDate)
+                                Text(transaction.date.formatted(date: .abbreviated, time: .omitted))
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }
 
                             Spacer()
 
-                            Text(transaction.formattedAmount)
+                            Text(transaction.formattedAmount())
                                 .font(.body)
                                 .fontWeight(.semibold)
                                 .foregroundColor(

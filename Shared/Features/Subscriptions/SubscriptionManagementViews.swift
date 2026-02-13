@@ -158,13 +158,14 @@ extension Features.Subscriptions {
 
             let subscription = Subscription(
                 name: name,
+                provider: "",
                 amount: amountValue,
                 billingCycle: frequency,
                 nextDueDate: nextDueDate,
                 notes: notes.isEmpty ? nil : self.notes
             )
 
-            subscription.category = self.selectedCategory
+            subscription.category = self.selectedCategory?.name
             subscription.account = self.selectedAccount
             subscription.isActive = self.isActive
 

@@ -1,0 +1,59 @@
+{
+  "configurations" : [
+    {
+      "id" : "42A95E8A-796A-4C0F-B4A3-C55489CF9F30",
+      "name" : "Default Configuration",
+      "options" : {
+
+      }
+    },
+    {
+      "id" : "27F4332D-9F09-4A3E-B5D3-B15A8FDFCB5D",
+      "name" : "Performance",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "gatherCoverageData" : true,
+      "targets" : [
+        {
+          "containerPath" : "container:MomentumFinance.xcodeproj",
+          "identifier" : "6B1A2B272C0D1E8F00123456",
+          "name" : "MomentumFinance"
+        },
+        {
+          "containerPath" : "container:MomentumFinance.xcodeproj",
+          "identifier" : "A0CORE112F0ABCDE00000001",
+          "name" : "MomentumFinanceCore"
+        }
+      ]
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:MomentumFinance.xcodeproj",
+      "identifier" : "6B1A2B272C0D1E8F00123456",
+      "name" : "MomentumFinance"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:MomentumFinance.xcodeproj",
+        "identifier" : "A0TEST112F0ABCDE00000001",
+        "name" : "MomentumFinanceTests"
+      }
+    },
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:MomentumFinance.xcodeproj",
+        "identifier" : "63292F885ECCB953E9ABA700",
+        "name" : "MomentumFinanceUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

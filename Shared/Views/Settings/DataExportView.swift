@@ -2,7 +2,6 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 import MomentumFinanceCore
-import SharedKit
 import SwiftData
 import SwiftUI
 import UniformTypeIdentifiers
@@ -241,7 +240,7 @@ public struct DataExportView: View {
         #endif
 
         do {
-            let exporter = DataExporter(modelContainer: modelContext.container)
+            let exporter = ExportEngineService(modelContainer: modelContext.container)
             let (start, end) = self.getDateRange()
 
             let exportSettings = ExportSettings(
@@ -256,7 +255,7 @@ public struct DataExportView: View {
                 includeGoals: includeGoals
             )
 
-            let fileURL = try await exporter.exportData(settings: exportSettings)
+            let fileURL = try await exporter.export(settings: exportSettings)
 
             self.exportedFileURL = fileURL
             self.showingShareSheet = true

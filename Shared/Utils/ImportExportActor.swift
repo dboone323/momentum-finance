@@ -2,8 +2,9 @@ import Foundation
 import MomentumFinanceCore
 import SwiftData
 
-/// Optimized import/export with background threading using actors
-actor ImportExportService {
+/// Import/export service bound to the main actor to safely access ModelContext.
+@MainActor
+final class ImportExportService {
     private let modelContext: ModelContext
 
     init(modelContext: ModelContext) {
@@ -119,7 +120,7 @@ actor ImportExportService {
             let title = escapeCSVField(transaction.title)
             let amount = String(format: "%.2f", transaction.amount)
             let type = transaction.transactionType.rawValue
-            let category = escapeCSVField(transaction.category?.name ?? "")
+            let category = escapeCSVField(transaction.category ?? "")
             let account = escapeCSVField(transaction.account?.name ?? "")
             let notes = escapeCSVField(transaction.notes ?? "")
 
@@ -139,12 +140,20 @@ actor ImportExportService {
     // MARK: - JSON Export (Background)
 
     func exportJSONAsync(_ transactions: [FinancialTransaction]) async throws -> URL {
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-
-        // Encode on background
-        let data = try encoder.encode(transactions)
+        let isoFormatter = ISO8601DateFormatter()
+        let payload = transactions.map { transaction in
+            [
+                "id": transaction.id.uuidString,
+                "title": transaction.title,
+                "amount": transaction.amount,
+                "date": isoFormatter.string(from: transaction.date),
+                "type": transaction.transactionType.rawValue,
+                "category": transaction.category ?? "",
+                "account": transaction.account?.name ?? "",
+                "notes": transaction.notes ?? "",
+            ] as [String: Any]
+        }
+        let data = try JSONSerialization.data(withJSONObject: payload, options: [.prettyPrinted])
 
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("export_\(Date().timeIntervalSince1970).json")

@@ -144,7 +144,7 @@ public struct ChartDataPoint: Identifiable, Sendable, Codable {
     public let colorHex: String?
 
     public var color: Color? {
-        guard let colorHex else { return nil }
+        guard colorHex != nil else { return nil }
         // Simplified stub: return .blue if hex not empty.
         // In real app, parse hex.
         return .blue

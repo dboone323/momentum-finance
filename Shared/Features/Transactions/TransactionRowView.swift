@@ -27,7 +27,7 @@ public extension Features.Transactions {
                             .font(.headline)
 
                         if let category = transaction.category {
-                            Text(category.name)
+                            Text(category)
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -36,13 +36,17 @@ public extension Features.Transactions {
                     Spacer()
 
                     VStack(alignment: .trailing) {
-                        Text(self.transaction.formattedAmount)
+                        Text(
+                            self.transaction.formattedAmount(
+                                currency: self.transaction.account?.currency ?? "USD"
+                            )
+                        )
                             .font(.headline)
                             .foregroundColor(
                                 self.transaction.transactionType == .income ? .green : .red
                             )
 
-                        Text(self.transaction.formattedDate)
+                        Text(self.transaction.date.formatted(date: .abbreviated, time: .omitted))
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }

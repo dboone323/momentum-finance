@@ -49,6 +49,23 @@ public final class SavingsGoal {
         self.category = category
     }
 
+    /// Legacy convenience initializer retained for compatibility with older views/view-models.
+    public convenience init(
+        name: String,
+        targetAmount: Double,
+        currentAmount: Double = 0,
+        targetDate: Date = Date(),
+        notes: String? = nil
+    ) {
+        self.init(
+            title: name,
+            goalDescription: notes,
+            targetAmount: targetAmount,
+            currentAmount: currentAmount,
+            targetDate: targetDate
+        )
+    }
+
     /// Calculate progress as a percentage (0-100)
     public var progressPercentage: Double {
         guard targetAmount > 0 else { return 0 }
@@ -85,6 +102,11 @@ public final class SavingsGoal {
             isCompleted = true
         }
     }
+
+    /// Legacy alias retained for older call sites.
+    public func addFunds(_ amount: Double) {
+        addAmount(amount)
+    }
 }
 
 /// Priority levels for savings goals
@@ -105,6 +127,34 @@ public enum GoalPriority: String, Codable, CaseIterable {
 }
 
 public extension SavingsGoal {
+    // Backward-compatible aliases used by older views
+    var name: String {
+        get { title }
+        set { title = newValue }
+    }
+
+    var notes: String? {
+        get { goalDescription }
+        set { goalDescription = newValue }
+    }
+
+    var formattedCurrentAmount: String {
+        currentAmount.formatted(.currency(code: "USD"))
+    }
+
+    var formattedTargetAmount: String {
+        targetAmount.formatted(.currency(code: "USD"))
+    }
+
+    var formattedRemainingAmount: String {
+        remainingAmount.formatted(.currency(code: "USD"))
+    }
+
+    var daysRemaining: Int? {
+        guard let targetDate else { return nil }
+        return max(Calendar.current.dateComponents([.day], from: Date(), to: targetDate).day ?? 0, 0)
+    }
+
     /// Sample data for previews and testing
     static var sample: SavingsGoal {
         SavingsGoal(

@@ -122,6 +122,96 @@ public final class Budget {
         totalAmount = newAmount
         lastModifiedDate = Date()
     }
+
+    /// Legacy convenience initializer retained for compatibility with older views/view-models.
+    public convenience init(name: String, limitAmount: Double, month: Date) {
+        let start = month.startOfMonth
+        let end = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: start) ?? start
+        self.init(
+            name: name,
+            totalAmount: limitAmount,
+            spentAmount: 0,
+            period: .monthly,
+            startDate: start,
+            endDate: end
+        )
+    }
+}
+
+private enum BudgetCompatibilityStore {
+    nonisolated(unsafe) static var rolloverEnabled: [UUID: Bool] = [:]
+    nonisolated(unsafe) static var maxRolloverPercentage: [UUID: Double] = [:]
+    nonisolated(unsafe) static var rolledOverAmount: [UUID: Double] = [:]
+}
+
+public extension Budget {
+    // Legacy aliases used by older UI code paths
+    var month: Date {
+        get { startDate }
+        set {
+            let newStart = newValue.startOfMonth
+            startDate = newStart
+            endDate = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: newStart) ?? newStart
+            lastModifiedDate = Date()
+        }
+    }
+
+    var limitAmount: Double {
+        get { totalAmount }
+        set { updateAmount(newValue) }
+    }
+
+    var rolloverEnabled: Bool {
+        get { BudgetCompatibilityStore.rolloverEnabled[id] ?? false }
+        set { BudgetCompatibilityStore.rolloverEnabled[id] = newValue }
+    }
+
+    var maxRolloverPercentage: Double {
+        get { BudgetCompatibilityStore.maxRolloverPercentage[id] ?? 1.0 }
+        set { BudgetCompatibilityStore.maxRolloverPercentage[id] = newValue }
+    }
+
+    var rolledOverAmount: Double {
+        get { BudgetCompatibilityStore.rolledOverAmount[id] ?? 0 }
+        set { BudgetCompatibilityStore.rolledOverAmount[id] = newValue }
+    }
+
+    var effectiveLimit: Double {
+        limitAmount + rolledOverAmount
+    }
+
+    func calculateRolloverAmount() -> Double {
+        guard rolloverEnabled else { return 0 }
+        let unusedAmount = max(limitAmount - spentAmount, 0)
+        let maxAllowed = limitAmount * maxRolloverPercentage
+        return min(unusedAmount, maxAllowed)
+    }
+
+    func createNextPeriodBudget(for month: Date? = nil) -> Budget {
+        let startSourceDate = month ?? Calendar.current.date(byAdding: .day, value: 1, to: endDate) ?? Date()
+        let nextPeriod = period.nextPeriod(from: startSourceDate)
+
+        let nextBudget = Budget(
+            name: name,
+            budgetDescription: budgetDescription,
+            totalAmount: limitAmount,
+            spentAmount: 0,
+            period: period,
+            startDate: nextPeriod.start,
+            endDate: nextPeriod.end,
+            isActive: isActive,
+            category: category,
+            colorHex: colorHex
+        )
+
+        if rolloverEnabled {
+            nextBudget.rolloverEnabled = true
+            nextBudget.maxRolloverPercentage = maxRolloverPercentage
+            nextBudget.rolledOverAmount = calculateRolloverAmount()
+        }
+
+        return nextBudget
+    }
 }
 
 /// Budget period types

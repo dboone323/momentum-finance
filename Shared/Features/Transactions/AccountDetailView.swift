@@ -52,7 +52,7 @@ public struct AccountDetailView: View {
         // Populate transactions from the provided account relationship if available.
         // This avoids using the SwiftData @Query attribute which may not be available
         // on all toolchains in this workspace.
-        self.transactions = account.transactions ?? []
+        self.transactions = account.transactions
     }
 
     var filteredTransactions: [FinancialTransaction] {
@@ -71,7 +71,7 @@ public struct AccountDetailView: View {
                 VStack(spacing: 16) {
                     // Account Icon and Balance
                     VStack(spacing: 8) {
-                        Image(systemName: self.account.iconName)
+                        Image(systemName: self.account.iconName ?? "creditcard.fill")
                             .font(.largeTitle)
                             .foregroundColor(.blue)
                             .frame(width: 60, height: 60)
@@ -89,9 +89,7 @@ public struct AccountDetailView: View {
                             .foregroundColor(.secondary)
 
                         Text(
-                            self.formattedCurrency(
-                                Double(truncating: self.account.balance as NSDecimalNumber)
-                            )
+                            self.formattedCurrency(self.account.balance)
                         )
                         .font(.largeTitle)
                         .fontWeight(.bold)
@@ -249,13 +247,13 @@ public struct AccountDetailView: View {
     private var incomeSummary: Double {
         self.filteredTransactions
             .filter { $0.transactionType == .income }
-            .reduce(0) { $0 + Double(truncating: $1.amount as NSDecimalNumber) }
+            .reduce(0) { $0 + $1.amount }
     }
 
     private var expenseSummary: Double {
         self.filteredTransactions
             .filter { $0.transactionType == .expense }
-            .reduce(0) { $0 + Double(truncating: $1.amount as NSDecimalNumber) }
+            .reduce(0) { $0 + $1.amount }
     }
 
     private func formattedCurrency(_ value: Double) -> String {
@@ -334,12 +332,12 @@ public struct ActivityChartView: View {
                 let income =
                     dayTransactions
                         .filter { $0.transactionType == .income }
-                        .reduce(0.0) { $0 + Double(truncating: $1.amount as NSDecimalNumber) }
+                        .reduce(0.0) { $0 + $1.amount }
 
                 let expense =
                     dayTransactions
                         .filter { $0.transactionType == .expense }
-                        .reduce(0.0) { $0 + Double(truncating: $1.amount as NSDecimalNumber) }
+                        .reduce(0.0) { $0 + $1.amount }
 
                 result.append(DailyTransactionData(date: date, income: income, expense: expense))
             }

@@ -6,6 +6,10 @@ import MomentumFinanceCore
 import SwiftData
 import SwiftUI
 
+#if os(iOS)
+import UIKit
+#endif
+
 /// Temporary placeholder views until namespace issues are resolved
 public struct DashboardView: View {
     public var body: some View {
@@ -116,6 +120,13 @@ public struct ContentView: View {
         .environmentObject(self.navigationCoordinator)
         .onChange(of: self.navigationCoordinator.isSearchActive) { _, newValue in
             self.isGlobalSearchPresented = newValue
+        }
+        .onChange(of: self.navigationCoordinator.selectedTab) { _, _ in
+            #if os(iOS)
+            let generator = UISelectionFeedbackGenerator()
+            generator.prepare()
+            generator.selectionChanged()
+            #endif
         }
         #if os(iOS)
         .onAppear {

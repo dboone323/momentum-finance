@@ -148,7 +148,7 @@ final class GoalsAndReportsViewModel {
                 income += transaction.amount
             case .expense:
                 expenses += transaction.amount
-                let categoryName = transaction.category?.name ?? "Uncategorized"
+                let categoryName = transaction.category ?? "Uncategorized"
                 categorySpending[categoryName, default: 0] += transaction.amount
             case .transfer:
                 continue
@@ -245,7 +245,7 @@ final class GoalsAndReportsViewModel {
         }
 
         let grouped = Dictionary(grouping: filteredTransactions) { transaction in
-            transaction.category?.name ?? "Uncategorized"
+            transaction.category ?? "Uncategorized"
         }
 
         return grouped.mapValues { transactions in
@@ -259,7 +259,7 @@ final class GoalsAndReportsViewModel {
     func budgetVsActualReport(_ budgets: [Budget]) -> [BudgetVsActual] {
         budgets.map { budget in
             BudgetVsActual(
-                categoryName: budget.category?.name ?? "Unknown",
+                categoryName: budget.category ?? "Unknown",
                 budgetedAmount: budget.limitAmount,
                 actualAmount: budget.spentAmount,
                 difference: budget.remainingAmount,

@@ -12,7 +12,7 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
     let categorySpending = Dictionary(grouping: transactions
         .filter { $0.amount < 0 })
     { (tx: FinancialTransaction) -> String in
-        tx.category?.name ?? "Uncategorized"
+        tx.category ?? "Uncategorized"
     }
 
     let calendar = Calendar.current
@@ -44,8 +44,8 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
     // Build a lookup of current budgets keyed by category name
     var currentBudget: [String: Double] = [:]
     for b in budgets {
-        if let cname = b.category?.name {
-            currentBudget[cname] = b.limitAmount
+        if let cname = b.category {
+            currentBudget[cname] = b.totalAmount
         }
     }
 

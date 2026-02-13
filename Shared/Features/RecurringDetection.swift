@@ -35,7 +35,7 @@ public final class RecurringTransactionDetector {
                         frequency: frequency,
                         occurrences: group.count,
                         lastDate: sortedDates.last ?? Date(),
-                        category: group.first?.category?.name
+                        category: group.first?.category
                     ))
                 }
             }

@@ -10,10 +10,12 @@ import XCTest
 final class TransactionUITests: XCTestCase {
     var app: XCUIApplication!
 
+    @MainActor
     override func setUpWithError() throws {
         continueAfterFailure = false
         app = XCUIApplication()
         self.app.launch()
+        dismissSystemPermissionAlertsIfPresent(in: self.app)
     }
 
     // MARK: - Transaction Creation Tests

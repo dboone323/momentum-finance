@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MomentumFinanceCore
 
 extension Features.Transactions {
     struct SearchAndFilterSection: View {

@@ -10,8 +10,7 @@ func fi_detectCategoryOutliers(_ transactions: [FinancialTransaction]) -> [Finan
     var transactionsByCategory: [String: [FinancialTransaction]] = [:]
     for transaction in transactions where transaction.amount < 0 {
         guard let category = transaction.category else { continue }
-        let categoryId = category.id.hashValue.description
-        transactionsByCategory[categoryId, default: []].append(transaction)
+        transactionsByCategory[category, default: []].append(transaction)
     }
 
     for (_, categoryTransactions) in transactionsByCategory {
@@ -30,8 +29,8 @@ func fi_detectCategoryOutliers(_ transactions: [FinancialTransaction]) -> [Finan
             let transactionAmount = abs(topOutlier.amount)
             let percentageHigher = mean > 0 ? Int((transactionAmount / mean - 1) * 100) : 0
             let formattedAmount = fi_formatCurrency(transactionAmount, code: "USD")
-            let formattedDate = fi_formatDateShort(topOutlier.date)
-            let categoryName = category.name
+            let formattedDate = topOutlier.date.formatted(date: .abbreviated, time: .omitted)
+            let categoryName = category
             let titlePart = "\(topOutlier.title) (\(formattedAmount))"
             let restPart = " on \(formattedDate) is \(percentageHigher)% higher than your average \(categoryName) transaction."
             let descriptionText = titlePart + restPart
@@ -81,7 +80,7 @@ func fi_detectRecentFrequencyAnomalies(_ transactions: [FinancialTransaction], d
         let percentageMore = Int((Double(transactionCount) / averageCount - 1) * 100)
         let formattedDate = highestDay.key.formatted(date: .abbreviated, time: .omitted)
         let chartData = last7Days.map { dayData in
-            (fi_formatDateShort(dayData.key), Double(dayData.value.count))
+            (dayData.key.formatted(date: .abbreviated, time: .omitted), Double(dayData.value.count))
         }
         let partA = "You had \(transactionCount) transactions on \(formattedDate),"
         let partB = " which is \(percentageMore)% more than your daily average."
@@ -114,7 +113,7 @@ func fi_suggestDuplicatePaymentInsights(transactions: [FinancialTransaction]) ->
         let dupTitle = duplicate.first?.title ?? ""
         let dupAmount = duplicate.first?.amount ?? 0
         let dupDescription = "You may have duplicate payments: \(dupTitle) for "
-            + fi_formatCurrency(dupAmount, code: "USD") + " on multiple dates."
+            + fi_formatCurrency(abs(dupAmount), code: "USD") + " on multiple dates."
 
         let dupData = duplicate.map { txn in
             (

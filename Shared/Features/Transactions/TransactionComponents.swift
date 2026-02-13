@@ -191,7 +191,7 @@ public struct TransactionDetailView: View {
                         label: "Type", value: self.transaction.transactionType.rawValue.capitalized
                     )
                     if let category = transaction.category {
-                        TransactionDetailRow(label: "Category", value: category.name)
+                        TransactionDetailRow(label: "Category", value: category)
                     }
                     if let account = transaction.account {
                         TransactionDetailRow(label: "Account", value: account.name)

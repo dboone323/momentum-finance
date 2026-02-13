@@ -50,7 +50,7 @@ final class TransactionPatternAnalyzer {
             let weekday = calendar.component(.weekday, from: transaction.date)
             spendingByWeekday[weekday] =
                 (spendingByWeekday[weekday] ?? 0)
-                    + Double(truncating: abs(transaction.amount) as NSDecimalNumber)
+                    + abs(transaction.amount)
             countByWeekday[weekday] = (countByWeekday[weekday] ?? 0) + 1
         }
 
@@ -90,7 +90,7 @@ final class TransactionPatternAnalyzer {
             let day = calendar.component(.day, from: transaction.date)
             spendingByDay[day] =
                 (spendingByDay[day] ?? 0)
-                    + Double(truncating: abs(transaction.amount) as NSDecimalNumber)
+                    + abs(transaction.amount)
         }
 
         guard let maxDay = spendingByDay.max(by: { $0.value < $1.value })?.key else {
@@ -118,33 +118,33 @@ final class TransactionPatternAnalyzer {
         let expenses = transactions.filter { $0.amount < 0 }
         guard !expenses.isEmpty else { return insights }
 
-        let amounts = expenses.map { Double(truncating: abs($0.amount) as NSDecimalNumber) }
+        let amounts = expenses.map { abs($0.amount) }
         let average = amounts.reduce(0, +) / Double(amounts.count)
         let standardDeviation = self.calculateStandardDeviation(amounts, mean: average)
 
         // Find transactions that are more than 2 standard deviations above the mean
         let threshold = average + (2 * standardDeviation)
         let anomalies = expenses.filter {
-            Double(truncating: abs($0.amount) as NSDecimalNumber) > threshold
+            abs($0.amount) > threshold
         }
 
         for anomaly in anomalies {
             let insight = FinancialInsight(
                 title: "Unusual Transaction Detected",
                 description:
-                "A transaction of \(fi_formatCurrency(Double(truncating: abs(anomaly.amount) as NSDecimalNumber))) on \(anomaly.date.formatted()) seems unusually large compared to your typical spending.",
+                "A transaction of \(fi_formatCurrency(abs(anomaly.amount))) on \(anomaly.date.formatted()) seems unusually large compared to your typical spending.",
                 priority: .medium,
                 type: .anomaly,
                 visualizationType: .barChart,
                 chartData: [
                     ChartDataPoint(
                         label: "Transaction Amount",
-                        value: Double(truncating: abs(anomaly.amount) as NSDecimalNumber)
+                        value: abs(anomaly.amount)
                     ),
                     ChartDataPoint(label: "Average Amount", value: average),
                     ChartDataPoint(
                         label: "Deviation",
-                        value: Double(truncating: abs(anomaly.amount) as NSDecimalNumber) - average
+                        value: abs(anomaly.amount) - average
                     ),
                 ]
             )

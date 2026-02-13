@@ -46,7 +46,7 @@ extension Features.Transactions {
             if !self.searchText.isEmpty {
                 filtered = filtered.filter { transaction in
                     transaction.title.localizedCaseInsensitiveContains(self.searchText)
-                        || transaction.category?.name.localizedCaseInsensitiveContains(
+                        || transaction.category?.localizedCaseInsensitiveContains(
                             self.searchText
                         )
                         == true

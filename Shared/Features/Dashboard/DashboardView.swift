@@ -262,11 +262,11 @@ extension Features.Dashboard {
             _ subscriptions: [Subscription], modelContext: ModelContext
         ) async {
             let overdueSubscriptions = subscriptions.filter { subscription in
-                subscription.isActive && subscription.nextDueDate <= Date()
+                subscription.isActive && subscription.nextBillingDate <= Date()
             }
 
             for subscription in overdueSubscriptions {
-                subscription.processPayment(modelContext: modelContext)
+                subscription.updateNextBillingDate()
                 do {
                     try modelContext.save()
                 } catch {

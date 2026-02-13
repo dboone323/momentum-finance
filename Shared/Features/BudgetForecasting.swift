@@ -18,7 +18,7 @@ public final class BudgetForecastingService {
 
             // Filter by category if specified
             let relevantTransactions = if let category {
-                transactions.filter { $0.category == category && $0.transactionType == .expense }
+                transactions.filter { $0.category == category.name && $0.transactionType == .expense }
             } else {
                 transactions.filter { $0.transactionType == .expense }
             }

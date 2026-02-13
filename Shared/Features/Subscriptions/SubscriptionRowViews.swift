@@ -154,7 +154,7 @@ extension Features.Subscriptions {
                                     .font(.caption2)
                                     .foregroundColor(.blue)
 
-                                Text(category.name)
+                                Text(category)
                                     .font(.caption)
                                     .foregroundColor(.blue)
                             }

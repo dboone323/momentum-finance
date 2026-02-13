@@ -283,7 +283,7 @@ extension Features.GoalsAndReports {
             var spendingByCategory: [String: Double] = [:]
 
             for transaction in expenseTransactions {
-                let categoryName = transaction.category?.name ?? "Uncategorized"
+                let categoryName = transaction.category ?? "Uncategorized"
                 spendingByCategory[categoryName, default: 0] += transaction.amount
             }
 
@@ -340,7 +340,7 @@ extension Features.GoalsAndReports {
                 let spent =
                     self.transactions
                         .filter {
-                            $0.category?.name == budget.category?.name && $0.transactionType == .expense
+                            $0.category == budget.category && $0.transactionType == .expense
                         }
                         .reduce(0) { $0 + $1.amount }
                 return BudgetPerformanceData(budget: budget, spent: spent, budgeted: budget.limitAmount)
@@ -362,7 +362,7 @@ extension Features.GoalsAndReports {
                     VStack(spacing: 12) {
                         ForEach(self.budgetPerformance, id: \.budget.id) { data in
                             VStack(alignment: .leading, spacing: 8) {
-                                Text(data.budget.category?.name ?? "Unknown")
+                                Text(data.budget.category ?? "Unknown")
                                     .font(.subheadline)
                                     .fontWeight(.medium)
 
@@ -455,7 +455,7 @@ extension Features.GoalsAndReports {
                     Text(transaction.title)
                         .font(.subheadline)
                         .fontWeight(.medium)
-                    Text(transaction.category?.name ?? "Uncategorized")
+                    Text(transaction.category ?? "Uncategorized")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
