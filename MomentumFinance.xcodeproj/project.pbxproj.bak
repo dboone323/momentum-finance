@@ -7,11 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09D3C85A68D88363F77CBB6A /* AccountsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA29FE60425500EFD38F4B1 /* AccountsGenerator.swift */; };
-		1F6029DA5C07EB1C29654A0D /* SavingsGoalsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0B1F657058E2BE7A68A30 /* SavingsGoalsGenerator.swift */; };
-		681809762DF34D4F00EB877A /* DataExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681809732DF34D4F00EB877A /* DataExportView.swift */; };
-		681809772DF34D4F00EB877A /* DataImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681809742DF34D4F00EB877A /* DataImportView.swift */; };
-		681809782DF34D4F00EB877A /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681809752DF34D4F00EB877A /* HapticManager.swift */; };
+
+
 		68383FD82179DD77F8742681 /* FunctionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34E2EF3C28754CA5D980BD /* FunctionalTests.swift */; };
 		6B1A2B2C2C0D1E8F00123456 /* MomentumFinanceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B2B2C0D1E8F00123456 /* MomentumFinanceApp.swift */; };
 		6B1A2B2E2C0D1E8F00123456 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B2D2C0D1E8F00123456 /* ContentView.swift */; };
@@ -40,9 +37,8 @@
 		6B1A2B860C0D1E9100123456 /* GoalUtilityViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B852C0D1E9100123456 /* GoalUtilityViews.swift */; };
 		6B1A2B880C0D1E9100123456 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B872C0D1E9100123456 /* SettingsView.swift */; };
 		6B1A2B9D2C0D1E9100123456 /* TabSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B9C2C0D1E9100123456 /* TabSection.swift */; };
-		748B1C8D5C924066E5A8F7D3 /* TransactionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAE79C791674AFF448C8646 /* TransactionsGenerator.swift */; };
-		76E77A1935BB09548218A0E5 /* MomentumFinanceVisualTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C587EB11748B180310E5138A /* MomentumFinanceVisualTests.swift */; };
-		815DB79DB4126C68EBAF51E7 /* BudgetsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B98B3A0ED3B79DA710B0901 /* BudgetsGenerator.swift */; };
+
+
 		89860844AB97740973A8D1A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54DB3B096B75141CA237E8E2 /* Foundation.framework */; };
 		A00100012F0ABCDE00000001 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00100002F0ABCDE00000001 /* Theme.swift */; };
 		A00100132F0ABCDE00000001 /* DashboardComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00100122F0ABCDE00000001 /* DashboardComponents.swift */; };
@@ -50,32 +46,14 @@
 		A00100172F0ABCDE00000001 /* DataImportComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00100162F0ABCDE00000001 /* DataImportComponents.swift */; };
 		A001001B2F0ABCDE00000001 /* DashboardWelcomeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A001001A2F0ABCDE00000001 /* DashboardWelcomeHeader.swift */; };
 		A00110112F0ABCDE00000001 /* BreadcrumbNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00110102F0ABCDE00000001 /* BreadcrumbNavigation.swift */; };
-		A0CORE172F0ABCDE00000001 /* CoreExports.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CORE012F0ABCDE00000001 /* CoreExports.swift */; };
-		A0CORE1C2F0ABCDE00000001 /* ImportExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00100022F0ABCDE00000001 /* ImportExport.swift */; };
-		A0CORE1D2F0ABCDE00000001 /* FinancialInsightModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00100182F0ABCDE00000001 /* FinancialInsightModels.swift */; };
-		A0CORE1E2F0ABCDE00000001 /* TransactionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00100102F0ABCDE00000001 /* TransactionFilter.swift */; };
-		A0CORE1F2F0ABCDE00000001 /* SearchEngineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B962C0D1E9100123456 /* SearchEngineService.swift */; };
+
 		A0CORE202F0ABCDE00000001 /* SearchTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B972C0D1E9100123456 /* SearchTypes.swift */; };
-		A0CORE212F0ABCDE00000001 /* FinancialAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B3F2C0D1E9100123456 /* FinancialAccount.swift */; };
-		A0CORE222F0ABCDE00000001 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B412C0D1E9100123456 /* Transaction.swift */; };
-		A0CORE232F0ABCDE00000001 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B432C0D1E9100123456 /* Category.swift */; };
-		A0CORE242F0ABCDE00000001 /* ExpenseCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B4D2C0D1E9100123456 /* ExpenseCategory.swift */; };
-		A0CORE252F0ABCDE00000001 /* FinancialTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B4B2C0D1E9100123456 /* FinancialTransaction.swift */; };
-		A0CORE262F0ABCDE00000001 /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B452C0D1E9100123456 /* Budget.swift */; };
-		A0CORE272F0ABCDE00000001 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B472C0D1E9100123456 /* Subscription.swift */; };
-		A0CORE282F0ABCDE00000001 /* SavingsGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B492C0D1E9100123456 /* SavingsGoal.swift */; };
-		A0CORE292F0ABCDE00000001 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B4F2C0D1E9100123456 /* SampleData.swift */; };
-		A0CORE2A2F0ABCDE00000001 /* SampleDataGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B512C0D1E9100123456 /* SampleDataGenerators.swift */; };
-		A0CORE2B2F0ABCDE00000001 /* SampleDataProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B532C0D1E9100123456 /* SampleDataProviders.swift */; };
-		A0CORE2C2F0ABCDE00000001 /* ComplexDataGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B552C0D1E9100123456 /* ComplexDataGenerators.swift */; };
-		A0CORE2D2F0ABCDE00000001 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B5B2C0D1E9100123456 /* Logger.swift */; };
-		A0CORE2E2F0ABCDE00000001 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1A2B592C0D1E9100123456 /* ErrorHandler.swift */; };
-		A0CORE312F0ABCDE00000001 /* ExportTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CORE302F0ABCDE00000001 /* ExportTypes.swift */; };
+
 		A0CORE322F0ABCDE00000001 /* MomentumFinanceCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CORE102F0ABCDE00000001 /* MomentumFinanceCore.framework */; };
 		A0TEST022F0ABCDE00000001 /* DataExporterDateRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0TEST032F0ABCDE00000001 /* DataExporterDateRangeTests.swift */; };
 		A0TEST042F0ABCDE00000001 /* DataImporterErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0TEST052F0ABCDE00000001 /* DataImporterErrorTests.swift */; };
 		A0TEST082F0ABCDE00000001 /* DataExporterContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0TEST072F0CONTENT0000001 /* DataExporterContentTests.swift */; };
-		BB7A5BD961FC5DDE5E252E17 /* CategoriesGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FE4C7F884E7BB2E2E7B69D /* CategoriesGenerator.swift */; };
+
 		435C7B6AA9084129B621A701 /* MomentumFinanceTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91FB2CBAB284ADAB2B1E3D4 /* MomentumFinanceTypes.swift */; };
 		BC2A68F522DC4FE49D141649 /* MissingTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F343DE9B95B40549BF95688 /* MissingTypes.swift */; };
 		7A1A3F81FE944B92B53D3D34 /* RootSearchEngineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE0CAE9EB54FCC8925C3AB /* RootSearchEngineService.swift */; };
@@ -96,6 +74,7 @@
 		55DB53CC5D7E478BB5C80A2E /* AnomalyDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B819F158573044E18BA54545 /* AnomalyDetection.swift */; };
 		CFC9CA05EB43458594C5A74F /* TransactionPatternDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DCFD46E1D34BD7980464DF /* TransactionPatternDetection.swift */; };
 		0689197589964181BE06B160 /* BudgetRecommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6578F0030114F1F880F519E /* BudgetRecommendations.swift */; };
+		12DCC3C93AD94CEC93342976 /* FormattingUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85FF0CDCC214490B84E646A /* FormattingUtilities.swift */; };
 		D98FD4BC617748E6A3388A88 /* NotificationCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFAC9CFCFAF4816856D3583 /* NotificationCenterView.swift */; };
 		9B71E882961C4A6E829A36BD /* RecurringDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE72ECD08964ED9B9FE5D72 /* RecurringDetection.swift */; };
 		094F20604F084B14BB6EA472 /* GlobalSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B607791A2420597D03403 /* GlobalSearchView.swift */; };
@@ -123,7 +102,6 @@
 		D768FF5354344768830BCC30 /* DashboardComponentStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F2D2DB07264A7798FA0B00 /* DashboardComponentStubs.swift */; };
 		A78DF7C144E247DDBA4F3BE1 /* TransactionEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8BFE9B96F4BA68ACD0734 /* TransactionEmptyStateView.swift */; };
 		0D598722141440AA81726E9B /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3ED976C9F04547847370F1 /* TransactionRowView.swift */; };
-		CABF7D496808412E9EB914B5 /* SearchAndFilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8CE36D96E44419D391A8C /* SearchAndFilterSection.swift */; };
 		701CCB25EA634D34877A87B4 /* TransactionsComponentStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9BEF68072446A58F002F62 /* TransactionsComponentStubs.swift */; };
 		E26FA0FB98BC4000ACD2AB8B /* TransactionFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBDF30ADD7401E95B2838B /* TransactionFilters.swift */; };
 		AA38F27BCA644048ABFF220D /* TransactionsHeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA091FDAFEA14B5398F467A6 /* TransactionsHeaderSection.swift */; };
@@ -162,6 +140,7 @@
 		FCFD963F16224ED1A4CB6EB1 /* ForecastData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52AD90B99E744F0820C156E /* ForecastData.swift */; };
 		945C5F775EB3432196C9716D /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A82406269E43E4BBC0E6E5 /* NotificationManager.swift */; };
 		46FC334973B64ED18B2B6B7A /* SwiftDataCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AF84B51EFE487F8BCA3F5A /* SwiftDataCompat.swift */; };
+		47EE247DE7B645248B31B31B /* FinancialUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC1FA8DAB96492AB2059AA6 /* FinancialUtilities.swift */; };
 		23978DC1396D4896BE54D43C /* NotificationTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573AA58F72E147F1AC8AB659 /* NotificationTypes.swift */; };
 		6AB91CA7661B4483B0621211 /* QueryFallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA0B456E58491991BE6F76 /* QueryFallback.swift */; };
 		6B27AC30EC6A47C7986C815A /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4EE7773AFB4BB5B618B326 /* AppLogger.swift */; };
@@ -252,7 +231,7 @@
 		20698D9530BC405DA53FAD47 /* SearchTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/SearchTypesTests.swift; sourceTree = "<group>"; };
 		20D5F54734A748F0A3E04EE3 /* DashboardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/DashboardViewModelTests.swift; sourceTree = "<group>"; };
 		24742A53EACB4CB28AD15090 /* MomentumFinanceTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/MomentumFinanceTypesTests.swift; sourceTree = "<group>"; };
-		2B98B3A0ED3B79DA710B0901 /* BudgetsGenerator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BudgetsGenerator.swift; path = Shared/Models/Generators/BudgetsGenerator.swift; sourceTree = "<group>"; };
+
 		2D47E420238849E2B74ED162 /* SearchAndFilterSectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/SearchAndFilterSectionTests.swift; sourceTree = "<group>"; };
 		2DC1FF6BE104402C9051E4BF /* ReportsViewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/ReportsViewsTests.swift; sourceTree = "<group>"; };
 		327BFCF507F540B39B28CE10 /* BudgetRecommendationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/BudgetRecommendationsTests.swift; sourceTree = "<group>"; };
@@ -268,7 +247,7 @@
 		453345193C4043ABBE5CFB84 /* SubscriptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/SubscriptionsViewModelTests.swift; sourceTree = "<group>"; };
 		4D8CCD3F36504209800B52D8 /* AccountDetailViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/AccountDetailViewTests.swift; sourceTree = "<group>"; };
 		4E9A32D8BFEB4550A3E54F34 /* EntityManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/EntityManagerTests.swift; sourceTree = "<group>"; };
-		4FA29FE60425500EFD38F4B1 /* AccountsGenerator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AccountsGenerator.swift; path = Shared/Models/Generators/AccountsGenerator.swift; sourceTree = "<group>"; };
+
 		50F5737E97494A98AB3BE208 /* SavingsGoalViewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/SavingsGoalViewsTests.swift; sourceTree = "<group>"; };
 		542282C892518F2493DE20DD /* MomentumFinanceUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MomentumFinanceUITests/MomentumFinanceUITests.swift; sourceTree = SOURCE_ROOT; };
 		54DB3B096B75141CA237E8E2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -281,9 +260,6 @@
 		638DB23510A1424D8353C57A /* AddTransactionViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/AddTransactionViewTests.swift; sourceTree = "<group>"; };
 		63E45ADD6C7D46E3A852D2A8 /* FinancialForecastingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/FinancialForecastingTests.swift; sourceTree = "<group>"; };
 		654F731C2D164F8E8F95AE9E /* NotificationsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/NotificationsViewTests.swift; sourceTree = "<group>"; };
-		681809732DF34D4F00EB877A /* DataExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Views/Settings/DataExportView.swift; sourceTree = SOURCE_ROOT; };
-		681809742DF34D4F00EB877A /* DataImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Views/Settings/DataImportView.swift; sourceTree = SOURCE_ROOT; };
-		681809752DF34D4F00EB877A /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Utils/HapticManager.swift; sourceTree = SOURCE_ROOT; };
 		68E7DE6C983947EC9FA99407 /* DashboardUpcomingSubscriptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/DashboardUpcomingSubscriptionsTests.swift; sourceTree = "<group>"; };
 		69B0B15A6E894C7E998953C0 /* FinancialInsightModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/FinancialInsightModelsTests.swift; sourceTree = "<group>"; };
 		6B1A2B282C0D1E8F00123456 /* MomentumFinance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MomentumFinance.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -291,21 +267,7 @@
 		6B1A2B2D2C0D1E8F00123456 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6B1A2B2F2C0D1E9000123456 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B1A2B322C0D1E9000123456 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		6B1A2B3F2C0D1E9100123456 /* FinancialAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialAccount.swift; sourceTree = "<group>"; };
-		6B1A2B412C0D1E9100123456 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
-		6B1A2B432C0D1E9100123456 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
-		6B1A2B452C0D1E9100123456 /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
-		6B1A2B472C0D1E9100123456 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
-		6B1A2B492C0D1E9100123456 /* SavingsGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingsGoal.swift; sourceTree = "<group>"; };
-		6B1A2B4B2C0D1E9100123456 /* FinancialTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialTransaction.swift; sourceTree = "<group>"; };
-		6B1A2B4D2C0D1E9100123456 /* ExpenseCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCategory.swift; sourceTree = "<group>"; };
-		6B1A2B4F2C0D1E9100123456 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
-		6B1A2B512C0D1E9100123456 /* SampleDataGenerators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDataGenerators.swift; sourceTree = "<group>"; };
-		6B1A2B532C0D1E9100123456 /* SampleDataProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDataProviders.swift; sourceTree = "<group>"; };
-		6B1A2B552C0D1E9100123456 /* ComplexDataGenerators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexDataGenerators.swift; sourceTree = "<group>"; };
 		6B1A2B572C0D1E9100123456 /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
-		6B1A2B592C0D1E9100123456 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
-		6B1A2B5B2C0D1E9100123456 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6B1A2B5D2C0D1E9100123456 /* Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features.swift; sourceTree = "<group>"; };
 		6B1A2B5F2C0D1E9100123456 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		6B1A2B612C0D1E9100123456 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
@@ -326,7 +288,6 @@
 		6B1A2B812C0D1E9100123456 /* ReportsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsViews.swift; sourceTree = "<group>"; };
 		6B1A2B832C0D1E9100123456 /* EnhancedReportsSectionViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnhancedReportsSectionViews.swift; sourceTree = "<group>"; };
 		6B1A2B852C0D1E9100123456 /* GoalUtilityViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalUtilityViews.swift; sourceTree = "<group>"; };
-		6B1A2B872C0D1E9100123456 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Views/Settings/SettingsView.swift; sourceTree = SOURCE_ROOT; };
 		6B1A2B962C0D1E9100123456 /* SearchEngineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/GlobalSearch/SearchEngineService.swift; sourceTree = "<group>"; };
 		6B1A2B972C0D1E9100123456 /* SearchTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTypes.swift; sourceTree = "<group>"; };
 		6B1A2B9C2C0D1E9100123456 /* TabSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSection.swift; sourceTree = "<group>"; };
@@ -344,7 +305,7 @@
 		820B210F8BB940F6A2922337 /* KeyboardShortcutManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/KeyboardShortcutManagerTests.swift; sourceTree = "<group>"; };
 		8281BBDD62F644D79FF0549E /* FinancialIntelligenceService.ForecastingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/FinancialIntelligenceService.ForecastingTests.swift; sourceTree = "<group>"; };
 		831B142181364604B6E70485 /* CategoryTransactionsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/CategoryTransactionsViewTests.swift; sourceTree = "<group>"; };
-		84FE4C7F884E7BB2E2E7B69D /* CategoriesGenerator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CategoriesGenerator.swift; path = Shared/Models/Generators/CategoriesGenerator.swift; sourceTree = "<group>"; };
+
 		8B497EBF67254B1A8757B48A /* InsightsWidgetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/InsightsWidgetTests.swift; sourceTree = "<group>"; };
 		911010AA96C446B7B09E120C /* TransactionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/TransactionsViewModelTests.swift; sourceTree = "<group>"; };
 		922E11B98D3C40B4A6AF152A /* DataExporter_OriginalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/DataExporter_OriginalTests.swift; sourceTree = "<group>"; };
@@ -358,23 +319,18 @@
 		9C388F9501EB41129E2D8CB6 /* UpdatedMomentumFinanceAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/UpdatedMomentumFinanceAppTests.swift; sourceTree = "<group>"; };
 		9F2F8561AEA24B0F8736B0D8 /* SimpleDashboardViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/SimpleDashboardViewTests.swift; sourceTree = "<group>"; };
 		A00100002F0ABCDE00000001 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		A00100022F0ABCDE00000001 /* ImportExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportExport.swift; sourceTree = "<group>"; };
-		A00100102F0ABCDE00000001 /* TransactionFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFilter.swift; sourceTree = "<group>"; };
 		A00100122F0ABCDE00000001 /* DashboardComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardComponents.swift; sourceTree = "<group>"; };
 		A00100142F0ABCDE00000001 /* TransactionComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionComponents.swift; sourceTree = "<group>"; };
-		A00100182F0ABCDE00000001 /* FinancialInsightModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Intelligence/FinancialInsightModels.swift; sourceTree = SOURCE_ROOT; };
-		A001001A2F0ABCDE00000001 /* DashboardWelcomeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Features/Dashboard/DashboardWelcomeHeader.swift; sourceTree = SOURCE_ROOT; };
-		A00110102F0ABCDE00000001 /* BreadcrumbNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Navigation/BreadcrumbNavigation.swift; sourceTree = SOURCE_ROOT; };
+
 		A0CORE012F0ABCDE00000001 /* CoreExports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceCore/CoreExports.swift; sourceTree = SOURCE_ROOT; };
 		A0CORE102F0ABCDE00000001 /* MomentumFinanceCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MomentumFinanceCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0CORE302F0ABCDE00000001 /* ExportTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/Utils/ExportTypes.swift; sourceTree = SOURCE_ROOT; };
+
 		A0TEST002F0ABCDE00000001 /* CSVParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/CSVParserTests.swift; sourceTree = SOURCE_ROOT; };
 		A0TEST032F0ABCDE00000001 /* DataExporterDateRangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/DataExporterDateRangeTests.swift; sourceTree = SOURCE_ROOT; };
 		A0TEST052F0ABCDE00000001 /* DataImporterErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/DataImporterErrorTests.swift; sourceTree = SOURCE_ROOT; };
 		A0TEST062F0EDGECASES000001 /* CSVParserEdgeCasesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/CSVParserEdgeCasesTests.swift; sourceTree = SOURCE_ROOT; };
 		A0TEST072F0CONTENT0000001 /* DataExporterContentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/DataExporterContentTests.swift; sourceTree = SOURCE_ROOT; };
 		A0TEST152F0ABCDE00000001 /* MomentumFinanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MomentumFinanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A139CF9EFAAE92F66141FC20 /* SampleDataGenerator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SampleDataGenerator.swift; path = Shared/Models/Generators/SampleDataGenerator.swift; sourceTree = "<group>"; };
 		A772A78B3E1F443F8509C56E /* FinancialIntelligenceService.HelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/FinancialIntelligenceService.HelpersTests.swift; sourceTree = "<group>"; };
 		A7A7427D43784A308BFB4D64 /* TransactionFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/TransactionFilterTests.swift; sourceTree = "<group>"; };
 		A7BDED0C658E4072B257547E /* EnhancedReportsSectionViewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/EnhancedReportsSectionViewsTests.swift; sourceTree = "<group>"; };
@@ -385,7 +341,7 @@
 		B9BFCBDB6F8C441E960F0C84 /* DashboardSubscriptionsSectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/DashboardSubscriptionsSectionTests.swift; sourceTree = "<group>"; };
 		BBC12A07ED5F4D3F832C0CD2 /* GoalsAndReportsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/GoalsAndReportsViewTests.swift; sourceTree = "<group>"; };
 		BC147FC42CFB4B25A2E47757 /* SubscriptionRowViewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/SubscriptionRowViewsTests.swift; sourceTree = "<group>"; };
-		BCAE79C791674AFF448C8646 /* TransactionsGenerator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TransactionsGenerator.swift; path = Shared/Models/Generators/TransactionsGenerator.swift; sourceTree = "<group>"; };
+
 		BCEDACCF6CA04779B8A32C89 /* TransactionListViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/TransactionListViewTests.swift; sourceTree = "<group>"; };
 		BE078269FBD44959A962DFCE /* TransactionPatternAnalyzerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/TransactionPatternAnalyzerTests.swift; sourceTree = "<group>"; };
 		C0AA01A3D76E4860B330C020 /* ImportValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/ImportValidatorTests.swift; sourceTree = "<group>"; };
@@ -395,7 +351,6 @@
 		C74408F4480444599E64E35D /* test_minimal_appTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/test_minimal_appTests.swift; sourceTree = "<group>"; };
 		CE67DF77B6904EC8AB8E32F9 /* TransactionEmptyStateViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/TransactionEmptyStateViewTests.swift; sourceTree = "<group>"; };
 		D0784549108148FF848EDFB7 /* AccountsListViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/AccountsListViewTests.swift; sourceTree = "<group>"; };
-		D4E0B1F657058E2BE7A68A30 /* SavingsGoalsGenerator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SavingsGoalsGenerator.swift; path = Shared/Models/Generators/SavingsGoalsGenerator.swift; sourceTree = "<group>"; };
 		D628939B9E05477CA663F573 /* FormattingUtilitiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/FormattingUtilitiesTests.swift; sourceTree = "<group>"; };
 		D755B5568BDE44328E8AF87B /* SearchHeaderComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/SearchHeaderComponentTests.swift; sourceTree = "<group>"; };
 		D7EAFB085D4848C693A1DEAB /* DashboardInsightsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumFinanceTests/DashboardInsightsTests.swift; sourceTree = "<group>"; };
@@ -435,6 +390,7 @@
 		B819F158573044E18BA54545 /* AnomalyDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Intelligence/Helpers/AnomalyDetection.swift"; sourceTree = "<group>"; };
 		C9DCFD46E1D34BD7980464DF /* TransactionPatternDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Intelligence/Helpers/TransactionPatternDetection.swift"; sourceTree = "<group>"; };
 		D6578F0030114F1F880F519E /* BudgetRecommendations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Intelligence/Helpers/BudgetRecommendations.swift"; sourceTree = "<group>"; };
+		F85FF0CDCC214490B84E646A /* FormattingUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Intelligence/Helpers/FormattingUtilities.swift"; sourceTree = "<group>"; };
 		3FFAC9CFCFAF4816856D3583 /* NotificationCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/NotificationCenterView.swift"; sourceTree = "<group>"; };
 		AAE72ECD08964ED9B9FE5D72 /* RecurringDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/RecurringDetection.swift"; sourceTree = "<group>"; };
 		ED5B607791A2420597D03403 /* GlobalSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/GlobalSearchView.swift"; sourceTree = "<group>"; };
@@ -460,7 +416,6 @@
 		22F2D2DB07264A7798FA0B00 /* DashboardComponentStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Dashboard/DashboardComponentStubs.swift"; sourceTree = "<group>"; };
 		13B8BFE9B96F4BA68ACD0734 /* TransactionEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Transactions/TransactionEmptyStateView.swift"; sourceTree = "<group>"; };
 		1D3ED976C9F04547847370F1 /* TransactionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Transactions/TransactionRowView.swift"; sourceTree = "<group>"; };
-		5DF8CE36D96E44419D391A8C /* SearchAndFilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Transactions/SearchAndFilterSection.swift"; sourceTree = "<group>"; };
 		EB9BEF68072446A58F002F62 /* TransactionsComponentStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Transactions/TransactionsComponentStubs.swift"; sourceTree = "<group>"; };
 		FBDBDF30ADD7401E95B2838B /* TransactionFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Transactions/TransactionFilters.swift"; sourceTree = "<group>"; };
 		DA091FDAFEA14B5398F467A6 /* TransactionsHeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Transactions/TransactionsHeaderSection.swift"; sourceTree = "<group>"; };
@@ -494,6 +449,7 @@
 		E52AD90B99E744F0820C156E /* ForecastData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/Insights/ForecastData.swift"; sourceTree = "<group>"; };
 		17A82406269E43E4BBC0E6E5 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utilities/NotificationManager.swift"; sourceTree = "<group>"; };
 		D6AF84B51EFE487F8BCA3F5A /* SwiftDataCompat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utilities/SwiftDataCompat.swift"; sourceTree = "<group>"; };
+		CEC1FA8DAB96492AB2059AA6 /* FinancialUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utilities/FinancialUtilities.swift"; sourceTree = "<group>"; };
 		573AA58F72E147F1AC8AB659 /* NotificationTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utilities/NotificationTypes.swift"; sourceTree = "<group>"; };
 		FADA0B456E58491991BE6F76 /* QueryFallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utilities/QueryFallback.swift"; sourceTree = "<group>"; };
 		870F63889BE842ECBE69A9B6 /* GoalsReportsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Components/GoalsReportsComponents.swift"; sourceTree = "<group>"; };
@@ -592,8 +548,7 @@
 				2B98B3A0ED3B79DA710B0901 /* BudgetsGenerator.swift */,
 				D4E0B1F657058E2BE7A68A30 /* SavingsGoalsGenerator.swift */,
 				BCAE79C791674AFF448C8646 /* TransactionsGenerator.swift */,
-				A139CF9EFAAE92F66141FC20 /* SampleDataGenerator.swift */,
-				16CA1ECDB52FF6381906E157 /* Frameworks */,
+						16CA1ECDB52FF6381906E157 /* Frameworks */,
 				8085B6280A1CE95D8F4A4593 /* MomentumFinanceUITests */,
 			);
 			sourceTree = "<group>";
@@ -776,6 +731,7 @@
 				E52AD90B99E744F0820C156E /* ForecastData.swift */,
 				17A82406269E43E4BBC0E6E5 /* NotificationManager.swift */,
 				D6AF84B51EFE487F8BCA3F5A /* SwiftDataCompat.swift */,
+				CEC1FA8DAB96492AB2059AA6 /* FinancialUtilities.swift */,
 				573AA58F72E147F1AC8AB659 /* NotificationTypes.swift */,
 				FADA0B456E58491991BE6F76 /* QueryFallback.swift */,
 				5C4EE7773AFB4BB5B618B326 /* AppLogger.swift */,
@@ -814,8 +770,7 @@
 				22F2D2DB07264A7798FA0B00 /* DashboardComponentStubs.swift */,
 				13B8BFE9B96F4BA68ACD0734 /* TransactionEmptyStateView.swift */,
 				1D3ED976C9F04547847370F1 /* TransactionRowView.swift */,
-				5DF8CE36D96E44419D391A8C /* SearchAndFilterSection.swift */,
-				EB9BEF68072446A58F002F62 /* TransactionsComponentStubs.swift */,
+					EB9BEF68072446A58F002F62 /* TransactionsComponentStubs.swift */,
 				FBDBDF30ADD7401E95B2838B /* TransactionFilters.swift */,
 				DA091FDAFEA14B5398F467A6 /* TransactionsHeaderSection.swift */,
 				7AEB496BAB184B57A1C61014 /* SimpleTransactionRow.swift */,
@@ -826,6 +781,7 @@
 				528D6621CD9E4126A4EC8692 /* TransactionStatsCard.swift */,
 				46FE65EA4C354C3384AF3CBC /* TransactionListView.swift */,
 				D6578F0030114F1F880F519E /* BudgetRecommendations.swift */,
+				F85FF0CDCC214490B84E646A /* FormattingUtilities.swift */,
 				3FFAC9CFCFAF4816856D3583 /* NotificationCenterView.swift */,
 				AAE72ECD08964ED9B9FE5D72 /* RecurringDetection.swift */,
 				ED5B607791A2420597D03403 /* GlobalSearchView.swift */,
@@ -872,10 +828,8 @@
 				6B1A2B932C0D1E9100123456 /* Views */,
 				6B1A2B942C0D1E9100123456 /* Utils */,
 				A00100002F0ABCDE00000001 /* Theme.swift */,
-				A00100022F0ABCDE00000001 /* ImportExport.swift */,
-				6B1A2B962C0D1E9100123456 /* SearchEngineService.swift */,
-				6B1A2B972C0D1E9100123456 /* SearchTypes.swift */,
-				A00100182F0ABCDE00000001 /* FinancialInsightModels.swift */,
+								6B1A2B972C0D1E9100123456 /* SearchTypes.swift */,
+	
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -883,19 +837,7 @@
 		6B1A2B8A2C0D1E9100123456 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6B1A2B3F2C0D1E9100123456 /* FinancialAccount.swift */,
-				6B1A2B412C0D1E9100123456 /* Transaction.swift */,
-				6B1A2B432C0D1E9100123456 /* Category.swift */,
-				6B1A2B452C0D1E9100123456 /* Budget.swift */,
-				6B1A2B472C0D1E9100123456 /* Subscription.swift */,
-				6B1A2B492C0D1E9100123456 /* SavingsGoal.swift */,
-				6B1A2B4B2C0D1E9100123456 /* FinancialTransaction.swift */,
-				6B1A2B4D2C0D1E9100123456 /* ExpenseCategory.swift */,
-				6B1A2B4F2C0D1E9100123456 /* SampleData.swift */,
-				6B1A2B512C0D1E9100123456 /* SampleDataGenerators.swift */,
-				6B1A2B532C0D1E9100123456 /* SampleDataProviders.swift */,
-				6B1A2B552C0D1E9100123456 /* ComplexDataGenerators.swift */,
-				302375A7F3152B0AAB576E99 /* Generators */,
+																												302375A7F3152B0AAB576E99 /* Generators */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -926,9 +868,7 @@
 		6B1A2B8D2C0D1E9100123456 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				6B1A2B592C0D1E9100123456 /* ErrorHandler.swift */,
-				6B1A2B5B2C0D1E9100123456 /* Logger.swift */,
-			);
+							);
 			path = Utilities;
 			sourceTree = "<group>";
 		};
@@ -1002,7 +942,7 @@
 			isa = PBXGroup;
 			children = (
 				681809752DF34D4F00EB877A /* HapticManager.swift */,
-				A0CORE302F0ABCDE00000001 /* ExportTypes.swift */,
+	
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1098,9 +1038,6 @@
 			productName = MomentumFinance;
 			productReference = 6B1A2B282C0D1E8F00123456 /* MomentumFinance.app */;
 			productType = "com.apple.product-type.application";
-					packageProductDependencies = (
-				D0CB3B7EDA2A9403390589A2 /* SharedKit */,
-			);
 		};
 		A0CORE112F0ABCDE00000001 /* MomentumFinanceCore */ = {
 			isa = PBXNativeTarget;
@@ -1162,681 +1099,10 @@
 			);
 			mainGroup = 6B1A2B1F2C0D1E8F00123456;
 			packageReferences = (
-				C5ECB746D5994E77B58BADED /* XCRemoteSwiftPackageReference "shared-kit" */,
-			);
-			preferredProjectObjectVersion = 90;
-			productRefGroup = 6B1A2B292C0D1E8F00123456 /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				A0CORE112F0ABCDE00000001 /* MomentumFinanceCore */,
-				6B1A2B272C0D1E8F00123456 /* MomentumFinance */,
-				A0TEST112F0ABCDE00000001 /* MomentumFinanceTests */,
-				63292F885ECCB953E9ABA700 /* MomentumFinanceUITests */,
+				C5ECB746D5994E77B58BADED /* XCLocalSwiftPackageReference "../Shared-Kit" */,
 			);
 		};
-/* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		3B81065EBB23F5DBAD7FFA67 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6B1A2B262C0D1E8F00123456 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			files = (
-				6B1A2B332C0D1E9000123456 /* Preview Assets.xcassets in Resources */,
-				6B1A2B302C0D1E9000123456 /* Assets.xcassets in Resources */,
-			);
-		};
-		A0CORE162F0ABCDE00000001 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			files = (
-			);
-		};
-		A0TEST142F0ABCDE00000001 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			files = (
-			);
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		22DC814540EEC1C8E020CE47 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				76E77A1935BB09548218A0E5 /* MomentumFinanceVisualTests.swift in Sources */,
-				68383FD82179DD77F8742681 /* FunctionalTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6B1A2B242C0D1E8F00123456 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			files = (
-				27D3C7A2479940E8B20FA67F /* ThemeDemoPublicWrappers.swift in Sources */,
-				D24DCC36299248069DD81787 /* ColorDefinitions.swift in Sources */,
-				F4253A6D5D45468E81BDCC69 /* ThemeEnums.swift in Sources */,
-				ACDB36FDEC974D9598CCAD5F /* ThemeManager.swift in Sources */,
-				B06BCE5EF9AF4D988A96700D /* ColorTheme.swift in Sources */,
-				E5056ECBBC9F4BB9A079B328 /* ThemeDemoPlaceholders.swift in Sources */,
-				86A3D87D2DB248148D9E298D /* ThemeDemoView.swift in Sources */,
-				A8C8156D892B4AFB8A867C0A /* ColorTheme+Convenience.swift in Sources */,
-				65C3DB5901B8434CB48B5B7A /* ButtonStyles.swift in Sources */,
-				93B3276C81AC4FE3A323CA11 /* ThemeComponentStubs.swift in Sources */,
-				64C27074C1FB4E3D810999FB /* ThemeSettingsView.swift in Sources */,
-				B8DBB5FC5217478CA4A2836D /* ThemeComponents.swift in Sources */,
-				565F08367FC84F8E9C7A9808 /* ThemePersistence.swift in Sources */,
-				F10B513F48944DF7A795D4F7 /* ColorExtensions.swift in Sources */,
-				FE22FC7E78EC4E2F9DBEFF05 /* ColorThemePreview.swift in Sources */,
-				BCD264C35FC2422A9F4DA859 /* ComponentColorDefinitions.swift in Sources */,
-				F1785FB8BF1A468D9E18FDE0 /* ComponentThemeEnums.swift in Sources */,
-				508AECF018404DBB8C3EE4CE /* TemporaryImportNotificationStubs.swift in Sources */,
-				3ECD4F75D94746F5ADA24C0B /* FinanceIntents.swift in Sources */,
-				B7534DAF2AFE4908A6241905 /* SettingsSectionStubs.swift in Sources */,
-				8496CAC0C7504FA4A8ACC6F7 /* BudgetComponents.swift in Sources */,
-				B7267B39004A41459D11101C /* DetailViewComponents.swift in Sources */,
-				72AF710D00CC47FE8E5D5982 /* ImportComponents.swift in Sources */,
-				F5F5B23C982F47E08EEEF9D8 /* ThemeSettingsComponents.swift in Sources */,
-				EA3ED23871A240FEA7D97566 /* SectionHeader.swift in Sources */,
-				492B3BC34EC847B4927AEFEB /* SecuritySettingsSection.swift in Sources */,
-				3A0113B42C51490C8AC97784 /* ExportDataView.swift in Sources */,
-				5112782EF9CC49E7BFA9AF11 /* AppearanceSettingsSection.swift in Sources */,
-					52E6E89400C84075B3E7C8C5 /* DataManagementSection.swift in Sources */,
-				A4E47C02588148729FD56A65 /* ImportDataView.swift in Sources */,
-				D139DAB63FC24211B5FA69E7 /* AccessibilitySettingsSection.swift in Sources */,
-				CD83D986E81B4C69A222E269 /* ImportExportSection.swift in Sources */,
-				4F2DEA53F02A4442B5B6422E /* AboutSection.swift in Sources */,
-				C5E66D5F50FB44479A5BF662 /* DashboardUIComponents.swift in Sources */,
-				C599E83DD45C4FC4AA22EAC3 /* DataImportHeaderComponent.swift in Sources */,
-				310DAAA861174F8E92B12ED9 /* ImportResultView.swift in Sources */,
-				B3D28260AC61413392421734 /* ImportResultComponent.swift in Sources */,
-				55E9571CC5B5422BAE1C518D /* DarkModePreference.swift in Sources */,
-				CCE5AE56AF1D477298D5410A /* ThemeDemoComponents.swift in Sources */,
-				6B70F723732440AB8F5D3E78 /* FinancialIntelligenceModels.swift in Sources */,
-				A1292F0A55494BC99F61A815 /* TransactionModels.swift in Sources */,
-				D66570B2911F43BF964AB650 /* NotificationModels.swift in Sources */,
-				C902100181DE4031B340E4A6 /* CoreFinancialModels.swift in Sources */,
-				D612438466C24F56902D8524 /* ThemeModels.swift in Sources */,
-				57ECD6176BB14113A98DA994 /* FinancialIntelligenceAnalysis.swift in Sources */,
-				FCFD963F16224ED1A4CB6EB1 /* ForecastData.swift in Sources */,
-				945C5F775EB3432196C9716D /* NotificationManager.swift in Sources */,
-				46FC334973B64ED18B2B6B7A /* SwiftDataCompat.swift in Sources */,
-				23978DC1396D4896BE54D43C /* NotificationTypes.swift in Sources */,
-				6AB91CA7661B4483B0621211 /* QueryFallback.swift in Sources */,
-				6B27AC30EC6A47C7986C815A /* AppLogger.swift in Sources */,
-				85BE46CC95DE437FB1B1C09F /* GoalsReportsComponents.swift in Sources */,
-				D5A42A4C077E4015A74DBD16 /* UIAnimationComponents.swift in Sources */,
-				1478D350FDD646F59292E524 /* UITransactionComponents.swift in Sources */,
-				D157DE6D11724CF0B473EE84 /* ComponentButtonStyles.swift in Sources */,
-				2E5F62D2576E42BA8A59135F /* SubscriptionDetailComponents.swift in Sources */,
-				813D7A955A54434C8CD5A3FC /* AccountDetailComponents.swift in Sources */,
-				19900811E8E9485898037DFE /* UIThemeDemoComponents.swift in Sources */,
-				6E01538C526F46958F284941 /* FeatureGlobalSearchView.swift in Sources */,
-				704E9E75C81A4C09A72588FD /* SearchHeaderComponent.swift in Sources */,
-				9F555E1BE034402EA8B4B114 /* FeatureNavigationModels.swift in Sources */,
-				A4D39087953742B0A971B57B /* NavigationTypes.swift in Sources */,
-				1A13C5B746D24F76A340424E /* MacOSNavigationTypes.swift in Sources */,
-				9286A0DC0D1641A7B3D5A845 /* ImportExportActor.swift in Sources */,
-				EF1C6BEEABA949CAB593B812 /* DataExporter_Original.swift in Sources */,
-				E99FBE3C3D2746A18B6D78F3 /* DataImportHelpers.swift in Sources */,
-				049DED402EEC448F9F89B27A /* ExportEngineService.swift in Sources */,
-				FA782A2289DC4C3EB7EBB818 /* DataExporter_Simplified.swift in Sources */,
-				770F1EF7FE3F4396A886E33F /* DataImporter.swift in Sources */,
-				0A00E885D7A74F5C8F4067EE /* DataExporter.swift in Sources */,
-				C07A6C5FFDE947958D6105FE /* CSVParser.swift in Sources */,
-				9FDDF365A4D8420F8A0FE071 /* ImportValidator.swift in Sources */,
-				A6FA957E994748C9ACD409A9 /* CSVMapping.swift in Sources */,
-				C795DE7745F74E618F976CB7 /* DataParser.swift in Sources */,
-				C54A38B410DD4974B37F8EF7 /* EntityManager.swift in Sources */,
-				A5A7895105014CD6958AD4E1 /* ImportError.swift in Sources */,
-				EBB97F5687E24737AAA3B9CE /* NavigationModels.swift in Sources */,
-				38FEBEBA59F243379588C2E1 /* DataImportModels.swift in Sources */,
-				40498F4CB8B3415788807026 /* InsightsEmptyStateView.swift in Sources */,
-				901270AB3D414E8AB53F1663 /* InsightDetailView.swift in Sources */,
-				EAD66495379147AA948DF78F /* InsightsSummaryWidget.swift in Sources */,
-				5638A686110E4B65A6D3E2EC /* InsightsView.swift in Sources */,
-				6E29021971514BE991E34E1A /* EnhancedDashboardView.swift in Sources */,
-				E2F32577E00A47CF9BA8A8D3 /* InsightsLoadingView.swift in Sources */,
-				D768FF5354344768830BCC30 /* DashboardComponentStubs.swift in Sources */,
-				A78DF7C144E247DDBA4F3BE1 /* TransactionEmptyStateView.swift in Sources */,
-				0D598722141440AA81726E9B /* TransactionRowView.swift in Sources */,
-				CABF7D496808412E9EB914B5 /* SearchAndFilterSection.swift in Sources */,
-				701CCB25EA634D34877A87B4 /* TransactionsComponentStubs.swift in Sources */,
-				E26FA0FB98BC4000ACD2AB8B /* TransactionFilters.swift in Sources */,
-				AA38F27BCA644048ABFF220D /* TransactionsHeaderSection.swift in Sources */,
-				492E635E8A524F57974A2D68 /* SimpleTransactionRow.swift in Sources */,
-				A72461817A3D404BBDE4E2B1 /* TransactionComponentStubs.swift in Sources */,
-				860CD0B5C4D046F282D569EE /* SimpleTransactionSectionHeader.swift in Sources */,
-				F2F4AFE6252A479CA0560C9F /* AddTransactionView.swift in Sources */,
-				71BF0876BBD84E8987F3D6FC /* TransactionDetailView.swift in Sources */,
-				0134056500E640049D241838 /* TransactionStatsCard.swift in Sources */,
-				E2D38A1AC25E4A77887CD693 /* TransactionListView.swift in Sources */,
-				0689197589964181BE06B160 /* BudgetRecommendations.swift in Sources */,
-				D98FD4BC617748E6A3388A88 /* NotificationCenterView.swift in Sources */,
-				9B71E882961C4A6E829A36BD /* RecurringDetection.swift in Sources */,
-				094F20604F084B14BB6EA472 /* GlobalSearchView.swift in Sources */,
-				C902C0BA2B2549329774EB45 /* NotificationsView.swift in Sources */,
-				1C7D34C1F8134135B34A13B7 /* BudgetForecasting.swift in Sources */,
-				65821A41C4D243079FB21B5D /* InsightUIStubs.swift in Sources */,
-				FF1C5E421BC24334A3DD609E /* InsightsFilterBar.swift in Sources */,
-				D6399EE6B7B14C93A6273D9E /* GoalsAndReportsView_New.swift in Sources */,
-				D7D1B5A8D08843AE9906BBE8 /* EnhancedGoalsSectionViews.swift in Sources */,
-				D0557757DC53436CAB8DA782 /* SubscriptionManagementViews.swift in Sources */,
-				4806A499DD7849608C63C942 /* SubscriptionSummaryViews.swift in Sources */,
-				0C61913DB37C42ADA461749B /* SubscriptionRowViews.swift in Sources */,
-				A3BD88A3F0604CAAB0A8D93B /* SubscriptionsView_New.swift in Sources */,
-				6924B0A96DFE4AC397732C47 /* DashboardInsightsFilterBar.swift in Sources */,
-				33BE89E4021A4CF5A30C7763 /* DashboardUpcomingSubscriptions.swift in Sources */,
-				A6B2F50A132C44B99B2AB740 /* InsightRowView.swift in Sources */,
-				4A504E0CE77A49ACA3DB6926 /* SimpleDashboardView.swift in Sources */,
-				C83C86B9789342A581FAB15F /* InsightsWidget.swift in Sources */,
-				435C7B6AA9084129B621A701 /* MomentumFinanceTypes.swift in Sources */,
-				BC2A68F522DC4FE49D141649 /* MissingTypes.swift in Sources */,
-				7A1A3F81FE944B92B53D3D34 /* RootSearchEngineService.swift in Sources */,
-				A058F89B20794A50AEED71BB /* FinancialIntelligenceService.Budgets.swift in Sources */,
-				B99AF1F6B3694A94876D9467 /* FinancialIntelligenceService.Forecasting.swift in Sources */,
-				0DBE73587857429F8BF12F59 /* FinancialIntelligenceService.Anomaly.swift in Sources */,
-				8DE749D4F7714613A292F079 /* FinancialMLStubs.swift in Sources */,
-				20DF96460FDF40F095AB9A8B /* FinancialMLModels.swift in Sources */,
-				6BEE6E32960F484593370E70 /* FinancialIntelligenceService.Helpers.swift in Sources */,
-				AB18642B537D49CDAC1F8251 /* AdvancedFinancialIntelligence.swift in Sources */,
-				834F02E3C3C94BFFA1AF315D /* FinancialIntelligenceService.Optimizations.swift in Sources */,
-				1CEFD3984FA3406EB2E5B558 /* InsightsModels.swift in Sources */,
-				F99BDF0B3A1443C9941D7A00 /* TransactionPatternAnalyzer.swift in Sources */,
-				81D8E4D3BFF444AE9C6D24BA /* FinancialIntelligenceService.Spending.swift in Sources */,
-				89633E2364EE44B3BC4FE886 /* FinancialIntelligenceService.swift in Sources */,
-				A48D3C3C8D3F47E78CDDD7A8 /* FinancialForecasting.swift in Sources */,
-				1F1E9CFD20AF45E0994D1DF4 /* OptimizationSuggestions.swift in Sources */,
-				55DB53CC5D7E478BB5C80A2E /* AnomalyDetection.swift in Sources */,
-				CFC9CA05EB43458594C5A74F /* TransactionPatternDetection.swift in Sources */,
-				A00110112F0ABCDE00000001 /* BreadcrumbNavigation.swift in Sources */,
-				A00100132F0ABCDE00000001 /* DashboardComponents.swift in Sources */,
-				A00100152F0ABCDE00000001 /* TransactionComponents.swift in Sources */,
-				A00100172F0ABCDE00000001 /* DataImportComponents.swift in Sources */,
-				A001001B2F0ABCDE00000001 /* DashboardWelcomeHeader.swift in Sources */,
-				A00100012F0ABCDE00000001 /* Theme.swift in Sources */,
-				6B1A2B2E2C0D1E8F00123456 /* ContentView.swift in Sources */,
-				6B1A2B2C2C0D1E8F00123456 /* MomentumFinanceApp.swift in Sources */,
-				6B1A2B580C0D1E9100123456 /* NavigationCoordinator.swift in Sources */,
-				6B1A2B5E0C0D1E9100123456 /* Features.swift in Sources */,
-				6B1A2B600C0D1E9100123456 /* DashboardView.swift in Sources */,
-				6B1A2B620C0D1E9100123456 /* DashboardViewModel.swift in Sources */,
-				6B1A2B640C0D1E9100123456 /* TransactionsView.swift in Sources */,
-				6B1A2B660C0D1E9100123456 /* TransactionsViewModel.swift in Sources */,
-				6B1A2B680C0D1E9100123456 /* AccountDetailView.swift in Sources */,
-				6B1A2B6A0C0D1E9100123456 /* AccountsListView.swift in Sources */,
-				6B1A2B6C0C0D1E9100123456 /* CategoryTransactionsView.swift in Sources */,
-				6B1A2B6E0C0D1E9100123456 /* BudgetsView.swift in Sources */,
-				6B1A2B700C0D1E9100123456 /* BudgetsViewModel.swift in Sources */,
-				6B1A2B740C0D1E9100123456 /* SubscriptionsView.swift in Sources */,
-				6B1A2B760C0D1E9100123456 /* SubscriptionsViewModel.swift in Sources */,
-				6B1A2B780C0D1E9100123456 /* SubscriptionDetailView.swift in Sources */,
-				6B1A2B7A0C0D1E9100123456 /* GoalsAndReportsView.swift in Sources */,
-				6B1A2B7C0C0D1E9100123456 /* GoalsAndReportsViewModel.swift in Sources */,
-				6B1A2B7E0C0D1E9100123456 /* SavingsGoalViews.swift in Sources */,
-				681809762DF34D4F00EB877A /* DataExportView.swift in Sources */,
-				681809772DF34D4F00EB877A /* DataImportView.swift in Sources */,
-				681809782DF34D4F00EB877A /* HapticManager.swift in Sources */,
-				6B1A2B800C0D1E9100123456 /* SavingsGoalManagementViews.swift in Sources */,
-				6B1A2B820C0D1E9100123456 /* ReportsViews.swift in Sources */,
-				6B1A2B840C0D1E9100123456 /* EnhancedReportsSectionViews.swift in Sources */,
-				6B1A2B860C0D1E9100123456 /* GoalUtilityViews.swift in Sources */,
-				6B1A2B880C0D1E9100123456 /* SettingsView.swift in Sources */,
-				6B1A2B9D2C0D1E9100123456 /* TabSection.swift in Sources */,
-			);
-		};
-		A0CORE142F0ABCDE00000001 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			files = (
-				A0CORE172F0ABCDE00000001 /* CoreExports.swift in Sources */,
-				A0CORE1C2F0ABCDE00000001 /* ImportExport.swift in Sources */,
-				A0CORE1D2F0ABCDE00000001 /* FinancialInsightModels.swift in Sources */,
-				A0CORE1E2F0ABCDE00000001 /* TransactionFilter.swift in Sources */,
-				A0CORE1F2F0ABCDE00000001 /* SearchEngineService.swift in Sources */,
-				A0CORE202F0ABCDE00000001 /* SearchTypes.swift in Sources */,
-				A0CORE212F0ABCDE00000001 /* FinancialAccount.swift in Sources */,
-				A0CORE222F0ABCDE00000001 /* Transaction.swift in Sources */,
-				A0CORE232F0ABCDE00000001 /* Category.swift in Sources */,
-				A0CORE242F0ABCDE00000001 /* ExpenseCategory.swift in Sources */,
-				A0CORE252F0ABCDE00000001 /* FinancialTransaction.swift in Sources */,
-				A0CORE262F0ABCDE00000001 /* Budget.swift in Sources */,
-				A0CORE272F0ABCDE00000001 /* Subscription.swift in Sources */,
-				A0CORE282F0ABCDE00000001 /* SavingsGoal.swift in Sources */,
-				A0CORE292F0ABCDE00000001 /* SampleData.swift in Sources */,
-				A0CORE2A2F0ABCDE00000001 /* SampleDataGenerators.swift in Sources */,
-				A0CORE2B2F0ABCDE00000001 /* SampleDataProviders.swift in Sources */,
-				A0CORE2C2F0ABCDE00000001 /* ComplexDataGenerators.swift in Sources */,
-				A0CORE2D2F0ABCDE00000001 /* Logger.swift in Sources */,
-				A0CORE2E2F0ABCDE00000001 /* ErrorHandler.swift in Sources */,
-				A0CORE312F0ABCDE00000001 /* ExportTypes.swift in Sources */,
-				BB7A5BD961FC5DDE5E252E17 /* CategoriesGenerator.swift in Sources */,
-				09D3C85A68D88363F77CBB6A /* AccountsGenerator.swift in Sources */,
-				815DB79DB4126C68EBAF51E7 /* BudgetsGenerator.swift in Sources */,
-				1F6029DA5C07EB1C29654A0D /* SavingsGoalsGenerator.swift in Sources */,
-				748B1C8D5C924066E5A8F7D3 /* TransactionsGenerator.swift in Sources */,
-			);
-		};
-		A0TEST122F0ABCDE00000001 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			files = (
-				A0TEST022F0ABCDE00000001 /* DataExporterDateRangeTests.swift in Sources */,
-				A0TEST042F0ABCDE00000001 /* DataImporterErrorTests.swift in Sources */,
-				A0TEST082F0ABCDE00000001 /* DataExporterContentTests.swift in Sources */,
-			);
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		19735777653E1DD174AA3D92 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MomentumFinance;
-			target = 6B1A2B272C0D1E8F00123456 /* MomentumFinance */;
-			targetProxy = 000B94E0B2EF421CEFCDFE4E /* PBXContainerItemProxy */;
-		};
-		A0TEST202F0ABCDE00000001 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6B1A2B272C0D1E8F00123456 /* MomentumFinance */;
-			targetProxy = A0TEST212F0ABCDE00000001 /* PBXContainerItemProxy */;
-		};
-		A0TEST222F0ABCDE00000001 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A0CORE112F0ABCDE00000001 /* MomentumFinanceCore */;
-			targetProxy = A0TEST232F0ABCDE00000001 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin XCBuildConfiguration section */
-		5F87236236E0D557CA58FA9B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MomentumFinanceUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.DanielStevens.MomentumFinanceUITests;
-				PRODUCT_NAME = MomentumFinanceUITests;
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 6.0;
-				TEST_HOST = "";
-				TEST_TARGET_NAME = MomentumFinance;
-			};
-			name = Debug;
-		};
-		6B1A2B342C0D1E9000123456 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BASE_CONFIGURATION_FILE = Config/Base.xcconfig;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 3N5528D82R;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = auto;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 6.0;
-			};
-			name = Debug;
-		};
-		6B1A2B352C0D1E9000123456 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BASE_CONFIGURATION_FILE = Config/Base.xcconfig;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 3N5528D82R;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				SDKROOT = auto;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_VERSION = 6.0;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		6B1A2B372C0D1E9000123456 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"MomentumFinance/Preview Content\"";
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Momentum Finance";
-				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
-				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
-				INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsArbitraryLoads = NO;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UIApplicationSupportsMultipleScenes = NO;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.momentumfinance.MomentumFinance;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
-			};
-			name = Debug;
-		};
-		6B1A2B382C0D1E9000123456 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"MomentumFinance/Preview Content\"";
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Momentum Finance";
-				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
-				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
-				INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsArbitraryLoads = NO;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UIApplicationSupportsMultipleScenes = NO;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.momentumfinance.MomentumFinance;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
-			};
-			name = Release;
-		};
-		A0CORE1A2F0ABCDE00000001 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDevelopmentRegion = en;
-				INFOPLIST_KEY_CFBundleExecutable = "$(EXECUTABLE_NAME)";
-				INFOPLIST_KEY_CFBundleIdentifier = com.momentumfinance.core;
-				INFOPLIST_KEY_CFBundleName = MomentumFinanceCore;
-				INFOPLIST_KEY_CFBundlePackageType = FMWK;
-				INFOPLIST_KEY_CFBundleShortVersionString = 1.0;
-				INFOPLIST_KEY_CFBundleVersion = 1;
-				MACH_O_TYPE = staticlib;
-				PRODUCT_BUNDLE_IDENTIFIER = com.momentumfinance.core;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
-			};
-			name = Debug;
-		};
-		A0CORE1B2F0ABCDE00000001 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDevelopmentRegion = en;
-				INFOPLIST_KEY_CFBundleExecutable = "$(EXECUTABLE_NAME)";
-				INFOPLIST_KEY_CFBundleIdentifier = com.momentumfinance.core;
-				INFOPLIST_KEY_CFBundleName = MomentumFinanceCore;
-				INFOPLIST_KEY_CFBundlePackageType = FMWK;
-				INFOPLIST_KEY_CFBundleShortVersionString = 1.0;
-				INFOPLIST_KEY_CFBundleVersion = 1;
-				MACH_O_TYPE = staticlib;
-				PRODUCT_BUNDLE_IDENTIFIER = com.momentumfinance.core;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
-			};
-			name = Release;
-		};
-		A0TEST1A2F0ABCDE00000001 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3N5528D82R;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.momentumfinance.MomentumFinanceTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
-				TEST_HOST = "";
-			};
-			name = Debug;
-		};
-		A0TEST1B2F0ABCDE00000001 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3N5528D82R;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.momentumfinance.MomentumFinanceTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2,6";
-				TEST_HOST = "";
-			};
-			name = Release;
-		};
-		E391BA524FCC71844E1B6741 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MomentumFinanceUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.DanielStevens.MomentumFinanceUITests;
-				PRODUCT_NAME = MomentumFinanceUITests;
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 6.0;
-				TEST_HOST = "";
-				TEST_TARGET_NAME = MomentumFinance;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		D0CB3B7EDA2A9403390589A2 /* SharedKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C5ECB746D5994E77B58BADED /* XCLocalSwiftPackageReference "../Shared-Kit" */;
-			productName = SharedKit;
-		};
-/* End XCSwiftPackageProductDependency section */
-
-/* Begin XCConfigurationList section */
-		6B1A2B232C0D1E8F00123456 /* Build configuration list for PBXProject "MomentumFinance" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6B1A2B342C0D1E9000123456 /* Debug */,
-				6B1A2B352C0D1E9000123456 /* Release */,
-			);
-			defaultConfigurationName = Release;
-		};
-		6B1A2B362C0D1E9000123456 /* Build configuration list for PBXNativeTarget "MomentumFinance" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6B1A2B372C0D1E9000123456 /* Debug */,
-				6B1A2B382C0D1E9000123456 /* Release */,
-			);
-			defaultConfigurationName = Release;
-		};
-		A0CORE192F0ABCDE00000001 /* Build configuration list for PBXNativeTarget "MomentumFinanceCore" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A0CORE1A2F0ABCDE00000001 /* Debug */,
-				A0CORE1B2F0ABCDE00000001 /* Release */,
-			);
-			defaultConfigurationName = Release;
-		};
-		A0TEST192F0ABCDE00000001 /* Build configuration list for PBXNativeTarget "MomentumFinanceTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A0TEST1A2F0ABCDE00000001 /* Debug */,
-				A0TEST1B2F0ABCDE00000001 /* Release */,
-			);
-			defaultConfigurationName = Release;
-		};
-		C5629EBF403F3E1586134C6F /* Build configuration list for PBXNativeTarget "MomentumFinanceUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E391BA524FCC71844E1B6741 /* Release */,
-				5F87236236E0D557CA58FA9B /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCLocalSwiftPackageReference section */
 		C5ECB746D5994E77B58BADED /* XCLocalSwiftPackageReference "../Shared-Kit" */ = {

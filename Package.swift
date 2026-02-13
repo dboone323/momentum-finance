@@ -8,7 +8,7 @@ let package = Package(
     name: "MomentumFinance",
     platforms: [
         .iOS(.v17),
-        .macOS(.v14)
+        .macOS(.v14),
     ],
     products: [
         .library(
@@ -33,7 +33,8 @@ let package = Package(
             name: "Shared",
             dependencies: [
                 "MomentumFinanceCore",
-                .product(name: "EnterpriseScalingFramework", package: "shared-kit")
+                .product(name: "SharedKit", package: "shared-kit"),
+                .product(name: "EnterpriseScalingFramework", package: "shared-kit"),
             ],
             path: "Shared",
             exclude: ["Package.swift", ".build", "README.md"],
@@ -46,6 +47,6 @@ let package = Package(
             name: "MomentumFinanceTests",
             dependencies: ["MomentumFinanceCore", "Shared"],
             path: "MomentumFinanceTests"
-        )
+        ),
     ]
 )
