@@ -10,4 +10,4 @@ export ENABLE_AUTO_TEST=true
 # shellcheck disable=SC2034
 export PROJECT_NAME="MomentumFinance"
 # shellcheck disable=SC2034
-export PROJECT_DIR="/Users/danielstevens/Desktop/github-projects/tools-automation/Projects/MomentumFinance"
+export PROJECT_DIR="/Users/danielstevens/Desktop/github-projects/tools-automation/MomentumFinance"
