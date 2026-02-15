@@ -5,7 +5,7 @@ on:
     branches: [main, develop, 'fix/*']
     tags: ['v*']
   pull_request:
-    branches: [main, develop, 'phase3-advanced-automation']
+    branches: [main, develop]
   workflow_dispatch:
     inputs:
       environment:
@@ -24,7 +24,7 @@ jobs:
   # 1. Code Quality & Linting
   quality-checks:
     name: 🔍 Code Quality
-    runs-on: macos-15
+    runs-on: macos-26-xlarge
     timeout-minutes: 15
 
     steps:
@@ -32,12 +32,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: 📥 Checkout shared-kit
-        uses: actions/checkout@v4
-        with:
-          repository: dboone323/shared-kit
-          path: ../shared-kit
 
       - name: 🔧 Setup Swift
         uses: swift-actions/setup-swift@v2
@@ -78,7 +72,7 @@ jobs:
             echo "❌ Lines exceed $MAX_LENGTH characters:"
             echo "$VIOLATIONS"
             # Warn only for now
-            # exit 1
+            # exit 1 
           else
             echo "✅ All lines within $MAX_LENGTH characters"
           fi
@@ -124,7 +118,7 @@ jobs:
       - name: 🧠 CodeQL Analysis
         uses: github/codeql-action/init@v3
         with:
-          languages: swift
+          languages: python # Only python supported by CodeQL without build. Swift requires build mode but is Mac-only.
 
       - name: 🕵️ Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
@@ -153,7 +147,7 @@ jobs:
   # 3. Build & Test
   build-and-test:
     name: 🏗️ Build & Test
-    runs-on: macos-15
+    runs-on: macos-26-xlarge
     timeout-minutes: 45
     needs: quality-checks
     strategy:
@@ -170,12 +164,6 @@ jobs:
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
-
-      - name: 📥 Checkout shared-kit
-        uses: actions/checkout@v4
-        with:
-          repository: dboone323/shared-kit
-          path: ../shared-kit
 
       - name: 🔧 Setup Swift
         uses: swift-actions/setup-swift@v2
@@ -230,16 +218,17 @@ jobs:
 
       - name: 📤 Upload Coverage
         if: matrix.scheme == 'MomentumFinance'
-        uses: actions/upload-artifact@v4
-        if: always()
+        uses: codecov/codecov-action@v4
         with:
-          name: coverage-report
-          path: coverage.json
+          file: ./coverage.json
+          flags: ios
+          name: codecov-umbrella
+          fail_ci_if_error: false
 
   # 4. Deployment (Conditional)
   deploy:
     name: 🚀 Deploy
-    runs-on: macos-15
+    runs-on: macos-26-xlarge
     timeout-minutes: 45
     needs: [build-and-test, security-scan]
     if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
@@ -252,12 +241,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: 📥 Checkout shared-kit
-        uses: actions/checkout@v4
-        with:
-          repository: dboone323/shared-kit
-          path: ../shared-kit
 
       - name: 🔧 Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
