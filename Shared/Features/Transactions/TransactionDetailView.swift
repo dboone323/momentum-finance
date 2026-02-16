@@ -25,11 +25,11 @@ extension Features.Transactions {
                                 currency: self.transaction.account?.currency ?? "USD"
                             )
                         )
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(
-                                self.transaction.transactionType == .income ? .green : .red
-                            )
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(
+                            self.transaction.transactionType == .income ? .green : .red
+                        )
 
                         Text(self.transaction.transactionType.rawValue)
                             .font(.headline)

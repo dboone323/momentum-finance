@@ -51,7 +51,7 @@ public enum ExportFormat: String, Codable, CaseIterable, Sendable {
     }
 }
 
-public struct ExportConstants {
+public enum ExportConstants {
     public static let csvFilename = "MomentumFinance_Export.csv"
     public static let pdfFilename = "MomentumFinance_Report.pdf"
     public static let jsonFilename = "MomentumFinance_Backup.json"
@@ -202,8 +202,13 @@ public struct ImportResult: Sendable {
         )
     }
 
-    public var itemsImported: Int { importedCount }
-    public var itemsFailed: Int { failedCount }
+    public var itemsImported: Int {
+        importedCount
+    }
+
+    public var itemsFailed: Int {
+        failedCount
+    }
 }
 
 /// Import validation error with detailed information

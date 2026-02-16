@@ -41,10 +41,10 @@ public extension Features.Transactions {
                                 currency: self.transaction.account?.currency ?? "USD"
                             )
                         )
-                            .font(.headline)
-                            .foregroundColor(
-                                self.transaction.transactionType == .income ? .green : .red
-                            )
+                        .font(.headline)
+                        .foregroundColor(
+                            self.transaction.transactionType == .income ? .green : .red
+                        )
 
                         Text(self.transaction.date.formatted(date: .abbreviated, time: .omitted))
                             .font(.caption)

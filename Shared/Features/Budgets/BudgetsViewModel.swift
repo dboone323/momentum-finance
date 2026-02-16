@@ -135,7 +135,7 @@ final class BudgetsViewModel {
 
         let totalBudgeted = monthBudgets.reduce(0) { $0 + $1.limitAmount }
         let totalSpent = monthBudgets.reduce(0) { $0 + $1.spentAmount }
-        let onTrackCount = monthBudgets.filter { !$0.isOverBudget }.count
+        let onTrackCount = monthBudgets.count(where: { !$0.isOverBudget })
         let overBudgetCount = monthBudgets.filter(\.isOverBudget).count
 
         return BudgetProgressSummary(

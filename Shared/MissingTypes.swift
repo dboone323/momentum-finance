@@ -50,5 +50,7 @@ func fi_formatMonthAbbrev(_ date: Date) -> String {
 }
 
 extension FinancialAccount {
-    var currencyCode: String { currency }
+    var currencyCode: String {
+        currency
+    }
 }

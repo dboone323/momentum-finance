@@ -18,23 +18,23 @@ enum ImportError: LocalizedError {
         switch self {
         case .fileAccessDenied:
             "The selected file could not be accessed."
-        case .invalidFormat(let message):
+        case let .invalidFormat(message):
             message
-        case .parsingError(let message):
+        case let .parsingError(message):
             message
-        case .missingRequiredField(let field):
+        case let .missingRequiredField(field):
             "CSV is missing required field: \(field)."
-        case .emptyRequiredField(let field):
+        case let .emptyRequiredField(field):
             "Required field is empty: \(field)."
         case .emptyFile:
             "CSV file is empty."
-        case .invalidDateFormat(let value):
+        case let .invalidDateFormat(value):
             "Invalid date format: \(value)."
-        case .invalidAmountFormat(let value):
+        case let .invalidAmountFormat(value):
             "Invalid amount format: \(value)."
         case .duplicateTransaction:
             "This transaction already exists."
-        case .invalidTransactionType(let value):
+        case let .invalidTransactionType(value):
             "Invalid transaction type: \(value)."
         case .invalidData:
             "The import data is invalid or missing."

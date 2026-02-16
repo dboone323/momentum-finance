@@ -1,11 +1,11 @@
-import Foundation
 import AppIntents
+import Foundation
 import MomentumFinanceCore
 import os
 import SwiftData
 import SwiftUI
 #if os(macOS)
-import AppKit
+    import AppKit
 #endif
 
 // Import KeychainHelper for secure storage

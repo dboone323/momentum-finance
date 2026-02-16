@@ -32,8 +32,7 @@ public struct ThemeComponents: @unchecked Sendable {
     }
 
     @MainActor
-    func cardWithHeader(title: String, @ViewBuilder content: @escaping () -> some View) -> some View
-    {
+    func cardWithHeader(title: String, @ViewBuilder content: @escaping () -> some View) -> some View {
         let theme = ColorTheme.shared
         return VStack(alignment: .leading, spacing: 12) {
             Text(title)
@@ -52,8 +51,7 @@ public struct ThemeComponents: @unchecked Sendable {
     }
 
     @MainActor
-    func section(title: String? = nil, @ViewBuilder content: @escaping () -> some View) -> some View
-    {
+    func section(title: String? = nil, @ViewBuilder content: @escaping () -> some View) -> some View {
         let theme = ColorTheme.shared
         return VStack(alignment: .leading, spacing: 12) {
             if let title {

@@ -28,7 +28,7 @@ extension Features.Transactions {
 
         /// Filter transactions by category
         private var filteredTransactions: [FinancialTransaction] {
-            return self.transactions.filter {
+            self.transactions.filter {
                 $0.category == self.categoryName
             }
             .sorted { $0.date > $1.date }

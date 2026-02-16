@@ -7,7 +7,7 @@ import SwiftData
 import SwiftUI
 
 #if os(iOS)
-import UIKit
+    import UIKit
 #endif
 
 /// Temporary placeholder views until namespace issues are resolved
@@ -123,9 +123,9 @@ public struct ContentView: View {
         }
         .onChange(of: self.navigationCoordinator.selectedTab) { _, _ in
             #if os(iOS)
-            let generator = UISelectionFeedbackGenerator()
-            generator.prepare()
-            generator.selectionChanged()
+                let generator = UISelectionFeedbackGenerator()
+                generator.prepare()
+                generator.selectionChanged()
             #endif
         }
         #if os(iOS)

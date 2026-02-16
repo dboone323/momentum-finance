@@ -496,12 +496,12 @@ public struct BudgetSearchView: View {
         if self.searchText.isEmpty {
             self.budgets
         } else {
-                self.budgets.filter { budget in
-                    budget.name.localizedCaseInsensitiveContains(self.searchText)
+            self.budgets.filter { budget in
+                budget.name.localizedCaseInsensitiveContains(self.searchText)
                     || budget.category?.localizedCaseInsensitiveContains(self.searchText)
                     ?? false
-                }
             }
+        }
     }
 
     public var body: some View {

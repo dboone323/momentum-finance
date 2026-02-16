@@ -237,96 +237,96 @@ actor ExportEngineService {
         context _: CGContext, yPosition: Double,
         settings: ExportSettings
     ) throws -> Double {
-#if os(macOS)
-        let transactions = try fetchTransactions(from: settings.startDate, to: settings.endDate)
+        #if os(macOS)
+            let transactions = try fetchTransactions(from: settings.startDate, to: settings.endDate)
 
-        let headerAttributes: [NSAttributedString.Key: Any] = [
-            .font: NSFont.boldSystemFont(ofSize: 18),
-            .foregroundColor: NSColor.black,
-        ]
-        let textAttributes: [NSAttributedString.Key: Any] = [
-            .font: NSFont.systemFont(ofSize: 12),
-            .foregroundColor: NSColor.black,
-        ]
+            let headerAttributes: [NSAttributedString.Key: Any] = [
+                .font: NSFont.boldSystemFont(ofSize: 18),
+                .foregroundColor: NSColor.black,
+            ]
+            let textAttributes: [NSAttributedString.Key: Any] = [
+                .font: NSFont.systemFont(ofSize: 12),
+                .foregroundColor: NSColor.black,
+            ]
 
-        "Transactions Summary".draw(
-            at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes
-        )
+            "Transactions Summary".draw(
+                at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes
+            )
 
-        let totalIncome = transactions.filter { $0.transactionType == .income }.reduce(0.0) {
-            $0 + $1.amount
-        }
-        let totalExpenses = transactions.filter { $0.transactionType == .expense }.reduce(0.0) {
-            $0 + abs($1.amount)
-        }
-        let netAmount = totalIncome - totalExpenses
+            let totalIncome = transactions.filter { $0.transactionType == .income }.reduce(0.0) {
+                $0 + $1.amount
+            }
+            let totalExpenses = transactions.filter { $0.transactionType == .expense }.reduce(0.0) {
+                $0 + abs($1.amount)
+            }
+            let netAmount = totalIncome - totalExpenses
 
-        var currentY = yPosition + 30
+            var currentY = yPosition + 30
 
-        "Total Transactions: \(transactions.count)".draw(
-            at: CGPoint(x: 70, y: currentY),
-            withAttributes: textAttributes
-        )
-        currentY += 20
-
-        "Total Income: $\(String(format: "%.2f", totalIncome))"
-            .draw(
+            "Total Transactions: \(transactions.count)".draw(
                 at: CGPoint(x: 70, y: currentY),
                 withAttributes: textAttributes
             )
-        currentY += 20
+            currentY += 20
 
-        "Total Expenses: $\(String(format: "%.2f", totalExpenses))"
-            .draw(
-                at: CGPoint(x: 70, y: currentY),
-                withAttributes: textAttributes
-            )
-        currentY += 20
+            "Total Income: $\(String(format: "%.2f", totalIncome))"
+                .draw(
+                    at: CGPoint(x: 70, y: currentY),
+                    withAttributes: textAttributes
+                )
+            currentY += 20
 
-        "Net Amount: $\(String(format: "%.2f", netAmount))"
-            .draw(
-                at: CGPoint(x: 70, y: currentY),
-                withAttributes: textAttributes
-            )
-        currentY += 40
+            "Total Expenses: $\(String(format: "%.2f", totalExpenses))"
+                .draw(
+                    at: CGPoint(x: 70, y: currentY),
+                    withAttributes: textAttributes
+                )
+            currentY += 20
 
-        return currentY
-#else
-        _ = settings
-        return yPosition
-#endif
+            "Net Amount: $\(String(format: "%.2f", netAmount))"
+                .draw(
+                    at: CGPoint(x: 70, y: currentY),
+                    withAttributes: textAttributes
+                )
+            currentY += 40
+
+            return currentY
+        #else
+            _ = settings
+            return yPosition
+        #endif
     }
 
     private func drawAccountsSummary(
         context _: CGContext, yPosition: Double,
         settings _: ExportSettings
     ) throws -> Double {
-#if os(macOS)
-        let accounts = try fetchAccounts()
+        #if os(macOS)
+            let accounts = try fetchAccounts()
 
-        let headerAttributes: [NSAttributedString.Key: Any] = [
-            .font: NSFont.boldSystemFont(ofSize: 18),
-            .foregroundColor: NSColor.black,
-        ]
-        let textAttributes: [NSAttributedString.Key: Any] = [
-            .font: NSFont.systemFont(ofSize: 12),
-            .foregroundColor: NSColor.black,
-        ]
+            let headerAttributes: [NSAttributedString.Key: Any] = [
+                .font: NSFont.boldSystemFont(ofSize: 18),
+                .foregroundColor: NSColor.black,
+            ]
+            let textAttributes: [NSAttributedString.Key: Any] = [
+                .font: NSFont.systemFont(ofSize: 12),
+                .foregroundColor: NSColor.black,
+            ]
 
-        "Accounts Summary".draw(at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes)
+            "Accounts Summary".draw(at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes)
 
-        var currentY = yPosition + 30
+            var currentY = yPosition + 30
 
-        for account in accounts {
-            let accountInfo = "\(account.name): $\(String(format: "%.2f", account.balance))"
-            accountInfo.draw(at: CGPoint(x: 70, y: currentY), withAttributes: textAttributes)
-            currentY += 20
-        }
+            for account in accounts {
+                let accountInfo = "\(account.name): $\(String(format: "%.2f", account.balance))"
+                accountInfo.draw(at: CGPoint(x: 70, y: currentY), withAttributes: textAttributes)
+                currentY += 20
+            }
 
-        return currentY + 20
-#else
-        return yPosition
-#endif
+            return currentY + 20
+        #else
+            return yPosition
+        #endif
     }
 
     // MARK: - JSON

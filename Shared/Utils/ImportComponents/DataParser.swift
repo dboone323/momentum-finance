@@ -63,8 +63,7 @@ enum DataParser {
 
         for format in formats {
             formatter.dateFormat = format
-            if let date = formatter.date(from: string.trimmingCharacters(in: .whitespacesAndNewlines))
-            {
+            if let date = formatter.date(from: string.trimmingCharacters(in: .whitespacesAndNewlines)) {
                 return date
             }
         }

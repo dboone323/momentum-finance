@@ -71,11 +71,11 @@ public actor SharedKitEnterpriseBridge {
     private func mapServiceStatus(_ status: ServiceHealthStatus) -> String {
         switch status {
         case .healthy:
-            return "healthy"
-        case .degraded(let reason):
-            return "degraded: \(reason)"
-        case .unhealthy(let error):
-            return "unhealthy: \(error.localizedDescription)"
+            "healthy"
+        case let .degraded(reason):
+            "degraded: \(reason)"
+        case let .unhealthy(error):
+            "unhealthy: \(error.localizedDescription)"
         }
     }
 }

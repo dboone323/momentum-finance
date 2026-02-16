@@ -3,8 +3,8 @@ import Security
 import SwiftUI
 
 #if os(iOS)
-import UIKit
-import UserNotifications
+    import UIKit
+    import UserNotifications
 #endif
 
 @MainActor
@@ -21,29 +21,29 @@ enum MomentumFinanceLifecycleCoordinator {
         }
 
         #if os(iOS)
-        Task {
-            _ = await requestNotificationAuthorizationIfNeeded()
-        }
-        UIApplication.shared.registerForRemoteNotifications()
-        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
+            Task {
+                _ = await requestNotificationAuthorizationIfNeeded()
+            }
+            UIApplication.shared.registerForRemoteNotifications()
+            UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         #endif
     }
 
     #if os(iOS)
-    private static func requestNotificationAuthorizationIfNeeded() async -> Bool {
-        let center = UNUserNotificationCenter.current()
-        let currentSettings = await center.notificationSettings()
+        private static func requestNotificationAuthorizationIfNeeded() async -> Bool {
+            let center = UNUserNotificationCenter.current()
+            let currentSettings = await center.notificationSettings()
 
-        if currentSettings.authorizationStatus == .authorized {
-            return true
-        }
+            if currentSettings.authorizationStatus == .authorized {
+                return true
+            }
 
-        do {
-            return try await center.requestAuthorization(options: [.alert, .badge, .sound])
-        } catch {
-            return false
+            do {
+                return try await center.requestAuthorization(options: [.alert, .badge, .sound])
+            } catch {
+                return false
+            }
         }
-    }
     #endif
 }
 

@@ -5,8 +5,8 @@
 //  Created by GitHub Copilot on 2025-08-19.
 //
 
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 extension Features.Transactions {
     struct SearchAndFilterSection: View {
