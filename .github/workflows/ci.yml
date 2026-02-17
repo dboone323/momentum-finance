@@ -4,8 +4,10 @@ on:
   push:
     branches: [main, develop, 'fix/*']
     tags: ['v*']
+    paths-ignore: ['**.md', 'docs/**']
   pull_request:
     branches: [main, develop]
+    paths-ignore: ['**.md', 'docs/**']
   workflow_dispatch:
     inputs:
       environment:
@@ -16,6 +18,10 @@ on:
         options:
           - testflight
           - appstore
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   DEVELOPER_DIR: /Applications/Xcode_15.2.app/Contents/Developer
@@ -77,6 +83,41 @@ jobs:
             echo "All lines within $MAX_LENGTH characters"
           fi
 
+  # 1.5 Docker Build (Linux Compatibility)
+  docker-build:
+    name: Docker Build (Linux)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: false
+          tags: momentum-finance:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+
+      # Temp fix to move cache
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
   # 2. Security Scanning
   security-scan:
     name: Security Analysis
@@ -128,9 +169,9 @@ jobs:
         with:
           severity: error
           ignore_paths: |
-             node_modules
-             .build
-             .swiftpm
+            node_modules
+            .build
+            .swiftpm
           ignore_names: |
             launch_iphone16.sh
             run_ios_fixed.sh
@@ -154,10 +195,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - destination: "platform=iOS Simulator,name=iPhone 15,OS=17.5"
+          - destination: 'platform=iOS Simulator,name=iPhone 15,OS=17.5'
             name: iOS
             scheme: MomentumFinance
-          - destination: "platform=iOS Simulator,name=iPhone 15,OS=17.5"
+          - destination: 'platform=iOS Simulator,name=iPhone 15,OS=17.5'
             name: iOS-Core
             scheme: MomentumFinanceCore
 
@@ -233,8 +274,8 @@ jobs:
     needs: [build-and-test, security-scan]
     if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
     strategy:
-        matrix:
-            scheme: [MomentumFinance] # Deploy main app only
+      matrix:
+        scheme: [MomentumFinance] # Deploy main app only
 
     steps:
       - name: Checkout Code
