@@ -1,31 +1,44 @@
-FROM swift:6.2
+# syntax=docker/dockerfile:1.5
 
+FROM swift:6.2 AS builder
 LABEL maintainer="tools-automation"
-LABEL description="MomentumFinance Swift application"
+LABEL description="MomentumFinance build stage"
+
+WORKDIR /src
+
+# Install build-only dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libssl-dev \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy manifest files first to leverage build cache
+COPY Package.* ./
+RUN --mount=type=cache,target=/root/.swiftpm swift package resolve
+
+# Copy sources and build using SwiftPM cache
+COPY . .
+RUN --mount=type=cache,target=/root/.swiftpm swift build -c release
+
+########## Runtime stage ##########
+FROM swift:6.2-slim AS runtime
+LABEL maintainer="tools-automation"
+LABEL description="MomentumFinance runtime"
 
 WORKDIR /app
 
-# Install necessary dependencies and create non-root user for security
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libssl-dev \
-    && rm -rf /var/lib/apt/lists/* \
-    && groupadd -r swiftuser && useradd -r -g swiftuser -d /home/swiftuser -m swiftuser
+# Create a non-root user
+RUN groupadd -r swiftuser && useradd -r -g swiftuser -d /home/swiftuser -m swiftuser
 
-# Copy the current directory contents into the container
-COPY . .
+# Copy built artifact from builder (use --chown to avoid chown -R)
+COPY --from=builder --chown=swiftuser:swiftuser /src/.build/release/MomentumFinance /app/MomentumFinance
 
-# Set ownership and build the application
-RUN chown -R swiftuser:swiftuser /app && swift build
-
-# Switch to non-root user
 USER swiftuser
 
-# Health check
+# Health check (adjust command to your service readiness probe)
 HEALTHCHECK --interval=60s --timeout=10s --start-period=30s --retries=3 \
-    CMD pgrep -f "MomentumFinance" || exit 0
+  CMD ["/bin/sh", "-c", "test -x /app/MomentumFinance && /app/MomentumFinance --health || exit 1"]
 
-# Set the command to run when the container starts
-CMD ["swift", "run", "MomentumFinance"]
+CMD ["/app/MomentumFinance"]
 
-# Expose port if needed for web interface
-# EXPOSE 8080
+# NOTE: For production, consider using a smaller runtime (distroless) and pin base image digests for reproducibility.

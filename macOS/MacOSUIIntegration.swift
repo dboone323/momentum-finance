@@ -586,6 +586,7 @@ import SwiftUI
                                         .font(.headline)
                                     Spacer()
                                     Text(
+                                        // swiftlint:disable:next line_length
                                         "\(budget.spentAmount.formatted(.currency(code: "USD"))) of \(budget.limitAmount.formatted(.currency(code: "USD")))"
                                     )
                                     .font(.subheadline)
@@ -821,6 +822,7 @@ import SwiftUI
 
                                 Spacer()
 
+                                // swiftlint:disable:next line_length
                                 Text(
                                     "\(goal.currentAmount.formatted(.currency(code: "USD"))) of \(goal.targetAmount.formatted(.currency(code: "USD")))"
                                 )

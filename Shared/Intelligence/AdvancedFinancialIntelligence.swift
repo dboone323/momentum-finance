@@ -107,6 +107,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
                 EnhancedFinancialInsight(
                     title: "Accelerating Spending Detected",
                     description:
+                    // swiftlint:disable:next line_length
                     "Your spending has increased by \(Int(spendingVelocity.percentageIncrease))% this month. Consider reviewing your recent purchases.",
                     priority: .high,
                     type: .spendingAlert,

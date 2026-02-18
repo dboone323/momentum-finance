@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.2
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
@@ -22,7 +22,9 @@ let package = Package(
     targets: [
         .target(
             name: "MomentumFinanceCore",
-            dependencies: [],
+            dependencies: [
+                .product(name: "SharedKit", package: "shared-kit")
+            ],
             path: "Sources/MomentumFinanceCore",
             resources: [],
             swiftSettings: [

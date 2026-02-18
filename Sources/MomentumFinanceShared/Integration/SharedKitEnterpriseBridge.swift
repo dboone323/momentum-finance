@@ -49,8 +49,9 @@ public actor SharedKitEnterpriseBridge {
         try await ServiceManager.shared.initializeServices()
         let statuses = await ServiceManager.shared.getServicesHealthStatus()
         let normalizedStatuses = Dictionary(
-            uniqueKeysWithValues: statuses.map { key, status in
-                (key, mapServiceStatus(status))
+            uniqueKeysWithValues: statuses.map {
+                (key: String, status: ServiceHealthStatus) -> (String, String) in
+                (key, self.mapServiceStatus(status))
             }
         )
 

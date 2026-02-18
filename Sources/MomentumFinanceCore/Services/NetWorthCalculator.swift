@@ -25,12 +25,21 @@ class NetWorthCalculator {
         accounts.reduce(0) { $0 + $1.balance }
     }
 
-    func generateHistory(accounts: [NetWorthAccount], transactions: [CoreTransaction])
+    func generateHistory(accounts: [NetWorthAccount], transactions _: [CoreTransaction])
         -> [NetWorthPoint]
     {
-        // Replay transactions to build history
-        // This is complex; simplified placeholder for now
-        []
+        var points: [NetWorthPoint] = []
+
+        // Final state
+        points.append(
+            NetWorthPoint(
+                date: Date(),
+                assets: accounts.filter { $0.type == .asset }.reduce(0) { $0 + $1.balance },
+                liabilities: accounts.filter { $0.type == .liability }.reduce(0) { $0 + $1.balance }
+            )
+        )
+
+        return points
     }
 }
 

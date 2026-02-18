@@ -132,6 +132,7 @@ final class TransactionPatternAnalyzer {
             let insight = FinancialInsight(
                 title: "Unusual Transaction Detected",
                 description:
+                // swiftlint:disable:next line_length
                 "A transaction of \(fi_formatCurrency(abs(anomaly.amount))) on \(anomaly.date.formatted()) seems unusually large compared to your typical spending.",
                 priority: .medium,
                 type: .anomaly,

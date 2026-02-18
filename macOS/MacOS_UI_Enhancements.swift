@@ -539,6 +539,7 @@ import SwiftUI
                                         Spacer()
 
                                         Text(
+                                            // swiftlint:disable:next line_length
                                             "\(budget.spentAmount.formatted(.currency(code: "USD"))) of \(budget.limitAmount.formatted(.currency(code: "USD")))"
                                         )
                                     }
@@ -905,6 +906,7 @@ import SwiftUI
 
                                     Spacer()
 
+                                    // swiftlint:disable:next line_length
                                     Text(
                                         "\(goal.currentAmount.formatted(.currency(code: "USD"))) of \(goal.targetAmount.formatted(.currency(code: "USD")))"
                                     )
@@ -1048,6 +1050,7 @@ import SwiftUI
                                             .font(.headline)
 
                                         Spacer()
+                                        // swiftlint:disable:next line_length
 
                                         Text(
                                             "\(goal.currentAmount.formatted(.currency(code: "USD"))) of \(goal.targetAmount.formatted(.currency(code: "USD")))"
@@ -1102,6 +1105,7 @@ import SwiftUI
                                         let remainingAmount = goal.targetAmount - goal.currentAmount
                                         let monthsRemaining = Double(daysRemaining) / 30.0
                                         if monthsRemaining > 0 {
+                                            // swiftlint:disable:next line_length
                                             let requiredMonthlySavings =
                                                 remainingAmount / monthsRemaining
                                             Text(

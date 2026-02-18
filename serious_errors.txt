@@ -1,0 +1,173 @@
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/macOS/MacOSUIIntegration.swift",
+    "line" : 825,
+    "reason" : "Line should be 150 characters or less; currently it has 151 characters",
+    "rule_id" : "line_length",
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/macOS/MacOSUIIntegration.swift",
+    "line" : 1189,
+    "reason" : "Line should be 120 characters or less; currently it has 143 characters",
+    "rule_id" : "line_length",
+    "severity" : "Warning",
+    "type" : "Line Length"
+--
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/macOS/EnhancedBudgetDetailView.swift",
+    "line" : 191,
+    "reason" : "Line should be 120 characters or less; currently it has 128 characters",
+    "rule_id" : "line_length",
+    "severity" : "Warning",
+    "type" : "Line Length"
+--
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/macOS/MacOS_UI_Enhancements.swift",
+    "line" : 559,
+    "reason" : "Line should be 120 characters or less; currently it has 124 characters",
+    "rule_id" : "line_length",
+    "severity" : "Warning",
+    "type" : "Line Length"
+--
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/macOS/MacOS_UI_Enhancements.swift",
+    "line" : 1053,
+    "reason" : "Line should be 150 characters or less; currently it has 159 characters",
+    "rule_id" : "line_length",
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/macOS/MacOS_UI_Enhancements.swift",
+    "line" : 1066,
+    "reason" : "Line should be 120 characters or less; currently it has 134 characters",
+    "rule_id" : "line_length",
+    "severity" : "Warning",
+    "type" : "Line Length"
+--
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/macOS/MacOS_UI_Enhancements.swift",
+    "line" : 1195,
+    "reason" : "Line should be 120 characters or less; currently it has 146 characters",
+    "rule_id" : "line_length",
+    "severity" : "Warning",
+    "type" : "Line Length"
+--
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/macOS/Components/GoalsListView.swift",
+    "line" : 208,
+    "reason" : "Line should be 150 characters or less; currently it has 159 characters",
+    "rule_id" : "line_length",
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/macOS/Components/GoalsListView.swift",
+    "line" : 221,
+    "reason" : "Line should be 120 characters or less; currently it has 134 characters",
+    "rule_id" : "line_length",
+    "severity" : "Warning",
+    "type" : "Line Length"
+--
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/Shared.disabled/Intelligence/AdvancedFinancialIntelligence.swift",
+    "line" : 110,
+    "reason" : "Line should be 150 characters or less; currently it has 152 characters",
+    "rule_id" : "line_length",
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/Shared.disabled/Intelligence/AdvancedFinancialIntelligence.swift",
+    "line" : 160,
+    "reason" : "Line should be 120 characters or less; currently it has 128 characters",
+    "rule_id" : "line_length",
+    "severity" : "Warning",
+    "type" : "Line Length"
+--
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/Shared/Intelligence/AdvancedFinancialIntelligence.swift",
+    "line" : 160,
+    "reason" : "Line should be 120 characters or less; currently it has 128 characters",
+    "rule_id" : "line_length",
+    "severity" : "Warning",
+    "type" : "Line Length"
+--
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/Shared/Intelligence/Helpers/BudgetRecommendations.swift",
+    "line" : 79,
+    "reason" : "Line should be 120 characters or less; currently it has 123 characters",
+    "rule_id" : "line_length",
+    "severity" : "Warning",
+    "type" : "Line Length"
+--
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/Sources/MomentumFinanceCore/DataExporter.swift",
+    "line" : 46,
+    "reason" : "Line should be 150 characters or less; currently it has 199 characters",
+    "rule_id" : "line_length",
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/Sources/MomentumFinanceCore/Services/BudgetAlerts.swift",
+    "line" : 141,
+    "reason" : "Line should be 150 characters or less; currently it has 163 characters",
+    "rule_id" : "line_length",
+    "severity" : "Error",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/momentum-finance/Sources/MomentumFinanceCore/Services/BudgetAlerts.swift",
+    "line" : 151,
+    "reason" : "Line should be 120 characters or less; currently it has 141 characters",
+    "rule_id" : "line_length",
+    "severity" : "Warning",
+    "type" : "Line Length"

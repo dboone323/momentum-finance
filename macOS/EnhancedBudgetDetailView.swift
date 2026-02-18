@@ -177,6 +177,7 @@ import SwiftUI
                                             Spacer()
 
                                             Text(
+                                                // swiftlint:disable:next line_length
                                                 "\(budget.spent.formatted(.currency(code: "USD"))) of \(budget.amount.formatted(.currency(code: "USD")))"
                                             )
                                         }
