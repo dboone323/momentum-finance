@@ -52,11 +52,18 @@ import Foundation
 
                     let notes = mapping.notesIndex.flatMap { $0 < fields.count ? fields[$0] : nil }
 
-                    // Use default entities or handle as needed
+                    // Use default entities or handle as needed with professional fallbacks
+                    let importTag =
+                        "[Import \(Date().formatted(date: .abbreviated, time: .omitted))]"
                     let account = FinancialAccount(
-                        name: "Imported Account", balance: Decimal(0), iconName: "creditcard"
+                        name: "Unassigned Account \(importTag)",
+                        balance: Decimal(0),
+                        iconName: "questionmark.circle"
                     )
-                    let category = ExpenseCategory(name: "Imported Category", iconName: "tag")
+                    let category = ExpenseCategory(
+                        name: "Unassigned Category \(importTag)",
+                        iconName: "tag.slash"
+                    )
 
                     let transaction = FinancialTransaction(
                         title: title,

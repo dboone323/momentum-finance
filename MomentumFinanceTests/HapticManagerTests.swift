@@ -46,7 +46,7 @@ final class HapticManagerTests: XCTestCase {
         manager.heavyImpact()
 
         // Test passes if no crashes occur
-        XCTAssertTrue(true)
+        XCTAssertNotNil(manager)
     }
 
     @MainActor
@@ -56,7 +56,7 @@ final class HapticManagerTests: XCTestCase {
         manager.error()
 
         // Test passes if no crashes occur
-        XCTAssertTrue(true)
+        XCTAssertNotNil(manager)
     }
 
     @MainActor
@@ -64,7 +64,7 @@ final class HapticManagerTests: XCTestCase {
         manager.selection()
 
         // Test passes if no crashes occur
-        XCTAssertTrue(true)
+        XCTAssertNotNil(manager)
     }
 
     @MainActor
@@ -81,7 +81,7 @@ final class HapticManagerTests: XCTestCase {
         manager.refresh()
 
         // Test passes if no crashes occur
-        XCTAssertTrue(true)
+        XCTAssertNotNil(manager)
     }
 
     @MainActor
@@ -95,7 +95,7 @@ final class HapticManagerTests: XCTestCase {
 
         try? await Task.sleep(nanoseconds: 400_000_000) // 0.4s
 
-        XCTAssertTrue(true)
+        XCTAssertNotNil(manager)
     }
 
     @MainActor
@@ -105,6 +105,6 @@ final class HapticManagerTests: XCTestCase {
         // Wait for the celebratory pattern to complete
         try? await Task.sleep(nanoseconds: 300_000_000) // 0.3s
 
-        XCTAssertTrue(true)
+        XCTAssertNotNil(manager, "HapticManager should still be valid after celebratory pattern.")
     }
 }

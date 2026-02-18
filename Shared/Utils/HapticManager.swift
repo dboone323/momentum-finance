@@ -63,8 +63,6 @@ public class HapticManager: ObservableObject {
 
     // Provides impact haptic feedback with varying intensity
     #if os(iOS)
-        /// <#Description#>
-        /// - Returns: <#description#>
         func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {
             guard self.isEnabled else { return }
 
@@ -73,8 +71,6 @@ public class HapticManager: ObservableObject {
             generator.impactOccurred()
         }
     #else
-        /// <#Description#>
-        /// - Returns: <#description#>
         func impact(_: Any) {
             // No haptic feedback on macOS
         }
@@ -307,16 +303,12 @@ public struct SuccessHapticModifier: ViewModifier {
 extension View {
     // Adds haptic feedback when the trigger value changes
     #if os(iOS)
-        /// <#Description#>
-        /// - Returns: <#description#>
         func hapticFeedback(_ style: UIImpactFeedbackGenerator.FeedbackStyle, trigger: Bool)
             -> some View
         {
             modifier(HapticFeedbackModifier(style: style, trigger: trigger))
         }
     #else
-        /// <#Description#>
-        /// - Returns: <#description#>
         func hapticFeedback(_: Any, trigger: Bool) -> some View {
             modifier(HapticFeedbackModifier(trigger: trigger))
         }
@@ -338,44 +330,16 @@ extension View {
 
     // Adds tap haptic feedback to any view
     #if os(iOS)
-        /// <#Description#>
-        /// - Returns: <#description#>
         func hapticTap(_ style: UIImpactFeedbackGenerator.FeedbackStyle = .light) -> some View {
             onTapGesture {
                 HapticManager.shared.impact(style)
             }
         }
     #else
-        /// <#Description#>
-        /// - Returns: <#description#>
         func hapticTap(_: Any = Any.self) -> some View {
             onTapGesture {
                 // No haptic feedback on macOS
             }
         }
     #endif
-}
-
-// MARK: - Object Pooling
-
-/// Object pool for performance optimization
-@MainActor
-private var objectPool: [Any] = []
-private let maxPoolSize = 50
-
-/// Get an object from the pool or create new one
-@MainActor
-private func getPooledObject<T>() -> T? {
-    if let pooled = objectPool.popLast() as? T {
-        return pooled
-    }
-    return nil
-}
-
-/// Return an object to the pool
-@MainActor
-private func returnToPool(_ object: Any) {
-    if objectPool.count < maxPoolSize {
-        objectPool.append(object)
-    }
 }

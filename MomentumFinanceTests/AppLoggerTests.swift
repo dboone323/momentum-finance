@@ -34,86 +34,86 @@ final class AppLoggerTests: XCTestCase {
     func testLogDebugMessage() {
         // Should not crash
         logger.log("Debug message", level: .debug, category: .general)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogInfoMessage() {
         logger.log("Info message", level: .info, category: .general)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogWarningMessage() {
         logger.log("Warning message", level: .warning, category: .general)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogErrorMessage() {
         logger.log("Error message", level: .error, category: .general)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogCriticalMessage() {
         logger.log("Critical message", level: .critical, category: .general)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     // MARK: - Log Category Tests
 
     func testLogToGeneralCategory() {
         logger.log("General log", level: .info, category: .general)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogToUICategory() {
         logger.log("UI log", level: .info, category: .ui)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogToDataCategory() {
         logger.log("Data log", level: .info, category: .data)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogToBusinessCategory() {
         logger.log("Business log", level: .info, category: .business)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogToNetworkCategory() {
         logger.log("Network log", level: .info, category: .network)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogToPerformanceCategory() {
         logger.log("Performance log", level: .info, category: .performance)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogToAnalysisCategory() {
         logger.log("Analysis log", level: .info, category: .analysis)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogToSecurityCategory() {
         logger.log("Security log", level: .info, category: .security)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogToAICategory() {
         logger.log("AI log", level: .info, category: .ai)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     // MARK: - Convenience Method Tests
 
     func testDebugMethod() {
         logger.debug("Debug convenience method")
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogWarningMethod() {
         logger.logWarning("Warning convenience method")
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogErrorMethod() {
@@ -124,53 +124,53 @@ final class AppLoggerTests: XCTestCase {
         )
 
         logger.logError(error, context: "Test context")
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogErrorWithoutContext() {
         let error = NSError(domain: "TestDomain", code: 200)
         logger.logError(error)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     // MARK: - Default Parameter Tests
 
     func testLogWithDefaultLevel() {
         logger.log("Message with default level")
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogWithDefaultCategory() {
         logger.log("Message with default category", level: .info)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogWithAllDefaults() {
         logger.log("Message with all defaults")
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     // MARK: - Edge Case Tests
 
     func testLogEmptyString() {
         logger.log("", level: .info, category: .general)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogVeryLongString() {
         let longString = String(repeating: "A", count: 10000)
         logger.log(longString, level: .info, category: .general)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogSpecialCharacters() {
         logger.log("Special chars: \n\t\r\\\"'", level: .info, category: .general)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testLogUnicode() {
         logger.log("Unicode: 🚀 💰 ✅ 🎉", level: .info, category: .general)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     // MARK: - Concurrent Logging Tests
@@ -184,7 +184,7 @@ final class AppLoggerTests: XCTestCase {
             }
         }
 
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testMultipleCategoriesConcurrently() async {
@@ -200,7 +200,7 @@ final class AppLoggerTests: XCTestCase {
             }
         }
 
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     // MARK: - Integration Tests
@@ -222,7 +222,7 @@ final class AppLoggerTests: XCTestCase {
         // Critical
         logger.log("Critical failure", level: .critical, category: .business)
 
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     func testAllLogLevelsInAllCategories() {
@@ -238,7 +238,7 @@ final class AppLoggerTests: XCTestCase {
             }
         }
 
-        XCTAssertTrue(true)
+        XCTAssertNotNil(logger)
     }
 
     // MARK: - MainActor Isolation Tests

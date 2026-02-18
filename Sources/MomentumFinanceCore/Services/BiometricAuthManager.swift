@@ -36,12 +36,14 @@ public final class BiometricAuthManager {
             return .touchID
         case .opticID:
             return .opticID
+        case .none:
+            return .none
         @unknown default:
             return .none
         }
     }
 
-    public enum BiometricType: String {
+    public enum BiometricType: String, Sendable {
         case faceID = "Face ID"
         case touchID = "Touch ID"
         case opticID = "Optic ID"
@@ -56,7 +58,7 @@ public final class BiometricAuthManager {
     ///   - completion: Callback with success status and optional error.
     public func authenticate(
         reason: String = "Authenticate to access your financial data",
-        completion: @escaping (Bool, Error?) -> Void
+        completion: @escaping @Sendable (Bool, Error?) -> Void
     ) {
         let context = LAContext()
         context.localizedCancelTitle = "Cancel"
@@ -86,7 +88,9 @@ public final class BiometricAuthManager {
 
     /// Async version of authenticate.
     @available(iOS 15.0, macOS 12.0, *)
-    public func authenticate(reason: String = "Authenticate to access your financial data") async throws -> Bool {
+    public func authenticate(reason: String = "Authenticate to access your financial data")
+        async throws -> Bool
+    {
         try await withCheckedThrowingContinuation { continuation in
             authenticate(reason: reason) { success, error in
                 if let error {
@@ -100,7 +104,7 @@ public final class BiometricAuthManager {
 
     // MARK: - Error Handling
 
-    public enum BiometricError: LocalizedError {
+    public enum BiometricError: LocalizedError, Sendable {
         case notAvailable
         case notEnrolled
         case userCancel

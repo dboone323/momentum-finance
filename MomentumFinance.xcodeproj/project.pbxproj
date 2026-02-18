@@ -212,6 +212,7 @@
 		508AECF018404DBB8C3EE4CE /* TemporaryImportNotificationStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F01154B77244459B8147CB /* TemporaryImportNotificationStubs.swift */; };
 		3ECD4F75D94746F5ADA24C0B /* FinanceIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBC4ED86FBF47518E3CCE35 /* FinanceIntents.swift */; };
 		B7534DAF2AFE4908A6241905 /* SettingsSectionStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A60145B2E8245B2823BD795 /* SettingsSectionStubs.swift */; };
+		568C106BA40848F2A8117904 /* BiometricAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE5A0B504D4BF5A15ADBE6 /* BiometricAuthManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -538,6 +539,7 @@
 		29F01154B77244459B8147CB /* TemporaryImportNotificationStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bridging/TemporaryImportNotificationStubs.swift"; sourceTree = "<group>"; };
 		6DBC4ED86FBF47518E3CCE35 /* FinanceIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Intents/FinanceIntents.swift"; sourceTree = "<group>"; };
 		5A60145B2E8245B2823BD795 /* SettingsSectionStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Settings/SettingsSectionStubs.swift"; sourceTree = "<group>"; };
+		2CBE5A0B504D4BF5A15ADBE6 /* BiometricAuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sources/MomentumFinanceCore/Services/BiometricAuthManager.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -708,7 +710,8 @@
 				C74408F4480444599E64E35D /* test_minimal_appTests.swift */,
 				EF7274BCF1EB4F1296A77710 /* test_modelsTests.swift */,
 				99B8D342AB535603F7A78294 /* MomentumFinanceUITests.xctest */,
-			);
+			
+				2CBE5A0B504D4BF5A15ADBE6 /* BiometricAuthManager.swift */,);
 			name = Products;
 			sourceTree = "<group>";
 		};
@@ -1424,7 +1427,8 @@
 				815DB79DB4126C68EBAF51E7 /* BudgetsGenerator.swift in Sources */,
 				1F6029DA5C07EB1C29654A0D /* SavingsGoalsGenerator.swift in Sources */,
 				748B1C8D5C924066E5A8F7D3 /* TransactionsGenerator.swift in Sources */,
-			);
+			
+				568C106BA40848F2A8117904 /* BiometricAuthManager.swift in Sources */,);
 		};
 		A0TEST122F0ABCDE00000001 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;

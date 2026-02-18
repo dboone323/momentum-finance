@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 #if canImport(UIKit)
     import UIKit
 #endif
@@ -86,7 +87,7 @@ public final class PrivacyScreenManager {
             privacyView = blurView
             isPrivacyScreenActive = true
 
-            print("[PrivacyScreen] Privacy screen activated")
+            NSLog("[PrivacyScreenManager] Privacy screen activated")
         }
 
         /// Hides the privacy screen.
@@ -97,7 +98,7 @@ public final class PrivacyScreenManager {
                 self?.privacyView?.removeFromSuperview()
                 self?.privacyView = nil
                 self?.isPrivacyScreenActive = false
-                print("[PrivacyScreen] Privacy screen deactivated")
+                NSLog("[PrivacyScreenManager] Privacy screen deactivated")
             }
         }
 
@@ -113,17 +114,23 @@ public final class PrivacyScreenManager {
             hidePrivacyScreen()
         }
     #else
-        /// macOS stub
+        /// macOS Implementation stub.
+        /// > [!NOTE]
+        /// > Privacy screen parity for macOS is planned for a future release using local authentication gating.
         public func configure(window: Any) {
-            print("[PrivacyScreen] Privacy screen not supported on macOS")
+            NSLog(
+                "[PrivacyScreenManager] Configuration received. Platform: macOS. Security Gating: NOT_ENABLED."
+            )
         }
 
         public func showPrivacyScreen() {
-            print("[PrivacyScreen] Privacy screen not supported on macOS")
+            NSLog(
+                "[PrivacyScreenManager] LOG: showPrivacyScreen called on macOS. (Feature parity in progress)"
+            )
         }
 
         public func hidePrivacyScreen() {
-            print("[PrivacyScreen] Privacy screen not supported on macOS")
+            NSLog("[PrivacyScreenManager] LOG: hidePrivacyScreen called on macOS.")
         }
     #endif
 

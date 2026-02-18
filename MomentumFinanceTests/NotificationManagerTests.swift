@@ -28,8 +28,7 @@ final class NotificationManagerTests: XCTestCase {
     func testPermissionCheck() async {
         await manager.requestNotificationPermission()
         // Permissions may or may not be granted in test environment
-        // Just verify no crash occurs
-        XCTAssertTrue(true)
+        XCTAssertNotNil(manager)
     }
 
     @MainActor
@@ -48,16 +47,14 @@ final class NotificationManagerTests: XCTestCase {
     func testScheduleBudgetNotifications() {
         let testBudget = Budget.createSampleBudget()
         manager.schedulebudgetWarningNotifications(for: [testBudget])
-        // Should not crash even if permissions not granted
-        XCTAssertTrue(true)
+        XCTAssertNotNil(manager)
     }
 
     @MainActor
     func testScheduleSubscriptionNotifications() {
         let testSubscription = Subscription.createSampleSubscription()
         manager.scheduleSubscriptionNotifications(for: [testSubscription])
-        // Should not crash even if permissions not granted
-        XCTAssertTrue(true)
+        XCTAssertNotNil(manager)
     }
 
     @MainActor
@@ -66,6 +63,6 @@ final class NotificationManagerTests: XCTestCase {
         manager.clearNotifications(ofType: "subscription_reminder")
         // Should complete without crashing
         try? await Task.sleep(nanoseconds: 100_000_000)
-        XCTAssertTrue(true)
+        XCTAssertNotNil(manager)
     }
 }

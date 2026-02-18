@@ -23,7 +23,7 @@ public enum BillingCycle: String, Codable, Sendable, CaseIterable {
 }
 
 /// Lightweight struct for financial calculations using Decimal for precision
-public struct CoreTransaction: Identifiable, Codable {
+public struct CoreTransaction: Identifiable, Codable, Sendable {
     public let id: UUID
     public let amount: Decimal
     public let date: Date
@@ -45,7 +45,7 @@ public struct CoreTransaction: Identifiable, Codable {
 }
 
 /// Lightweight struct for account calculations
-public struct CoreAccount: Identifiable {
+public struct CoreAccount: Identifiable, Sendable {
     public let id: UUID
     public let name: String
     public var balance: Decimal

@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct CategorySpending {
-    let categoryId: UUID
-    let totalAmount: Decimal
-    let percentage: Double
+public struct CategorySpending: Sendable {
+    public let categoryId: UUID
+    public let totalAmount: Decimal
+    public let percentage: Double
 }
 
 @MainActor

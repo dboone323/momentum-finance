@@ -11,23 +11,52 @@ public final class BudgetAgent: BaseAgent {
 
     public func execute(context: [String: Sendable]) async throws -> AgentResult {
         // Log start
-        print("[\(name)] Starting budget analysis...")
+        NSLog("[\(name)] Starting autonomous budget analysis...")
 
         // 1. Analyze spending patterns
-        // (Simplified: in real app, we'd fetch data from SwiftData context passed in)
+        // Ideally, we'd pull from SwiftData context, but for now we look for transactions in the context dictionary
+        let transactions = context["transactions"] as? [CoreTransaction] ?? []
 
-        // 2. Generate insights
-        let summary = "Spending is within limits, but subscription costs are rising (+12% MoM)."
-        let recommendations = [
-            "recommendation": "Consider canceling unused 'CloudPro' subscription to save $9.99/mo.",
-            "next_step": "Review subscriptions in Settings.",
-        ]
+        guard !transactions.isEmpty else {
+            return AgentResult(
+                agentId: id,
+                success: true,
+                summary:
+                "No recent transactions found for analysis. Settle more data for insights.",
+                detail: ["status": "idle"],
+                requiresApproval: false
+            )
+        }
+
+        // 2. Generate insights using SpendingAnalyzer
+        let burnRate = await SpendingAnalyzer.shared.calculateMonthlyBurnRate(
+            transactions: transactions
+        )
+        let anomalies = await SpendingAnalyzer.shared.detectSpendingAnomalies(
+            transactions: transactions
+        )
+
+        let summary: String
+        var detail: [String: String] = [:]
+
+        if anomalies.isEmpty {
+            summary =
+                "Spending profile is stable. Average monthly burn rate is \(burnRate.description)."
+            detail["burn_rate"] = burnRate.description
+        } else {
+            summary =
+                "Detected \(anomalies.count) spending anomalies! Average burn rate: \(burnRate.description)."
+            detail["anomaly_count"] = "\(anomalies.count)"
+            detail["burn_rate"] = burnRate.description
+            detail["recommendation"] =
+                "Review large unusual transactions to maintain budget health."
+        }
 
         return AgentResult(
             agentId: id,
             success: true,
             summary: summary,
-            detail: recommendations,
+            detail: detail,
             requiresApproval: false
         )
     }

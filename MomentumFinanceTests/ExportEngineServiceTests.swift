@@ -158,11 +158,15 @@ final class ExportEngineServiceTests: XCTestCase {
         let oldDate = Date().addingTimeInterval(-86400 * 60) // 60 days ago
         let recentDate = Date().addingTimeInterval(-86400 * 10) // 10 days ago
 
-        let oldTx = FinancialTransaction(title: "Old", amount: -50, date: oldDate, transactionType: .expense)
+        let oldTx = FinancialTransaction(
+            title: "Old", amount: -50, date: oldDate, transactionType: .expense
+        )
         oldTx.account = account
         modelContext.insert(oldTx)
 
-        let recentTx = FinancialTransaction(title: "Recent", amount: -30, date: recentDate, transactionType: .expense)
+        let recentTx = FinancialTransaction(
+            title: "Recent", amount: -30, date: recentDate, transactionType: .expense
+        )
         recentTx.account = account
         modelContext.insert(recentTx)
 
@@ -208,13 +212,13 @@ final class ExportEngineServiceTests: XCTestCase {
                 includeGoals: true
             )
 
-            // When/Then: Should throw error on iOS
+            // When/Then: Should throw error on iOS due to missing PDF engine
             do {
                 _ = try await service.export(settings: settings)
                 XCTFail("Should have thrown error on iOS")
             } catch {
-                // Expected to throw
-                XCTAssertTrue(true)
+                // Expected to throw on iOS
+                XCTAssertNotNil(error)
             }
         #endif
     }

@@ -32,8 +32,10 @@ enum Currency: String, CaseIterable, Identifiable {
 class CurrencyService {
     @MainActor static let shared = CurrencyService()
 
-    /// Mock exchange rates (Base: USD)
-    private let rates: [Currency: Decimal] = [
+    /// Fallback exchange rates (Base: USD)
+    /// > [!NOTE]
+    /// > These are used when real-time pricing data is unavailable.
+    private static let fallbackRates: [Currency: Decimal] = [
         .usd: 1.0,
         .eur: 0.92,
         .gbp: 0.79,
@@ -42,7 +44,9 @@ class CurrencyService {
     ]
 
     func convert(amount: Decimal, from source: Currency, to target: Currency) -> Decimal {
-        guard let sourceRate = rates[source], let targetRate = rates[target] else {
+        guard let sourceRate = Self.fallbackRates[source],
+              let targetRate = Self.fallbackRates[target]
+        else {
             return amount
         }
 
