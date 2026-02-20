@@ -4,7 +4,6 @@ import XCTest
 
 @MainActor
 final class DataExporterContentTests: ExportEngineServiceTestCase {
-
     func testCSVExportIncludesHeaderAndRows() async throws {
         let account = FinancialAccount(name: "Checking", balance: 1000, accountType: .checking)
         self.modelContext.insert(account)
@@ -20,28 +19,27 @@ final class DataExporterContentTests: ExportEngineServiceTestCase {
             self.modelContext.insert(transaction)
         }
 
-        let settings = ExportSettings(
-            format: .csv,
-            startDate: Date().addingTimeInterval(-86400),
-            endDate: Date().addingTimeInterval(86400),
-            includeTransactions: true,
-            includeAccounts: false,
-            includeBudgets: false,
-            includeSubscriptions: false,
-            includeGoals: false
-        )
-
-        let url = try await self.service.export(settings: settings)
-        defer { try? FileManager.default.removeItem(at: url) }
-
-        let content = try String(contentsOf: url)
-        XCTAssertTrue(content.contains("TRANSACTIONS"))
-        XCTAssertTrue(content.contains("Date,Title,Amount,Type,Category,Account,Notes"))
+        let content = try await self.exportCSVContent()
         XCTAssertTrue(content.contains("SeedTx0"))
     }
 
     func testCSVExportWithNoTransactionsKeepsSectionHeaders() async throws {
-        let settings = ExportSettings(
+        let content = try await self.exportCSVContent()
+        XCTAssertFalse(content.contains("SeedTx"))
+    }
+
+    private func exportCSVContent() async throws -> String {
+        let url = try await self.service.export(settings: self.makeCSVSettings())
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        let content = try String(contentsOf: url)
+        XCTAssertTrue(content.contains("TRANSACTIONS"))
+        XCTAssertTrue(content.contains("Date,Title,Amount,Type,Category,Account,Notes"))
+        return content
+    }
+
+    private func makeCSVSettings() -> ExportSettings {
+        ExportSettings(
             format: .csv,
             startDate: Date().addingTimeInterval(-86400),
             endDate: Date().addingTimeInterval(86400),
@@ -51,13 +49,5 @@ final class DataExporterContentTests: ExportEngineServiceTestCase {
             includeSubscriptions: false,
             includeGoals: false
         )
-
-        let url = try await self.service.export(settings: settings)
-        defer { try? FileManager.default.removeItem(at: url) }
-
-        let content = try String(contentsOf: url)
-        XCTAssertTrue(content.contains("TRANSACTIONS"))
-        XCTAssertTrue(content.contains("Date,Title,Amount,Type,Category,Account,Notes"))
-        XCTAssertFalse(content.contains("SeedTx"))
     }
 }
