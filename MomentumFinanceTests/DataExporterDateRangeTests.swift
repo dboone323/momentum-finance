@@ -1,3 +1,4 @@
+import MomentumFinanceCore
 import SwiftData
 import XCTest
 @testable import MomentumFinance
@@ -9,12 +10,12 @@ class ExportEngineServiceTestCase: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         let schema = Schema([
-            FinancialTransaction.self,
-            FinancialAccount.self,
-            Budget.self,
-            Subscription.self,
-            SavingsGoal.self,
-            ExpenseCategory.self,
+            MomentumFinanceCore.FinancialTransaction.self,
+            MomentumFinanceCore.FinancialAccount.self,
+            MomentumFinanceCore.Budget.self,
+            MomentumFinanceCore.Subscription.self,
+            MomentumFinanceCore.SavingsGoal.self,
+            MomentumFinanceCore.ExpenseCategory.self,
         ])
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: schema, configurations: [config])
@@ -33,11 +34,11 @@ final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
 
     @MainActor
     func testExportFiltersByDateRange() async throws {
-        let account = FinancialAccount(
+        let account = MomentumFinanceCore.FinancialAccount(
             name: "Range Account",
-            accountType: .checking,
             balance: 0,
-            iconName: "bank"
+            iconName: "bank",
+            accountType: .checking
         )
         self.modelContext.insert(account)
 
@@ -46,7 +47,7 @@ final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
             let date = try XCTUnwrap(
                 Calendar.current.date(byAdding: .day, value: dayOffset, to: now)
             )
-            let transaction = FinancialTransaction(
+            let transaction = MomentumFinanceCore.FinancialTransaction(
                 title: "T\(dayOffset)",
                 amount: -10,
                 date: date,
@@ -62,7 +63,7 @@ final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
         let end = try XCTUnwrap(
             Calendar.current.date(byAdding: .day, value: 2, to: now)
         )
-        let settings = ExportSettings(
+        let settings = MomentumFinanceCore.ExportSettings(
             format: .json,
             dateRange: .custom,
             startDate: start,
