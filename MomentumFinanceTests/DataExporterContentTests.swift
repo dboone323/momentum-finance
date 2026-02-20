@@ -3,20 +3,16 @@ import SwiftData
 import XCTest
 @testable import MomentumFinance
 
-@MainActor
+    @MainActor
 final class DataExporterContentTests: ExportEngineServiceTestCase {
     func testCSVExportIncludesHeaderAndRows() async throws {
-        let account = FinancialAccount(name: "Checking", balance: 1000, accountType: .checking)
-        self.modelContext.insert(account)
-
         for i in 0..<3 {
-            let transaction = FinancialTransaction(
+            let transaction = MomentumFinanceCore.FinancialTransaction(
                 title: "SeedTx\(i)",
                 amount: Decimal(100 + i),
                 date: Date().addingTimeInterval(Double(i) * 60),
                 transactionType: i == 2 ? .expense : .income
             )
-            transaction.account = account
             self.modelContext.insert(transaction)
         }
 
@@ -30,8 +26,9 @@ final class DataExporterContentTests: ExportEngineServiceTestCase {
     }
 
     private func exportCSVContent() async throws -> String {
-        let settings = ExportSettings(
+        let settings = MomentumFinanceCore.ExportSettings(
             format: .csv,
+            dateRange: .custom,
             startDate: Date().addingTimeInterval(-86400),
             endDate: Date().addingTimeInterval(86400),
             includeTransactions: true,
