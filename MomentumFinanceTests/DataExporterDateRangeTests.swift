@@ -34,14 +34,6 @@ final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
 
     @MainActor
     func testExportFiltersByDateRange() async throws {
-        let account = MomentumFinanceCore.FinancialAccount(
-            name: "Range Account",
-            balance: 0,
-            iconName: "bank",
-            accountType: .checking
-        )
-        self.modelContext.insert(account)
-
         let now = Date()
         for dayOffset in -5...5 {
             let date = try XCTUnwrap(
@@ -53,7 +45,6 @@ final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
                 date: date,
                 transactionType: .expense
             )
-            transaction.account = account
             self.modelContext.insert(transaction)
         }
 
