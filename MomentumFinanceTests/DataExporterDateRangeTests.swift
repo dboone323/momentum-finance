@@ -1,4 +1,3 @@
-import MomentumFinanceCore
 import SwiftData
 import XCTest
 @testable import MomentumFinance
@@ -36,9 +35,9 @@ final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
     func testExportFiltersByDateRange() async throws {
         let account = FinancialAccount(
             name: "Range Account",
+            accountType: .checking,
             balance: 0,
-            iconName: "bank",
-            accountType: .checking
+            iconName: "bank"
         )
         self.modelContext.insert(account)
 
