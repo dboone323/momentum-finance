@@ -3,12 +3,10 @@ import SwiftData
 import XCTest
 @testable import MomentumFinance
 
-@MainActor
 class ExportEngineServiceTestCase: XCTestCase {
     var modelContext: ModelContext!
     var service: ExportEngineService!
 
-    @MainActor
     override func setUpWithError() throws {
         try super.setUpWithError()
         let schema = Schema([
@@ -25,7 +23,6 @@ class ExportEngineServiceTestCase: XCTestCase {
         self.service = ExportEngineService(modelContainer: container)
     }
 
-    @MainActor
     override func tearDownWithError() throws {
         self.service = nil
         self.modelContext = nil
@@ -33,9 +30,9 @@ class ExportEngineServiceTestCase: XCTestCase {
     }
 }
 
-@MainActor
 final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
 
+    @MainActor
     func testExportFiltersByDateRange() async throws {
         let account = FinancialAccount(name: "Range Account", balance: 0, accountType: .checking)
         self.modelContext.insert(account)
