@@ -3,13 +3,12 @@ import XCTest
 @testable import MomentumFinance
 
 @MainActor
-final class DataExporterDateRangeTests: XCTestCase {
+class ExportEngineServiceTestCase: XCTestCase {
     var modelContext: ModelContext!
     var service: ExportEngineService!
 
-    override func setUp() {
-        super.setUp()
-
+    override func setUpWithError() throws {
+        try super.setUpWithError()
         let schema = Schema([
             FinancialTransaction.self,
             FinancialAccount.self,
@@ -19,7 +18,7 @@ final class DataExporterDateRangeTests: XCTestCase {
             ExpenseCategory.self,
         ])
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try! ModelContainer(for: schema, configurations: [config])
+        let container = try ModelContainer(for: schema, configurations: [config])
         self.modelContext = ModelContext(container)
         self.service = ExportEngineService(modelContext: modelContext)
     }
@@ -29,13 +28,20 @@ final class DataExporterDateRangeTests: XCTestCase {
         self.modelContext = nil
         super.tearDown()
     }
+}
+
+@MainActor
+final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
 
     func testExportFiltersByDateRange() async throws {
         let account = FinancialAccount(name: "Range Account", balance: 0, accountType: .checking)
         self.modelContext.insert(account)
 
+        let now = Date()
         for dayOffset in -5...5 {
-            let date = Calendar.current.date(byAdding: .day, value: dayOffset, to: Date())!
+            let date = try XCTUnwrap(
+                Calendar.current.date(byAdding: .day, value: dayOffset, to: now)
+            )
             let transaction = FinancialTransaction(
                 title: "T\(dayOffset)",
                 amount: -10,
@@ -46,8 +52,12 @@ final class DataExporterDateRangeTests: XCTestCase {
             self.modelContext.insert(transaction)
         }
 
-        let start = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
-        let end = Calendar.current.date(byAdding: .day, value: 2, to: Date())!
+        let start = try XCTUnwrap(
+            Calendar.current.date(byAdding: .day, value: -2, to: now)
+        )
+        let end = try XCTUnwrap(
+            Calendar.current.date(byAdding: .day, value: 2, to: now)
+        )
         let settings = ExportSettings(
             format: .json,
             startDate: start,

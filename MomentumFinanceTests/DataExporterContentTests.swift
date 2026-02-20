@@ -3,32 +3,7 @@ import XCTest
 @testable import MomentumFinance
 
 @MainActor
-final class DataExporterContentTests: XCTestCase {
-    var modelContext: ModelContext!
-    var service: ExportEngineService!
-
-    override func setUp() {
-        super.setUp()
-
-        let schema = Schema([
-            FinancialTransaction.self,
-            FinancialAccount.self,
-            Budget.self,
-            Subscription.self,
-            SavingsGoal.self,
-            ExpenseCategory.self,
-        ])
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try! ModelContainer(for: schema, configurations: [config])
-        self.modelContext = ModelContext(container)
-        self.service = ExportEngineService(modelContext: modelContext)
-    }
-
-    override func tearDown() {
-        self.service = nil
-        self.modelContext = nil
-        super.tearDown()
-    }
+final class DataExporterContentTests: ExportEngineServiceTestCase {
 
     func testCSVExportIncludesHeaderAndRows() async throws {
         let account = FinancialAccount(name: "Checking", balance: 1000, accountType: .checking)
