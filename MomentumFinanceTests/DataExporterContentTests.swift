@@ -9,7 +9,7 @@ final class DataExporterContentTests: ExportEngineServiceTestCase {
         for i in 0..<3 {
             let transaction = MomentumFinanceCore.FinancialTransaction(
                 title: "SeedTx\(i)",
-                amount: Decimal(100 + i),
+                amount: Double(100 + i),
                 date: Date().addingTimeInterval(Double(i) * 60),
                 transactionType: i == 2 ? .expense : .income
             )
@@ -40,7 +40,7 @@ final class DataExporterContentTests: ExportEngineServiceTestCase {
         let url = try await self.service.export(settings: settings)
         defer { try? FileManager.default.removeItem(at: url) }
 
-        let content = try String(contentsOf: url)
+        let content = try String(contentsOf: url, encoding: .utf8)
         XCTAssertTrue(content.contains("TRANSACTIONS"))
         XCTAssertTrue(content.contains("Date,Title,Amount,Type,Category,Account,Notes"))
         return content
