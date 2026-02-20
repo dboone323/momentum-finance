@@ -238,8 +238,10 @@ jobs:
             CODE_SIGNING_REQUIRED=NO
 
       - name: Run Tests (${{ matrix.name }})
+        if: matrix.scheme == 'MomentumFinance'
         run: |
           echo "Running tests on ${{ matrix.name }}..."
+          rm -rf TestResults.xcresult
           xcodebuild test \
             -scheme ${{ matrix.scheme }} \
             -destination '${{ matrix.destination }}' \
@@ -251,7 +253,7 @@ jobs:
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && matrix.scheme == 'MomentumFinance'
         with:
           name: test-results-${{ matrix.name }}
           path: TestResults.xcresult

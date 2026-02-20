@@ -1,6 +1,6 @@
 import SwiftData
 import XCTest
-@testable import MomentumFinance
+@testable import MomentumFinanceCore
 
 @MainActor
 final class DataExporterDateRangeTests: XCTestCase {
@@ -33,6 +33,7 @@ final class DataExporterDateRangeTests: XCTestCase {
         let end = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 2, to: Date()))
         let settings = ExportSettings(
             format: .csv,
+            dateRange: .custom,
             startDate: start,
             endDate: end,
             includeTransactions: true,
@@ -41,7 +42,7 @@ final class DataExporterDateRangeTests: XCTestCase {
             includeSubscriptions: true,
             includeGoals: true
         )
-        let exporter = await DataExporter(modelContainer: container)
+        let exporter = DataExporter(modelContainer: container)
         let url = try await exporter.exportData(settings: settings)
         let content = try String(contentsOf: url)
         let lines = content.split(separator: "\n").dropFirst() // skip header
