@@ -3,7 +3,7 @@ import SwiftData
 import XCTest
 @testable import MomentumFinance
 
-    @MainActor
+@MainActor
 final class DataExporterContentTests: ExportEngineServiceTestCase {
     func testCSVExportIncludesHeaderAndRows() async throws {
         for i in 0..<3 {
