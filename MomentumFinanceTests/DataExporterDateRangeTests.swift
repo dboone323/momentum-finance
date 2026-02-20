@@ -34,7 +34,12 @@ final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
 
     @MainActor
     func testExportFiltersByDateRange() async throws {
-        let account = FinancialAccount(name: "Range Account", balance: 0, accountType: .checking)
+        let account = FinancialAccount(
+            name: "Range Account",
+            balance: 0,
+            iconName: "bank",
+            accountType: .checking
+        )
         self.modelContext.insert(account)
 
         let now = Date()
@@ -60,6 +65,7 @@ final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
         )
         let settings = ExportSettings(
             format: .json,
+            dateRange: .custom,
             startDate: start,
             endDate: end,
             includeTransactions: true,
@@ -73,9 +79,10 @@ final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
         defer { try? FileManager.default.removeItem(at: url) }
 
         let data = try Data(contentsOf: url)
-        let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-        let transactions = json?["transactions"] as? [[String: Any]]
+        let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+        let json = try XCTUnwrap(jsonObject as? [String: Any])
+        let transactions = try XCTUnwrap(json["transactions"] as? [[String: Any]])
 
-        XCTAssertEqual(transactions?.count, 5)
+        XCTAssertEqual(transactions.count, 5)
     }
 }
