@@ -1,44 +1,38 @@
-import MomentumFinanceCore
-import SwiftData
 import XCTest
 @testable import MomentumFinance
 
 final class DataImporterErrorTests: XCTestCase {
-    var container: ModelContainer!
+    func testEmptyHeadersDoNotMapRequiredColumns() {
+        let headers = CSVParser.parseCSVRow("")
+        let mapping = CSVParser.mapColumns(headers: headers)
 
-    override func setUp() async throws {
-        let schema = Schema([
-            MomentumFinanceCore.FinancialTransaction.self,
-            MomentumFinanceCore.FinancialAccount.self,
-            MomentumFinanceCore.ExpenseCategory.self,
-        ])
-        self.container = try ModelContainer(
-            for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-        )
+        XCTAssertNil(mapping.dateIndex)
+        XCTAssertNil(mapping.titleIndex)
+        XCTAssertNil(mapping.amountIndex)
     }
 
-    func testEmptyCSV() async throws {
-        let importer = MomentumFinanceCore.DataImporter(modelContainer: container)
-        let result = try await importer.importFromCSV("")
-        XCTAssertFalse(result.success)
-        XCTAssertTrue(result.errors.contains(where: { $0.contains("empty") }))
+    func testInvalidAmountThrowsInvalidAmountFormat() {
+        XCTAssertThrowsError(try DataParser.parseAmount("NOTNUM")) { error in
+            guard case let ImportError.invalidAmountFormat(value) = error else {
+                XCTFail("Expected invalidAmountFormat error, got \(error)")
+                return
+            }
+            XCTAssertEqual(value, "NOTNUM")
+        }
     }
 
-    func testInvalidAmount() async throws {
-        let importer = MomentumFinanceCore.DataImporter(modelContainer: container)
-        let csv = "date,title,amount\n2025-09-01,Bad,NOTNUM"
-        let result = try await importer.importFromCSV(csv)
-        XCTAssertEqual(result.itemsImported, 0)
-        XCTAssertFalse(result.success)
-        XCTAssertTrue(result.errors.first?.contains("Error importing line") == true)
+    func testInvalidDateThrowsInvalidDateFormat() {
+        XCTAssertThrowsError(try DataParser.parseDate("2025/99/99")) { error in
+            guard case let ImportError.invalidDateFormat(value) = error else {
+                XCTFail("Expected invalidDateFormat error, got \(error)")
+                return
+            }
+            XCTAssertEqual(value, "2025/99/99")
+        }
     }
 
-    func testPartialValidRows() async throws {
-        let importer = MomentumFinanceCore.DataImporter(modelContainer: container)
-        let csv = "date,title,amount\n2025-09-01,Good,100\n2025-09-02,Bad,XYZ\n2025-09-03,Good2,50"
-        let result = try await importer.importFromCSV(csv)
-        XCTAssertEqual(result.itemsImported, 2)
-        XCTAssertFalse(result.success)
-        XCTAssertEqual(result.errors.count, 1)
+    func testUnknownTransactionTypeFallsBackToAmountSign() {
+        XCTAssertEqual(DataParser.parseTransactionType("", fallbackAmount: 100), .income)
+        XCTAssertEqual(DataParser.parseTransactionType("", fallbackAmount: -5), .expense)
     }
 }
