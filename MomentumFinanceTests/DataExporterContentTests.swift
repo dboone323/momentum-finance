@@ -29,17 +29,7 @@ final class DataExporterContentTests: ExportEngineServiceTestCase {
     }
 
     private func exportCSVContent() async throws -> String {
-        let url = try await self.service.export(settings: self.makeCSVSettings())
-        defer { try? FileManager.default.removeItem(at: url) }
-
-        let content = try String(contentsOf: url)
-        XCTAssertTrue(content.contains("TRANSACTIONS"))
-        XCTAssertTrue(content.contains("Date,Title,Amount,Type,Category,Account,Notes"))
-        return content
-    }
-
-    private func makeCSVSettings() -> ExportSettings {
-        ExportSettings(
+        let settings = ExportSettings(
             format: .csv,
             startDate: Date().addingTimeInterval(-86400),
             endDate: Date().addingTimeInterval(86400),
@@ -49,5 +39,12 @@ final class DataExporterContentTests: ExportEngineServiceTestCase {
             includeSubscriptions: false,
             includeGoals: false
         )
+        let url = try await self.service.export(settings: settings)
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        let content = try String(contentsOf: url)
+        XCTAssertTrue(content.contains("TRANSACTIONS"))
+        XCTAssertTrue(content.contains("Date,Title,Amount,Type,Category,Account,Notes"))
+        return content
     }
 }
