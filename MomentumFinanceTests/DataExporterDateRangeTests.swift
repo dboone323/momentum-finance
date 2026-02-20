@@ -20,7 +20,7 @@ class ExportEngineServiceTestCase: XCTestCase {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: schema, configurations: [config])
         self.modelContext = ModelContext(container)
-        self.service = ExportEngineService(modelContainer: container)
+        self.service = ExportEngineService(modelContext: self.modelContext)
     }
 
     override func tearDownWithError() throws {

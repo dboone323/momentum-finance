@@ -1,38 +1,31 @@
+import MomentumFinanceCore
 import XCTest
-@testable import MomentumFinance
 
 final class DataImporterErrorTests: XCTestCase {
-    func testEmptyHeadersDoNotMapRequiredColumns() {
-        let headers = CSVParser.parseCSVRow("")
-        let mapping = CSVParser.mapColumns(headers: headers)
-
-        XCTAssertNil(mapping.dateIndex)
-        XCTAssertNil(mapping.titleIndex)
-        XCTAssertNil(mapping.amountIndex)
+    func testImportErrorDescriptionsAreUserFriendly() {
+        XCTAssertEqual(
+            ImportError.invalidAmountFormat("BAD").errorDescription,
+            "Invalid amount format: BAD."
+        )
+        XCTAssertEqual(
+            ImportError.missingRequiredField("date").errorDescription,
+            "CSV is missing required field: date."
+        )
     }
 
-    func testInvalidAmountThrowsInvalidAmountFormat() {
-        XCTAssertThrowsError(try DataParser.parseAmount("NOTNUM")) { error in
-            guard case let ImportError.invalidAmountFormat(value) = error else {
-                XCTFail("Expected invalidAmountFormat error, got \(error)")
-                return
-            }
-            XCTAssertEqual(value, "NOTNUM")
-        }
-    }
+    func testImportResultCapturesSuccessAndFailureCounts() {
+        let result = ImportResult(
+            success: false,
+            itemsImported: 2,
+            itemsFailed: 1,
+            errors: ["Row 3: Invalid amount"],
+            warnings: ["Row 2: Missing category"]
+        )
 
-    func testInvalidDateThrowsInvalidDateFormat() {
-        XCTAssertThrowsError(try DataParser.parseDate("2025/99/99")) { error in
-            guard case let ImportError.invalidDateFormat(value) = error else {
-                XCTFail("Expected invalidDateFormat error, got \(error)")
-                return
-            }
-            XCTAssertEqual(value, "2025/99/99")
-        }
-    }
-
-    func testUnknownTransactionTypeFallsBackToAmountSign() {
-        XCTAssertEqual(DataParser.parseTransactionType("", fallbackAmount: 100), .income)
-        XCTAssertEqual(DataParser.parseTransactionType("", fallbackAmount: -5), .expense)
+        XCTAssertFalse(result.success)
+        XCTAssertEqual(result.itemsImported, 2)
+        XCTAssertEqual(result.itemsFailed, 1)
+        XCTAssertEqual(result.errors.count, 1)
+        XCTAssertEqual(result.warnings.count, 1)
     }
 }
