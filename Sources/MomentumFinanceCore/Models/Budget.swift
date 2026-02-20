@@ -1,7 +1,11 @@
 import Foundation
-import SwiftData
+#if canImport(SwiftData)
+    import SwiftData
+#endif
 
-@Model
+#if canImport(SwiftData)
+    @Model
+#endif
 public final class Budget: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, name, limitAmount, month, createdDate, rolloverEnabled, rolledOverAmount,

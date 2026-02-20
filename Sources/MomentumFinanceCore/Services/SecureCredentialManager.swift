@@ -1,9 +1,15 @@
 // Momentum Finance - Secure Credential Manager
 // Copyright © 2026 Momentum Finance. All rights reserved.
 
-import CryptoKit
 import Foundation
-import Security
+#if canImport(CryptoKit)
+    import CryptoKit
+#elseif canImport(Crypto)
+    import Crypto
+#endif
+#if canImport(Security)
+    import Security
+#endif
 
 /// Secure credential storage and retrieval using iOS/macOS Keychain.
 @MainActor
@@ -20,6 +26,12 @@ public final class SecureCredentialManager {
 
     /// Access group for Keychain sharing (optional)
     private let accessGroup: String?
+
+    #if !canImport(Security)
+        /// File-backed storage root for non-Apple platforms.
+        private let storageRootURL: URL
+        private let fileManager = FileManager.default
+    #endif
 
     // MARK: - Credential Keys
 
@@ -45,7 +57,11 @@ public final class SecureCredentialManager {
         case invalidData
         case encodingFailed
         case decodingFailed
-        case keychainError(OSStatus)
+        #if canImport(Security)
+            case keychainError(OSStatus)
+        #else
+            case storageError(String)
+        #endif
         case biometricNotAvailable
         case biometricAuthFailed
 
@@ -61,8 +77,13 @@ public final class SecureCredentialManager {
                 "Failed to encode credential"
             case .decodingFailed:
                 "Failed to decode credential"
-            case let .keychainError(status):
-                "Keychain error: \(status)"
+            #if canImport(Security)
+                case let .keychainError(status):
+                    "Keychain error: \(status)"
+            #else
+                case let .storageError(message):
+                    "Credential storage error: \(message)"
+            #endif
             case .biometricNotAvailable:
                 "Biometric authentication not available"
             case .biometricAuthFailed:
@@ -76,6 +97,9 @@ public final class SecureCredentialManager {
     private init(serviceName: String? = nil, accessGroup: String? = nil) {
         self.serviceName = serviceName ?? Bundle.main.bundleIdentifier ?? "com.momentumfinance"
         self.accessGroup = accessGroup
+        #if !canImport(Security)
+            self.storageRootURL = Self.defaultStorageRootURL()
+        #endif
     }
 
     // MARK: - Storage Operations
@@ -108,39 +132,56 @@ public final class SecureCredentialManager {
         _ data: Data, forKey key: CredentialKey, requireBiometric: Bool = false,
         syncWithiCloud: Bool = false
     ) throws {
-        var query = baseQuery(forKey: key)
-        query[kSecValueData as String] = data
-        query[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlocked
+        #if canImport(Security)
+            var query = baseQuery(forKey: key)
+            query[kSecValueData as String] = data
+            query[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlocked
 
-        // Add biometric protection if requested
-        if requireBiometric {
-            #if !targetEnvironment(simulator)
-                let access = SecAccessControlCreateWithFlags(
-                    nil,
-                    kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
-                    .userPresence,
-                    nil
+            if requireBiometric {
+                #if !targetEnvironment(simulator)
+                    let access = SecAccessControlCreateWithFlags(
+                        nil,
+                        kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+                        .userPresence,
+                        nil
+                    )
+                    query[kSecAttrAccessControl as String] = access
+                #endif
+            }
+
+            if syncWithiCloud {
+                query[kSecAttrSynchronizable as String] = kCFBooleanTrue
+            }
+
+            let status = SecItemAdd(query as CFDictionary, nil)
+
+            if status == errSecDuplicateItem {
+                let attributesToUpdate: [String: Any] = [
+                    kSecValueData as String: data,
+                ]
+                let updateStatus = SecItemUpdate(
+                    baseQuery(forKey: key) as CFDictionary, attributesToUpdate as CFDictionary
                 )
-                query[kSecAttrAccessControl as String] = access
-            #endif
-        }
-
-        if syncWithiCloud {
-            query[kSecAttrSynchronizable as String] = kCFBooleanTrue
-        }
-
-        let status = SecItemAdd(query as CFDictionary, nil)
-
-        if status == errSecDuplicateItem {
-            let attributesToUpdate: [String: Any] = [
-                kSecValueData as String: data,
-            ]
-            SecItemUpdate(
-                baseQuery(forKey: key) as CFDictionary, attributesToUpdate as CFDictionary
-            )
-        } else if status != errSecSuccess {
-            throw CredentialError.keychainError(status)
-        }
+                guard updateStatus == errSecSuccess else {
+                    throw CredentialError.keychainError(updateStatus)
+                }
+            } else if status != errSecSuccess {
+                throw CredentialError.keychainError(status)
+            }
+        #else
+            if requireBiometric || syncWithiCloud {
+                throw CredentialError.biometricNotAvailable
+            }
+            try ensureStorageDirectoryExists()
+            let encryptedData = try encryptForFileStore(data)
+            let fileURL = credentialFileURL(for: key)
+            do {
+                try encryptedData.write(to: fileURL, options: [.atomic])
+                try secureFilePermissions(at: fileURL)
+            } catch {
+                throw CredentialError.storageError(error.localizedDescription)
+            }
+        #endif
     }
 
     public func retrieve(_ key: CredentialKey, requireBiometric: Bool = false) throws -> String? {
@@ -165,61 +206,158 @@ public final class SecureCredentialManager {
     }
 
     public func retrieveData(_ key: CredentialKey, requireBiometric: Bool = false) throws -> Data? {
-        var query = baseQuery(forKey: key)
-        query[kSecReturnData as String] = kCFBooleanTrue
-        query[kSecMatchLimit as String] = kSecMatchLimitOne
+        #if canImport(Security)
+            var query = baseQuery(forKey: key)
+            query[kSecReturnData as String] = kCFBooleanTrue
+            query[kSecMatchLimit as String] = kSecMatchLimitOne
 
-        if requireBiometric {
-            query[kSecUseOperationPrompt as String] = "Authenticate to access credential"
-        }
+            if requireBiometric {
+                query[kSecUseOperationPrompt as String] = "Authenticate to access credential"
+            }
 
-        var result: AnyObject?
-        let status = SecItemCopyMatching(query as CFDictionary, &result)
+            var result: AnyObject?
+            let status = SecItemCopyMatching(query as CFDictionary, &result)
 
-        guard status != errSecItemNotFound else {
-            return nil
-        }
+            guard status != errSecItemNotFound else {
+                return nil
+            }
 
-        guard status == errSecSuccess else {
-            throw CredentialError.keychainError(status)
-        }
+            guard status == errSecSuccess else {
+                throw CredentialError.keychainError(status)
+            }
 
-        guard let data = result as? Data else {
-            throw CredentialError.invalidData
-        }
+            guard let data = result as? Data else {
+                throw CredentialError.invalidData
+            }
 
-        return data
+            return data
+        #else
+            if requireBiometric {
+                throw CredentialError.biometricNotAvailable
+            }
+            let fileURL = credentialFileURL(for: key)
+            guard fileManager.fileExists(atPath: fileURL.path) else {
+                return nil
+            }
+            do {
+                let encryptedData = try Data(contentsOf: fileURL)
+                return try decryptFromFileStore(encryptedData)
+            } catch {
+                throw CredentialError.storageError(error.localizedDescription)
+            }
+        #endif
     }
 
     public func delete(_ key: CredentialKey) throws {
-        let query = baseQuery(forKey: key)
-        let status = SecItemDelete(query as CFDictionary)
+        #if canImport(Security)
+            let query = baseQuery(forKey: key)
+            let status = SecItemDelete(query as CFDictionary)
 
-        guard status == errSecSuccess || status == errSecItemNotFound else {
-            throw CredentialError.keychainError(status)
-        }
+            guard status == errSecSuccess || status == errSecItemNotFound else {
+                throw CredentialError.keychainError(status)
+            }
+        #else
+            let fileURL = credentialFileURL(for: key)
+            guard fileManager.fileExists(atPath: fileURL.path) else {
+                return
+            }
+            do {
+                try fileManager.removeItem(at: fileURL)
+            } catch {
+                throw CredentialError.storageError(error.localizedDescription)
+            }
+        #endif
     }
 
     public func exists(_ key: CredentialKey) -> Bool {
-        var query = baseQuery(forKey: key)
-        query[kSecReturnData as String] = kCFBooleanFalse
-        let status = SecItemCopyMatching(query as CFDictionary, nil)
-        return status == errSecSuccess
+        #if canImport(Security)
+            var query = baseQuery(forKey: key)
+            query[kSecReturnData as String] = kCFBooleanFalse
+            let status = SecItemCopyMatching(query as CFDictionary, nil)
+            return status == errSecSuccess
+        #else
+            fileManager.fileExists(atPath: credentialFileURL(for: key).path)
+        #endif
     }
 
     // MARK: - Helper Methods
 
-    private func baseQuery(forKey key: CredentialKey) -> [String: Any] {
-        var query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: serviceName,
-            kSecAttrAccount as String: key.fullyQualifiedKey,
-        ]
+    #if canImport(Security)
+        private func baseQuery(forKey key: CredentialKey) -> [String: Any] {
+            var query: [String: Any] = [
+                kSecClass as String: kSecClassGenericPassword,
+                kSecAttrService as String: serviceName,
+                kSecAttrAccount as String: key.fullyQualifiedKey,
+            ]
 
-        if let accessGroup {
-            query[kSecAttrAccessGroup as String] = accessGroup
+            if let accessGroup {
+                query[kSecAttrAccessGroup as String] = accessGroup
+            }
+
+            return query
+        }
+    #else
+        private static func defaultStorageRootURL() -> URL {
+            FileManager.default.homeDirectoryForCurrentUser
+                .appendingPathComponent(".momentumfinance", isDirectory: true)
+                .appendingPathComponent("credentials", isDirectory: true)
         }
 
-        return query
-    }
+        private func ensureStorageDirectoryExists() throws {
+            if !fileManager.fileExists(atPath: storageRootURL.path) {
+                try fileManager.createDirectory(
+                    at: storageRootURL,
+                    withIntermediateDirectories: true
+                )
+            }
+            try secureFilePermissions(at: storageRootURL, permissions: 0o700)
+        }
+
+        private func credentialFileURL(for key: CredentialKey) -> URL {
+            storageRootURL.appendingPathComponent("\(key.fullyQualifiedKey).bin")
+        }
+
+        private func masterKeyFileURL() -> URL {
+            storageRootURL.appendingPathComponent("master.key")
+        }
+
+        private func loadOrCreateMasterKey() throws -> SymmetricKey {
+            let keyURL = masterKeyFileURL()
+            if fileManager.fileExists(atPath: keyURL.path) {
+                let existing = try Data(contentsOf: keyURL)
+                guard existing.count == 32 else {
+                    throw CredentialError.storageError("Invalid stored master key length")
+                }
+                return SymmetricKey(data: existing)
+            }
+
+            let key = SymmetricKey(size: .bits256)
+            let keyData = key.withUnsafeBytes { Data($0) }
+            try keyData.write(to: keyURL, options: [.atomic])
+            try secureFilePermissions(at: keyURL)
+            return key
+        }
+
+        private func encryptForFileStore(_ plaintext: Data) throws -> Data {
+            let key = try loadOrCreateMasterKey()
+            let sealed = try AES.GCM.seal(plaintext, using: key)
+            guard let combined = sealed.combined else {
+                throw CredentialError.storageError("Failed to produce encrypted payload")
+            }
+            return combined
+        }
+
+        private func decryptFromFileStore(_ ciphertext: Data) throws -> Data {
+            let key = try loadOrCreateMasterKey()
+            let sealed = try AES.GCM.SealedBox(combined: ciphertext)
+            return try AES.GCM.open(sealed, using: key)
+        }
+
+        private func secureFilePermissions(at url: URL, permissions: UInt16 = 0o600) throws {
+            try fileManager.setAttributes(
+                [.posixPermissions: NSNumber(value: permissions)],
+                ofItemAtPath: url.path
+            )
+        }
+    #endif
 }

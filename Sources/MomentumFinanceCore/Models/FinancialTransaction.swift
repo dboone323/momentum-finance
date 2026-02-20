@@ -1,7 +1,11 @@
 import Foundation
-import SwiftData
+#if canImport(SwiftData)
+    import SwiftData
+#endif
 
-@Model
+#if canImport(SwiftData)
+    @Model
+#endif
 public final class FinancialTransaction: Encodable {
     enum CodingKeys: String, CodingKey {
         case title, amount, date, transactionType, notes, isReconciled, isRecurring, location,

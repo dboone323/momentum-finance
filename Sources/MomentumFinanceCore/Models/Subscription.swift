@@ -1,7 +1,11 @@
 import Foundation
-import SwiftData
+#if canImport(SwiftData)
+    import SwiftData
+#endif
 
-@Model
+#if canImport(SwiftData)
+    @Model
+#endif
 public final class Subscription: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, name, provider, amount, currencyCode, billingCycle, startDate, nextDueDate, notes,
@@ -51,33 +55,34 @@ public final class Subscription: Encodable {
         self.autoRenews = autoRenews
     }
 
-    public func processPayment(modelContext: ModelContext) {
-        let transaction = FinancialTransaction(
-            title: "Subscription: \(name)",
-            amount: amount,
-            date: Date(),
-            transactionType: .expense,
-            notes: "Automatic payment for \(name)"
-        )
-        transaction.account = account
-        transaction.category = category
-        modelContext.insert(transaction)
+    #if canImport(SwiftData)
+        public func processPayment(modelContext: ModelContext) {
+            let transaction = FinancialTransaction(
+                title: "Subscription: \(name)",
+                amount: amount,
+                date: Date(),
+                transactionType: .expense,
+                notes: "Automatic payment for \(name)"
+            )
+            transaction.account = account
+            transaction.category = category
+            modelContext.insert(transaction)
 
-        // Update next due date
-        let calendar = Calendar.current
-        let component: Calendar.Component =
-            switch billingCycle {
-            case .daily: .day
-            case .weekly: .weekday
-            case .monthly: .month
-            case .quarterly: .month
-            case .yearly: .year
-            }
+            let calendar = Calendar.current
+            let component: Calendar.Component =
+                switch billingCycle {
+                case .daily: .day
+                case .weekly: .weekday
+                case .monthly: .month
+                case .quarterly: .month
+                case .yearly: .year
+                }
 
-        let value = billingCycle == .quarterly ? 3 : 1
-        self.nextDueDate =
-            calendar.date(byAdding: component, value: value, to: nextDueDate) ?? nextDueDate
-    }
+            let value = billingCycle == .quarterly ? 3 : 1
+            self.nextDueDate =
+                calendar.date(byAdding: component, value: value, to: nextDueDate) ?? nextDueDate
+        }
+    #endif
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
