@@ -17,7 +17,7 @@ for file in ${files}; do
 	echo "Processing ${file}..."
 
 	# Check if the file already has a standard header
-	if grep -q "Copyright © 2025 Momentum Finance" ${$fil}e"; then
+	if grep -q "Copyright © 2025 Momentum Finance" "${file}"; then
 		echo "  File already has header, skipping..."
 		continue
 	fi

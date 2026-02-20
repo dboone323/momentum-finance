@@ -206,10 +206,10 @@ main() {
 		echo ""
 		echo -e "${BLUE}🎉 Multi-platform launch complete!${NC}"
 		;;
-	*)
-		echo -e "${RED}❌ Invalid platform${ $platfo}rm${NC}"
-		show_usage
-		;;
+		*)
+			echo -e "${RED}❌ Invalid platform: ${platform}${NC}"
+			show_usage
+			;;
 	esac
 }
 

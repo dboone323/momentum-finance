@@ -77,7 +77,7 @@ if [[ $? -eq 0 ]]; then
 		echo "Launching app..."
 		xcrun simctl launch "${DEVICE_ID}" "com.momentumfinance.MomentumFinance"
 
-		echo -e "${GREEN}✨ MomentumFinance launched i${ $DEVICE_NA}ME simulator!${NC}"
+			echo -e "${GREEN}✨ MomentumFinance launched in ${DEVICE_NAME} simulator!${NC}"
 	else
 		echo -e "${RED}❌ Failed to install the app.${NC}"
 	fi

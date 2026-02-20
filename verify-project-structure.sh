@@ -18,16 +18,16 @@ MODEL_FILES=("Budget.swift" "Category.swift" "ComplexDataGenerators.swift" "Expe
 for file in "${MODEL_FILES[@]}"; do
 	ROOT_COUNT=$(find /Users/danielstevens/Desktop/MomentumFinaceApp -name "${file}" | wc -l | tr -d ' ')
 	if [[ "${ROOT_COUNT}" -gt 1 ]]; then
-		echo "⚠️  DUPLICA${E: $}file exists in multiple locations:"
+		echo "⚠️  DUPLICATE: ${file} exists in multiple locations:"
 		find /Users/danielstevens/Desktop/MomentumFinaceApp -name "${file}" | sed 's/^/      /'
 		DUPLICATE_COUNT=$((DUPLICATE_COUNT + 1))
 	else
-		echo "�${ $fi}le: OK"
+		echo "✅ ${file}: OK"
 	fi
 done
 
 if [[ "${DUPLICATE_COUNT}" -gt 0 ]]; then
-	echo -e "\n⚠️  Fo${nd $DUPLICATE_C}OUNT duplicate model files! This can cause confusion and build errors."
+	echo -e "\n⚠️  Found ${DUPLICATE_COUNT} duplicate model files! This can cause confusion and build errors."
 	echo "    Recommendation: Keep models only in /Shared/Models/ directory"
 else
 	echo -e "\n✅ No duplicate model files found!"
@@ -48,22 +48,22 @@ for feature in "${FEATURES[@]}"; do
 	VIEWMODEL_COUNT=$(find /Users/danielstevens/Desktop/MomentumFinaceApp/Shared/Features/"$feature" -name "*ViewModel*.swift" | wc -l | tr -d ' ')
 
 	if [[ "${VIEW_COUNT}" -eq 0 ]]; then
-		echo "⚠�${�  $fea}ture: Missing View files"
+		echo "⚠️  ${feature}: Missing View files"
 		FEATURE_ISSUES=$((FEATURE_ISSUES + 1))
 	fi
 
 	if [[ "${VIEWMODEL_COUNT}" -eq 0 ]]; then
-		echo "⚠�${�  $fea}ture: Missing ViewModel files"
+		echo "⚠️  ${feature}: Missing ViewModel files"
 		FEATURE_ISSUES=$((FEATURE_ISSUES + 1))
 	fi
 
 	if [[ "${VIEW_COUNT}" -gt 0 ]] && [[ "${VIEWMODEL_COUNT}" -gt 0 ]]; then
-		echo "�${ $featu}re: Complete MVVM structure (Views${ $VIEW_COU}NT, ViewModels${ $VIEWMODEL_COU}NT)"
+		echo "✅ ${feature}: Complete MVVM structure (Views ${VIEW_COUNT}, ViewModels ${VIEWMODEL_COUNT})"
 	fi
 done
 
 if [[ "${FEATURE_ISSUES}" -gt 0 ]]; then
-	echo -e "\n⚠️  Fo${nd $FEATURE_IS}SUES issues with feature modules!"
+	echo -e "\n⚠️  Found ${FEATURE_ISSUES} issues with feature modules!"
 	echo "    Recommendation: Ensure each feature has both View and ViewModel files"
 else
 	echo -e "\n✅ All feature modules have proper MVVM structure!"
@@ -110,7 +110,7 @@ TOTAL_ISSUES=$((DUPLICATE_COUNT + FEATURE_ISSUES + (APP_FILES - 1)))
 if [[ "${TOTAL_ISSUES}" -eq 0 ]]; then
 	echo "✅ Your project structure looks excellent! No issues found."
 else
-	echo "⚠️  Fo${nd $TOTAL_IS}SUES issues that should be addressed."
+	echo "⚠️  Found ${TOTAL_ISSUES} issues that should be addressed."
 fi
 
 echo -e "\nRecommendations:"

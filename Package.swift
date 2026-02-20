@@ -2,7 +2,13 @@
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
+import Foundation
 import PackageDescription
+
+private let localSharedKitPath = "../shared-kit"
+private let sharedKitDependency: Package.Dependency = FileManager.default.fileExists(atPath: localSharedKitPath)
+    ? .package(path: localSharedKitPath)
+    : .package(url: "https://github.com/dboone323/shared-kit.git", branch: "main")
 
 let package = Package(
     name: "MomentumFinance",
@@ -17,7 +23,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../shared-kit")
+        sharedKitDependency
     ],
     targets: [
         .target(
