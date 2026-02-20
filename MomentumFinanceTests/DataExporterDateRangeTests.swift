@@ -1,52 +1,71 @@
 import SwiftData
 import XCTest
-@testable import MomentumFinanceCore
+@testable import MomentumFinance
 
 @MainActor
 final class DataExporterDateRangeTests: XCTestCase {
-    var container: ModelContainer!
+    var modelContext: ModelContext!
+    var service: ExportEngineService!
 
-    override func setUp() async throws {
+    override func setUp() {
+        super.setUp()
+
         let schema = Schema([
-            FinancialTransaction.self, FinancialAccount.self, ExpenseCategory.self,
+            FinancialTransaction.self,
+            FinancialAccount.self,
+            Budget.self,
+            Subscription.self,
+            SavingsGoal.self,
+            ExpenseCategory.self,
         ])
-        self.container = try ModelContainer(
-            for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-        )
-        let context = ModelContext(container)
-        // Seed transactions across dates
-        let dates: [Date] = (-5...5).compactMap {
-            Calendar.current.date(byAdding: .day, value: $0, to: Date())
-        }
-        for (i, d) in dates.enumerated() {
-            let t = FinancialTransaction(
-                title: "T\(i)", amount: Double(i) * 10.0, date: d, transactionType: .income,
-                notes: nil
-            )
-            context.insert(t)
-        }
-        try context.save()
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try! ModelContainer(for: schema, configurations: [config])
+        self.modelContext = ModelContext(container)
+        self.service = ExportEngineService(modelContext: modelContext)
+    }
+
+    override func tearDown() {
+        self.service = nil
+        self.modelContext = nil
+        super.tearDown()
     }
 
     func testExportFiltersByDateRange() async throws {
-        let start = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -2, to: Date()))
-        let end = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 2, to: Date()))
+        let account = FinancialAccount(name: "Range Account", balance: 0, accountType: .checking)
+        self.modelContext.insert(account)
+
+        for dayOffset in -5...5 {
+            let date = Calendar.current.date(byAdding: .day, value: dayOffset, to: Date())!
+            let transaction = FinancialTransaction(
+                title: "T\(dayOffset)",
+                amount: -10,
+                date: date,
+                transactionType: .expense
+            )
+            transaction.account = account
+            self.modelContext.insert(transaction)
+        }
+
+        let start = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
+        let end = Calendar.current.date(byAdding: .day, value: 2, to: Date())!
         let settings = ExportSettings(
-            format: .csv,
-            dateRange: .custom,
+            format: .json,
             startDate: start,
             endDate: end,
             includeTransactions: true,
-            includeAccounts: true,
-            includeBudgets: true,
-            includeSubscriptions: true,
-            includeGoals: true
+            includeAccounts: false,
+            includeBudgets: false,
+            includeSubscriptions: false,
+            includeGoals: false
         )
-        let exporter = DataExporter(modelContainer: container)
-        let url = try await exporter.exportData(settings: settings)
-        let content = try String(contentsOf: url)
-        let lines = content.split(separator: "\n").dropFirst() // skip header
-        // Only dates within +-2 days expected (~5 entries)
-        XCTAssert(lines.count <= 6 && lines.count >= 4, "Unexpected filtered count: \(lines.count)")
+
+        let url = try await self.service.export(settings: settings)
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        let data = try Data(contentsOf: url)
+        let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        let transactions = json?["transactions"] as? [[String: Any]]
+
+        XCTAssertEqual(transactions?.count, 5)
     }
 }

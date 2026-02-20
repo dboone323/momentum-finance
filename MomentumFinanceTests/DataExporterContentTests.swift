@@ -1,83 +1,88 @@
 import SwiftData
 import XCTest
-@testable import MomentumFinanceCore
+@testable import MomentumFinance
 
 @MainActor
 final class DataExporterContentTests: XCTestCase {
-    var container: ModelContainer!
+    var modelContext: ModelContext!
+    var service: ExportEngineService!
 
-    override func setUp() async throws {
+    override func setUp() {
+        super.setUp()
+
         let schema = Schema([
-            FinancialTransaction.self, FinancialAccount.self, ExpenseCategory.self,
+            FinancialTransaction.self,
+            FinancialAccount.self,
+            Budget.self,
+            Subscription.self,
+            SavingsGoal.self,
+            ExpenseCategory.self,
         ])
-        self.container = try ModelContainer(
-            for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-        )
-        let context = ModelContext(container)
-        // Seed 3 transactions (2 incomes, 1 expense)
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try! ModelContainer(for: schema, configurations: [config])
+        self.modelContext = ModelContext(container)
+        self.service = ExportEngineService(modelContext: modelContext)
+    }
+
+    override func tearDown() {
+        self.service = nil
+        self.modelContext = nil
+        super.tearDown()
+    }
+
+    func testCSVExportIncludesHeaderAndRows() async throws {
+        let account = FinancialAccount(name: "Checking", balance: 1000, accountType: .checking)
+        self.modelContext.insert(account)
+
         for i in 0..<3 {
-            let tx = FinancialTransaction(
+            let transaction = FinancialTransaction(
                 title: "SeedTx\(i)",
-                amount: Double(100 + i),
+                amount: Decimal(100 + i),
                 date: Date().addingTimeInterval(Double(i) * 60),
-                transactionType: i == 2 ? .expense : .income,
-                notes: i == 1 ? "Note, With Comma" : nil
+                transactionType: i == 2 ? .expense : .income
             )
-            context.insert(tx)
+            transaction.account = account
+            self.modelContext.insert(transaction)
         }
-        try context.save()
-    }
 
-    func testExporterIncludesHeaderAndRows() async throws {
-        let start = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -1, to: Date()))
-        let end = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: Date()))
         let settings = ExportSettings(
             format: .csv,
-            dateRange: .custom,
-            startDate: start,
-            endDate: end,
+            startDate: Date().addingTimeInterval(-86400),
+            endDate: Date().addingTimeInterval(86400),
             includeTransactions: true,
-            includeAccounts: true,
-            includeBudgets: true,
-            includeSubscriptions: true,
-            includeGoals: true
+            includeAccounts: false,
+            includeBudgets: false,
+            includeSubscriptions: false,
+            includeGoals: false
         )
-        let exporter = DataExporter(modelContainer: container)
-        let url = try await exporter.exportData(settings: settings)
+
+        let url = try await self.service.export(settings: settings)
+        defer { try? FileManager.default.removeItem(at: url) }
+
         let content = try String(contentsOf: url)
-        let lines = content.split(separator: "\n")
-        XCTAssertTrue(lines.first?.contains("date,title,amount,type,notes,category,account") == true, "Missing header")
-        XCTAssertEqual(lines.count, 4, "Expected 1 header + 3 data rows, got \(lines.count)")
-        // Validate a row contains expected seed data
-        XCTAssertTrue(lines.contains(where: { $0.contains("SeedTx0") }))
+        XCTAssertTrue(content.contains("TRANSACTIONS"))
+        XCTAssertTrue(content.contains("Date,Title,Amount,Type,Category,Account,Notes"))
+        XCTAssertTrue(content.contains("SeedTx0"))
     }
 
-    func testExporterWritesNoDataRowWhenEmpty() async throws {
-        // Fresh container with no transactions
-        let schema = Schema([
-            FinancialTransaction.self, FinancialAccount.self, ExpenseCategory.self,
-        ])
-        let emptyContainer = try ModelContainer(
-            for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-        )
-        let start = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -1, to: Date()))
-        let end = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 1, to: Date()))
+    func testCSVExportWithNoTransactionsKeepsSectionHeaders() async throws {
         let settings = ExportSettings(
             format: .csv,
-            dateRange: .custom,
-            startDate: start,
-            endDate: end,
+            startDate: Date().addingTimeInterval(-86400),
+            endDate: Date().addingTimeInterval(86400),
             includeTransactions: true,
-            includeAccounts: true,
-            includeBudgets: true,
-            includeSubscriptions: true,
-            includeGoals: true
+            includeAccounts: false,
+            includeBudgets: false,
+            includeSubscriptions: false,
+            includeGoals: false
         )
-        let exporter = DataExporter(modelContainer: emptyContainer)
-        let url = try await exporter.exportData(settings: settings)
+
+        let url = try await self.service.export(settings: settings)
+        defer { try? FileManager.default.removeItem(at: url) }
+
         let content = try String(contentsOf: url)
-        let lines = content.split(separator: "\n")
-        XCTAssertEqual(lines.count, 2, "Expected header + placeholder line")
-        XCTAssertTrue(lines[1].contains("No Data"))
+        XCTAssertTrue(content.contains("TRANSACTIONS"))
+        XCTAssertTrue(content.contains("Date,Title,Amount,Type,Category,Account,Notes"))
+        XCTAssertFalse(content.contains("SeedTx"))
     }
 }
