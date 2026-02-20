@@ -3,7 +3,9 @@ import MomentumFinanceCore
 
 enum AICategorizationService {
     /// Predicts a category based on the transaction title
-    static func predictCategory(for title: String, categories: [ExpenseCategory]) -> ExpenseCategory? {
+    static func predictCategory(for title: String, categories: [ExpenseCategory])
+        -> ExpenseCategory?
+    {
         let normalizedTitle = title.lowercased()
 
         // Comprehensive keyword mapping for categorization
@@ -111,7 +113,10 @@ enum AICategorizationService {
             ],
 
             // Housing
-            "housing": ["rent", "mortgage", "home", "apartment", "depot", "lowe's", "ikea", "repair", "maintenance"],
+            "housing": [
+                "rent", "mortgage", "home", "apartment", "depot", "lowe's", "ikea", "repair",
+                "maintenance",
+            ],
 
             // Travel
             "travel": [
@@ -129,29 +134,23 @@ enum AICategorizationService {
             ],
         ]
 
+        let categoryMap: [String: String] = [
+            "food": "food", "grocer": "food", "dining": "food",
+            "transport": "transportation", "car": "transportation", "auto": "transportation",
+            "util": "utilities", "bill": "utilities",
+            "entertain": "entertainment", "fun": "entertainment",
+            "shop": "shopping",
+            "health": "health", "med": "health", "well": "health",
+            "home": "housing", "hous": "housing",
+            "travel": "travel", "trip": "travel",
+        ]
+
         // 1. Check heuristics against available categories
         for category in categories {
             let catName = category.name.lowercased()
-            var matchedKey: String?
 
-            // Map category name to rule key
-            if catName.contains("food") || catName.contains("grocer") || catName.contains("dining") {
-                matchedKey = "food"
-            } else if catName.contains("transport") || catName.contains("car") || catName.contains("auto") {
-                matchedKey = "transportation"
-            } else if catName.contains("util") || catName.contains("bill") {
-                matchedKey = "utilities"
-            } else if catName.contains("entertain") || catName.contains("fun") {
-                matchedKey = "entertainment"
-            } else if catName.contains("shop") {
-                matchedKey = "shopping"
-            } else if catName.contains("health") || catName.contains("med") || catName.contains("well") {
-                matchedKey = "health"
-            } else if catName.contains("home") || catName.contains("hous") {
-                matchedKey = "housing"
-            } else if catName.contains("travel") || catName.contains("trip") {
-                matchedKey = "travel"
-            }
+            // Map category name to rule key using the dictionary
+            let matchedKey = categoryMap.first { catName.contains($0.key) }?.value
 
             // Check if ANY keywords for this category type are present in title
             if let key = matchedKey, let words = keywords[key] {

@@ -9,7 +9,6 @@ import SwiftUI
 
 // Temporary ColorTheme stub for macOS compatibility (only if not already defined)
 #if DEBUG
-    @available(iOS, deprecated: 9999)
     @MainActor
     struct DebugColorThemeStub {
         static let shared = DebugColorThemeStub()
@@ -186,31 +185,31 @@ extension Features.Dashboard {
                 #if os(iOS)
                     .navigationBarTitleDisplayMode(.large)
                 #endif
-                    .onAppear {
-                        self.loadData()
+                .onAppear {
+                    self.loadData()
+                }
+                .task {
+                    // Process overdue subscriptions asynchronously
+                    await self.processOverdueSubscriptions(
+                        self.subscriptions, modelContext: self.modelContext
+                    )
+                }
+                .navigationDestination(for: DashboardDestination.self) { destination in
+                    switch destination {
+                    case .transactions:
+                        Features.Transactions.TransactionsView()
+                    case .subscriptions:
+                        #if canImport(SwiftData)
+                            Features.Subscriptions.SubscriptionsView()
+                        #else
+                            Text("Subscriptions View - SwiftData not available")
+                        #endif
+                    case .budgets:
+                        Features.Budgets.BudgetsView()
+                    case .accountDetail(let accountId):
+                        Text("Account Detail: \(accountId)")
                     }
-                    .task {
-                        // Process overdue subscriptions asynchronously
-                        await self.processOverdueSubscriptions(
-                            self.subscriptions, modelContext: self.modelContext
-                        )
-                    }
-                    .navigationDestination(for: DashboardDestination.self) { destination in
-                        switch destination {
-                        case .transactions:
-                            Features.Transactions.TransactionsView()
-                        case .subscriptions:
-                            #if canImport(SwiftData)
-                                Features.Subscriptions.SubscriptionsView()
-                            #else
-                                Text("Subscriptions View - SwiftData not available")
-                            #endif
-                        case .budgets:
-                            Features.Budgets.BudgetsView()
-                        case let .accountDetail(accountId):
-                            Text("Account Detail: \(accountId)")
-                        }
-                    }
+                }
             }
         }
 
