@@ -1,3 +1,4 @@
+import MomentumFinanceCore
 import SwiftData
 import XCTest
 @testable import MomentumFinance
@@ -7,6 +8,7 @@ class ExportEngineServiceTestCase: XCTestCase {
     var modelContext: ModelContext!
     var service: ExportEngineService!
 
+    @MainActor
     override func setUpWithError() throws {
         try super.setUpWithError()
         let schema = Schema([
@@ -20,13 +22,14 @@ class ExportEngineServiceTestCase: XCTestCase {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: schema, configurations: [config])
         self.modelContext = ModelContext(container)
-        self.service = ExportEngineService(modelContext: modelContext)
+        self.service = ExportEngineService(modelContainer: container)
     }
 
-    override func tearDown() {
+    @MainActor
+    override func tearDownWithError() throws {
         self.service = nil
         self.modelContext = nil
-        super.tearDown()
+        try super.tearDownWithError()
     }
 }
 
