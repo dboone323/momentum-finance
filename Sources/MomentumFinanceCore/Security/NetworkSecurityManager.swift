@@ -2,7 +2,9 @@
 // Copyright © 2026 Momentum Finance. All rights reserved.
 
 import Foundation
-import os
+#if canImport(FoundationNetworking)
+    import FoundationNetworking
+#endif
 
 /// Centralized manager for network security policies including SSL pinning and TLS enforcement.
 @MainActor
@@ -79,10 +81,15 @@ public final class NetworkSecurityManager {
      */
     public func createSecureSession() -> URLSession {
         let configuration = self.createSecureConfiguration()
-        return URLSession(
-            configuration: configuration,
-            delegate: self.pinningManager,
-            delegateQueue: nil
-        )
+        #if canImport(Security)
+            return URLSession(
+                configuration: configuration,
+                delegate: self.pinningManager,
+                delegateQueue: nil
+            )
+        #else
+            // Linux FoundationNetworking does not support Security.framework pinning APIs.
+            return URLSession(configuration: configuration)
+        #endif
     }
 }

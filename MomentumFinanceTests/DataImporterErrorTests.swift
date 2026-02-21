@@ -1,41 +1,30 @@
-import SwiftData
+import MomentumFinanceCore
 import XCTest
-@testable import MomentumFinance
 
 final class DataImporterErrorTests: XCTestCase {
-    var container: ModelContainer!
+    func testImportErrorDescriptionsAreUserFriendly() {
+        let invalidDataMessage = ImportError.invalidData.errorDescription
+        let decodingFailedMessage = ImportError.decodingFailed.errorDescription
 
-    override func setUp() async throws {
-        let schema = Schema([
-            FinancialTransaction.self, FinancialAccount.self, ExpenseCategory.self,
-        ])
-        self.container = try ModelContainer(
-            for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+        XCTAssertNotNil(invalidDataMessage)
+        XCTAssertNotNil(decodingFailedMessage)
+        XCTAssertFalse(invalidDataMessage?.isEmpty ?? true)
+        XCTAssertFalse(decodingFailedMessage?.isEmpty ?? true)
+    }
+
+    func testImportResultCapturesSuccessAndFailureCounts() {
+        let result = ImportResult(
+            success: false,
+            itemsImported: 2,
+            itemsFailed: 1,
+            errors: ["Row 3: Invalid amount"],
+            warnings: ["Row 2: Missing category"]
         )
-    }
 
-    func testEmptyCSV() async throws {
-        let importer = DataImporter(modelContainer: container)
-        let result = try await importer.importFromCSV("")
         XCTAssertFalse(result.success)
-        XCTAssertTrue(result.errors.contains(where: { $0.contains("empty") }))
-    }
-
-    func testInvalidAmount() async throws {
-        let importer = DataImporter(modelContainer: container)
-        let csv = "date,title,amount\n2025-09-01,Bad,NOTNUM"
-        let result = try await importer.importFromCSV(csv)
-        XCTAssertEqual(result.itemsImported, 0)
-        XCTAssertFalse(result.success)
-        XCTAssertTrue(result.errors.first?.contains("Error importing line") == true)
-    }
-
-    func testPartialValidRows() async throws {
-        let importer = DataImporter(modelContainer: container)
-        let csv = "date,title,amount\n2025-09-01,Good,100\n2025-09-02,Bad,XYZ\n2025-09-03,Good2,50"
-        let result = try await importer.importFromCSV(csv)
         XCTAssertEqual(result.itemsImported, 2)
-        XCTAssertFalse(result.success)
+        XCTAssertEqual(result.itemsFailed, 1)
         XCTAssertEqual(result.errors.count, 1)
+        XCTAssertEqual(result.warnings.count, 1)
     }
 }

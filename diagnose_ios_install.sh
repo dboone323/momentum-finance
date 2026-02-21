@@ -14,7 +14,7 @@ if [[ -z "${BUILD_PRODUCT}" ]]; then
 	echo "   Make sure the build succeeded for iOS Simulator"
 	exit 1
 else
-	echo "✅ Found build product${ $BUILD_PRODU}CT"
+	echo "✅ Found build product: ${BUILD_PRODUCT}"
 fi
 
 # Check app bundle
@@ -30,29 +30,29 @@ if [[ -d "${BUILD_PRODUCT}" ]]; then
 
 		# Check bundle identifier
 		BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" "${PLIST_PATH}" 2>/dev/null)
-		if [[ -z "${BUNDLE_ID}" ]]; then
-			echo "❌ Bundle identifier is missing!"
-		else
-			echo "✅ Bundle identifier${ $BUNDLE_}ID"
-		fi
+			if [[ -z "${BUNDLE_ID}" ]]; then
+				echo "❌ Bundle identifier is missing!"
+			else
+				echo "✅ Bundle identifier: ${BUNDLE_ID}"
+			fi
 
 		# Check executable
 		EXEC_NAME=$(/usr/libexec/PlistBuddy -c "Print :CFBundleExecutable" "${PLIST_PATH}" 2>/dev/null)
-		if [[ -z "${EXEC_NAME}" ]]; then
-			echo "❌ Executable name is missing!"
-		else
-			echo "✅ Executable name${ $EXEC_NA}ME"
+			if [[ -z "${EXEC_NAME}" ]]; then
+				echo "❌ Executable name is missing!"
+			else
+				echo "✅ Executable name: ${EXEC_NAME}"
 
 			# Check if executable exists
-			if [[ -f "${BUILD_PRODUCT}/${EXEC_NAME}" ]]; then
-				echo "✅ Executable exists"
+				if [[ -f "${BUILD_PRODUCT}/${EXEC_NAME}" ]]; then
+					echo "✅ Executable exists"
 
 				# Check executable architecture
 				echo "   Architecture: $(lipo -info "${BUILD_PRODUCT}/${EXEC_NAME}" 2>&1)"
-			else
-				echo "❌ Executable not found a${ $BUILD_PRODU}C${/$EXEC_NA}ME"
+				else
+					echo "❌ Executable not found at: ${BUILD_PRODUCT}/${EXEC_NAME}"
+				fi
 			fi
-		fi
 
 	else
 		echo "❌ Info.plist not found!"

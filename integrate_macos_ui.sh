@@ -130,7 +130,7 @@ MARKER="### 🚀 PHASE 7: NEXT DEVELOPMENT ENHANCEMENTS"
 
 # Create the update content
 read -r -d '' UPDATE_CONTENT <<EOM
-### 📝 RECENT UPDATE${ ($DATE_TO}DAY)
+### 📝 RECENT UPDATE (${DATE_TODAY})
 
 #### **macOS UI Enhancement Complete**
 - ✅ **Three-Column Navigation**: Implemented professional macOS UI with sidebar, list, and detail views

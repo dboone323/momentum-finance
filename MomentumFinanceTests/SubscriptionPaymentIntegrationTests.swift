@@ -2,7 +2,6 @@ import SwiftData
 import XCTest
 @testable import MomentumFinance
 
-@MainActor
 final class SubscriptionPaymentIntegrationTests: XCTestCase {
     var modelContainer: ModelContainer!
     var modelContext: ModelContext!
@@ -25,6 +24,7 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
         modelContext = nil
     }
 
+    @MainActor
     func testProcessPayment_UpdatesBalanceAndDueDate() throws {
         // Given
         let account = FinancialAccount(
@@ -69,6 +69,7 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
         XCTAssertEqual(transactions.first?.title, "Test Sub", "Transaction title should match subscription name")
     }
 
+    @MainActor
     func testProcessPayment_WeeklyCycle() throws {
         // Given
         let startDate = Date()
@@ -93,6 +94,7 @@ final class SubscriptionPaymentIntegrationTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testProcessPayment_YearlyCycle() throws {
         // Given
         let startDate = Date()

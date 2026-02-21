@@ -15,8 +15,8 @@ DEVICE_ID="891E4B4F-9FEA-494A-8DD0-DA1C058B5253"
 DEVICE_NAME="iPhone 16"
 IOS_VERSION="18.1"
 
-echo "📱 Target Devic$$$${${ }}$DE}VIC}E_N}AME (i$$$${${ }}$IO}S_V}ERS}ION)"
-echo "🆔 Device I$$${: $}DEV}ICE}_ID"
+echo "📱 Target Device: ${DEVICE_NAME} (iOS ${IOS_VERSION})"
+echo "🆔 Device ID: ${DEVICE_ID}"
 
 # Boot the simulator if not already running
 echo "⚡ Booting simulator..."

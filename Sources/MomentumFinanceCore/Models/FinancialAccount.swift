@@ -1,7 +1,11 @@
 import Foundation
-import SwiftData
+#if canImport(SwiftData)
+    import SwiftData
+#endif
 
-@Model
+#if canImport(SwiftData)
+    @Model
+#endif
 public final class FinancialAccount: Hashable, Encodable {
     enum CodingKeys: String, CodingKey {
         case name, balance, iconName, createdDate, accountType, currencyCode, creditLimit
@@ -15,10 +19,14 @@ public final class FinancialAccount: Hashable, Encodable {
     public var currencyCode: String
     public var creditLimit: Decimal?
 
-    @Relationship(deleteRule: .cascade)
+    #if canImport(SwiftData)
+        @Relationship(deleteRule: .cascade)
+    #endif
     public var transactions: [FinancialTransaction] = []
 
-    @Relationship(deleteRule: .cascade)
+    #if canImport(SwiftData)
+        @Relationship(deleteRule: .cascade)
+    #endif
     public var subscriptions: [Subscription] = []
 
     public init(

@@ -1,7 +1,11 @@
 import Foundation
-import SwiftData
+#if canImport(SwiftData)
+    import SwiftData
+#endif
 
-@Model
+#if canImport(SwiftData)
+    @Model
+#endif
 public final class ExpenseCategory: Hashable, Encodable {
     enum CodingKeys: String, CodingKey {
         case id, name, iconName, createdDate
@@ -12,7 +16,9 @@ public final class ExpenseCategory: Hashable, Encodable {
     public var iconName: String
     public var createdDate: Date
 
-    @Relationship(deleteRule: .cascade, inverse: \FinancialTransaction.category)
+    #if canImport(SwiftData)
+        @Relationship(deleteRule: .cascade, inverse: \FinancialTransaction.category)
+    #endif
     public var transactions: [FinancialTransaction] = []
 
     public init(name: String, iconName: String = "tag") {

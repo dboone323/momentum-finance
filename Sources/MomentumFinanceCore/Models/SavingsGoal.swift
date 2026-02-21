@@ -1,7 +1,11 @@
 import Foundation
-import SwiftData
+#if canImport(SwiftData)
+    import SwiftData
+#endif
 
-@Model
+#if canImport(SwiftData)
+    @Model
+#endif
 public final class SavingsGoal: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, name, targetAmount, currentAmount, targetDate, createdDate, currencyCode

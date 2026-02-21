@@ -49,6 +49,11 @@ public struct MomentumFinanceApp: App {
         self.initializeUserPreferences()
     }
 
+    // Keep exporter symbols reachable so unit tests can link against the app module.
+    private func keepExportEngineServiceLinked(with container: ModelContainer) {
+        _ = ExportEngineService(modelContainer: container)
+    }
+
     // MARK: - Secure Settings Access
 
     /// Securely access biometric authentication setting from Keychain
@@ -181,6 +186,7 @@ public struct MomentumFinanceApp: App {
                 ContentView()
                     .modelContainer(container)
                     .onAppear {
+                        self.keepExportEngineServiceLinked(with: container)
                         print("MomentumFinanceApp: ContentView appeared")
                     }
             } else {

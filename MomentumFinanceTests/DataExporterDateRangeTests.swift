@@ -1,51 +1,78 @@
+import MomentumFinanceCore
 import SwiftData
 import XCTest
 @testable import MomentumFinance
 
-@MainActor
-final class DataExporterDateRangeTests: XCTestCase {
-    var container: ModelContainer!
+class ExportEngineServiceTestCase: XCTestCase {
+    var modelContext: ModelContext!
+    var service: ExportEngineService!
 
-    override func setUp() async throws {
+    override func setUpWithError() throws {
+        try super.setUpWithError()
         let schema = Schema([
-            FinancialTransaction.self, FinancialAccount.self, ExpenseCategory.self,
+            MomentumFinanceCore.FinancialTransaction.self,
+            MomentumFinanceCore.FinancialAccount.self,
+            MomentumFinanceCore.Budget.self,
+            MomentumFinanceCore.Subscription.self,
+            MomentumFinanceCore.SavingsGoal.self,
+            MomentumFinanceCore.ExpenseCategory.self,
         ])
-        self.container = try ModelContainer(
-            for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-        )
-        let context = ModelContext(container)
-        // Seed transactions across dates
-        let dates: [Date] = (-5...5).compactMap {
-            Calendar.current.date(byAdding: .day, value: $0, to: Date())
-        }
-        for (i, d) in dates.enumerated() {
-            let t = FinancialTransaction(
-                title: "T\(i)", amount: Double(i) * 10.0, date: d, transactionType: .income,
-                notes: nil
-            )
-            context.insert(t)
-        }
-        try context.save()
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: schema, configurations: [config])
+        self.modelContext = ModelContext(container)
+        self.service = ExportEngineService(modelContainer: container)
     }
 
+    override func tearDownWithError() throws {
+        self.service = nil
+        self.modelContext = nil
+        try super.tearDownWithError()
+    }
+}
+
+final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
+
+    @MainActor
     func testExportFiltersByDateRange() async throws {
-        let start = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -2, to: Date()))
-        let end = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: 2, to: Date()))
+        let now = Date()
+        for dayOffset in -5...5 {
+            let date = try XCTUnwrap(
+                Calendar.current.date(byAdding: .day, value: dayOffset, to: now)
+            )
+            let transaction = MomentumFinanceCore.FinancialTransaction(
+                title: "T\(dayOffset)",
+                amount: -10,
+                date: date,
+                transactionType: .expense
+            )
+            self.modelContext.insert(transaction)
+        }
+
+        let start = try XCTUnwrap(
+            Calendar.current.date(byAdding: .day, value: -2, to: now)
+        )
+        let end = try XCTUnwrap(
+            Calendar.current.date(byAdding: .day, value: 2, to: now)
+        )
         let settings = ExportSettings(
-            format: .csv,
+            format: .json,
+            dateRange: .custom,
             startDate: start,
             endDate: end,
             includeTransactions: true,
-            includeAccounts: true,
-            includeBudgets: true,
-            includeSubscriptions: true,
-            includeGoals: true
+            includeAccounts: false,
+            includeBudgets: false,
+            includeSubscriptions: false,
+            includeGoals: false
         )
-        let exporter = await DataExporter(modelContainer: container)
-        let url = try await exporter.exportData(settings: settings)
-        let content = try String(contentsOf: url)
-        let lines = content.split(separator: "\n").dropFirst() // skip header
-        // Only dates within +-2 days expected (~5 entries)
-        XCTAssert(lines.count <= 6 && lines.count >= 4, "Unexpected filtered count: \(lines.count)")
+
+        let url = try await self.service.export(settings: settings)
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        let data = try Data(contentsOf: url)
+        let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+        let json = try XCTUnwrap(jsonObject as? [String: Any])
+        let transactions = try XCTUnwrap(json["transactions"] as? [[String: Any]])
+        XCTAssertEqual(transactions.count, 5)
     }
 }

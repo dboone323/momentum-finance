@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import os
 
 /// Audit event severity levels.
 public enum AuditSeverity: String, Codable, Sendable {
@@ -50,7 +49,6 @@ public struct AuditEvent: Codable, Sendable {
 public final class AuditLogger {
     public static let shared = AuditLogger()
 
-    private let osLogger = os.Logger(subsystem: "com.momentumfinance", category: "Audit")
     private var auditLog: [AuditEvent] = []
     private let maxLogSize = 10000
 
@@ -77,14 +75,20 @@ public final class AuditLogger {
 
         appendEvent(event)
 
-        // Also log to system
         switch severity {
         case .info:
-            osLogger.info("[\(action)] \(details)")
+            Logger.logInfo("[\(action)] \(details)")
         case .warning:
-            osLogger.warning("[\(action)] \(details)")
+            Logger.logWarning("[\(action)] \(details)")
         case .critical:
-            osLogger.critical("[\(action)] \(details)")
+            Logger.logError(
+                NSError(
+                    domain: "MomentumFinance.Audit",
+                    code: 1,
+                    userInfo: [NSLocalizedDescriptionKey: "[\(action)] \(details)"]
+                ),
+                context: "AuditLogger"
+            )
         }
     }
 

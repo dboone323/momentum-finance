@@ -2,8 +2,9 @@
 // Copyright © 2026 Momentum Finance. All rights reserved.
 
 import Foundation
-import os
-import SwiftData
+#if canImport(SwiftData)
+    import SwiftData
+#endif
 
 /// Manager for privacy-related features including GDPR/CCPA compliance.
 @MainActor
@@ -60,19 +61,29 @@ public final class PrivacyManager {
      - Parameter modelContext: The SwiftData model context.
      - Parameter olderThanYears: Age threshold for deletion (default: 7 years).
      */
-    public func applyRetentionPolicy(to modelContext: ModelContext, olderThanYears years: Int = 7)
-        throws
-    {
-        let cutoffDate = Calendar.current.date(byAdding: .year, value: -years, to: Date()) ?? Date()
+    #if canImport(SwiftData)
+        public func applyRetentionPolicy(
+            to modelContext: ModelContext,
+            olderThanYears years: Int = 7
+        ) throws {
+            let cutoffDate =
+                Calendar.current.date(byAdding: .year, value: -years, to: Date()) ?? Date()
 
-        // Example: Delete old transactions
-        // Note: In a real app, this would use FetchDescriptors with predicates
-        // try modelContext.delete(model: FinancialTransaction.self, where: #Predicate { $0.date < cutoffDate })
+            // Example: Delete old transactions
+            // Note: In a real app, this would use FetchDescriptors with predicates
+            // try modelContext.delete(model: FinancialTransaction.self, where: #Predicate { $0.date < cutoffDate })
 
-        Logger.logInfo(
-            "Data retention policy applied. Data older than \(years) years marked for archival/deletion."
-        )
-    }
+            Logger.logInfo(
+                "Data retention policy applied. Data older than \(years) years marked for archival/deletion."
+            )
+        }
+    #else
+        public func applyRetentionPolicy(to _: Any, olderThanYears years: Int = 7) throws {
+            Logger.logInfo(
+                "Data retention policy requested for non-SwiftData runtime (years=\(years)); no-op."
+            )
+        }
+    #endif
 
     // MARK: - Data Portability (Right to Access)
 
@@ -81,20 +92,30 @@ public final class PrivacyManager {
      - Parameter modelContext: The SwiftData model context.
      - Returns: A URL to the exported data bundle.
      */
-    public func exportUserData(from modelContext: ModelContext) async throws -> URL {
-        let exporter = DataExporter(modelContainer: modelContext.container)
-        let settings = ExportSettings(
-            format: .csv,
-            dateRange: .allTime,
-            startDate: Date.distantPast,
-            endDate: Date.distantFuture,
-            includeTransactions: true,
-            includeAccounts: true
-        )
-        let tempURL = try await exporter.exportData(settings: settings)
-        MomentumFinanceCore.Logger.logInfo("User data exported for portability")
-        return tempURL
-    }
+    #if canImport(SwiftData)
+        public func exportUserData(from modelContext: ModelContext) async throws -> URL {
+            let exporter = DataExporter(modelContainer: modelContext.container)
+            let settings = ExportSettings(
+                format: .csv,
+                dateRange: .allTime,
+                startDate: Date.distantPast,
+                endDate: Date.distantFuture,
+                includeTransactions: true,
+                includeAccounts: true
+            )
+            let tempURL = try await exporter.exportData(settings: settings)
+            MomentumFinanceCore.Logger.logInfo("User data exported for portability")
+            return tempURL
+        }
+    #else
+        public func exportUserData(from _: Any) async throws -> URL {
+            throw NSError(
+                domain: "MomentumFinance.PrivacyManager",
+                code: 1,
+                userInfo: [NSLocalizedDescriptionKey: "User data export requires SwiftData support."]
+            )
+        }
+    #endif
 
     // MARK: - Right to be Forgotten
 
@@ -102,20 +123,31 @@ public final class PrivacyManager {
      Deletes all user data from the device.
      - Parameter modelContext: The SwiftData model context.
      */
-    public func eraseAllUserData(from modelContext: ModelContext) throws {
-        // 1. Delete all database records
-        // try modelContext.delete(model: FinancialAccount.self)
-        // try modelContext.delete(model: FinancialTransaction.self)
-        // ... and so on
+    #if canImport(SwiftData)
+        public func eraseAllUserData(from modelContext: ModelContext) throws {
+            // 1. Delete all database records
+            // try modelContext.delete(model: FinancialAccount.self)
+            // try modelContext.delete(model: FinancialTransaction.self)
+            // ... and so on
 
-        // 2. Clear Keychain
-        // try SecureCredentialManager.shared.deleteAll()
+            // 2. Clear Keychain
+            // try SecureCredentialManager.shared.deleteAll()
 
-        // 3. Reset UserDefaults
-        if let bundleID = Bundle.main.bundleIdentifier {
-            self.defaults.removePersistentDomain(forName: bundleID)
+            // 3. Reset UserDefaults
+            if let bundleID = Bundle.main.bundleIdentifier {
+                self.defaults.removePersistentDomain(forName: bundleID)
+            }
+
+            Logger.logWarning("User initiated 'Right to be Forgotten' - All data erased")
         }
-
-        Logger.logWarning("User initiated 'Right to be Forgotten' - All data erased")
-    }
+    #else
+        public func eraseAllUserData(from _: Any) throws {
+            if let bundleID = Bundle.main.bundleIdentifier {
+                self.defaults.removePersistentDomain(forName: bundleID)
+            }
+            Logger.logWarning(
+                "User initiated 'Right to be Forgotten' on non-SwiftData runtime."
+            )
+        }
+    #endif
 }

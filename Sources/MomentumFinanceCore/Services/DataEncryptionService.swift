@@ -3,8 +3,12 @@
 // MomentumFinance
 //
 
-import CryptoKit
 import Foundation
+#if canImport(CryptoKit)
+    import CryptoKit
+#elseif canImport(Crypto)
+    import Crypto
+#endif
 
 @MainActor
 public final class DataEncryptionService {

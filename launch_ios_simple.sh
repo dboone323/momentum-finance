@@ -31,7 +31,7 @@ DEVICE_ID="891E4B4F-9FEA-494A-8DD0-DA1C058B5253"
 DEVICE_NAME="iPhone 16"
 IOS_VERSION="18.1"
 
-echo -e "${GREEN}✅ Using${ $DEVICE_NA}ME (iO${ $IOS_VERSI}ON)${NC}"
+echo -e "${GREEN}✅ Using ${DEVICE_NAME} (iOS ${IOS_VERSION})${NC}"
 echo "Device ID: ${DEVICE_ID}"
 
 # Make sure the simulator is booted
@@ -69,15 +69,15 @@ if [[ "$BUILD_SUCCESS" -eq 0 ]]; then
 
 	if [[ ! -z "${APP_PATH}" ]]; then
 		# Install the app
-		echo "📦 Installing ap${: $APP_P}ATH"
+		echo "📦 Installing app from: ${APP_PATH}"
 		xcrun simctl install "${DEVICE_ID}" "${APP_PATH}"
 
 		# Launch the app
 		echo "🚀 Launching app..."
 		xcrun simctl launch "${DEVICE_ID}" "${APP_BUNDLE_ID}"
 
-		echo -e "${GREEN}✨ MomentumFinance launched successfully o${ $DEVICE_NA}ME!${NC}"
-		echo "🎯 iOS Configuratio${: $DEVICE_N}AME (i${S $IOS_VERS}ION)"
+		echo -e "${GREEN}✨ MomentumFinance launched successfully on ${DEVICE_NAME}!${NC}"
+		echo "🎯 iOS Configuration: ${DEVICE_NAME} (iOS ${IOS_VERSION})"
 	else
 		echo -e "${RED}❌ Could not find app bundle after build${NC}"
 		exit 1

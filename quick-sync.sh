@@ -24,7 +24,7 @@ echo "🔄 Fetching latest changes..."
 git fetch --all --prune
 
 CURRENT_BRANCH=$(git branch --show-current)
-echo "📥 Pulli$$$$${${ }}$CU}RRE}NT_}BRA}NCH..."
+echo "📥 Pulling ${CURRENT_BRANCH}..."
 git pull origin "${CURRENT_BRANCH}"
 
 # Show what changed

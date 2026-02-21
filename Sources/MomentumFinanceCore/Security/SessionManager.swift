@@ -2,7 +2,6 @@
 // Copyright © 2026 Momentum Finance. All rights reserved.
 
 import Foundation
-import os
 
 /// Manager for app session timeouts and auto-lock security.
 @MainActor

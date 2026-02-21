@@ -1,6 +1,8 @@
 // Compatibility wrapper to match CodingReviewer AppLogger API.
 import Foundation
-import OSLog
+#if canImport(OSLog)
+    import OSLog
+#endif
 
 /// Lightweight wrapper providing a shared instance to delegate to the static `Logger` API.
 @MainActor
@@ -18,7 +20,7 @@ public final class AppLogger {
         case general, analysis, performance, security, ui, ai, network, data, business
     }
 
-    private func osLog(for category: LogCategory) -> OSLog {
+    private func osLog(for category: LogCategory) -> Logger.LogCategoryHandle {
         switch category {
         case .ui: Logger.ui
         case .data: Logger.data
