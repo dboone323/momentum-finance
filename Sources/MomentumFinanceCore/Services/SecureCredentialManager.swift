@@ -317,12 +317,12 @@ public final class SecureCredentialManager {
             storageRootURL.appendingPathComponent("\(key.fullyQualifiedKey).bin")
         }
 
-        private func masterKeyFileURL() -> URL {
+        private func primaryKeyFileURL() -> URL {
             storageRootURL.appendingPathComponent("master.key")
         }
 
-        private func loadOrCreateMasterKey() throws -> SymmetricKey {
-            let keyURL = masterKeyFileURL()
+        private func loadOrCreatePrimaryKey() throws -> SymmetricKey {
+            let keyURL = primaryKeyFileURL()
             if fileManager.fileExists(atPath: keyURL.path) {
                 let existing = try Data(contentsOf: keyURL)
                 guard existing.count == 32 else {
@@ -339,7 +339,7 @@ public final class SecureCredentialManager {
         }
 
         private func encryptForFileStore(_ plaintext: Data) throws -> Data {
-            let key = try loadOrCreateMasterKey()
+            let key = try loadOrCreatePrimaryKey()
             let sealed = try AES.GCM.seal(plaintext, using: key)
             guard let combined = sealed.combined else {
                 throw CredentialError.storageError("Failed to produce encrypted payload")
@@ -348,7 +348,7 @@ public final class SecureCredentialManager {
         }
 
         private func decryptFromFileStore(_ ciphertext: Data) throws -> Data {
-            let key = try loadOrCreateMasterKey()
+            let key = try loadOrCreatePrimaryKey()
             let sealed = try AES.GCM.SealedBox(combined: ciphertext)
             return try AES.GCM.open(sealed, using: key)
         }

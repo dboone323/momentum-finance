@@ -8,11 +8,10 @@ import SwiftData
 public protocol EntityManager: Sendable {
     func save() throws
     func delete(_ entity: some PersistentModel) throws
-    func fetch<T: PersistentModel>(_ type: T.Type) throws -> [T] where
-        func getOrCreateAccount(
-            from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping
-        ) throws
-        -> FinancialAccount?
+    func fetch<T: PersistentModel>(_ type: T.Type) throws -> [T]
+    func getOrCreateAccount(
+        from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping
+    ) throws -> FinancialAccount?
     func getOrCreateCategory(
         from fields: [String], columnMapping: MomentumFinanceCore.CSVColumnMapping,
         transactionType: TransactionType
@@ -162,9 +161,7 @@ public final class SwiftDataExportEngineService {
     }
 
     public func exportToCSV() async throws -> URL {
-        let transactions = try modelContext.fetch(FetchDescriptor<FinancialTransaction>())
-
-        let csvString = self.createCSVString(from: transactions)
+        let csvString = try self.createCSVString(from: self.filteredTransactions())
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
             "transactions_export.csv"
         )
@@ -176,20 +173,32 @@ public final class SwiftDataExportEngineService {
     public func export(settings: [String: Any]) async throws -> URL {
         // Support different export formats based on settings
         let format = settings["format"] as? String ?? "csv"
+        let startDate = settings["startDate"] as? Date
+        let endDate = settings["endDate"] as? Date
 
         switch format {
         case "json":
-            return try await self.exportToJSON()
+            return try await self.exportToJSON(startDate: startDate, endDate: endDate)
         case "pdf":
-            return try await self.exportToPDF()
+            return try await self.exportToPDF(startDate: startDate, endDate: endDate)
         default:
-            return try await self.exportToCSV()
+            return try await self.exportToCSV(startDate: startDate, endDate: endDate)
         }
     }
 
-    private func exportToJSON() async throws -> URL {
-        let transactions = try modelContext.fetch(FetchDescriptor<FinancialTransaction>())
+    private func exportToCSV(startDate: Date?, endDate: Date?) async throws -> URL {
+        let transactions = try self.filteredTransactions(startDate: startDate, endDate: endDate)
+        let csvString = self.createCSVString(from: transactions)
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
+            "transactions_export.csv"
+        )
 
+        try csvString.write(to: tempURL, atomically: true, encoding: .utf8)
+        return tempURL
+    }
+
+    private func exportToJSON(startDate: Date?, endDate: Date?) async throws -> URL {
+        let transactions = try self.filteredTransactions(startDate: startDate, endDate: endDate)
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted
@@ -203,10 +212,10 @@ public final class SwiftDataExportEngineService {
         return tempURL
     }
 
-    private func exportToPDF() async throws -> URL {
+    private func exportToPDF(startDate: Date?, endDate: Date?) async throws -> URL {
         // Generates a HTML report which is universally viewable and printable to PDF
         // This avoids complex cross-platform PDFKit dependencies in the core service layer.
-        let transactions = try modelContext.fetch(FetchDescriptor<FinancialTransaction>())
+        let transactions = try self.filteredTransactions(startDate: startDate, endDate: endDate)
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
             "transactions_report.html"
         )
@@ -267,6 +276,25 @@ public final class SwiftDataExportEngineService {
 
         try html.write(to: tempURL, atomically: true, encoding: .utf8)
         return tempURL
+    }
+
+    private func filteredTransactions(startDate: Date? = nil, endDate: Date? = nil) throws
+        -> [FinancialTransaction]
+    {
+        let transactions = try modelContext.fetch(FetchDescriptor<FinancialTransaction>())
+        guard startDate != nil || endDate != nil else {
+            return transactions
+        }
+
+        return transactions.filter { transaction in
+            if let startDate, transaction.date < startDate {
+                return false
+            }
+            if let endDate, transaction.date > endDate {
+                return false
+            }
+            return true
+        }
     }
 
     private func createCSVString(from transactions: [FinancialTransaction]) -> String {

@@ -20,7 +20,7 @@ class ExportEngineServiceTestCase: XCTestCase {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: schema, configurations: [config])
         self.modelContext = ModelContext(container)
-        self.service = ExportEngineService(modelContext: self.modelContext)
+        self.service = ExportEngineService(modelContainer: container)
     }
 
     override func tearDownWithError() throws {
@@ -54,7 +54,7 @@ final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
         let end = try XCTUnwrap(
             Calendar.current.date(byAdding: .day, value: 2, to: now)
         )
-        let settings = MomentumFinanceCore.ExportSettings(
+        let settings = ExportSettings(
             format: .json,
             dateRange: .custom,
             startDate: start,
@@ -73,7 +73,6 @@ final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
         let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
         let json = try XCTUnwrap(jsonObject as? [String: Any])
         let transactions = try XCTUnwrap(json["transactions"] as? [[String: Any]])
-
         XCTAssertEqual(transactions.count, 5)
     }
 }

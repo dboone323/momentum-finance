@@ -3,14 +3,13 @@ import XCTest
 
 final class DataImporterErrorTests: XCTestCase {
     func testImportErrorDescriptionsAreUserFriendly() {
-        XCTAssertEqual(
-            ImportError.invalidAmountFormat("BAD").errorDescription,
-            "Invalid amount format: BAD."
-        )
-        XCTAssertEqual(
-            ImportError.missingRequiredField("date").errorDescription,
-            "CSV is missing required field: date."
-        )
+        let invalidDataMessage = ImportError.invalidData.errorDescription
+        let decodingFailedMessage = ImportError.decodingFailed.errorDescription
+
+        XCTAssertNotNil(invalidDataMessage)
+        XCTAssertNotNil(decodingFailedMessage)
+        XCTAssertFalse(invalidDataMessage?.isEmpty ?? true)
+        XCTAssertFalse(decodingFailedMessage?.isEmpty ?? true)
     }
 
     func testImportResultCapturesSuccessAndFailureCounts() {

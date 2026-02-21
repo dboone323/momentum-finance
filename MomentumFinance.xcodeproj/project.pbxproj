@@ -75,6 +75,7 @@
 		A0TEST022F0ABCDE00000001 /* DataExporterDateRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0TEST032F0ABCDE00000001 /* DataExporterDateRangeTests.swift */; };
 		A0TEST042F0ABCDE00000001 /* DataImporterErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0TEST052F0ABCDE00000001 /* DataImporterErrorTests.swift */; };
 		A0TEST082F0ABCDE00000001 /* DataExporterContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0TEST072F0CONTENT0000001 /* DataExporterContentTests.swift */; };
+		A0TEST092F0ABCDE00000001 /* ExportEngineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF84F18F4B9E46CE93439D28 /* ExportEngineService.swift */; };
 		BB7A5BD961FC5DDE5E252E17 /* CategoriesGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FE4C7F884E7BB2E2E7B69D /* CategoriesGenerator.swift */; };
 		435C7B6AA9084129B621A701 /* MomentumFinanceTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91FB2CBAB284ADAB2B1E3D4 /* MomentumFinanceTypes.swift */; };
 		BC2A68F522DC4FE49D141649 /* MissingTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F343DE9B95B40549BF95688 /* MissingTypes.swift */; };
