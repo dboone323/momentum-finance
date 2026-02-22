@@ -47,8 +47,8 @@ final class DashboardViewModel {
     /// Calculate total balance across all accounts
     /// <#Description#>
     /// - Returns: <#description#>
-    func totalBalance(_ accounts: [FinancialAccount]) -> Double {
-        accounts.reduce(0) { $0 + $1.balance }
+    func totalBalance(_ accounts: [FinancialAccount]) -> Decimal {
+        accounts.reduce(Decimal(0)) { $0 + $1.balance }
     }
 
     /// Get recent transactions
@@ -98,7 +98,7 @@ final class DashboardViewModel {
     /// Get spending by category for current month
     /// <#Description#>
     /// - Returns: <#description#>
-    func spendingByCategory(_ transactions: [FinancialTransaction]) -> [String: Double] {
+    func spendingByCategory(_ transactions: [FinancialTransaction]) -> [String: Decimal] {
         let calendar = Calendar.current
         let now = Date()
 
@@ -107,10 +107,10 @@ final class DashboardViewModel {
                 && calendar.isDate(transaction.date, equalTo: now, toGranularity: .month)
         }
 
-        var spendingByCategory: [String: Double] = [:]
+        var spendingByCategory: [String: Decimal] = [:]
         for transaction in currentMonthTransactions {
             let categoryName = transaction.category ?? "Uncategorized"
-            spendingByCategory[categoryName, default: 0] += transaction.amount
+            spendingByCategory[categoryName, default: Decimal(0)] += transaction.amount
         }
 
         return spendingByCategory
@@ -119,7 +119,7 @@ final class DashboardViewModel {
     /// Get net income for current month
     /// <#Description#>
     /// - Returns: <#description#>
-    func netIncomeThisMonth(_ transactions: [FinancialTransaction]) -> Double {
+    func netIncomeThisMonth(_ transactions: [FinancialTransaction]) -> Decimal {
         let calendar = Calendar.current
         let now = Date()
 
@@ -130,12 +130,12 @@ final class DashboardViewModel {
         let income =
             currentMonthTransactions
                 .filter { $0.transactionType == .income }
-                .reduce(0) { $0 + $1.amount }
+                .reduce(Decimal(0)) { $0 + $1.amount }
 
         let expenses =
             currentMonthTransactions
                 .filter { $0.transactionType == .expense }
-                .reduce(0) { $0 + $1.amount }
+                .reduce(Decimal(0)) { $0 + $1.amount }
 
         return income - expenses
     }

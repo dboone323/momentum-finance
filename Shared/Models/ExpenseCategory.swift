@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 @Model
@@ -64,7 +65,7 @@ public final class ExpenseCategory {
     }
 
     /// Calculate total spent in this category for a given date range
-    public func totalSpent(in dateRange: ClosedRange<Date>? = nil) -> Double {
+    public func totalSpent(in dateRange: ClosedRange<Date>? = nil) -> Decimal {
         let relevantTransactions = transactions.filter { transaction in
             if let dateRange {
                 return dateRange.contains(transaction.date)
@@ -75,7 +76,7 @@ public final class ExpenseCategory {
     }
 
     /// Calculate total spent in this category and all subcategories
-    public func totalSpentWithSubcategories(in dateRange: ClosedRange<Date>? = nil) -> Double {
+    public func totalSpentWithSubcategories(in dateRange: ClosedRange<Date>? = nil) -> Decimal {
         let ownTotal = totalSpent(in: dateRange)
         let subcategoryTotal = allDescendants.reduce(0) { $0 + $1.totalSpent(in: dateRange) }
         return ownTotal + subcategoryTotal

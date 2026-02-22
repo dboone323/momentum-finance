@@ -1,16 +1,36 @@
 import Foundation
-import MomentumFinanceCore
 import PDFKit
 import SwiftData
 import SwiftUI
 
-@ModelActor
-actor ExportEngineService {
-    // modelContext is provided by @ModelActor macro
-    // init(modelContainer:) is provided by @ModelActor macro
+@testable import MomentumFinanceCore
+
+public actor ExportEngineService: ModelActor {
+    public nonisolated let modelExecutor: any SwiftData.ModelExecutor
+    public nonisolated let modelContainer: SwiftData.ModelContainer
+    private var _modelContext: ModelContext!
+    public var modelContext: ModelContext {
+        if _modelContext == nil {
+            _modelContext = ModelContext(modelContainer)
+        }
+        return _modelContext
+    }
+
+    public init(modelContainer: SwiftData.ModelContainer) {
+        self.modelContainer = modelContainer
+        let context = ModelContext(modelContainer)
+        self.modelExecutor = DefaultSerialModelExecutor(modelContext: context)
+        self._modelContext = context
+    }
+
+    public init(modelContext: ModelContext) {
+        self.modelContainer = modelContext.container
+        self.modelExecutor = DefaultSerialModelExecutor(modelContext: modelContext)
+        self._modelContext = modelContext
+    }
 
     /// Public API
-    func export(settings: ExportSettings) async throws -> URL {
+    public func export(settings: ExportSettings) async throws -> URL {
         switch settings.format {
         case .csv:
             try await self.exportToCSV(settings: settings)
@@ -65,7 +85,7 @@ actor ExportEngineService {
             let title = self.escapeCSVField(transaction.title)
             let amount = transaction.amount.description
             let type = transaction.transactionType.rawValue
-            let category = self.escapeCSVField(transaction.category ?? "")
+            let category = transaction.category ?? ""
             let account = self.escapeCSVField(transaction.account?.name ?? "")
             let notes = self.escapeCSVField(transaction.notes ?? "")
 
@@ -102,13 +122,15 @@ actor ExportEngineService {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
 
-        var csvLines = ["BUDGETS", "Name,Limit Amount,Spent Amount,Category,Start Date,Created Date"]
+        var csvLines = [
+            "BUDGETS", "Name,Limit Amount,Spent Amount,Category,Start Date,Created Date",
+        ]
 
         for budget in budgets {
             let name = self.escapeCSVField(budget.name)
             let limit = budget.totalAmount.description
             let spent = budget.spentAmount.description
-            let category = self.escapeCSVField(budget.category ?? "")
+            let category = budget.category ?? ""
             let month = formatter.string(from: budget.startDate)
             let created = formatter.string(from: budget.createdDate)
 
@@ -133,7 +155,7 @@ actor ExportEngineService {
             let amount = subscription.amount.description
             let cycle = subscription.billingCycle.displayName
             let nextDue = formatter.string(from: subscription.nextBillingDate)
-            let category = self.escapeCSVField(subscription.category ?? "")
+            let category = subscription.category ?? ""
             let account = ""
             let isActive = subscription.isActive ? "Yes" : "No"
 
@@ -157,7 +179,7 @@ actor ExportEngineService {
             let name = self.escapeCSVField(goal.title)
             let target = goal.targetAmount.description
             let current = goal.currentAmount.description
-            let targetDate = goal.targetDate.map { formatter.string(from: $0) } ?? ""
+            let targetDate = formatter.string(from: goal.targetDate ?? Date())
             let progress = String(format: "%.1f%%", goal.progressPercentage)
 
             csvLines.append("\(name),\(target),\(current),\(targetDate),\(progress)")
@@ -182,7 +204,7 @@ actor ExportEngineService {
             let pdfData = NSMutableData()
             let pdfInfo = [kCGPDFContextCreator: "Momentum Finance"] as CFDictionary
             guard let dataConsumer = CGDataConsumer(data: pdfData as CFMutableData),
-                  let pdfContext = CGContext(consumer: dataConsumer, mediaBox: nil, pdfInfo)
+                let pdfContext = CGContext(consumer: dataConsumer, mediaBox: nil, pdfInfo)
             else { throw ExportError.pdfGenerationFailed }
 
             let pageRect = CGRect(x: 0, y: 0, width: 612, height: 792)
@@ -313,7 +335,8 @@ actor ExportEngineService {
                 .foregroundColor: NSColor.black,
             ]
 
-            "Accounts Summary".draw(at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes)
+            "Accounts Summary".draw(
+                at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes)
 
             var currentY = yPosition + 30
 
@@ -414,7 +437,7 @@ actor ExportEngineService {
 
         return transactions.map { transaction in
             [
-                "id": transaction.id.uuidString,
+                "id": String(describing: transaction.persistentModelID),
                 "date": formatter.string(from: transaction.date),
                 "title": transaction.title,
                 "amount": transaction.amount,
@@ -432,11 +455,11 @@ actor ExportEngineService {
 
         return accounts.map { account in
             [
-                "id": account.id.uuidString,
+                "id": String(describing: account.persistentModelID),
                 "name": account.name,
                 "balance": account.balance,
                 "type": account.accountType.rawValue,
-                "currencyCode": account.currency,
+                "currencyCode": account.currencyCode,
                 "createdDate": formatter.string(from: account.createdDate),
             ]
         }
@@ -448,9 +471,9 @@ actor ExportEngineService {
 
         return budgets.map { budget in
             [
-                "id": budget.id.uuidString,
+                "id": String(describing: budget.persistentModelID),
                 "name": budget.name,
-                "limitAmount": budget.totalAmount,
+                "limitAmount": budget.limitAmount,
                 "spentAmount": budget.spentAmount,
                 "category": budget.category ?? "",
                 "month": formatter.string(from: budget.startDate),
@@ -465,7 +488,7 @@ actor ExportEngineService {
 
         return subscriptions.map { subscription in
             [
-                "id": subscription.id.uuidString,
+                "id": String(describing: subscription.persistentModelID),
                 "name": subscription.name,
                 "amount": subscription.amount,
                 "billingCycle": subscription.billingCycle.displayName,
@@ -483,14 +506,14 @@ actor ExportEngineService {
 
         return goals.map { goal in
             var goalData: [String: Any] = [
-                "id": goal.id.uuidString,
+                "id": String(describing: goal.persistentModelID),
                 "name": goal.title,
                 "targetAmount": goal.targetAmount,
                 "currentAmount": goal.currentAmount,
                 "progressPercentage": goal.progressPercentage,
             ]
 
-            goalData["targetDate"] = goal.targetDate.map { formatter.string(from: $0) }
+            goalData["targetDate"] = formatter.string(from: goal.targetDate ?? Date())
 
             return goalData
         }

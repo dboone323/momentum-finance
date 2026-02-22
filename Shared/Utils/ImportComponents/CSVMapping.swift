@@ -1,4 +1,5 @@
 import Foundation
+import MomentumFinanceCore
 
 /// Column index mapping for CSV imports.
 struct CSVColumnMapping: Sendable {

@@ -1,13 +1,7 @@
-//
-//  ExportTypes.swift
-//  MomentumFinance
-//
-//  Created by GitHub Copilot on 2026-02-09.
-//
-
 import Foundation
 
-/// Export format types supported by the application
+// MARK: - Export Types
+
 public enum ExportFormat: String, Codable, CaseIterable, Sendable {
     case csv = "CSV"
     case json = "JSON"
@@ -51,7 +45,74 @@ public enum ExportFormat: String, Codable, CaseIterable, Sendable {
     }
 }
 
-public enum ExportConstants {
+public enum ExportError: LocalizedError, Sendable {
+    case invalidSettings
+    case fileAccessFailure
+    case pdfGenerationFailed
+    case encodingFailed
+    case fileWriteFailed
+    case invalidData
+
+    public var errorDescription: String? {
+        switch self {
+        case .invalidSettings: "Invalid export settings."
+        case .fileAccessFailure: "Failed to access file location."
+        case .pdfGenerationFailed: "Failed to generate PDF document."
+        case .encodingFailed: "Failed to encode data."
+        case .fileWriteFailed: "Failed to write data to file."
+        case .invalidData: "Invalid data for export."
+        }
+    }
+}
+
+public enum ImportError: LocalizedError, Sendable {
+    case fileAccessDenied
+    case invalidFormat(String)
+    case parsingError(String)
+    case missingRequiredField(String)
+    case emptyRequiredField(String)
+    case emptyFile
+    case invalidDateFormat(String)
+    case invalidAmountFormat(String)
+    case duplicateTransaction
+    case invalidTransactionType(String)
+    case invalidData
+    case decodingFailed
+    case validationFailed([ImportValidationError])
+
+    public var errorDescription: String? {
+        switch self {
+        case .fileAccessDenied:
+            "The selected file could not be accessed."
+        case .invalidFormat(let message):
+            message
+        case .parsingError(let message):
+            message
+        case .missingRequiredField(let field):
+            "CSV is missing required field: \(field)."
+        case .emptyRequiredField(let field):
+            "Required field is empty: \(field)."
+        case .emptyFile:
+            "CSV file is empty."
+        case .invalidDateFormat(let value):
+            "Invalid date format: \(value)."
+        case .invalidAmountFormat(let value):
+            "Invalid amount format: \(value)."
+        case .duplicateTransaction:
+            "This transaction already exists."
+        case .invalidTransactionType(let value):
+            "Invalid transaction type: \(value)."
+        case .invalidData:
+            "The import data is invalid or missing."
+        case .decodingFailed:
+            "Failed to decode import data."
+        case .validationFailed(let errors):
+            "Validation failed with \(errors.count) errors."
+        }
+    }
+}
+
+public struct ExportConstants: Sendable {
     public static let csvFilename = "MomentumFinance_Export.csv"
     public static let pdfFilename = "MomentumFinance_Report.pdf"
     public static let jsonFilename = "MomentumFinance_Backup.json"
@@ -116,7 +177,6 @@ public struct ExportSettings: Sendable {
     }
 }
 
-/// Export options for customizing the export process
 public struct ExportOptions: Codable, Sendable {
     public let format: ExportFormat
     public let dateRange: DateInterval?
@@ -142,7 +202,6 @@ public struct ExportOptions: Codable, Sendable {
     }
 }
 
-/// Import format types supported by the application
 public enum ImportFormat: String, Codable, CaseIterable, Sendable {
     case csv = "CSV"
     case json = "JSON"
@@ -159,7 +218,6 @@ public enum ImportFormat: String, Codable, CaseIterable, Sendable {
     }
 }
 
-/// Import result containing success/failure information
 public struct ImportResult: Sendable {
     public let success: Bool
     public let importedCount: Int
@@ -211,15 +269,18 @@ public struct ImportResult: Sendable {
     }
 }
 
-/// Import validation error with detailed information
-public struct ImportValidationError: Identifiable, Sendable {
-    public let id = UUID()
+public struct ImportValidationError: Identifiable, Sendable, Codable {
+    public let id: UUID
     public let row: Int?
     public let field: String?
     public let message: String
     public let value: String?
 
-    public init(row: Int? = nil, field: String? = nil, message: String, value: String? = nil) {
+    public init(
+        id: UUID = UUID(), row: Int? = nil, field: String? = nil, message: String,
+        value: String? = nil
+    ) {
+        self.id = id
         self.row = row
         self.field = field
         self.message = message
@@ -227,7 +288,6 @@ public struct ImportValidationError: Identifiable, Sendable {
     }
 }
 
-/// Export result containing success/failure information
 public struct ExportResult: Sendable {
     public let success: Bool
     public let fileURL: URL?
@@ -247,5 +307,94 @@ public struct ExportResult: Sendable {
         self.exportedCount = exportedCount
         self.errors = errors
         self.warnings = warnings
+    }
+}
+
+public struct ColumnMapping: Codable, Sendable {
+    public let csvColumn: String
+    public let modelProperty: String
+    public let dataType: DataType
+    public let isRequired: Bool
+    public let defaultValue: String?
+
+    public init(
+        csvColumn: String,
+        modelProperty: String,
+        dataType: DataType,
+        isRequired: Bool = false,
+        defaultValue: String? = nil
+    ) {
+        self.csvColumn = csvColumn
+        self.modelProperty = modelProperty
+        self.dataType = dataType
+        self.isRequired = isRequired
+        self.defaultValue = defaultValue
+    }
+}
+
+public enum DataType: String, CaseIterable, Codable, Sendable {
+    case string
+    case integer
+    case decimal
+    case date
+    case boolean
+
+    public var displayName: String {
+        switch self {
+        case .string: "Text"
+        case .integer: "Whole Number"
+        case .decimal: "Decimal Number"
+        case .date: "Date"
+        case .boolean: "Yes/No"
+        }
+    }
+}
+
+public enum EntityType: String, CaseIterable, Codable, Sendable {
+    case transaction
+    case account
+    case category
+    case budget
+    case goal
+
+    public var displayName: String {
+        switch self {
+        case .transaction: "Transaction"
+        case .account: "Account"
+        case .category: "Category"
+        case .budget: "Budget"
+        case .goal: "Goal"
+        }
+    }
+}
+
+public struct DataValidationError: Identifiable, Codable, Sendable {
+    public let id: UUID
+    public let field: String
+    public let message: String
+    public let severity: Severity
+
+    public init(
+        id: UUID = UUID(),
+        field: String,
+        message: String,
+        severity: Severity = .error
+    ) {
+        self.id = id
+        self.field = field
+        self.message = message
+        self.severity = severity
+    }
+
+    public enum Severity: String, Codable, Sendable {
+        case warning
+        case error
+
+        public var displayName: String {
+            switch self {
+            case .warning: "Warning"
+            case .error: "Error"
+            }
+        }
     }
 }

@@ -97,7 +97,7 @@ public struct InsightsSummaryWidget: View {
     private var insightContentView: some View {
         VStack(alignment: .leading, spacing: 10) {
             // Total balance insight
-            let totalBalance = self.accounts.reduce(0) { $0 + $1.balance }
+            let totalBalance = self.accounts.reduce(Decimal(0)) { $0 + $1.balance }
 
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
@@ -167,11 +167,11 @@ public struct InsightsSummaryWidget: View {
 
     // MARK: - Helper Functions
 
-    private func formatCurrency(_ value: Double) -> String {
+    private func formatCurrency(_ value: Decimal) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.currencyCode = "USD"
-        return formatter.string(from: NSNumber(value: value)) ?? "$0.00"
+        return formatter.string(from: value as NSDecimalNumber) ?? "$0.00"
     }
 
     private func calculateMonthlyChange() -> Double {
@@ -179,14 +179,13 @@ public struct InsightsSummaryWidget: View {
         2.5 // Example: 2.5% growth
     }
 
-    private func calculateRecentSpending() -> Double {
+    private func calculateRecentSpending() -> Decimal {
         // Sum of expenses in the last 7 days
         let lastWeek = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
-
-        return
-            self.transactions
-                .filter { $0.date > lastWeek && $0.transactionType == .expense }
-                .reduce(0) { $0 + $1.amount }
+        
+        return self.transactions
+            .filter { $0.date > lastWeek && $0.transactionType == .expense }
+            .reduce(Decimal(0)) { $0 + $1.amount }
     }
 
     private func calculateMonthComparisonRatio() -> Double {

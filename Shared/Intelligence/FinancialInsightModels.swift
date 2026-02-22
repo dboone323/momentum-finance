@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 
 /// Financial insight types
 public enum FinancialInsightType: String, Codable, CaseIterable {
@@ -200,9 +201,9 @@ public enum TrendDirection: String, Codable {
 
     public var colorHex: String {
         switch self {
-        case .increasing: "#FF3B30" // Red for increasing spending
-        case .decreasing: "#34C759" // Green for decreasing spending
-        case .stable: "#FF9500" // Orange for stable
+        case .increasing: "#FF3B30"  // Red for increasing spending
+        case .decreasing: "#34C759"  // Green for decreasing spending
+        case .stable: "#FF9500"  // Orange for stable
         }
     }
 }
@@ -291,13 +292,14 @@ public struct AnomalyInsight: Codable {
     }
 }
 
-public extension FinancialInsight {
+extension FinancialInsight {
     /// Sample insights for previews and testing
-    static var sampleSpendingAlert: FinancialInsight {
+    public static var sampleSpendingAlert: FinancialInsight {
         FinancialInsight(
             type: .budgetAlert,
             title: "Budget Alert: Dining Out",
-            description: "You've spent 85% of your monthly dining budget. Consider reducing restaurant expenses for the rest of the month.",
+            description:
+                "You've spent 85% of your monthly dining budget. Consider reducing restaurant expenses for the rest of the month.",
             priority: .high,
             category: "Dining",
             amount: 340.00,
@@ -307,11 +309,12 @@ public extension FinancialInsight {
         )
     }
 
-    static var sampleSavingsOpportunity: FinancialInsight {
+    public static var sampleSavingsOpportunity: FinancialInsight {
         FinancialInsight(
             type: .savingsOpportunity,
             title: "Coffee Savings",
-            description: "You spend $120/month on coffee. Switching to home brewing could save you $80/month.",
+            description:
+                "You spend $120/month on coffee. Switching to home brewing could save you $80/month.",
             priority: .medium,
             category: "Coffee",
             amount: 80.00,
@@ -320,11 +323,12 @@ public extension FinancialInsight {
         )
     }
 
-    static var sampleAnomaly: FinancialInsight {
+    public static var sampleAnomaly: FinancialInsight {
         FinancialInsight(
             type: .anomaly,
             title: "Unusual Transaction",
-            description: "A $500 transaction at 'Electronics Store' is 300% higher than your average electronics spending.",
+            description:
+                "A $500 transaction at 'Electronics Store' is 300% higher than your average electronics spending.",
             priority: .high,
             category: "Electronics",
             amount: 500.00,

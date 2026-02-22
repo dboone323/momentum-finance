@@ -211,12 +211,12 @@ public struct TransactionStatsCard: View {
         self.transactions = transactions
     }
 
-    private var totalIncome: Double {
-        self.transactions.filter { $0.transactionType == .income }.reduce(0) { $0 + $1.amount }
+    private var totalIncome: Decimal {
+        self.transactions.filter { $0.transactionType == .income }.reduce(Decimal(0)) { $0 + $1.amount }
     }
 
-    private var totalExpenses: Double {
-        self.transactions.filter { $0.transactionType == .expense }.reduce(0) {
+    private var totalExpenses: Decimal {
+        self.transactions.filter { $0.transactionType == .expense }.reduce(Decimal(0)) {
             $0 + abs($1.amount)
         }
     }
@@ -304,14 +304,14 @@ private struct TransactionDetailRow: View {
 
 private struct StatItem: View {
     let title: String
-    let amount: Double
+    let amount: Decimal
     let color: Color
     let icon: String
     var body: some View {
         VStack(alignment: .center, spacing: 4) {
             Image(systemName: self.icon).foregroundColor(self.color).font(.system(size: 20))
             Text(self.title).font(.caption).foregroundColor(.secondary)
-            Text(self.amount.formatted(.currency(code: "USD"))).font(.subheadline).fontWeight(
+            Text((self.amount as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD"))).font(.subheadline).fontWeight(
                 .semibold
             ).foregroundColor(self.color)
         }.frame(maxWidth: .infinity)

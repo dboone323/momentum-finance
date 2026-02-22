@@ -27,9 +27,6 @@ public struct SimpleFinancialAccount: Identifiable, Codable, Sendable {
         self.currency = currency
     }
 
-    public enum AccountType: String, Codable, Sendable {
-        case checking, savings, credit, investment, loan, other
-    }
 }
 
 /// Represents an expense category
@@ -83,9 +80,6 @@ public struct SimpleFinancialTransaction: Identifiable, Codable, Sendable {
         self.notes = notes
     }
 
-    public enum TransactionType: String, Codable, Sendable {
-        case income, expense, transfer
-    }
 }
 
 /// Represents a budget

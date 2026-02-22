@@ -1,6 +1,7 @@
 import Foundation
-import os.log
+import MomentumFinanceCore
 import SwiftData
+import os.log
 
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
@@ -17,10 +18,10 @@ protocol LegacyDataGenerator {
 }
 
 /// Convenience extension for easy sample data generation
-public extension ModelContext {
+extension ModelContext {
     /// Generates comprehensive sample data for development and testing
     @MainActor
-    func generateSampleData() {
+    public func generateSampleData() {
         // Create generators and generate data
         let categoriesGen = CategoriesGenerator(modelContext: self)
         categoriesGen.generate()
@@ -40,7 +41,7 @@ public extension ModelContext {
 
     /// Checks if the context already has sample data
     @MainActor
-    func hasSampleData() -> Bool {
+    public func hasSampleData() -> Bool {
         // Check if any data exists
         let categoryCount = (try? fetchCount(FetchDescriptor<ExpenseCategory>())) ?? 0
         let accountCount = (try? fetchCount(FetchDescriptor<FinancialAccount>())) ?? 0
@@ -51,7 +52,7 @@ public extension ModelContext {
 
     /// Clears all data from the context
     @MainActor
-    func clearAllData() throws {
+    public func clearAllData() throws {
         // Delete all entities
         try delete(model: FinancialTransaction.self)
         try delete(model: FinancialAccount.self)

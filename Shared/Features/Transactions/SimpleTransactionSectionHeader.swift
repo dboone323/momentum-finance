@@ -13,8 +13,8 @@ extension Features.Transactions {
     struct SimpleTransactionSectionHeader: View {
         let group: (key: String, value: [FinancialTransaction])
 
-        private var monthTotal: Double {
-            self.group.value.reduce(0) { result, transaction in
+        private var monthTotal: Decimal {
+            self.group.value.reduce(Decimal(0)) { result, transaction in
                 let transactionAmount =
                     transaction.transactionType == .income
                         ? transaction.amount

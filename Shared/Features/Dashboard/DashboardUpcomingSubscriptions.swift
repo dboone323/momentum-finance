@@ -60,7 +60,7 @@ extension Features.Dashboard {
                                 Spacer()
 
                                 self.themeComponents.currencyDisplay(
-                                    amount: Decimal(subscription.amount),
+                                    amount: subscription.amount,
                                     showSign: true,
                                     font: .subheadline.weight(.medium)
                                 )

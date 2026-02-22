@@ -34,13 +34,13 @@ extension Features.Subscriptions {
             #endif
         }
 
-        private var monthlyTotal: Double {
-            self.subscriptions.reduce(0.0) { total, subscription in
+        private var monthlyTotal: Decimal {
+            self.subscriptions.reduce(Decimal(0)) { total, subscription in
                 total + subscription.monthlyCost
             }
         }
 
-        private var yearlyTotal: Double {
+        private var yearlyTotal: Decimal {
             self.monthlyTotal * 12
         }
 
@@ -199,13 +199,13 @@ extension Features.Subscriptions {
             #endif
         }
 
-        private var monthlyTotal: Double {
-            self.subscriptions.reduce(0.0) { total, subscription in
+        private var monthlyTotal: Decimal {
+            self.subscriptions.reduce(Decimal(0)) { total, subscription in
                 total + subscription.monthlyCost
             }
         }
 
-        private var yearlyTotal: Double {
+        private var yearlyTotal: Decimal {
             self.monthlyTotal * 12
         }
 

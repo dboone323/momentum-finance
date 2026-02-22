@@ -132,7 +132,10 @@ public struct BudgetNotificationScheduler {
     /// - Parameter budgets: Array of budgets to check for warnings
     public func scheduleWarningNotifications(for budgets: [Budget]) {
         for budget in budgets {
-            let spentPercentage = budget.spentAmount / budget.totalAmount
+            let total = budget.totalAmount
+            let spent = budget.spentAmount
+            let spentPercentage =
+                total > 0 ? Double(truncating: (spent / total) as NSDecimalNumber) : 0
 
             // 75% spending warning
             if spentPercentage >= 0.75, spentPercentage < 0.90 {
@@ -348,7 +351,9 @@ public struct GoalNotificationScheduler {
         self.center.removePendingNotificationRequests(withIdentifiers: [identifier])
 
         // Calculate progress percentage
-        let progressPercentage = goal.currentAmount / goal.targetAmount
+        let progressPercentage =
+            goal.targetAmount > 0
+            ? Double(truncating: (goal.currentAmount / goal.targetAmount) as NSDecimalNumber) : 0
         let progressPercent = Int(progressPercentage * 100)
 
         // Only schedule if goal is active and has meaningful progress

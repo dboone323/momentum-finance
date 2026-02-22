@@ -56,28 +56,30 @@ final class SubscriptionsViewModel {
     /// Calculate total monthly amount for active subscriptions
     /// <#Description#>
     /// - Returns: <#description#>
-    func totalMonthlyAmount(_ subscriptions: [Subscription]) -> Double {
+    func totalMonthlyAmount(_ subscriptions: [Subscription]) -> Decimal {
         subscriptions
             .filter(\.isActive)
-            .reduce(0.0) { total, subscription in
+            .reduce(Decimal(0)) { total, subscription in
                 // Convert subscription amount to monthly equivalent
                 let subscriptionAmount = subscription.amount
-                let monthlyAmount: Double =
+                let monthlyAmount: Decimal =
                     switch subscription.billingCycle {
                     case .daily:
-                        subscriptionAmount * 30.0
+                        subscriptionAmount * Decimal(30)
                     case .weekly:
-                        subscriptionAmount * 4.33 // Average weeks per month
+                        subscriptionAmount * Decimal(4.33) // Average weeks per month
                     case .monthly:
                         subscriptionAmount
                     case .quarterly:
-                        subscriptionAmount / 3.0
+                        subscriptionAmount / Decimal(3)
                     case .semiAnnually:
-                        subscriptionAmount / 6.0
+                        subscriptionAmount / Decimal(6)
                     case .yearly, .annually:
-                        subscriptionAmount / 12.0
-                    case let .custom(days):
-                        subscriptionAmount * (30.44 / Double(days))
+                        subscriptionAmount / Decimal(12)
+                    case .custom:
+                        // Default to monthly if custom days not specified in model, 
+                        // or handle appropriately if Subscription model stores custom days.
+                        subscriptionAmount
                     }
 
                 return total + monthlyAmount

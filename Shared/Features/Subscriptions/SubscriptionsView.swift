@@ -76,7 +76,7 @@ extension Features.Subscriptions {
         }
 
         private var totalMonthlyCost: Double {
-            self.viewModel.totalMonthlyAmount(self.activeSubscriptions)
+            (self.viewModel.totalMonthlyAmount(self.activeSubscriptions) as NSDecimalNumber).doubleValue
         }
 
         private var subscriptionsDueThisWeek: [Subscription] {
@@ -420,11 +420,11 @@ private struct AddSubscriptionView: View {
 
     private var canSave: Bool {
         !self.name.trimmingCharacters(in: .whitespaces).isEmpty
-            && Double(self.amount) != nil
+            && Decimal(string: self.amount) != nil
     }
 
     private func save() {
-        guard let amountValue = Double(self.amount) else {
+        guard let amountValue = Decimal(string: self.amount) else {
             self.error = "Amount must be a number"
             return
         }

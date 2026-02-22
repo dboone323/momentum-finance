@@ -1,4 +1,5 @@
 import SwiftData
+import MomentumFinanceCore
 import XCTest
 @testable import MomentumFinance
 

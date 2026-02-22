@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 @Model
@@ -13,8 +14,8 @@ public final class SavingsGoal {
     public var id: UUID
     public var title: String
     public var goalDescription: String?
-    public var targetAmount: Double
-    public var currentAmount: Double
+    public var targetAmount: Decimal
+    public var currentAmount: Decimal
     public var targetDate: Date?
     public var createdDate: Date
     public var isCompleted: Bool
@@ -29,8 +30,8 @@ public final class SavingsGoal {
         id: UUID = UUID(),
         title: String,
         goalDescription: String? = nil,
-        targetAmount: Double,
-        currentAmount: Double = 0,
+        targetAmount: Decimal,
+        currentAmount: Decimal = 0,
         targetDate: Date? = nil,
         createdDate: Date = Date(),
         isCompleted: Bool = false,
@@ -52,8 +53,8 @@ public final class SavingsGoal {
     /// Legacy convenience initializer retained for compatibility with older views/view-models.
     public convenience init(
         name: String,
-        targetAmount: Double,
-        currentAmount: Double = 0,
+        targetAmount: Decimal,
+        currentAmount: Decimal = 0,
         targetDate: Date = Date(),
         notes: String? = nil
     ) {
@@ -69,11 +70,13 @@ public final class SavingsGoal {
     /// Calculate progress as a percentage (0-100)
     public var progressPercentage: Double {
         guard targetAmount > 0 else { return 0 }
-        return min((currentAmount / targetAmount) * 100, 100)
+        let total = NSDecimalNumber(decimal: targetAmount).doubleValue
+        let current = NSDecimalNumber(decimal: currentAmount).doubleValue
+        return min((current / total) * 100, 100)
     }
 
     /// Calculate remaining amount needed to reach the goal
-    public var remainingAmount: Double {
+    public var remainingAmount: Decimal {
         max(targetAmount - currentAmount, 0)
     }
 
@@ -84,7 +87,7 @@ public final class SavingsGoal {
         let daysRemaining = Calendar.current.dateComponents([.day], from: Date(), to: targetDate).day ?? 0
         guard daysRemaining > 0 else { return currentAmount >= targetAmount }
 
-        let requiredDailySavings = remainingAmount / Double(daysRemaining)
+        let requiredDailySavings = remainingAmount / Decimal(daysRemaining)
         // This is a simple heuristic - could be made more sophisticated
         return requiredDailySavings <= 50 // Assuming $50/day is reasonable
     }
@@ -96,7 +99,7 @@ public final class SavingsGoal {
     }
 
     /// Add an amount to the current savings
-    public func addAmount(_ amount: Double) {
+    public func addAmount(_ amount: Decimal) {
         currentAmount += amount
         if currentAmount >= targetAmount {
             isCompleted = true
@@ -104,7 +107,7 @@ public final class SavingsGoal {
     }
 
     /// Legacy alias retained for older call sites.
-    public func addFunds(_ amount: Double) {
+    public func addFunds(_ amount: Decimal) {
         addAmount(amount)
     }
 }

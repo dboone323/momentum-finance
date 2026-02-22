@@ -1,4 +1,5 @@
 import Combine
+import MomentumFinanceCore
 import Foundation
 import SwiftData
 
@@ -47,7 +48,7 @@ public final class SearchEngineService: ObservableObject {
         return accounts.compactMap { account in
             let titleScore = self.calculateRelevance(account.name, query: query)
             let balanceScore = self.calculateRelevance(
-                String(format: "%.2f", account.balance), query: query
+                String(format: "%.2f", (account.balance as NSDecimalNumber).doubleValue), query: query
             )
 
             let score = max(titleScore, balanceScore)
@@ -55,7 +56,7 @@ public final class SearchEngineService: ObservableObject {
                 return SearchResult(
                     id: String(describing: account.id),
                     title: account.name,
-                    subtitle: String(format: "Balance: $%.2f", account.balance),
+                    subtitle: String(format: "Balance: $%.2f", (account.balance as NSDecimalNumber).doubleValue),
                     type: .accounts,
                     iconName: "creditcard",
                     relevanceScore: score
@@ -72,7 +73,7 @@ public final class SearchEngineService: ObservableObject {
         return transactions.compactMap { transaction -> SearchResult? in
             let titleScore = self.calculateRelevance(transaction.title, query: query)
             let amountScore = self.calculateRelevance(
-                String(format: "%.2f", transaction.amount), query: query
+                String(format: "%.2f", (transaction.amount as NSDecimalNumber).doubleValue), query: query
             )
 
             let score = max(titleScore, amountScore)
@@ -81,7 +82,7 @@ public final class SearchEngineService: ObservableObject {
                     id: String(describing: transaction.id),
                     title: transaction.title,
                     subtitle: String(
-                        format: "$%.2f • %@", transaction.amount, transaction.date.formatted()
+                        format: "$%.2f • %@", (transaction.amount as NSDecimalNumber).doubleValue, transaction.date.formatted()
                     ),
                     type: .transactions,
                     iconName: "arrow.left.arrow.right",
@@ -99,7 +100,7 @@ public final class SearchEngineService: ObservableObject {
         return subscriptions.compactMap { subscription -> SearchResult? in
             let titleScore = self.calculateRelevance(subscription.name, query: query)
             let amountScore = self.calculateRelevance(
-                String(format: "%.2f", subscription.amount), query: query
+                String(format: "%.2f", (subscription.amount as NSDecimalNumber).doubleValue), query: query
             )
 
             let score = max(titleScore, amountScore)
@@ -108,7 +109,7 @@ public final class SearchEngineService: ObservableObject {
                     id: String(describing: subscription.id),
                     title: subscription.name,
                     subtitle: String(
-                        format: "$%.2f • %@", subscription.amount,
+                        format: "$%.2f • %@", (subscription.amount as NSDecimalNumber).doubleValue,
                         subscription.billingCycle.displayName
                     ),
                     type: .subscriptions,
@@ -127,7 +128,7 @@ public final class SearchEngineService: ObservableObject {
         return budgets.compactMap { budget -> SearchResult? in
             let titleScore = self.calculateRelevance(budget.name, query: query)
             let amountScore = self.calculateRelevance(
-                String(format: "%.2f", budget.totalAmount), query: query
+                String(format: "%.2f", (budget.totalAmount as NSDecimalNumber).doubleValue), query: query
             )
 
             let score = max(titleScore, amountScore)
@@ -135,7 +136,7 @@ public final class SearchEngineService: ObservableObject {
                 return SearchResult(
                     id: String(describing: budget.id),
                     title: budget.name,
-                    subtitle: String(format: "$%.2f limit", budget.totalAmount),
+                    subtitle: String(format: "$%.2f limit", (budget.totalAmount as NSDecimalNumber).doubleValue),
                     type: .budgets,
                     iconName: "chart.pie",
                     relevanceScore: score

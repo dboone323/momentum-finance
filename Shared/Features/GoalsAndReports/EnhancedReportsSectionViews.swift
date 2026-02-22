@@ -246,27 +246,27 @@ extension Features.GoalsAndReports {
         }
 
         private var incomeAmount: String {
-            let total = self.transactions.filter { $0.transactionType == .income }.reduce(0) {
+            let total = self.transactions.filter { $0.transactionType == .income }.reduce(Decimal(0)) {
                 $0 + $1.amount
             }
-            return String(format: "%.2f", total)
+            return String(format: "%.2f", (total as NSDecimalNumber).doubleValue)
         }
 
         private var expenseAmount: String {
-            let total = self.transactions.filter { $0.transactionType == .expense }.reduce(0) {
+            let total = self.transactions.filter { $0.transactionType == .expense }.reduce(Decimal(0)) {
                 $0 + $1.amount
             }
-            return String(format: "%.2f", total)
+            return String(format: "%.2f", (total as NSDecimalNumber).doubleValue)
         }
 
         private var netValue: Double {
-            let income = self.transactions.filter { $0.transactionType == .income }.reduce(0) {
+            let income = self.transactions.filter { $0.transactionType == .income }.reduce(Decimal(0)) {
                 $0 + $1.amount
             }
-            let expenses = self.transactions.filter { $0.transactionType == .expense }.reduce(0) {
+            let expenses = self.transactions.filter { $0.transactionType == .expense }.reduce(Decimal(0)) {
                 $0 + $1.amount
             }
-            return income - expenses
+            return (income - expenses as NSDecimalNumber).doubleValue
         }
 
         private var netAmount: String {
@@ -278,13 +278,13 @@ extension Features.GoalsAndReports {
     struct SpendingByCategoryChart: View {
         let transactions: [FinancialTransaction]
 
-        private var categorySpending: [(String, Double)] {
+        private var categorySpending: [(String, Decimal)] {
             let expenseTransactions = self.transactions.filter { $0.transactionType == .expense }
-            var spendingByCategory: [String: Double] = [:]
+            var spendingByCategory: [String: Decimal] = [:]
 
             for transaction in expenseTransactions {
                 let categoryName = transaction.category ?? "Uncategorized"
-                spendingByCategory[categoryName, default: 0] += transaction.amount
+                spendingByCategory[categoryName, default: Decimal(0)] += transaction.amount
             }
 
             return spendingByCategory.sorted { $0.value > $1.value }
@@ -308,7 +308,7 @@ extension Features.GoalsAndReports {
                                 Text(category)
                                     .font(.subheadline)
                                 Spacer()
-                                Text(amount.formatted(.currency(code: "USD")))
+                                Text((amount as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))
                                     .font(.subheadline)
                                     .fontWeight(.medium)
                             }
@@ -331,8 +331,8 @@ extension Features.GoalsAndReports {
         // swiftlint:disable:next nesting
         struct BudgetPerformanceData {
             let budget: Budget
-            let spent: Double
-            let budgeted: Double
+            let spent: Decimal
+            let budgeted: Decimal
         }
 
         private var budgetPerformance: [BudgetPerformanceData] {
@@ -342,7 +342,7 @@ extension Features.GoalsAndReports {
                         .filter {
                             $0.category == budget.category && $0.transactionType == .expense
                         }
-                        .reduce(0) { $0 + $1.amount }
+                        .reduce(Decimal(0)) { $0 + $1.amount }
                 return BudgetPerformanceData(budget: budget, spent: spent, budgeted: budget.limitAmount)
             }
         }
@@ -377,7 +377,7 @@ extension Features.GoalsAndReports {
                                             .fill(data.spent > data.budgeted ? Color.red : Color.green)
                                             .frame(
                                                 width: min(
-                                                    geometry.size.width * (data.spent / data.budgeted),
+                                                    geometry.size.width * ((data.spent / data.budgeted) as NSDecimalNumber).doubleValue,
                                                     geometry.size.width
                                                 ), height: 8
                                             )
@@ -387,11 +387,11 @@ extension Features.GoalsAndReports {
                                 .frame(height: 8)
 
                                 HStack {
-                                    Text("Spent: \(data.spent.formatted(.currency(code: "USD")))")
+                                    Text("Spent: \((data.spent as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))")
                                         .font(.caption)
                                         .foregroundColor(.secondary)
                                     Spacer()
-                                    Text("Budget: \(data.budgeted.formatted(.currency(code: "USD")))")
+                                    Text("Budget: \((data.budgeted as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))")
                                         .font(.caption)
                                         .foregroundColor(.secondary)
                                 }

@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import MomentumFinanceCore
 @testable import MomentumFinance
 
 final class PerformanceTests: XCTestCase {

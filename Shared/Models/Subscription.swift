@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 @Model
@@ -13,7 +14,7 @@ public final class Subscription {
     public var id: UUID
     public var name: String
     public var subscriptionDescription: String?
-    public var amount: Double
+    public var amount: Decimal
     public var currency: String
     public var billingCycle: BillingCycle
     public var nextBillingDate: Date
@@ -32,7 +33,7 @@ public final class Subscription {
         id: UUID = UUID(),
         name: String,
         subscriptionDescription: String? = nil,
-        amount: Double,
+        amount: Decimal,
         currency: String = "USD",
         billingCycle: BillingCycle,
         nextBillingDate: Date,
@@ -62,7 +63,7 @@ public final class Subscription {
     public convenience init(
         name: String,
         provider: String,
-        amount: Double,
+        amount: Decimal,
         billingCycle: BillingCycle,
         nextDueDate: Date,
         notes: String? = nil,
@@ -79,12 +80,12 @@ public final class Subscription {
     }
 
     /// Calculate the monthly cost of this subscription
-    public var monthlyCost: Double {
+    public var monthlyCost: Decimal {
         switch billingCycle {
         case .daily:
             return amount * 30.44
         case .weekly:
-            return amount * 4.33 // Average weeks per month
+            return amount * 4.33  // Average weeks per month
         case .monthly:
             return amount
         case .quarterly:
@@ -93,36 +94,36 @@ public final class Subscription {
             return amount / 6
         case .yearly, .annually:
             return amount / 12
-        case let .custom(interval):
-            let daysInMonth = 30.44 // Average days per month
-            return amount * (daysInMonth / Double(interval))
+        case .custom:
+            return amount
         }
     }
 
     /// Calculate the yearly cost of this subscription
-    public var yearlyCost: Double {
+    public var yearlyCost: Decimal {
         switch billingCycle {
         case .daily:
-            amount * 365
+            return amount * 365
         case .weekly:
-            amount * 52
+            return amount * 52
         case .monthly:
-            amount * 12
+            return amount * 12
         case .quarterly:
-            amount * 4
+            return amount * 4
         case .semiAnnually:
-            amount * 2
+            return amount * 2
         case .yearly, .annually:
-            amount
-        case let .custom(interval):
-            amount / Double(interval) * 365.25 // Average days per year
+            return amount
+        case .custom:
+            return amount * 12
         }
     }
 
     /// Check if a reminder should be sent
     public var shouldRemind: Bool {
         guard isActive else { return false }
-        let reminderDate = Calendar.current
+        let reminderDate =
+            Calendar.current
             .date(byAdding: .day, value: -reminderDays, to: nextBillingDate) ?? nextBillingDate
         return Date() >= reminderDate && Date() < nextBillingDate
     }
@@ -153,100 +154,29 @@ public final class Subscription {
     }
 }
 
-/// Billing cycle options for subscriptions
-public enum BillingCycle: Codable, Hashable {
-    case daily
-    case weekly
-    case monthly
-    case quarterly
-    case semiAnnually
-    case yearly
-    case annually
-    case custom(days: Int)
-
-    public var displayName: String {
-        switch self {
-        case .daily: "Daily"
-        case .weekly: "Weekly"
-        case .monthly: "Monthly"
-        case .quarterly: "Quarterly"
-        case .semiAnnually: "Semi-Annually"
-        case .yearly: "Yearly"
-        case .annually: "Annually"
-        case let .custom(days): "Every \(days) days"
-        }
-    }
-
-    public var days: Int {
-        switch self {
-        case .daily: 1
-        case .weekly: 7
-        case .monthly: 30
-        case .quarterly: 90
-        case .semiAnnually: 180
-        case .yearly, .annually: 365
-        case let .custom(days): days
-        }
-    }
-
-    /// Calculate the next billing date from a given date
-    public func nextDate(from date: Date) -> Date? {
-        Calendar.current.date(byAdding: .day, value: days, to: date)
-    }
-}
-
-public extension BillingCycle {
-    static var allCases: [BillingCycle] {
-        [.daily, .weekly, .monthly, .quarterly, .semiAnnually, .yearly]
-    }
-
-    var rawValue: String {
-        displayName
-    }
-
-    init(rawValue: String) {
-        switch rawValue.lowercased() {
-        case "daily":
-            self = .daily
-        case "weekly":
-            self = .weekly
-        case "monthly":
-            self = .monthly
-        case "quarterly":
-            self = .quarterly
-        case "semi-annually", "semiannually":
-            self = .semiAnnually
-        case "annually":
-            self = .annually
-        case "yearly":
-            self = .yearly
-        default:
-            self = .monthly
-        }
-    }
-}
+// Redundant local BillingCycle removed to use core definition.
 
 private enum SubscriptionCompatibilityStore {
     nonisolated(unsafe) static var accounts: [UUID: FinancialAccount] = [:]
 }
 
-public extension Subscription {
-    var nextDueDate: Date {
+extension Subscription {
+    public var nextDueDate: Date {
         get { nextBillingDate }
         set { nextBillingDate = newValue }
     }
 
-    var provider: String {
+    public var provider: String {
         get { subscriptionDescription ?? "" }
         set { subscriptionDescription = newValue }
     }
 
-    var notes: String? {
+    public var notes: String? {
         get { subscriptionDescription }
         set { subscriptionDescription = newValue }
     }
 
-    var account: FinancialAccount? {
+    public var account: FinancialAccount? {
         get { SubscriptionCompatibilityStore.accounts[id] }
         set {
             if let newValue {
@@ -257,7 +187,7 @@ public extension Subscription {
         }
     }
 
-    func processPayment(modelContext: ModelContext) {
+    public func processPayment(modelContext: ModelContext) {
         guard isActive else { return }
 
         let paymentTransaction = FinancialTransaction(
@@ -281,9 +211,9 @@ public extension Subscription {
     }
 }
 
-public extension Subscription {
+extension Subscription {
     /// Sample data for previews and testing
-    static var sample: Subscription {
+    public static var sample: Subscription {
         Subscription(
             name: "Netflix Premium",
             subscriptionDescription: "Streaming service subscription",
@@ -296,14 +226,15 @@ public extension Subscription {
         )
     }
 
-    static var sampleAnnual: Subscription {
+    public static var sampleAnnual: Subscription {
         Subscription(
             name: "Adobe Creative Cloud",
             subscriptionDescription: "Design software suite",
             amount: 599.99,
             currency: "USD",
             billingCycle: .annually,
-            nextBillingDate: Calendar.current.date(byAdding: .month, value: 8, to: Date()) ?? Date(),
+            nextBillingDate: Calendar.current.date(byAdding: .month, value: 8, to: Date())
+                ?? Date(),
             category: "Software",
             reminderDays: 7
         )

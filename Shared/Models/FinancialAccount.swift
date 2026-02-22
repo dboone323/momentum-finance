@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 @Model
@@ -15,7 +16,7 @@ public final class FinancialAccount {
     public var accountType: AccountType
     public var institutionName: String?
     public var accountNumber: String?
-    public var balance: Double
+    public var balance: Decimal
     public var currency: String
     public var isActive: Bool
     public var colorHex: String?
@@ -33,7 +34,7 @@ public final class FinancialAccount {
         accountType: AccountType,
         institutionName: String? = nil,
         accountNumber: String? = nil,
-        balance: Double = 0,
+        balance: Decimal = 0,
         currency: String = "USD",
         isActive: Bool = true,
         colorHex: String? = nil,
@@ -60,29 +61,30 @@ public final class FinancialAccount {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.currencyCode = currency
-        return formatter.string(from: NSNumber(value: balance)) ?? "$\(balance)"
+        let doubleBalance = NSDecimalNumber(decimal: balance).doubleValue
+        return formatter.string(from: NSNumber(value: doubleBalance)) ?? "$\(doubleBalance)"
     }
 
     /// Calculate total income for this account in a date range
-    public func totalIncome(in dateRange: ClosedRange<Date>? = nil) -> Double {
+    public func totalIncome(in dateRange: ClosedRange<Date>? = nil) -> Decimal {
         let relevantTransactions = transactions.filter { transaction in
-            transaction.transactionType == .income &&
-                (dateRange?.contains(transaction.date) ?? true)
+            transaction.transactionType == .income
+                && (dateRange?.contains(transaction.date) ?? true)
         }
-        return relevantTransactions.reduce(0) { $0 + $1.amount }
+        return relevantTransactions.reduce(Decimal(0)) { $0 + $1.amount }
     }
 
     /// Calculate total expenses for this account in a date range
-    public func totalExpenses(in dateRange: ClosedRange<Date>? = nil) -> Double {
+    public func totalExpenses(in dateRange: ClosedRange<Date>? = nil) -> Decimal {
         let relevantTransactions = transactions.filter { transaction in
-            transaction.transactionType == .expense &&
-                (dateRange?.contains(transaction.date) ?? true)
+            transaction.transactionType == .expense
+                && (dateRange?.contains(transaction.date) ?? true)
         }
-        return relevantTransactions.reduce(0) { $0 + $1.amount }
+        return relevantTransactions.reduce(Decimal(0)) { $0 + $1.amount }
     }
 
     /// Calculate net flow (income - expenses) for this account in a date range
-    public func netFlow(in dateRange: ClosedRange<Date>? = nil) -> Double {
+    public func netFlow(in dateRange: ClosedRange<Date>? = nil) -> Decimal {
         totalIncome(in: dateRange) - totalExpenses(in: dateRange)
     }
 
@@ -119,66 +121,11 @@ public final class FinancialAccount {
     }
 }
 
-/// Account types
-public enum AccountType: String, Codable, CaseIterable {
-    case checking = "Checking"
-    case savings = "Savings"
-    case creditCard = "Credit Card"
-    case investment = "Investment"
-    case loan = "Loan"
-    case cash = "Cash"
-    case other = "Other"
+// Redundant local AccountType removed to use core definition.
 
-    public var displayName: String {
-        rawValue
-    }
-
-    public var defaultColorHex: String {
-        switch self {
-        case .checking: "#007AFF" // Blue
-        case .savings: "#34C759" // Green
-        case .creditCard: "#FF3B30" // Red
-        case .investment: "#AF52DE" // Purple
-        case .loan: "#FF9500" // Orange
-        case .cash: "#FFCC00" // Yellow
-        case .other: "#8E8E93" // Gray
-        }
-    }
-
-    public var defaultIconName: String {
-        switch self {
-        case .checking: "building.columns.fill"
-        case .savings: "banknote.fill"
-        case .creditCard: "creditcard.fill"
-        case .investment: "chart.line.uptrend.xyaxis"
-        case .loan: "dollarsign.circle.fill"
-        case .cash: "banknote"
-        case .other: "circle.fill"
-        }
-    }
-
-    public var isAsset: Bool {
-        switch self {
-        case .checking, .savings, .investment, .cash:
-            true
-        case .creditCard, .loan, .other:
-            false
-        }
-    }
-
-    public var isLiability: Bool {
-        switch self {
-        case .creditCard, .loan:
-            true
-        case .checking, .savings, .investment, .cash, .other:
-            false
-        }
-    }
-}
-
-public extension FinancialAccount {
+extension FinancialAccount {
     /// Sample data for previews and testing
-    static var sampleChecking: FinancialAccount {
+    public static var sampleChecking: FinancialAccount {
         FinancialAccount(
             name: "Main Checking",
             accountType: .checking,
@@ -191,7 +138,7 @@ public extension FinancialAccount {
         )
     }
 
-    static var sampleSavings: FinancialAccount {
+    public static var sampleSavings: FinancialAccount {
         FinancialAccount(
             name: "Emergency Fund",
             accountType: .savings,
@@ -204,10 +151,10 @@ public extension FinancialAccount {
         )
     }
 
-    static var sampleCreditCard: FinancialAccount {
+    public static var sampleCreditCard: FinancialAccount {
         FinancialAccount(
             name: "Chase Freedom",
-            accountType: .creditCard,
+            accountType: .credit,
             institutionName: "Chase Bank",
             accountNumber: "1111222233334444",
             balance: -1250.75,

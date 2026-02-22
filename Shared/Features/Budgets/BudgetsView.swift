@@ -269,11 +269,11 @@ extension Features.Budgets {
         }
 
         private var totalBudget: Double {
-            self.budgets.reduce(0) { $0 + $1.limitAmount }
+            (self.budgets.reduce(Decimal(0)) { $0 + $1.limitAmount } as NSDecimalNumber).doubleValue
         }
 
         private var totalSpent: Double {
-            self.budgets.reduce(0) { $0 + $1.spentAmount }
+            (self.budgets.reduce(Decimal(0)) { $0 + $1.spentAmount } as NSDecimalNumber).doubleValue
         }
 
         private var remaining: Double {
@@ -325,12 +325,12 @@ extension Features.Budgets {
                             }
                         }
 
-                        Text("Budget: $\(self.budget.effectiveLimit, specifier: "%.2f")")
+                        Text("Budget: $\((self.budget.effectiveLimit as NSDecimalNumber).doubleValue, specifier: "%.2f")")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
 
                         if self.budget.rolledOverAmount > 0 {
-                            Text("Rolled over: $\(self.budget.rolledOverAmount, specifier: "%.2f")")
+                            Text("Rolled over: $\((self.budget.rolledOverAmount as NSDecimalNumber).doubleValue, specifier: "%.2f")")
                                 .font(.caption)
                                 .foregroundColor(.green)
                         }
@@ -339,7 +339,7 @@ extension Features.Budgets {
                     Spacer()
 
                     VStack(alignment: .trailing, spacing: 4) {
-                        Text("$\(self.budget.spentAmount, specifier: "%.2f")")
+                        Text("$\((self.budget.spentAmount as NSDecimalNumber).doubleValue, specifier: "%.2f")")
                             .font(.headline)
                             .fontWeight(.bold)
                             .foregroundColor(self.spentColor)
@@ -365,7 +365,7 @@ extension Features.Budgets {
 
         private var spentPercentage: Double {
             guard self.budget.limitAmount > 0 else { return 0 }
-            return min((self.budget.spentAmount / self.budget.limitAmount) * 100, 100)
+            return min(((self.budget.spentAmount / self.budget.limitAmount) * 100 as NSDecimalNumber).doubleValue, 100)
         }
 
         private var spentColor: Color {
@@ -471,7 +471,7 @@ extension Features.Budgets {
 
         private func saveBudget() {
             guard let category = selectedCategory,
-                  let limit = Double(limitAmount) else { return }
+                  let limit = Decimal(string: limitAmount) else { return }
 
             let calendar = Calendar.current
             let currentMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: Date()))!
@@ -522,7 +522,7 @@ public struct BudgetSearchView: View {
                                     .foregroundColor(.secondary)
                             }
                             Text(
-                                "Budget: $\(budget.limitAmount, specifier: "%.2f") • Spent: $\(budget.spentAmount, specifier: "%.2f")"
+                                "Budget: $\((budget.limitAmount as NSDecimalNumber).doubleValue, specifier: "%.2f") • Spent: $\((budget.spentAmount as NSDecimalNumber).doubleValue, specifier: "%.2f")"
                             )
                             .font(.caption)
                             .foregroundColor(.secondary)

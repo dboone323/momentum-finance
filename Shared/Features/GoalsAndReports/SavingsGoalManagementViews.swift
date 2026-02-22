@@ -22,7 +22,7 @@ public struct AddSavingsGoalView: View {
 
     private var isFormValid: Bool {
         !self.name.isEmpty && !self.targetAmountString.isEmpty
-            && Double(self.targetAmountString) != nil
+            && Decimal(string: self.targetAmountString) != nil
     }
 
     public var body: some View {
@@ -100,7 +100,7 @@ public struct AddSavingsGoalView: View {
     }
 
     private func saveSavingsGoal() {
-        guard let targetAmount = Double(targetAmountString) else { return }
+        guard let targetAmount = Decimal(string: targetAmountString) else { return }
 
         let goal = MomentumFinanceCore.SavingsGoal(
             name: name,
@@ -249,7 +249,7 @@ public struct SavingsGoalDetailView: View {
                         HStack(spacing: 12) {
                             Button(
                                 action: {
-                                    self.goal.addFunds(25)
+                                    self.goal.addFunds(Decimal(25))
                                     try? self.modelContext.save()
                                 },
                                 label: {
@@ -264,7 +264,7 @@ public struct SavingsGoalDetailView: View {
 
                             Button(
                                 action: {
-                                    self.goal.addFunds(50)
+                                    self.goal.addFunds(Decimal(50))
                                     try? self.modelContext.save()
                                 },
                                 label: {
@@ -279,7 +279,7 @@ public struct SavingsGoalDetailView: View {
 
                             Button(
                                 action: {
-                                    self.goal.addFunds(100)
+                                    self.goal.addFunds(Decimal(100))
                                     try? self.modelContext.save()
                                 },
                                 label: {
@@ -329,7 +329,7 @@ public struct SavingsGoalDetailView: View {
                     }
                     .accessibilityLabel("Cancel")
                     Button("Add") {
-                        if let amount = Double(amountToAdd) {
+                        if let amount = Decimal(string: amountToAdd) {
                             self.goal.addFunds(amount)
                             try? self.modelContext.save()
                         }

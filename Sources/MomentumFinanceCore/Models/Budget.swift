@@ -1,4 +1,5 @@
 import Foundation
+
 #if canImport(SwiftData)
     import SwiftData
 #endif
@@ -9,7 +10,7 @@ import Foundation
 public final class Budget: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, name, limitAmount, month, createdDate, rolloverEnabled, rolledOverAmount,
-             maxRolloverPercentage, currencyCode
+            maxRolloverPercentage, currencyCode
     }
 
     public var id: UUID
@@ -37,6 +38,13 @@ public final class Budget: Encodable {
         self.month = month
         self.createdDate = Date()
         self.currencyCode = currencyCode
+    }
+    public var totalAmount: Decimal {
+        limitAmount
+    }
+
+    public var startDate: Date {
+        month
     }
 
     public var effectiveLimit: Decimal {

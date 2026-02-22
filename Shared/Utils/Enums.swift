@@ -62,15 +62,75 @@ public enum AccountType: String, Codable, Sendable, CaseIterable {
     }
 }
 
+public enum BudgetPeriod: String, Codable, Sendable, CaseIterable {
+    case weekly = "Weekly"
+    case monthly = "Monthly"
+    case quarterly = "Quarterly"
+    case semiAnnually = "Semi-Annually"
+    case annually = "Annually"
+    case custom = "Custom"
+
+    public var displayName: String {
+        rawValue
+    }
+
+    public func nextPeriod(from date: Date) -> (start: Date, end: Date) {
+        let calendar = Calendar.current
+        switch self {
+        case .weekly:
+            let start = date.startOfWeek
+            let end = calendar.date(byAdding: .day, value: 6, to: start) ?? start
+            return (start, end)
+        case .monthly:
+            let start = date.startOfMonth
+            let end = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: start) ?? start
+            return (start, end)
+        case .quarterly:
+            let start = date.startOfQuarter
+            let end = calendar.date(byAdding: DateComponents(month: 3, day: -1), to: start) ?? start
+            return (start, end)
+        case .semiAnnually:
+            let start = date.startOfSemester
+            let end = calendar.date(byAdding: DateComponents(month: 6, day: -1), to: start) ?? start
+            return (start, end)
+        case .annually:
+            let start = date.startOfYear
+            let end = calendar.date(byAdding: DateComponents(year: 1, day: -1), to: start) ?? start
+            return (start, end)
+        case .custom:
+            return (date, date)
+        }
+    }
+}
+
 public enum BillingCycle: String, Codable, Sendable, CaseIterable {
     case daily = "Daily"
     case weekly = "Weekly"
     case monthly = "Monthly"
     case quarterly = "Quarterly"
+    case semiAnnually = "Semi-Annually"
     case yearly = "Yearly"
+    case annually = "Annually"
+    case custom = "Custom"
 
     public var displayName: String {
-        self.rawValue
+        rawValue
+    }
+
+    public var days: Int {
+        switch self {
+        case .daily: 1
+        case .weekly: 7
+        case .monthly: 30
+        case .quarterly: 90
+        case .semiAnnually: 180
+        case .yearly, .annually: 365
+        case .custom: 30 // Default to 30 for now
+        }
+    }
+
+    public func nextDate(from date: Date) -> Date? {
+        Calendar.current.date(byAdding: .day, value: days, to: date)
     }
 }
 

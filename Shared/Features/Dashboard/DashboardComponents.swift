@@ -162,17 +162,20 @@ public struct DashboardBudgetProgress: View {
                     .foregroundColor(.blue)
             }
             ForEach(self.budgets.prefix(2), id: \.id) { budget in
+                let progress: Double = budget.limitAmount > 0
+                    ? ((budget.spentAmount / budget.limitAmount) as NSDecimalNumber).doubleValue
+                    : 0
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
                         Text(budget.name)
                             .font(.subheadline)
                             .foregroundColor(.primary)
                         Spacer()
-                        Text("\(Int(budget.spentAmount / budget.limitAmount * 100))%")
+                        Text("\(Int(progress * 100))%")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
-                    ProgressView(value: budget.spentAmount / budget.limitAmount)
+                    ProgressView(value: min(progress, 1.0))
                         .progressViewStyle(
                             LinearProgressViewStyle(
                                 tint: budget.spentAmount > budget.limitAmount ? .red : .green

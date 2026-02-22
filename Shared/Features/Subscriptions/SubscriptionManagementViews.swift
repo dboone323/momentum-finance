@@ -154,7 +154,7 @@ extension Features.Subscriptions {
         }
 
         private func saveSubscription() {
-            guard let amountValue = Double(amount) else { return }
+            guard let amountValue = Decimal(string: amount) else { return }
 
             let subscription = Subscription(
                 name: name,

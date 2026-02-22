@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 @Model
@@ -13,8 +14,8 @@ public final class Budget {
     public var id: UUID
     public var name: String
     public var budgetDescription: String?
-    public var totalAmount: Double
-    public var spentAmount: Double
+    public var totalAmount: Decimal
+    public var spentAmount: Decimal
     public var period: BudgetPeriod
     public var startDate: Date
     public var endDate: Date
@@ -32,8 +33,8 @@ public final class Budget {
         id: UUID = UUID(),
         name: String,
         budgetDescription: String? = nil,
-        totalAmount: Double,
-        spentAmount: Double = 0,
+        totalAmount: Decimal,
+        spentAmount: Decimal = 0,
         period: BudgetPeriod,
         startDate: Date,
         endDate: Date,
@@ -59,14 +60,16 @@ public final class Budget {
     }
 
     /// Calculate remaining budget amount
-    public var remainingAmount: Double {
+    public var remainingAmount: Decimal {
         max(totalAmount - spentAmount, 0)
     }
 
     /// Calculate budget utilization as a percentage (0-100)
     public var utilizationPercentage: Double {
         guard totalAmount > 0 else { return 0 }
-        return min((spentAmount / totalAmount) * 100, 100)
+        let total = NSDecimalNumber(decimal: totalAmount).doubleValue
+        let spent = NSDecimalNumber(decimal: spentAmount).doubleValue
+        return min((spent / total) * 100, 100)
     }
 
     /// Check if budget is over limit
@@ -76,15 +79,16 @@ public final class Budget {
 
     /// Check if budget is nearing limit (within 10%)
     public var isNearLimit: Bool {
-        let threshold = totalAmount * 0.9
+        let threshold = totalAmount * Decimal(0.9)
         return spentAmount >= threshold && spentAmount <= totalAmount
     }
 
     /// Calculate daily spending rate
-    public var dailySpendingRate: Double {
-        let daysRemaining = Calendar.current.dateComponents([.day], from: Date(), to: endDate).day ?? 1
+    public var dailySpendingRate: Decimal {
+        let daysRemaining =
+            Calendar.current.dateComponents([.day], from: Date(), to: endDate).day ?? 1
         guard daysRemaining > 0 else { return remainingAmount }
-        return remainingAmount / Double(daysRemaining)
+        return remainingAmount / Decimal(daysRemaining)
     }
 
     /// Calculate days remaining in the budget period
@@ -98,13 +102,13 @@ public final class Budget {
     }
 
     /// Add a transaction amount to the spent total
-    public func addTransaction(amount: Double) {
+    public func addTransaction(amount: Decimal) {
         spentAmount += amount
         lastModifiedDate = Date()
     }
 
     /// Remove a transaction amount from the spent total
-    public func removeTransaction(amount: Double) {
+    public func removeTransaction(amount: Decimal) {
         spentAmount = max(spentAmount - amount, 0)
         lastModifiedDate = Date()
     }
@@ -118,19 +122,19 @@ public final class Budget {
     }
 
     /// Update the budget amount
-    public func updateAmount(_ newAmount: Double) {
+    public func updateAmount(_ newAmount: Decimal) {
         totalAmount = newAmount
         lastModifiedDate = Date()
     }
 
     /// Legacy convenience initializer retained for compatibility with older views/view-models.
-    public convenience init(name: String, limitAmount: Double, month: Date) {
+    public convenience init(name: String, limitAmount: Decimal, month: Date) {
         let start = month.startOfMonth
-        let end = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: start) ?? start
+        let end =
+            Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: start) ?? start
         self.init(
             name: name,
             totalAmount: limitAmount,
-            spentAmount: 0,
             period: .monthly,
             startDate: start,
             endDate: end
@@ -144,51 +148,54 @@ private enum BudgetCompatibilityStore {
     nonisolated(unsafe) static var rolledOverAmount: [UUID: Double] = [:]
 }
 
-public extension Budget {
+extension Budget {
     // Legacy aliases used by older UI code paths
-    var month: Date {
+    public var month: Date {
         get { startDate }
         set {
             let newStart = newValue.startOfMonth
             startDate = newStart
-            endDate = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: newStart) ?? newStart
+            endDate =
+                Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: newStart)
+                ?? newStart
             lastModifiedDate = Date()
         }
     }
 
-    var limitAmount: Double {
+    public var limitAmount: Decimal {
         get { totalAmount }
         set { updateAmount(newValue) }
     }
 
-    var rolloverEnabled: Bool {
+    public var rolloverEnabled: Bool {
         get { BudgetCompatibilityStore.rolloverEnabled[id] ?? false }
         set { BudgetCompatibilityStore.rolloverEnabled[id] = newValue }
     }
 
-    var maxRolloverPercentage: Double {
+    public var maxRolloverPercentage: Double {
         get { BudgetCompatibilityStore.maxRolloverPercentage[id] ?? 1.0 }
         set { BudgetCompatibilityStore.maxRolloverPercentage[id] = newValue }
     }
 
-    var rolledOverAmount: Double {
-        get { BudgetCompatibilityStore.rolledOverAmount[id] ?? 0 }
-        set { BudgetCompatibilityStore.rolledOverAmount[id] = newValue }
+    public var rolledOverAmount: Decimal {
+        get { Decimal(BudgetCompatibilityStore.rolledOverAmount[id] ?? 0) }
+        set { BudgetCompatibilityStore.rolledOverAmount[id] = NSDecimalNumber(decimal: newValue).doubleValue }
     }
 
-    var effectiveLimit: Double {
+    public var effectiveLimit: Decimal {
         limitAmount + rolledOverAmount
     }
 
-    func calculateRolloverAmount() -> Double {
+    public func calculateRolloverAmount() -> Decimal {
         guard rolloverEnabled else { return 0 }
         let unusedAmount = max(limitAmount - spentAmount, 0)
-        let maxAllowed = limitAmount * maxRolloverPercentage
+        let maxAllowed = limitAmount * Decimal(maxRolloverPercentage)
         return min(unusedAmount, maxAllowed)
     }
 
-    func createNextPeriodBudget(for month: Date? = nil) -> Budget {
-        let startSourceDate = month ?? Calendar.current.date(byAdding: .day, value: 1, to: endDate) ?? Date()
+    public func createNextPeriodBudget(for month: Date? = nil) -> Budget {
+        let startSourceDate =
+            month ?? Calendar.current.date(byAdding: .day, value: 1, to: endDate) ?? Date()
         let nextPeriod = period.nextPeriod(from: startSourceDate)
 
         let nextBudget = Budget(
@@ -214,84 +221,41 @@ public extension Budget {
     }
 }
 
-/// Budget period types
-public enum BudgetPeriod: String, Codable, CaseIterable {
-    case weekly = "Weekly"
-    case monthly = "Monthly"
-    case quarterly = "Quarterly"
-    case semiAnnually = "Semi-Annually"
-    case annually = "Annually"
-    case custom = "Custom"
-
-    public var displayName: String {
-        rawValue
-    }
-
-    /// Calculate the next period dates from a given date
-    public func nextPeriod(from date: Date) -> (start: Date, end: Date) {
-        let calendar = Calendar.current
-
-        switch self {
-        case .weekly:
-            let start = date.startOfWeek
-            let end = calendar.date(byAdding: .day, value: 6, to: start) ?? start
-            return (start, end)
-
-        case .monthly:
-            let start = date.startOfMonth
-            let end = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: start) ?? start
-            return (start, end)
-
-        case .quarterly:
-            let start = date.startOfQuarter
-            let end = calendar.date(byAdding: DateComponents(month: 3, day: -1), to: start) ?? start
-            return (start, end)
-
-        case .semiAnnually:
-            let start = date.startOfSemester
-            let end = calendar.date(byAdding: DateComponents(month: 6, day: -1), to: start) ?? start
-            return (start, end)
-
-        case .annually:
-            let start = date.startOfYear
-            let end = calendar.date(byAdding: DateComponents(year: 1, day: -1), to: start) ?? start
-            return (start, end)
-
-        case .custom:
-            // For custom periods, return the same dates (should be handled by user)
-            return (date, date)
-        }
-    }
-}
+// Redundant local BudgetPeriod removed to use core definition.
 
 extension Date {
     var startOfWeek: Date {
         Calendar.current
-            .date(from: Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) ?? self
+            .date(
+                from: Calendar.current.dateComponents(
+                    [.yearForWeekOfYear, .weekOfYear], from: self)) ?? self
     }
 
     var startOfMonth: Date {
-        Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: self)) ?? self
+        Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: self))
+            ?? self
     }
 
     var startOfQuarter: Date {
         let month = Calendar.current.component(.month, from: self)
         let quarterStartMonth = ((month - 1) / 3) * 3 + 1
-        return Calendar.current.date(from: DateComponents(
-            year: Calendar.current.component(.year, from: self),
-            month: quarterStartMonth,
-            day: 1
-        )) ?? self
+        return Calendar.current.date(
+            from: DateComponents(
+                year: Calendar.current.component(.year, from: self),
+                month: quarterStartMonth,
+                day: 1
+            )) ?? self
     }
 
     var startOfSemester: Date {
         let month = Calendar.current.component(.month, from: self)
         let semesterStartMonth = month <= 6 ? 1 : 7
-        return Calendar.current.date(from: DateComponents(
-            year: Calendar.current.component(.year, from: self),
-            month: semesterStartMonth,
-            day: 1
-        )) ?? self
+        return Calendar.current.date(
+            from: DateComponents(
+                year: Calendar.current.component(.year, from: self),
+                month: semesterStartMonth,
+                day: 1
+            )) ?? self
     }
 
     var startOfYear: Date {
@@ -299,9 +263,9 @@ extension Date {
     }
 }
 
-public extension Budget {
+extension Budget {
     /// Sample data for previews and testing
-    static var sample: Budget {
+    public static var sample: Budget {
         let startDate = Date()
         let endDate = Calendar.current.date(byAdding: .month, value: 1, to: startDate) ?? startDate
 
@@ -318,7 +282,7 @@ public extension Budget {
         )
     }
 
-    static var sampleOverBudget: Budget {
+    public static var sampleOverBudget: Budget {
         let startDate = Date()
         let endDate = Calendar.current.date(byAdding: .month, value: 1, to: startDate) ?? startDate
 

@@ -34,7 +34,7 @@ extension Features.Transactions {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Total Balance")
                                 .font(.headline)
-                            Text(self.formattedCurrency(self.totalBalance))
+                            Text(self.formattedCurrency((self.totalBalance as NSDecimalNumber).doubleValue))
                                 .font(.title)
                                 .fontWeight(.bold)
                                 .foregroundColor(self.totalBalance >= 0 ? .primary : .red)
@@ -88,7 +88,7 @@ extension Features.Transactions {
                 Spacer()
 
                 // Balance
-                Text(self.formattedCurrency(account.balance))
+                Text(self.formattedCurrency((account.balance as NSDecimalNumber).doubleValue))
                     .font(.headline)
                     .foregroundColor(account.balance >= 0 ? .primary : .red)
             }
@@ -100,8 +100,8 @@ extension Features.Transactions {
             )
         }
 
-        private var totalBalance: Double {
-            self.accounts.reduce(0) { $0 + $1.balance }
+        private var totalBalance: Decimal {
+            self.accounts.reduce(Decimal(0)) { $0 + $1.balance }
         }
 
         private func backgroundColorForPlatform() -> Color {

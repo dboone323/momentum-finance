@@ -2,23 +2,23 @@ import Foundation
 import MomentumFinanceCore
 
 func fi_computeMonthlySpendingByCategory(transactions: [FinancialTransaction]) -> [String: [Date:
-        Double]]
+        Decimal]]
 {
     let calendar = Calendar.current
-    var monthlySpendingByCategory: [String: [Date: Double]] = [:]
+    var monthlySpendingByCategory: [String: [Date: Decimal]] = [:]
 
     for txn in transactions where txn.amount < 0 {
         guard let category = txn.category else { continue }
         let month = calendar.date(from: calendar.dateComponents([.year, .month], from: txn.date))!
         monthlySpendingByCategory[category, default: [:]][month] =
-            (monthlySpendingByCategory[category]?[month] ?? 0) + abs(txn.amount)
+            (monthlySpendingByCategory[category]?[month] ?? Decimal(0)) + abs(txn.amount)
     }
 
     return monthlySpendingByCategory
 }
 
 func fi_generateSpendingInsightsFromMonthlyData(
-    monthlySpendingByCategory: [String: [Date: Double]],
+    monthlySpendingByCategory: [String: [Date: Decimal]],
     categories: [ExpenseCategory]
 ) -> [FinancialInsight] {
     var insights: [FinancialInsight] = []
@@ -30,13 +30,13 @@ func fi_generateSpendingInsightsFromMonthlyData(
         guard sorted.count >= 2 else { continue }
 
         let values = sorted.map(\.value)
-        let average = values.reduce(0, +) / Double(values.count)
+        let average = values.reduce(Decimal(0), +) / Decimal(max(1, values.count))
 
-        let last = sorted.last?.value ?? 0
-        let prev = sorted.count > 1 ? sorted[sorted.count - 2].value : 0
+        let last = sorted.last?.value ?? Decimal(0)
+        let prev = sorted.count > 1 ? sorted[sorted.count - 2].value : Decimal(0)
 
-        if last > average * 1.2, last > prev * 1.1 {
-            let percentIncrease = prev > 0 ? Int(((last - prev) / prev) * 100) : 0
+        if last > average * Decimal(1.2), last > prev * Decimal(1.1) {
+            let percentIncrease = prev > 0 ? Int(((last - prev) / prev * 100) as NSDecimalNumber) : 0
             insights.append(
                 FinancialInsight(
                     title: "Increased Spending in \(resolvedCategoryName)",
@@ -49,13 +49,13 @@ func fi_generateSpendingInsightsFromMonthlyData(
                     chartData: sorted.map {
                         ChartDataPoint(
                             label: $0.key.formatted(.dateTime.month(.abbreviated)),
-                            value: $0.value
+                            value: ($0.value as NSDecimalNumber).doubleValue
                         )
                     }
                 )
             )
-        } else if last < average * 0.8, last < prev * 0.9 {
-            let percentDecrease = prev > 0 ? Int(((prev - last) / prev) * 100) : 0
+        } else if last < average * Decimal(0.8), last < prev * Decimal(0.9) {
+            let percentDecrease = prev > 0 ? Int(((prev - last) / prev * 100) as NSDecimalNumber) : 0
             insights.append(
                 FinancialInsight(
                     title: "Reduced Spending in \(resolvedCategoryName)",
@@ -68,7 +68,7 @@ func fi_generateSpendingInsightsFromMonthlyData(
                     chartData: sorted.map {
                         ChartDataPoint(
                             label: $0.key.formatted(.dateTime.month(.abbreviated)),
-                            value: $0.value
+                            value: ($0.value as NSDecimalNumber).doubleValue
                         )
                     }
                 )
@@ -80,14 +80,14 @@ func fi_generateSpendingInsightsFromMonthlyData(
 }
 
 func fi_topCategoriesInsight(
-    monthlySpendingByCategory: [String: [Date: Double]], categories: [ExpenseCategory]
+    monthlySpendingByCategory: [String: [Date: Decimal]], categories: [ExpenseCategory]
 ) -> FinancialInsight? {
-    let totalByCategory = monthlySpendingByCategory.mapValues { $0.values.reduce(0, +) }
+    let totalByCategory = monthlySpendingByCategory.mapValues { $0.values.reduce(Decimal(0), +) }
     let sorted = totalByCategory.sorted { $0.value > $1.value }
     guard !sorted.isEmpty else { return nil }
 
     let top = sorted.prefix(3)
-    let topCategoryData = top.map { categoryName, total -> (String, Double) in
+    let topCategoryData = top.map { categoryName, total -> (String, Decimal) in
         let resolvedCategoryName = categories.first(where: { $0.name == categoryName })?.name ?? categoryName
         return (resolvedCategoryName, total)
     }
@@ -100,7 +100,7 @@ func fi_topCategoriesInsight(
         priority: .medium,
         type: .spendingPattern,
         visualizationType: .pieChart,
-        chartData: topCategoryData.map { ChartDataPoint(label: $0.0, value: $0.1) }
+        chartData: topCategoryData.map { ChartDataPoint(label: $0.0, value: ($0.1 as NSDecimalNumber).doubleValue) }
     )
 }
 
@@ -133,7 +133,7 @@ func fi_analyzeSpendingPatterns(
                 type: .subscriptionDetection,
                 visualizationType: nil,
                 chartData: recurring.prefix(5).map {
-                    ChartDataPoint(label: $0.title, value: abs($0.amount))
+                    ChartDataPoint(label: $0.title, value: (abs($0.amount) as NSDecimalNumber).doubleValue)
                 }
             )
         )
@@ -143,7 +143,7 @@ func fi_analyzeSpendingPatterns(
 }
 
 func fi_checkBudgetExceeded(
-    budget: Budget, totalSpent: Double, categoryId _: String
+    budget: Budget, totalSpent: Decimal, categoryId _: String
 ) -> FinancialInsight? {
     guard totalSpent >= budget.totalAmount else { return nil }
 
@@ -159,18 +159,18 @@ func fi_checkBudgetExceeded(
         relatedBudgetId: budget.id.hashValue.description,
         visualizationType: .progressBar,
         chartData: [
-            ChartDataPoint(label: "Budget", value: budget.totalAmount),
-            ChartDataPoint(label: "Spent", value: totalSpent),
-            ChartDataPoint(label: "Overspent", value: overspent),
+            ChartDataPoint(label: "Budget", value: (budget.totalAmount as NSDecimalNumber).doubleValue),
+            ChartDataPoint(label: "Spent", value: (totalSpent as NSDecimalNumber).doubleValue),
+            ChartDataPoint(label: "Overspent", value: (overspent as NSDecimalNumber).doubleValue),
         ]
     )
 }
 
 struct BudgetAnalysisContext {
     let budget: Budget
-    let totalSpent: Double
-    let percentUsed: Double
-    let idealPercentage: Double
+    let totalSpent: Decimal
+    let percentUsed: Decimal
+    let idealPercentage: Decimal
     let daysInMonth: Int
     let day: Int
     let daysRemaining: Int
@@ -182,7 +182,7 @@ func fi_checkBudgetAtRisk(context: BudgetAnalysisContext) -> FinancialInsight? {
     }
 
     let projectedTotal =
-        context.totalSpent * Double(context.daysInMonth) / Double(max(1, context.day - 1))
+        context.totalSpent * Decimal(context.daysInMonth) / Decimal(max(1, context.day - 1))
     guard projectedTotal > context.budget.totalAmount else { return nil }
 
     let currencyCode = Locale.current.currency?.identifier ?? "USD"
@@ -205,20 +205,20 @@ func fi_checkBudgetAtRisk(context: BudgetAnalysisContext) -> FinancialInsight? {
         relatedBudgetId: context.budget.id.hashValue.description,
         visualizationType: .progressBar,
         chartData: [
-            ChartDataPoint(label: "Budget", value: context.budget.totalAmount),
-            ChartDataPoint(label: "Spent", value: context.totalSpent),
-            ChartDataPoint(label: "Projected", value: projectedTotal),
+            ChartDataPoint(label: "Budget", value: (context.budget.totalAmount as NSDecimalNumber).doubleValue),
+            ChartDataPoint(label: "Spent", value: (context.totalSpent as NSDecimalNumber).doubleValue),
+            ChartDataPoint(label: "Projected", value: (projectedTotal as NSDecimalNumber).doubleValue),
         ]
     )
 }
 
 func fi_checkBudgetUnderutilized(
-    budget: Budget, totalSpent: Double, percentUsed: Double,
-    idealPercentage: Double, daysRemaining: Int
+    budget: Budget, totalSpent: Decimal, percentUsed: Decimal,
+    idealPercentage: Decimal, daysRemaining: Int
 ) -> FinancialInsight? {
-    guard percentUsed < idealPercentage * 0.5, idealPercentage > 0.5 else { return nil }
+    guard percentUsed < idealPercentage * Decimal(0.5), idealPercentage > Decimal(0.5) else { return nil }
 
-    let percentUsedInt = Int(percentUsed * 100)
+    let percentUsedInt = Int((percentUsed * 100) as NSDecimalNumber)
     let baseMessage = "You've only used \(percentUsedInt)% of your \(budget.name) budget"
     let remainingMessage = " with \(daysRemaining) days remaining. Consider reallocating funds."
     let descriptionText = baseMessage + remainingMessage
@@ -231,9 +231,9 @@ func fi_checkBudgetUnderutilized(
         relatedBudgetId: budget.id.hashValue.description,
         visualizationType: .progressBar,
         chartData: [
-            ChartDataPoint(label: "Budget", value: budget.totalAmount),
-            ChartDataPoint(label: "Spent", value: totalSpent),
-            ChartDataPoint(label: "Remaining", value: budget.totalAmount - totalSpent),
+            ChartDataPoint(label: "Budget", value: (budget.totalAmount as NSDecimalNumber).doubleValue),
+            ChartDataPoint(label: "Spent", value: (totalSpent as NSDecimalNumber).doubleValue),
+            ChartDataPoint(label: "Remaining", value: ((budget.totalAmount - totalSpent) as NSDecimalNumber).doubleValue),
         ]
     )
 }
@@ -258,14 +258,14 @@ func fi_analyzeBudgets(transactions: [FinancialTransaction], budgets: [Budget])
         let categoryTransactions = currentMonthTransactions.filter {
             $0.category == category && $0.amount < 0
         }
-        let totalSpent = categoryTransactions.reduce(0) { $0 + abs($1.amount) }
-        let percentUsed = budget.totalAmount > 0 ? totalSpent / budget.totalAmount : 0
+        let totalSpent = categoryTransactions.reduce(Decimal(0)) { $0 + abs($1.amount) }
+        let percentUsed = budget.totalAmount > 0 ? totalSpent / budget.totalAmount : Decimal(0)
 
         let today = Date()
         let daysInMonth = calendar.range(of: .day, in: .month, for: Date())?.count ?? 30
         let day = calendar.component(.day, from: today)
         let daysRemaining = daysInMonth - day + 1
-        let idealPercentage = Double(day - 1) / Double(daysInMonth)
+        let idealPercentage = Decimal(day - 1) / Decimal(daysInMonth)
 
         let context = BudgetAnalysisContext(
             budget: budget,
@@ -307,7 +307,7 @@ extension FinancialIntelligenceService {
         let recurringTransactions = fi_findRecurringTransactions(transactions)
         guard !recurringTransactions.isEmpty else { return [] }
 
-        let topFive = recurringTransactions.prefix(5).map { ($0.title, abs($0.amount)) }
+        let topFive = recurringTransactions.prefix(5).map { ($0.title, (abs($0.amount) as NSDecimalNumber).doubleValue) }
 
         let insight = FinancialInsight(
             title: "Potential Recurring Expenses",

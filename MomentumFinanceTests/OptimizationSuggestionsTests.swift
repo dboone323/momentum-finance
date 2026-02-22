@@ -4,6 +4,7 @@
 //
 
 import SharedKit
+import MomentumFinanceCore
 import XCTest
 @testable import MomentumFinance
 

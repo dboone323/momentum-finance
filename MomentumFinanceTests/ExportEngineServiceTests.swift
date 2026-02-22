@@ -1,5 +1,7 @@
+import MomentumFinanceCore
 import SwiftData
 import XCTest
+
 @testable import MomentumFinance
 
 final class ExportEngineServiceTests: XCTestCase {
@@ -24,7 +26,7 @@ final class ExportEngineServiceTests: XCTestCase {
         let container = try! ModelContainer(for: schema, configurations: [config])
         modelContext = ModelContext(container)
 
-        service = ExportEngineService(modelContext: modelContext)
+        service = ExportEngineService(modelContainer: container)
     }
 
     override func tearDown() {
@@ -37,11 +39,15 @@ final class ExportEngineServiceTests: XCTestCase {
 
     func testExportToCSV_CreatesFile() async throws {
         // Given: Some test data
-        let account = FinancialAccount(name: "Test Account", balance: 1000, accountType: .checking)
+        let account = FinancialAccount(
+            name: "Test Account", balance: Decimal(1000), iconName: "banknote",
+            accountType: .checking)
         modelContext.insert(account)
+        try! modelContext.save()
 
         let settings = ExportSettings(
             format: .csv,
+            dateRange: .lastYear,
             startDate: Date().addingTimeInterval(-86400 * 30),
             endDate: Date(),
             includeTransactions: false,
@@ -63,11 +69,15 @@ final class ExportEngineServiceTests: XCTestCase {
 
     func testCSV_EscapesCommasInFields() async throws {
         // Given: Data with commas
-        let account = FinancialAccount(name: "Test, Account", balance: 1000, accountType: .checking)
+        let account = FinancialAccount(
+            name: "Test, Account", balance: Decimal(1000), iconName: "banknote",
+            accountType: .checking)
         modelContext.insert(account)
+        try! modelContext.save()
 
         let settings = ExportSettings(
             format: .csv,
+            dateRange: .lastYear,
             startDate: Date().addingTimeInterval(-86400 * 30),
             endDate: Date(),
             includeTransactions: false,
@@ -92,11 +102,15 @@ final class ExportEngineServiceTests: XCTestCase {
 
     func testExportToJSON_CreatesValidJSON() async throws {
         // Given: Test account
-        let account = FinancialAccount(name: "Checking", balance: 5000, accountType: .checking)
+        let account = FinancialAccount(
+            name: "Checking", balance: Decimal(5000), iconName: "building.columns",
+            accountType: .checking)
         modelContext.insert(account)
+        try! modelContext.save()
 
         let settings = ExportSettings(
             format: .json,
+            dateRange: .lastYear,
             startDate: Date().addingTimeInterval(-86400 * 30),
             endDate: Date(),
             includeTransactions: false,
@@ -124,6 +138,7 @@ final class ExportEngineServiceTests: XCTestCase {
         // Given: Empty data
         let settings = ExportSettings(
             format: .json,
+            dateRange: .lastYear,
             startDate: Date().addingTimeInterval(-86400 * 7),
             endDate: Date(),
             includeTransactions: false,
@@ -152,28 +167,36 @@ final class ExportEngineServiceTests: XCTestCase {
 
     func testExport_FiltersTransactionsByDateRange() async throws {
         // Given: Transactions on different dates
-        let account = FinancialAccount(name: "Test", balance: 0, accountType: .checking)
+        let account = FinancialAccount(
+            name: "Test", balance: Decimal(0), iconName: "banknote", accountType: .checking)
         modelContext.insert(account)
+        try! modelContext.save()
 
-        let oldDate = Date().addingTimeInterval(-86400 * 60) // 60 days ago
-        let recentDate = Date().addingTimeInterval(-86400 * 10) // 10 days ago
+        let oldDate = Calendar.current.date(byAdding: .day, value: -60, to: Date())!
+        let recentDate = Calendar.current.date(byAdding: .day, value: -10, to: Date())!
 
         let oldTx = FinancialTransaction(
-            title: "Old", amount: -50, date: oldDate, transactionType: .expense
+            title: "Old", amount: Decimal(-50), date: oldDate, transactionType: .expense
         )
         oldTx.account = account
         modelContext.insert(oldTx)
+        try! modelContext.save()
 
         let recentTx = FinancialTransaction(
-            title: "Recent", amount: -30, date: recentDate, transactionType: .expense
+            title: "Recent", amount: Decimal(-30), date: recentDate, transactionType: .expense
         )
         recentTx.account = account
         modelContext.insert(recentTx)
+        try! modelContext.save()
+
+        let startDate = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
+        let endDate = Date()
 
         let settings = ExportSettings(
             format: .json,
-            startDate: Date().addingTimeInterval(-86400 * 30), // 30 days ago
-            endDate: Date(),
+            dateRange: .lastMonth,
+            startDate: startDate,
+            endDate: endDate,
             includeTransactions: true,
             includeAccounts: false,
             includeBudgets: false,
@@ -203,6 +226,7 @@ final class ExportEngineServiceTests: XCTestCase {
         #if os(iOS)
             let settings = ExportSettings(
                 format: .pdf,
+                dateRange: .lastYear,
                 startDate: Date().addingTimeInterval(-86400 * 30),
                 endDate: Date(),
                 includeTransactions: true,

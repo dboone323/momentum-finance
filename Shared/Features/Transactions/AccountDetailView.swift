@@ -89,7 +89,7 @@ public struct AccountDetailView: View {
                             .foregroundColor(.secondary)
 
                         Text(
-                            self.formattedCurrency(self.account.balance)
+                            self.formattedCurrency((self.account.balance as NSDecimalNumber).doubleValue)
                         )
                         .font(.largeTitle)
                         .fontWeight(.bold)
@@ -100,7 +100,7 @@ public struct AccountDetailView: View {
                     HStack(spacing: 20) {
                         StatView(
                             title: "Income",
-                            value: self.formattedCurrency(self.incomeSummary),
+                            value: self.formattedCurrency((self.incomeSummary as NSDecimalNumber).doubleValue),
                             color: .green
                         )
 
@@ -108,7 +108,7 @@ public struct AccountDetailView: View {
 
                         StatView(
                             title: "Expenses",
-                            value: self.formattedCurrency(self.expenseSummary),
+                            value: self.formattedCurrency((self.expenseSummary as NSDecimalNumber).doubleValue),
                             color: .red
                         )
                     }
@@ -244,16 +244,16 @@ public struct AccountDetailView: View {
         }
     }
 
-    private var incomeSummary: Double {
+    private var incomeSummary: Decimal {
         self.filteredTransactions
             .filter { $0.transactionType == .income }
-            .reduce(0) { $0 + $1.amount }
+            .reduce(Decimal(0)) { $0 + $1.amount }
     }
 
-    private var expenseSummary: Double {
+    private var expenseSummary: Decimal {
         self.filteredTransactions
             .filter { $0.transactionType == .expense }
-            .reduce(0) { $0 + $1.amount }
+            .reduce(Decimal(0)) { $0 + $1.amount }
     }
 
     private func formattedCurrency(_ value: Double) -> String {
@@ -298,8 +298,8 @@ public struct ActivityChartView: View {
     struct DailyTransactionData: Identifiable {
         let id = UUID()
         let date: Date
-        let income: Double
-        let expense: Double
+        let income: Decimal
+        let expense: Decimal
 
         var day: String {
             let formatter = DateFormatter()
@@ -332,12 +332,12 @@ public struct ActivityChartView: View {
                 let income =
                     dayTransactions
                         .filter { $0.transactionType == .income }
-                        .reduce(0.0) { $0 + $1.amount }
+                        .reduce(Decimal(0)) { $0 + $1.amount }
 
                 let expense =
                     dayTransactions
                         .filter { $0.transactionType == .expense }
-                        .reduce(0.0) { $0 + $1.amount }
+                        .reduce(Decimal(0)) { $0 + $1.amount }
 
                 result.append(DailyTransactionData(date: date, income: income, expense: expense))
             }
@@ -351,7 +351,7 @@ public struct ActivityChartView: View {
             ForEach(self.chartData) { data in
                 LineMark(
                     x: .value("Day", data.day),
-                    y: .value("Income", data.income),
+                    y: .value("Income", (data.income as NSDecimalNumber).doubleValue),
                     series: .value("Type", "Income")
                 )
                 .foregroundStyle(.green)
@@ -360,7 +360,7 @@ public struct ActivityChartView: View {
 
                 LineMark(
                     x: .value("Day", data.day),
-                    y: .value("Expense", data.expense),
+                    y: .value("Expense", (data.expense as NSDecimalNumber).doubleValue),
                     series: .value("Type", "Expense")
                 )
                 .foregroundStyle(.red)

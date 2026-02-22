@@ -273,7 +273,7 @@ extension Features.GoalsAndReports {
                                     Text(goal.name)
                                         .font(.headline)
                                     Text(
-                                        "$\(goal.currentAmount, specifier: "%.2f") / $\(goal.targetAmount, specifier: "%.2f")"
+                                        "$\((goal.currentAmount as NSDecimalNumber).doubleValue, specifier: "%.2f") / $\((goal.targetAmount as NSDecimalNumber).doubleValue, specifier: "%.2f")"
                                     )
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)

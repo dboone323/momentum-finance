@@ -1,4 +1,5 @@
 import Foundation
+
 #if canImport(SwiftData)
     import SwiftData
 #endif
@@ -19,6 +20,11 @@ public final class SavingsGoal: Encodable {
     public var createdDate: Date
     public var notes: String? = ""
     public var currencyCode: String = "USD"
+
+    public var title: String {
+        get { name }
+        set { name = newValue }
+    }
 
     public init(
         name: String, targetAmount: Decimal, currentAmount: Decimal = 0, targetDate: Date,

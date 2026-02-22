@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 
 /// Protocol for exportable data
 public protocol Exportable {
@@ -129,39 +130,7 @@ public enum JSONUtilities {
     }
 }
 
-/// Export errors
-public enum ExportError: LocalizedError {
-    case encodingFailed
-    case fileWriteFailed
-    case invalidData
-    case pdfGenerationFailed
-
-    public var errorDescription: String? {
-        switch self {
-        case .encodingFailed: "Failed to encode data"
-        case .fileWriteFailed: "Failed to write file"
-        case .invalidData: "Invalid data for export"
-        case .pdfGenerationFailed: "Failed to generate PDF document"
-        }
-    }
-}
-
-/// Import errors
-public enum ImportError: LocalizedError {
-    case invalidFormat
-    case invalidData
-    case decodingFailed
-    case validationFailed([ImportValidationError])
-
-    public var errorDescription: String? {
-        switch self {
-        case .invalidFormat: "Invalid file format"
-        case .invalidData: "Invalid data in file"
-        case .decodingFailed: "Failed to decode data"
-        case .validationFailed: "Data validation failed"
-        }
-    }
-}
+// Redundant local ExportError removed to use MomentumFinanceCore.ExportError
 
 /// File system utilities for import/export
 public enum FileUtilities {

@@ -19,17 +19,20 @@ func fi_generateFinancialForecasts(
         calendar.date(from: calendar.dateComponents([.year, .month], from: transaction.date))
     }
 
-    let recentMonthlyIncomes = monthlyIncome
+    let recentMonthlyIncomes =
+        monthlyIncome
         .filter {
             guard let key = $0.key,
-                  let interval = calendar.dateInterval(of: .month, for: key),
-                  let sixMonthsAgo = calendar.date(byAdding: .month, value: -6, to: now) else { return false }
+                let interval = calendar.dateInterval(of: .month, for: key),
+                let sixMonthsAgo = calendar.date(byAdding: .month, value: -6, to: now)
+            else { return false }
             return interval.end > sixMonthsAgo
         }
-        .map { $0.value.reduce(0) { $0 + $1.amount } }
+        .map { $0.value.reduce(Decimal(0)) { $0 + $1.amount } }
 
     if recentMonthlyIncomes.count >= 3 {
-        let avgMonthlyIncome = recentMonthlyIncomes.reduce(0, +) / Double(recentMonthlyIncomes.count)
+        let avgMonthlyIncome =
+            recentMonthlyIncomes.reduce(Decimal(0), +) / Decimal(max(1, recentMonthlyIncomes.count))
         let forecastDescription = [
             "Based on recent trends, your estimated monthly income is \(fi_formatCurrency(avgMonthlyIncome)).",
             "This forecast helps with budgeting and financial planning.",
@@ -42,7 +45,9 @@ func fi_generateFinancialForecasts(
             type: InsightType.forecast,
             visualizationType: VisualizationType.lineChart,
             chartData: [
-                ChartDataPoint(label: "Estimated Monthly Income", value: avgMonthlyIncome),
+                ChartDataPoint(
+                    label: "Estimated Monthly Income",
+                    value: Double(truncating: avgMonthlyIncome as NSDecimalNumber)),
                 ChartDataPoint(label: "Data Points", value: Double(recentMonthlyIncomes.count)),
             ]
         )
@@ -55,17 +60,20 @@ func fi_generateFinancialForecasts(
         calendar.date(from: calendar.dateComponents([.year, .month], from: transaction.date))
     }
 
-    let recentMonthlyExpenses = monthlyExpenses
+    let recentMonthlyExpenses =
+        monthlyExpenses
         .filter {
             guard let key = $0.key,
-                  let interval = calendar.dateInterval(of: .month, for: key),
-                  let sixMonthsAgo = calendar.date(byAdding: .month, value: -6, to: now) else { return false }
+                let interval = calendar.dateInterval(of: .month, for: key),
+                let sixMonthsAgo = calendar.date(byAdding: .month, value: -6, to: now)
+            else { return false }
             return interval.end > sixMonthsAgo
         }
-        .map { $0.value.reduce(0) { $0 + abs($1.amount) } }
+        .map { $0.value.reduce(Decimal(0)) { $0 + abs($1.amount) } }
 
     if recentMonthlyExpenses.count >= 3 {
-        let avgMonthlyExpenses = recentMonthlyExpenses.reduce(0, +) / Double(recentMonthlyExpenses.count)
+        let avgMonthlyExpenses =
+            recentMonthlyExpenses.reduce(Decimal(0), +) / Decimal(max(1, recentMonthlyExpenses.count))
         let forecastDescription = [
             "Your estimated monthly expenses are \(fi_formatCurrency(avgMonthlyExpenses)).",
             "Use this to plan your budget and savings goals.",
@@ -78,7 +86,9 @@ func fi_generateFinancialForecasts(
             type: InsightType.forecast,
             visualizationType: VisualizationType.lineChart,
             chartData: [
-                ChartDataPoint(label: "Estimated Monthly Expenses", value: avgMonthlyExpenses),
+                ChartDataPoint(
+                    label: "Estimated Monthly Expenses",
+                    value: Double(truncating: avgMonthlyExpenses as NSDecimalNumber)),
                 ChartDataPoint(label: "Data Points", value: Double(recentMonthlyExpenses.count)),
             ]
         )
@@ -87,8 +97,8 @@ func fi_generateFinancialForecasts(
 
     // Cash flow forecast
     if !recentMonthlyIncomes.isEmpty, !recentMonthlyExpenses.isEmpty {
-        let avgIncome = recentMonthlyIncomes.reduce(0, +) / Double(recentMonthlyIncomes.count)
-        let avgExpenses = recentMonthlyExpenses.reduce(0, +) / Double(recentMonthlyExpenses.count)
+        let avgIncome = recentMonthlyIncomes.reduce(Decimal(0), +) / Decimal(max(1, recentMonthlyIncomes.count))
+        let avgExpenses = recentMonthlyExpenses.reduce(Decimal(0), +) / Decimal(max(1, recentMonthlyExpenses.count))
         let netCashFlow = avgIncome - avgExpenses
 
         var flowDescription: String
@@ -115,9 +125,15 @@ func fi_generateFinancialForecasts(
             type: .forecast,
             visualizationType: .barChart,
             chartData: [
-                ChartDataPoint(label: "Projected Income", value: avgIncome),
-                ChartDataPoint(label: "Projected Expenses", value: avgExpenses),
-                ChartDataPoint(label: "Net Cash Flow", value: netCashFlow),
+                ChartDataPoint(
+                    label: "Projected Income",
+                    value: Double(truncating: avgIncome as NSDecimalNumber)),
+                ChartDataPoint(
+                    label: "Projected Expenses",
+                    value: Double(truncating: avgExpenses as NSDecimalNumber)),
+                ChartDataPoint(
+                    label: "Net Cash Flow",
+                    value: Double(truncating: netCashFlow as NSDecimalNumber)),
             ]
         )
         insights.append(insight)
@@ -131,15 +147,17 @@ func fi_generateFinancialForecasts(
 struct TrendForecast {
     let trendDirection: String
     let trendPercentage: Double
-    let nextForecast: Double?
+    let nextForecast: Decimal?
 }
 
 func fi_projectedBalances(
-    startingBalance: Double, monthlyChange: Double, months: Int, calendar: Calendar
-) -> [(String, Double)] {
-    var projected: [(String, Double)] = []
+    startingBalance: Decimal, monthlyChange: Decimal, months: Int, calendar: Calendar
+) -> [(String, Decimal)] {
+    var projected: [(String, Decimal)] = []
     var projectedBalance = startingBalance
-    guard let currentMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: Date()))
+    guard
+        let currentMonth = calendar.date(
+            from: calendar.dateComponents([.year, .month], from: Date()))
     else { return [] }
     for monthIndex in 0..<months {
         guard
@@ -153,31 +171,36 @@ func fi_projectedBalances(
     return projected
 }
 
-func fi_monthlyNetCashFlow(_ transactions: [FinancialTransaction], monthsAgo: Int = 6) -> [(Date, Double)] {
+func fi_monthlyNetCashFlow(_ transactions: [FinancialTransaction], monthsAgo: Int = 6) -> [(
+    Date, Decimal
+)] {
     let calendar = Calendar.current
     let since = calendar.date(byAdding: .month, value: -monthsAgo, to: Date()) ?? Date()
-    var monthlyNetCashFlow: [Date: Double] = [:]
+    var monthlyNetCashFlow: [Date: Decimal] = [:]
 
     for transaction in transactions where transaction.date >= since {
-        guard let month = calendar.date(from: calendar.dateComponents([.year, .month], from: transaction.date))
+        guard
+            let month = calendar.date(
+                from: calendar.dateComponents([.year, .month], from: transaction.date))
         else { continue }
-        monthlyNetCashFlow[month] = (monthlyNetCashFlow[month] ?? 0) + transaction.amount
+        monthlyNetCashFlow[month] = (monthlyNetCashFlow[month] ?? Decimal(0)) + transaction.amount
     }
 
     return monthlyNetCashFlow.sorted { $0.key < $1.key }.map { ($0.key, $0.value) }
 }
 
-func fi_trendAndForecast(values: [Double]) -> TrendForecast {
+func fi_trendAndForecast(values: [Decimal]) -> TrendForecast {
     guard values.count >= 2
     else { return TrendForecast(trendDirection: "stable", trendPercentage: 0, nextForecast: nil) }
 
-    let latest = values.last ?? 0
+    let latest = values.last ?? Decimal(0)
     let previous = values[values.count - 2]
     var trendDirection = "stable"
     var trendPercentage = 0.0
 
     if previous != 0 {
-        trendPercentage = ((latest - previous) / abs(previous)) * 100
+        trendPercentage =
+            Double(truncating: ((latest - previous) / abs(previous)) as NSDecimalNumber) * 100
         if trendPercentage > 10 {
             trendDirection = "improving"
         } else if trendPercentage < -10 {
@@ -186,8 +209,9 @@ func fi_trendAndForecast(values: [Double]) -> TrendForecast {
     }
 
     let deltas = zip(values.dropFirst(), values).map { $0 - $1 }
-    let avgDelta = deltas.reduce(0, +) / Double(deltas.count)
-    let next = (values.last ?? 0) + avgDelta
+    let avgDelta = deltas.reduce(Decimal(0), +) / Decimal(max(1, deltas.count))
+    let next = (values.last ?? Decimal(0)) + avgDelta
 
-    return TrendForecast(trendDirection: trendDirection, trendPercentage: trendPercentage, nextForecast: next)
+    return TrendForecast(
+        trendDirection: trendDirection, trendPercentage: trendPercentage, nextForecast: next)
 }

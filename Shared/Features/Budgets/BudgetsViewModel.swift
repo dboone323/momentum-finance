@@ -31,24 +31,24 @@ final class BudgetsViewModel {
     /// Get total budgeted amount for a month
     /// <#Description#>
     /// - Returns: <#description#>
-    func totalBudgetedAmount(_ budgets: [Budget], for month: Date) -> Double {
-        self.budgetsForMonth(budgets, month: month).reduce(0) { $0 + $1.limitAmount }
+    func totalBudgetedAmount(_ budgets: [Budget], for month: Date) -> Decimal {
+        self.budgetsForMonth(budgets, month: month).reduce(Decimal(0)) { $0 + $1.limitAmount }
     }
 
     /// Get total spent amount for budgets in a month
     /// <#Description#>
     /// - Returns: <#description#>
-    func totalSpentAmount(_ budgets: [Budget], for month: Date) -> Double {
-        self.budgetsForMonth(budgets, month: month).reduce(0) { $0 + $1.spentAmount }
+    func totalSpentAmount(_ budgets: [Budget], for month: Date) -> Decimal {
+        self.budgetsForMonth(budgets, month: month).reduce(Decimal(0)) { $0 + $1.spentAmount }
     }
 
     /// Get remaining budget for a month
     /// <#Description#>
     /// - Returns: <#description#>
-    func remainingBudget(_ budgets: [Budget], for month: Date) -> Double {
+    func remainingBudget(_ budgets: [Budget], for month: Date) -> Decimal {
         let monthBudgets = self.budgetsForMonth(budgets, month: month)
-        let totalBudgeted = monthBudgets.reduce(0) { $0 + $1.limitAmount }
-        let totalSpent = monthBudgets.reduce(0) { $0 + $1.spentAmount }
+        let totalBudgeted = monthBudgets.reduce(Decimal(0)) { $0 + $1.limitAmount }
+        let totalSpent = monthBudgets.reduce(Decimal(0)) { $0 + $1.spentAmount }
         return totalBudgeted - totalSpent
     }
 
@@ -69,7 +69,7 @@ final class BudgetsViewModel {
     /// Create a new budget
     /// <#Description#>
     /// - Returns: <#description#>
-    func createBudget(category: ExpenseCategory, limitAmount: Double, month: Date) {
+    func createBudget(category: ExpenseCategory, limitAmount: Decimal, month: Date) {
         guard let modelContext else { return }
 
         // Check if budget already exists for this category and month
@@ -102,7 +102,7 @@ final class BudgetsViewModel {
     /// Update budget limit
     /// <#Description#>
     /// - Returns: <#description#>
-    func updateBudgetLimit(_ budget: Budget, newLimit: Double) {
+    func updateBudgetLimit(_ budget: Budget, newLimit: Decimal) {
         budget.limitAmount = newLimit
 
         do {
@@ -133,8 +133,8 @@ final class BudgetsViewModel {
     func budgetProgressSummary(_ budgets: [Budget], for month: Date) -> BudgetProgressSummary {
         let monthBudgets = self.budgetsForMonth(budgets, month: month)
 
-        let totalBudgeted = monthBudgets.reduce(0) { $0 + $1.limitAmount }
-        let totalSpent = monthBudgets.reduce(0) { $0 + $1.spentAmount }
+        let totalBudgeted = monthBudgets.reduce(Decimal(0)) { $0 + $1.limitAmount }
+        let totalSpent = monthBudgets.reduce(Decimal(0)) { $0 + $1.spentAmount }
         let onTrackCount = monthBudgets.count(where: { !$0.isOverBudget })
         let overBudgetCount = monthBudgets.filter(\.isOverBudget).count
 
@@ -165,7 +165,7 @@ final class BudgetsViewModel {
             let monthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: monthDate))
                 ?? monthDate
             let monthEnd = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: monthStart) ?? monthStart
-            let spent = category.totalSpent(in: monthStart...monthEnd)
+            let spent = (category.totalSpent(in: monthStart...monthEnd) as NSDecimalNumber).doubleValue
             let monthSpending = MonthlySpending(
                 month: monthDate,
                 amount: spent,
@@ -235,11 +235,11 @@ final class BudgetsViewModel {
 
         return BudgetRolloverSummary(
             budgetId: budget.id,
-            unusedAmount: unusedAmount,
-            potentialRollover: potentialRollover,
+            unusedAmount: (unusedAmount as NSDecimalNumber).doubleValue,
+            potentialRollover: (potentialRollover as NSDecimalNumber).doubleValue,
             rolloverEnabled: budget.rolloverEnabled,
             maxRolloverPercentage: budget.maxRolloverPercentage,
-            currentRolloverAmount: budget.rolledOverAmount
+            currentRolloverAmount: (budget.rolledOverAmount as NSDecimalNumber).doubleValue
         )
     }
 
@@ -255,19 +255,19 @@ final class BudgetsViewModel {
 }
 
 struct BudgetProgressSummary {
-    let totalBudgeted: Double
-    let totalSpent: Double
+    let totalBudgeted: Decimal
+    let totalSpent: Decimal
     let onTrackCount: Int
     let overBudgetCount: Int
     let totalBudgets: Int
 
-    var remainingAmount: Double {
+    var remainingAmount: Decimal {
         self.totalBudgeted - self.totalSpent
     }
 
     var progressPercentage: Double {
         guard self.totalBudgeted > 0 else { return 0.0 }
-        return self.totalSpent / self.totalBudgeted
+        return ((self.totalSpent / self.totalBudgeted) as NSDecimalNumber).doubleValue
     }
 }
 

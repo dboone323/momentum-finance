@@ -1,4 +1,5 @@
 import Foundation
+import MomentumFinanceCore
 import Intents
 
 // Siri Shortcuts integration for Momentum Finance

@@ -2,6 +2,7 @@
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 /// Generates sample transactions for testing and demo purposes.
@@ -38,76 +39,87 @@ public class TransactionsDataGenerator: DataGenerator {
         let transactions = [
             // Income transactions
             (
-                title: "Salary", amount: 3500.0, date: Date().addingTimeInterval(-86400 * 15),
+                title: "Salary", amount: Decimal(3500),
+                date: Date().addingTimeInterval(-86400 * 15),
                 type: TransactionType.income, category: "Income", account: checkingAccount
             ),
             (
-                title: "Freelance Work", amount: 500.0, date: Date().addingTimeInterval(-86400 * 8),
+                title: "Freelance Work", amount: Decimal(500),
+                date: Date().addingTimeInterval(-86400 * 8),
                 type: TransactionType.income, category: "Income", account: checkingAccount
             ),
             (
-                title: "Interest", amount: 25.0, date: Date().addingTimeInterval(-86400 * 3),
+                title: "Interest", amount: Decimal(25), date: Date().addingTimeInterval(-86400 * 3),
                 type: TransactionType.income, category: "Income", account: savingsAccount
             ),
 
             // Expense transactions
             (
-                title: "Rent", amount: 1200.0, date: Date().addingTimeInterval(-86400 * 28),
+                title: "Rent", amount: Decimal(1200), date: Date().addingTimeInterval(-86400 * 28),
                 type: TransactionType.expense, category: "Housing", account: checkingAccount
             ),
             (
-                title: "Groceries", amount: 120.50, date: Date().addingTimeInterval(-86400 * 25),
+                title: "Groceries", amount: Decimal(string: "120.50")!,
+                date: Date().addingTimeInterval(-86400 * 25),
                 type: TransactionType.expense, category: "Food", account: creditCard
             ),
             (
-                title: "Electricity Bill", amount: 85.0,
+                title: "Electricity Bill", amount: Decimal(85),
                 date: Date().addingTimeInterval(-86400 * 20),
                 type: TransactionType.expense, category: "Utilities", account: checkingAccount
             ),
             (
-                title: "Internet", amount: 60.0, date: Date().addingTimeInterval(-86400 * 18),
+                title: "Internet", amount: Decimal(60),
+                date: Date().addingTimeInterval(-86400 * 18),
                 type: TransactionType.expense, category: "Utilities", account: creditCard
             ),
             (
-                title: "Gas", amount: 45.0, date: Date().addingTimeInterval(-86400 * 15),
+                title: "Gas", amount: Decimal(45), date: Date().addingTimeInterval(-86400 * 15),
                 type: TransactionType.expense, category: "Transportation", account: creditCard
             ),
             (
-                title: "Dinner", amount: 65.75, date: Date().addingTimeInterval(-86400 * 12),
+                title: "Dinner", amount: Decimal(string: "65.75")!,
+                date: Date().addingTimeInterval(-86400 * 12),
                 type: TransactionType.expense, category: "Food", account: creditCard
             ),
             (
-                title: "Movie Tickets", amount: 30.0, date: Date().addingTimeInterval(-86400 * 10),
+                title: "Movie Tickets", amount: Decimal(30),
+                date: Date().addingTimeInterval(-86400 * 10),
                 type: TransactionType.expense, category: "Entertainment", account: creditCard
             ),
             (
-                title: "Coffee", amount: 4.50, date: Date().addingTimeInterval(-86400 * 7),
+                title: "Coffee", amount: Decimal(string: "4.50")!,
+                date: Date().addingTimeInterval(-86400 * 7),
                 type: TransactionType.expense, category: "Food", account: creditCard
             ),
             (
-                title: "Gym Membership", amount: 50.0, date: Date().addingTimeInterval(-86400 * 5),
+                title: "Gym Membership", amount: Decimal(50),
+                date: Date().addingTimeInterval(-86400 * 5),
                 type: TransactionType.expense, category: "Personal Care", account: checkingAccount
             ),
             (
-                title: "Online Course", amount: 200.0, date: Date().addingTimeInterval(-86400 * 2),
+                title: "Online Course", amount: Decimal(200),
+                date: Date().addingTimeInterval(-86400 * 2),
                 type: TransactionType.expense, category: "Education", account: creditCard
             ),
 
             // Previous month transactions
             (
-                title: "Salary", amount: 3500.0, date: Date().addingTimeInterval(-86400 * 45),
+                title: "Salary", amount: Decimal(3500),
+                date: Date().addingTimeInterval(-86400 * 45),
                 type: TransactionType.income, category: "Income", account: checkingAccount
             ),
             (
-                title: "Rent", amount: 1200.0, date: Date().addingTimeInterval(-86400 * 58),
+                title: "Rent", amount: Decimal(1200), date: Date().addingTimeInterval(-86400 * 58),
                 type: TransactionType.expense, category: "Housing", account: checkingAccount
             ),
             (
-                title: "Groceries", amount: 160.30, date: Date().addingTimeInterval(-86400 * 50),
+                title: "Groceries", amount: Decimal(string: "160.30")!,
+                date: Date().addingTimeInterval(-86400 * 50),
                 type: TransactionType.expense, category: "Food", account: creditCard
             ),
             (
-                title: "Travel", amount: 500.0, date: Date().addingTimeInterval(-86400 * 40),
+                title: "Travel", amount: Decimal(500), date: Date().addingTimeInterval(-86400 * 40),
                 type: TransactionType.expense, category: "Travel", account: creditCard
             ),
         ]
@@ -115,11 +127,11 @@ public class TransactionsDataGenerator: DataGenerator {
         for transaction in transactions {
             let newTransaction = FinancialTransaction(
                 title: transaction.title,
-                amount: Double(transaction.amount),
+                amount: transaction.amount,
                 date: transaction.date,
                 transactionType: transaction.type
             )
-            newTransaction.category = transaction.category
+            newTransaction.category = categoryDict[transaction.category]?.name
             newTransaction.account = transaction.account
 
             // Update account balance based on transaction
@@ -141,7 +153,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
     /// Temporary struct for subscription data creation.
     private struct SubscriptionData {
         let name: String
-        let amount: Double
+        let amount: Decimal
         let cycle: BillingCycle
         let nextDue: Date
         let category: String
@@ -181,9 +193,10 @@ public class SubscriptionsDataGenerator: DataGenerator {
         for subscription in subscriptions {
             let newSubscription = Subscription(
                 name: subscription.name,
-                amount: Double(subscription.amount),
+                provider: subscription.name,
+                amount: subscription.amount,
                 billingCycle: subscription.cycle,
-                nextBillingDate: subscription.nextDue
+                nextDueDate: subscription.nextDue
             )
 
             newSubscription.category = subscription.category
@@ -233,7 +246,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
         return [
             SubscriptionData(
                 name: "Netflix",
-                amount: 14.99,
+                amount: Decimal(string: "14.99")!,
                 cycle: BillingCycle.monthly,
                 nextDue: safeDateByAdding(days: 5, to: today),
                 category: "Entertainment",
@@ -242,7 +255,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
             ),
             SubscriptionData(
                 name: "Spotify",
-                amount: 9.99,
+                amount: Decimal(string: "9.99")!,
                 cycle: BillingCycle.monthly,
                 nextDue: safeDateByAdding(days: 12, to: today),
                 category: "Entertainment",
@@ -251,7 +264,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
             ),
             SubscriptionData(
                 name: "Video Streaming",
-                amount: 7.99,
+                amount: Decimal(string: "7.99")!,
                 cycle: BillingCycle.monthly,
                 nextDue: safeDateByAdding(days: 2, to: today),
                 category: "Entertainment",
@@ -281,7 +294,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
         return [
             SubscriptionData(
                 name: "Cloud Storage",
-                amount: 2.99,
+                amount: Decimal(string: "2.99")!,
                 cycle: BillingCycle.monthly,
                 nextDue: safeDateByAdding(days: 15, to: today),
                 category: "Utilities",
@@ -290,7 +303,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
             ),
             SubscriptionData(
                 name: "Phone Bill",
-                amount: 65.0,
+                amount: Decimal(65),
                 cycle: BillingCycle.monthly,
                 nextDue: safeDateByAdding(days: 22, to: today),
                 category: "Utilities",
@@ -299,7 +312,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
             ),
             SubscriptionData(
                 name: "Internet",
-                amount: 60.0,
+                amount: Decimal(60),
                 cycle: BillingCycle.monthly,
                 nextDue: safeDateByAdding(days: 18, to: today),
                 category: "Utilities",
@@ -327,13 +340,13 @@ public class SubscriptionsDataGenerator: DataGenerator {
         return [
             SubscriptionData(
                 name: "Gym Membership",
-                amount: 50.0,
+                amount: Decimal(50),
                 cycle: BillingCycle.monthly,
                 nextDue: safeDateByAdding(days: 8, to: today),
                 category: "Personal Care",
                 account: checkingAccount,
                 isActive: true
-            ),
+            )
         ]
     }
 
@@ -355,13 +368,13 @@ public class SubscriptionsDataGenerator: DataGenerator {
         return [
             SubscriptionData(
                 name: "Car Insurance",
-                amount: 120.0,
+                amount: Decimal(120),
                 cycle: BillingCycle.monthly,
                 nextDue: safeDateByAdding(days: 25, to: today),
                 category: "Transportation",
                 account: checkingAccount,
                 isActive: true
-            ),
+            )
         ]
     }
 }

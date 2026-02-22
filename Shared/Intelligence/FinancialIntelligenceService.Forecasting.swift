@@ -47,11 +47,11 @@ extension FinancialIntelligenceService {
                 }
 
                 let lastValues = values.suffix(3)
-                var chartData: [(String, Double)] = Array(zip(lastMonths, lastValues))
-                chartData.append((forecastLabels.last ?? "Next", nextMonthForecast))
+                var chartData: [(String, Double)] = Array(zip(lastMonths, lastValues.map { ($0 as NSDecimalNumber).doubleValue }))
+                chartData.append((forecastLabels.last ?? "Next", (nextMonthForecast as NSDecimalNumber).doubleValue))
 
                 let trendDirection =
-                    nextMonthForecast > (values.last ?? 0) ? "increasing" : "decreasing"
+                    nextMonthForecast > (values.last ?? Decimal(0)) ? "increasing" : "decreasing"
 
                 let nextMonthFormatted = fi_formatCurrency(nextMonthForecast, code: "USD")
                 let descA = "Your cash flow is \(trendDirection)."
@@ -98,12 +98,12 @@ extension FinancialIntelligenceService {
             return lhsKey < rhsKey
         }
         let monthlyNetFlow = sortedMonths.map { month, transactions in
-            (month, transactions.reduce(0.0) { $0 + $1.amount })
+            (month, transactions.reduce(Decimal(0)) { $0 + $1.amount })
         }
 
         // Calculate average monthly change
         let monthlyChanges = monthlyNetFlow.map(\.1)
-        let averageMonthlyChange = monthlyChanges.reduce(0.0, +) / Double(monthlyChanges.count)
+        let averageMonthlyChange = monthlyChanges.reduce(Decimal(0), +) / Decimal(max(1, monthlyChanges.count))
 
         // Forecast next 3 months
         let forecastData = fi_projectedBalances(
@@ -118,7 +118,7 @@ extension FinancialIntelligenceService {
         let priority: InsightPriority
         let description: String
 
-        if averageMonthlyChange < 0, threeMonthPrediction < account.balance * 0.5 {
+        if averageMonthlyChange < 0, threeMonthPrediction < account.balance * Decimal(0.5) {
             title = "Critical Balance Reduction"
             priority = .critical
             let dropAmount = fi_formatCurrency(
@@ -158,7 +158,7 @@ extension FinancialIntelligenceService {
             type: InsightType.forecast,
             relatedAccountId: String(account.id.hashValue),
             visualizationType: VisualizationType.lineChart,
-            chartData: forecastData.map { ChartDataPoint(label: $0.0, value: $0.1) }
+            chartData: forecastData.map { ChartDataPoint(label: $0.0, value: ($0.1 as NSDecimalNumber).doubleValue) }
         )
     }
 

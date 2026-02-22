@@ -174,7 +174,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         }
 
         // High-yield savings opportunities
-        let cashBalance = accounts.reduce(Decimal(0)) { $0 + Decimal($1.balance) }
+        let cashBalance = accounts.reduce(Decimal(0)) { $0 + $1.balance }
 
         if cashBalance > 10000 {
             insights.append(
@@ -207,7 +207,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
 
         for budget in budgets {
             let spent = self.calculateSpentAmount(transactions, for: budget)
-            let budgetLimit = Decimal(budget.totalAmount)
+            let budgetLimit = budget.totalAmount
             let percentageUsed = Double(
                 truncating: (spent / budgetLimit * 100) as NSDecimalNumber
             )
@@ -246,7 +246,7 @@ public class AdvancedFinancialIntelligence: ObservableObject {
         // Emergency fund assessment
         let monthlyExpenses = self.calculateMonthlyExpenses(transactions)
         let emergencyFund = accounts.filter { $0.accountType == .savings }
-            .reduce(Decimal(0)) { $0 + Decimal($1.balance) }
+            .reduce(Decimal(0)) { $0 + $1.balance }
 
         guard monthlyExpenses > 0 else { return [] }
         let monthsCovered = Double(truncating: (emergencyFund / monthlyExpenses) as NSDecimalNumber)

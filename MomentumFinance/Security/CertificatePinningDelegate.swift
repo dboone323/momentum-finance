@@ -1,12 +1,12 @@
 import Foundation
 
 /// Certificate pinning delegate for URLSession
-class CertificatePinningDelegate: NSObject, URLSessionDelegate {
+class CertificatePinningDelegate: NSObject, URLSessionDelegate, @unchecked Sendable {
     // Replace with your actual certificate data (DER format)
     private let pinnedCertificateData: Data = {
         // Load from bundle or hardcode for demo
         guard let certURL = Bundle.main.url(forResource: "server", withExtension: "cer"),
-              let data = try? Data(contentsOf: certURL)
+            let data = try? Data(contentsOf: certURL)
         else {
             print(
                 "Warning: Pinned certificate 'server.cer' not found in bundle. Pinning disabled/failed."

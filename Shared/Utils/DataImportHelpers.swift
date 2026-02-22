@@ -2,6 +2,7 @@
 // These are intentionally small, canonical helpers. Replace with full implementations later.
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 // All import-related types are now defined in DataImporter.swift and ExportTypes.swift

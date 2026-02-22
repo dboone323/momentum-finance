@@ -252,8 +252,8 @@ extension Features.Subscriptions {
                 "Billed Semi-Annually"
             case .annually:
                 "Billed Annually"
-            case let .custom(days):
-                "Billed Every \(days) Days"
+            case .custom:
+                "Billed Custom"
             }
         }
 

@@ -70,7 +70,7 @@ public final class SwiftDataEntityManager: EntityManager {
         // Create new account
         let newAccount = FinancialAccount(
             name: accountName,
-            balance: 0.0,
+            balance: Decimal(0),
             iconName: "creditcard.fill",
             accountType: .checking
         )
@@ -86,7 +86,7 @@ public final class SwiftDataEntityManager: EntityManager {
     ) throws -> ExpenseCategory? {
         // Extract category name from CSV fields
         guard let categoryColumnIndex = columnMapping.categoryIndex,
-              categoryColumnIndex < fields.count
+            categoryColumnIndex < fields.count
         else {
             // Use default category based on transaction type
             return self.getDefaultCategory(for: transactionType)
@@ -122,7 +122,7 @@ public final class SwiftDataEntityManager: EntityManager {
     private func getColumnIndex(for columnName: String?, in _: [String]) -> Int? {
         guard let columnName else { return nil }
         // This is a simplified implementation - in a real app you'd have proper CSV parsing
-        return 0 // Placeholder
+        return 0  // Placeholder
     }
 
     private func getDefaultCategory(for transactionType: TransactionType) -> ExpenseCategory? {
@@ -221,34 +221,34 @@ public final class SwiftDataExportEngineService {
         )
 
         var html = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-        <style>
-            body { font-family: -apple-system, sans-serif; padding: 20px; }
-            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-            th { background-color: #f2f2f2; }
-            tr:nth-child(even) { background-color: #f9f9f9; }
-            .amount { text-align: right; }
-            .header { margin-bottom: 30px; }
-        </style>
-        </head>
-        <body>
-            <div class="header">
-                <h1>Financial Transaction Report</h1>
-                <p>Generated: \(Date().formatted())</p>
-                <p>Total Transactions: \(transactions.count)</p>
-            </div>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Account</th>
-                    <th>Amount</th>
-                </tr>
-        """
+            <!DOCTYPE html>
+            <html>
+            <head>
+            <style>
+                body { font-family: -apple-system, sans-serif; padding: 20px; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                tr:nth-child(even) { background-color: #f9f9f9; }
+                .amount { text-align: right; }
+                .header { margin-bottom: 30px; }
+            </style>
+            </head>
+            <body>
+                <div class="header">
+                    <h1>Financial Transaction Report</h1>
+                    <p>Generated: \(Date().formatted())</p>
+                    <p>Total Transactions: \(transactions.count)</p>
+                </div>
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Account</th>
+                        <th>Amount</th>
+                    </tr>
+            """
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -256,23 +256,23 @@ public final class SwiftDataExportEngineService {
         for transaction in transactions.sorted(by: { $0.date > $1.date }) {
             let amountColor = transaction.transactionType == .income ? "green" : "black"
             html += """
-                <tr>
-                    <td>\(dateFormatter.string(from: transaction.date))</td>
-                    <td>\(transaction.title)</td>
-                    <td>\(transaction.category?.name ?? "-")</td>
-                    <td>\(transaction.account?.name ?? "-")</td>
-                    <td class="amount" style="color: \(amountColor)">
-                        \(String(format: "%.2f", transaction.amount))
-                    </td>
-                </tr>
-            """
+                    <tr>
+                        <td>\(dateFormatter.string(from: transaction.date))</td>
+                        <td>\(transaction.title)</td>
+                        <td>\(transaction.category?.name ?? "-")</td>
+                        <td>\(transaction.account?.name ?? "-")</td>
+                        <td class="amount" style="color: \(amountColor)">
+                            \(String(format: "%.2f", NSDecimalNumber(decimal: transaction.amount)))
+                        </td>
+                    </tr>
+                """
         }
 
         html += """
-            </table>
-        </body>
-        </html>
-        """
+                </table>
+            </body>
+            </html>
+            """
 
         try html.write(to: tempURL, atomically: true, encoding: .utf8)
         return tempURL
@@ -306,7 +306,7 @@ public final class SwiftDataExportEngineService {
         for transaction in transactions {
             let date = dateFormatter.string(from: transaction.date)
             let title = transaction.title.replacingOccurrences(of: ",", with: ";")
-            let amount = String(format: "%.2f", transaction.amount)
+            let amount = String(format: "%.2f", NSDecimalNumber(decimal: transaction.amount))
             let type = transaction.transactionType.rawValue
             let category = transaction.category?.name ?? ""
             let account = transaction.account?.name ?? ""
@@ -330,7 +330,7 @@ public final class SwiftDataFinancialMLService {
     }
 
     public func predictSpending(for category: ExpenseCategory? = nil, daysAhead: Int = 30) async
-        -> Double
+        -> Decimal
     {
         do {
             let transactions = try modelContext.fetch(FetchDescriptor<FinancialTransaction>())
@@ -341,17 +341,17 @@ public final class SwiftDataFinancialMLService {
             }
 
             if relevantTransactions.isEmpty {
-                return 0.0
+                return 0
             }
 
             // Simple average-based prediction
             let totalSpent = relevantTransactions.reduce(0) { $0 + $1.amount }
-            let averageDaily = totalSpent / Double(relevantTransactions.count)
+            let averageDaily = totalSpent / Decimal(relevantTransactions.count)
 
-            return averageDaily * Double(daysAhead)
+            return averageDaily * Decimal(daysAhead)
         } catch {
             print("Error predicting spending: \(error)")
-            return 0.0
+            return 0
         }
     }
 
@@ -362,7 +362,7 @@ public final class SwiftDataFinancialMLService {
             let expenseTransactions = transactions.filter { $0.transactionType == .expense }
 
             // Group by category
-            var categorySpending: [String: Double] = [:]
+            var categorySpending: [String: Decimal] = [:]
             for transaction in expenseTransactions {
                 let categoryName = transaction.category?.name ?? "Uncategorized"
                 categorySpending[categoryName, default: 0] += transaction.amount
@@ -385,7 +385,7 @@ public final class SwiftDataFinancialMLService {
             var anomalies: [TransactionAnomaly] = []
 
             // Simple anomaly detection based on amount thresholds
-            for transaction in transactions where transaction.amount > 1000 { // High amount threshold
+            for transaction in transactions where transaction.amount > 1000 {  // High amount threshold
                 anomalies.append(
                     TransactionAnomaly(
                         transaction: transaction,
@@ -405,7 +405,7 @@ public final class SwiftDataFinancialMLService {
 
 public struct SpendingPattern {
     public let category: String
-    public let totalAmount: Double
+    public let totalAmount: Decimal
     public let trend: Trend
 
     public enum Trend {
@@ -443,7 +443,7 @@ public final class SwiftDataTransactionPatternAnalyzer {
 
             // Group transactions by title to find recurring patterns
             var titleCounts: [String: Int] = [:]
-            var titleAmounts: [String: [Double]] = [:]
+            var titleAmounts: [String: [Decimal]] = [:]
 
             for transaction in transactions {
                 titleCounts[transaction.title, default: 0] += 1
@@ -455,7 +455,7 @@ public final class SwiftDataTransactionPatternAnalyzer {
 
             return recurringTitles.map { title, count in
                 let amounts = titleAmounts[title] ?? []
-                let averageAmount = amounts.reduce(0, +) / Double(amounts.count)
+                let averageAmount = amounts.reduce(0, +) / Decimal(amounts.count)
 
                 return TransactionPattern(
                     title: title,
@@ -515,7 +515,7 @@ public final class SwiftDataTransactionPatternAnalyzer {
 public struct TransactionPattern {
     public let title: String
     public let frequency: Int
-    public let averageAmount: Double
+    public let averageAmount: Decimal
     public let isRecurring: Bool
 }
 

@@ -43,13 +43,13 @@ final class TransactionPatternAnalyzer {
         let calendar = Calendar.current
         let expenses = transactions.filter { $0.amount < 0 }
 
-        var spendingByWeekday: [Int: Double] = [:]
+        var spendingByWeekday: [Int: Decimal] = [:]
         var countByWeekday: [Int: Int] = [:]
 
         for transaction in expenses {
             let weekday = calendar.component(.weekday, from: transaction.date)
             spendingByWeekday[weekday] =
-                (spendingByWeekday[weekday] ?? 0)
+                (spendingByWeekday[weekday] ?? Decimal(0))
                     + abs(transaction.amount)
             countByWeekday[weekday] = (countByWeekday[weekday] ?? 0) + 1
         }
@@ -74,7 +74,7 @@ final class TransactionPatternAnalyzer {
                 ChartDataPoint(label: "Highest Spending Day", value: Double(maxWeekday)),
                 ChartDataPoint(
                     label: "Average Daily Spending",
-                    value: spendingByWeekday.values.reduce(0, +) / Double(spendingByWeekday.count)
+                    value: (spendingByWeekday.values.reduce(Decimal(0), +) / Decimal(max(1, spendingByWeekday.count)) as NSDecimalNumber).doubleValue
                 ),
             ]
         )
@@ -84,12 +84,12 @@ final class TransactionPatternAnalyzer {
         let calendar = Calendar.current
         let expenses = transactions.filter { $0.amount < 0 }
 
-        var spendingByDay: [Int: Double] = [:]
+        var spendingByDay: [Int: Decimal] = [:]
 
         for transaction in expenses {
             let day = calendar.component(.day, from: transaction.date)
             spendingByDay[day] =
-                (spendingByDay[day] ?? 0)
+                (spendingByDay[day] ?? Decimal(0))
                     + abs(transaction.amount)
         }
 
@@ -119,11 +119,11 @@ final class TransactionPatternAnalyzer {
         guard !expenses.isEmpty else { return insights }
 
         let amounts = expenses.map { abs($0.amount) }
-        let average = amounts.reduce(0, +) / Double(amounts.count)
-        let standardDeviation = self.calculateStandardDeviation(amounts, mean: average)
+        let average = amounts.reduce(Decimal(0), +) / Decimal(max(1, amounts.count))
+        let standardDeviation = self.calculateStandardDeviation(amounts.map { ($0 as NSDecimalNumber).doubleValue }, mean: (average as NSDecimalNumber).doubleValue)
 
         // Find transactions that are more than 2 standard deviations above the mean
-        let threshold = average + (2 * standardDeviation)
+        let threshold = average + Decimal(2 * standardDeviation)
         let anomalies = expenses.filter {
             abs($0.amount) > threshold
         }
@@ -140,12 +140,12 @@ final class TransactionPatternAnalyzer {
                 chartData: [
                     ChartDataPoint(
                         label: "Transaction Amount",
-                        value: abs(anomaly.amount)
+                        value: (abs(anomaly.amount) as NSDecimalNumber).doubleValue
                     ),
-                    ChartDataPoint(label: "Average Amount", value: average),
+                    ChartDataPoint(label: "Average Amount", value: (average as NSDecimalNumber).doubleValue),
                     ChartDataPoint(
                         label: "Deviation",
-                        value: abs(anomaly.amount) - average
+                        value: ((abs(anomaly.amount) - average) as NSDecimalNumber).doubleValue
                     ),
                 ]
             )

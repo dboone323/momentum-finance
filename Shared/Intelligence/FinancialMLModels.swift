@@ -19,7 +19,7 @@ final class FinancialMLModels {
     /// Analyze spending patterns using simple statistical methods
     func analyzeSpendingPatterns(transactions: [FinancialTransaction]) -> [String: Any] {
         let expenses = transactions.filter { $0.amount < 0 }
-        let totalSpent = expenses.reduce(0) { $0 + abs($1.amount) }
+        let totalSpent = expenses.reduce(Decimal(0)) { $0 + abs($1.amount) }
 
         // Simple categorization by amount ranges
         let smallTransactions = expenses.filter { abs($0.amount) < 50 }
@@ -31,7 +31,7 @@ final class FinancialMLModels {
             "smallTransactionCount": smallTransactions.count,
             "mediumTransactionCount": mediumTransactions.count,
             "largeTransactionCount": largeTransactions.count,
-            "averageTransactionSize": totalSpent / Double(expenses.count),
+            "averageTransactionSize": (totalSpent as NSDecimalNumber).doubleValue / Double(max(1, expenses.count)),
             "transactionFrequency": Double(expenses.count) / 30.0,
         ]
     }

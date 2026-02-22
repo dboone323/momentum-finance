@@ -57,7 +57,7 @@ public struct SimpleDashboardView: View {
                             HStack {
                                 Text(account.name)
                                 Spacer()
-                                Text("$\(account.balance, specifier: "%.2f")")
+                                Text("$\((account.balance as NSDecimalNumber).doubleValue, specifier: "%.2f")")
                                     .fontWeight(.semibold)
                             }
                             .padding()
@@ -81,7 +81,7 @@ public struct SimpleDashboardView: View {
                             HStack {
                                 Text(subscription.name)
                                 Spacer()
-                                Text("$\(subscription.amount, specifier: "%.2f")")
+                                Text("$\((subscription.amount as NSDecimalNumber).doubleValue, specifier: "%.2f")")
                                     .fontWeight(.semibold)
                             }
                             .padding()
@@ -107,12 +107,12 @@ public struct SimpleDashboardView: View {
                                     Text(budget.name)
                                     Spacer()
                                     Text(
-                                        "$\(budget.spentAmount, specifier: "%.2f") / $\(budget.limitAmount, specifier: "%.2f")"
+                                        "$\((budget.spentAmount as NSDecimalNumber).doubleValue, specifier: "%.2f") / $\((budget.limitAmount as NSDecimalNumber).doubleValue, specifier: "%.2f")"
                                     )
                                     .fontWeight(.semibold)
                                 }
 
-                                ProgressView(value: budget.spentAmount, total: budget.limitAmount)
+                                ProgressView(value: (budget.spentAmount as NSDecimalNumber).doubleValue, total: (budget.limitAmount as NSDecimalNumber).doubleValue)
                                     .progressViewStyle(LinearProgressViewStyle())
                             }
                             .padding()

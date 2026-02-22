@@ -78,7 +78,7 @@ final class ImportExportService {
             guard let date = dateFormatter.date(from: row[0]) else { continue }
 
             let title = row[1]
-            guard let amount = Double(row[2]) else { continue }
+            guard let amount = Decimal(string: row[2]) else { continue }
             guard let type = TransactionType(rawValue: row[3]) else { continue }
 
             let transaction = FinancialTransaction(
@@ -118,7 +118,7 @@ final class ImportExportService {
         for transaction in transactions {
             let date = dateFormatter.string(from: transaction.date)
             let title = escapeCSVField(transaction.title)
-            let amount = String(format: "%.2f", transaction.amount)
+            let amount = transaction.amount.description
             let type = transaction.transactionType.rawValue
             let category = escapeCSVField(transaction.category ?? "")
             let account = escapeCSVField(transaction.account?.name ?? "")
@@ -143,7 +143,7 @@ final class ImportExportService {
         let isoFormatter = ISO8601DateFormatter()
         let payload = transactions.map { transaction in
             [
-                "id": transaction.id.uuidString,
+                "id": String(describing: transaction.persistentModelID),
                 "title": transaction.title,
                 "amount": transaction.amount,
                 "date": isoFormatter.string(from: transaction.date),

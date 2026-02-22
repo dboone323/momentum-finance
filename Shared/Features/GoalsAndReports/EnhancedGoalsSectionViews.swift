@@ -37,12 +37,12 @@ extension Features.GoalsAndReports {
             self.goals.filter(\.isCompleted)
         }
 
-        private var totalSaved: Double {
-            self.goals.reduce(0) { $0 + $1.currentAmount }
+        private var totalSaved: Decimal {
+            self.goals.reduce(Decimal(0)) { $0 + $1.currentAmount }
         }
 
-        private var totalTarget: Double {
-            self.goals.reduce(0) { $0 + $1.targetAmount }
+        private var totalTarget: Decimal {
+            self.goals.reduce(Decimal(0)) { $0 + $1.targetAmount }
         }
 
         var body: some View {
@@ -137,7 +137,7 @@ extension Features.GoalsAndReports {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
 
-                        Text(self.totalSaved.formatted(.currency(code: "USD")))
+                        Text((self.totalSaved as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.green)
@@ -150,7 +150,7 @@ extension Features.GoalsAndReports {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
 
-                        Text(self.totalTarget.formatted(.currency(code: "USD")))
+                        Text((self.totalTarget as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.blue)
@@ -166,13 +166,13 @@ extension Features.GoalsAndReports {
 
                             Spacer()
 
-                            Text("\(Int((self.totalSaved / self.totalTarget) * 100))%")
+                            Text("\(Int(((self.totalSaved / self.totalTarget) * 100) as NSDecimalNumber))%")
                                 .font(.headline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.blue)
                         }
 
-                        ProgressView(value: self.totalSaved / self.totalTarget)
+                        ProgressView(value: (self.totalSaved / self.totalTarget as NSDecimalNumber).doubleValue)
                             .progressViewStyle(LinearProgressViewStyle(tint: .blue))
                             .scaleEffect(x: 1, y: 2, anchor: .center)
                     }

@@ -23,10 +23,10 @@ func fi_suggestIdleCashInsights(
             calendar.date(from: calendar.dateComponents([.year, .month], from: transaction.date))
         }
 
-        let monthlyExpenses = monthlyTransactions.map { $0.value.reduce(0) { $0 + abs($1.amount) } }
+        let monthlyExpenses = monthlyTransactions.map { $0.value.reduce(Decimal(0)) { $0 + abs($1.amount) } }
         let averageMonthlyExpense = monthlyExpenses.isEmpty
-            ? 0
-            : monthlyExpenses.reduce(0, +) / Double(monthlyExpenses.count)
+            ? Decimal(0)
+            : monthlyExpenses.reduce(Decimal(0), +) / Decimal(max(1, monthlyExpenses.count))
 
         let recommendedBuffer = averageMonthlyExpense * 2
 
@@ -44,9 +44,9 @@ func fi_suggestIdleCashInsights(
                 type: .optimization,
                 relatedAccountId: String(account.id.hashValue),
                 chartData: [
-                    ChartDataPoint(label: "Current Balance", value: account.balance),
-                    ChartDataPoint(label: "Recommended Buffer", value: recommendedBuffer),
-                    ChartDataPoint(label: "Excess Cash", value: excessCash),
+                    ChartDataPoint(label: "Current Balance", value: (account.balance as NSDecimalNumber).doubleValue),
+                    ChartDataPoint(label: "Recommended Buffer", value: (recommendedBuffer as NSDecimalNumber).doubleValue),
+                    ChartDataPoint(label: "Excess Cash", value: (excessCash as NSDecimalNumber).doubleValue),
                 ]
             )
             insights.append(insight)
@@ -60,14 +60,14 @@ func fi_suggestIdleCashInsights(
 func fi_suggestCreditUtilizationInsights(accounts: [FinancialAccount]) -> [FinancialInsight] {
     var insights: [FinancialInsight] = []
 
-    let creditAccounts = accounts.filter { $0.accountType == .creditCard }
+    let creditAccounts = accounts.filter { $0.accountType == .credit }
     for account in creditAccounts {
         let balance = abs(account.balance)
         guard balance > 0 else { continue }
 
         // Current account model does not store credit limit, so use a conservative
         // high-balance threshold to surface repayment guidance.
-        let suggestedMaxRevolvingBalance = 1000.0
+        let suggestedMaxRevolvingBalance = Decimal(1000.0)
         if balance > suggestedMaxRevolvingBalance {
             let utilDescription = "Your outstanding balance on \(account.name) is "
                 + fi_formatCurrency(balance, code: account.currencyCode)
@@ -76,15 +76,15 @@ func fi_suggestCreditUtilizationInsights(accounts: [FinancialAccount]) -> [Finan
             let insight = FinancialInsight(
                 title: "High Credit Balance",
                 description: utilDescription,
-                priority: balance > 2500 ? .critical : .high,
+                priority: balance > Decimal(2500) ? .critical : .high,
                 type: .creditUtilization,
                 relatedAccountId: String(account.id.hashValue),
                 visualizationType: .progressBar,
                 chartData: [
-                    ChartDataPoint(label: "Balance", value: balance),
+                    ChartDataPoint(label: "Balance", value: (balance as NSDecimalNumber).doubleValue),
                     ChartDataPoint(
                         label: "Suggested Max Revolving Balance",
-                        value: suggestedMaxRevolvingBalance
+                        value: (suggestedMaxRevolvingBalance as NSDecimalNumber).doubleValue
                     ),
                 ]
             )

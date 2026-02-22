@@ -4,22 +4,24 @@ import MomentumFinanceCore
 // MARK: - Transaction Pattern Detection
 
 /// Find recurring transactions based on name, amount, and regularity
-func fi_findRecurringTransactions(_ transactions: [FinancialTransaction]) -> [FinancialTransaction] {
+func fi_findRecurringTransactions(_ transactions: [FinancialTransaction]) -> [FinancialTransaction]
+{
     var transactionsByNameAndAmount: [String: [FinancialTransaction]] = [:]
 
     for transaction in transactions where transaction.amount < 0 {
         let simplifiedName = transaction.title.lowercased()
             .replacingOccurrences(of: "[^a-z0-9]", with: "", options: .regularExpression)
 
-        let roundedAmount = round(abs(transaction.amount) * 100) / 100
-        let key = "\(simplifiedName)_\(roundedAmount)"
+        let amount = abs(transaction.amount)
+        let key = "\(simplifiedName)_\(amount.description)"
 
         transactionsByNameAndAmount[key, default: []].append(transaction)
     }
 
     var recurringTransactions: [FinancialTransaction] = []
 
-    for (_, similarTransactions) in transactionsByNameAndAmount where similarTransactions.count >= 3 {
+    for (_, similarTransactions) in transactionsByNameAndAmount where similarTransactions.count >= 3
+    {
         let sortedTransactions = similarTransactions.sorted { $0.date < $1.date }
 
         var intervals: [TimeInterval] = []
@@ -33,14 +35,18 @@ func fi_findRecurringTransactions(_ transactions: [FinancialTransaction]) -> [Fi
         if !intervals.isEmpty {
             let averageInterval = intervals.reduce(0, +) / Double(intervals.count)
             var isRegular = true
-            for interval in intervals where abs(interval - averageInterval) > averageInterval * 0.2 {
+            for interval in intervals where abs(interval - averageInterval) > averageInterval * 0.2
+            {
                 isRegular = false
                 break
             }
 
-            let isMonthly = averageInterval >= 28 * 24 * 60 * 60 && averageInterval <= 31 * 24 * 60 * 60
-            let isWeekly = averageInterval >= 6.5 * 24 * 60 * 60 && averageInterval <= 7.5 * 24 * 60 * 60
-            let isYearly = averageInterval >= 360 * 24 * 60 * 60 && averageInterval <= 370 * 24 * 60 * 60
+            let isMonthly =
+                averageInterval >= 28 * 24 * 60 * 60 && averageInterval <= 31 * 24 * 60 * 60
+            let isWeekly =
+                averageInterval >= 6.5 * 24 * 60 * 60 && averageInterval <= 7.5 * 24 * 60 * 60
+            let isYearly =
+                averageInterval >= 360 * 24 * 60 * 60 && averageInterval <= 370 * 24 * 60 * 60
 
             if isRegular, isMonthly || isWeekly || isYearly {
                 recurringTransactions.append(sortedTransactions.last!)
@@ -52,7 +58,8 @@ func fi_findRecurringTransactions(_ transactions: [FinancialTransaction]) -> [Fi
 }
 
 /// Find potential duplicate transactions within short time periods
-func fi_findPotentialDuplicates(_ transactions: [FinancialTransaction]) -> [[FinancialTransaction]] {
+func fi_findPotentialDuplicates(_ transactions: [FinancialTransaction]) -> [[FinancialTransaction]]
+{
     var transactionsByNameAndAmount: [String: [FinancialTransaction]] = [:]
 
     for transaction in transactions where transaction.amount < 0 {
@@ -67,7 +74,8 @@ func fi_findPotentialDuplicates(_ transactions: [FinancialTransaction]) -> [[Fin
 
     var duplicateSuspects: [[FinancialTransaction]] = []
 
-    for (_, similarTransactions) in transactionsByNameAndAmount where similarTransactions.count >= 2 {
+    for (_, similarTransactions) in transactionsByNameAndAmount where similarTransactions.count >= 2
+    {
         let sortedTransactions = similarTransactions.sorted { $0.date < $1.date }
         for dupIndex in 1..<sortedTransactions.count {
             let interval = sortedTransactions[dupIndex].date.timeIntervalSince(

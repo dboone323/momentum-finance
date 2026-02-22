@@ -1,4 +1,5 @@
 import UserNotifications
+import MomentumFinanceCore
 import XCTest
 @testable import MomentumFinance
 

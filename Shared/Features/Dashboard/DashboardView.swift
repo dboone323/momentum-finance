@@ -185,31 +185,31 @@ extension Features.Dashboard {
                 #if os(iOS)
                     .navigationBarTitleDisplayMode(.large)
                 #endif
-                    .onAppear {
-                        self.loadData()
+                .onAppear {
+                    self.loadData()
+                }
+                .task {
+                    // Process overdue subscriptions asynchronously
+                    await self.processOverdueSubscriptions(
+                        self.subscriptions, modelContext: self.modelContext
+                    )
+                }
+                .navigationDestination(for: DashboardDestination.self) { destination in
+                    switch destination {
+                    case .transactions:
+                        Features.Transactions.TransactionsView()
+                    case .subscriptions:
+                        #if canImport(SwiftData)
+                            Features.Subscriptions.SubscriptionsView()
+                        #else
+                            Text("Subscriptions View - SwiftData not available")
+                        #endif
+                    case .budgets:
+                        Features.Budgets.BudgetsView()
+                    case .accountDetail(let accountId):
+                        Text("Account Detail: \(accountId)")
                     }
-                    .task {
-                        // Process overdue subscriptions asynchronously
-                        await self.processOverdueSubscriptions(
-                            self.subscriptions, modelContext: self.modelContext
-                        )
-                    }
-                    .navigationDestination(for: DashboardDestination.self) { destination in
-                        switch destination {
-                        case .transactions:
-                            Features.Transactions.TransactionsView()
-                        case .subscriptions:
-                            #if canImport(SwiftData)
-                                Features.Subscriptions.SubscriptionsView()
-                            #else
-                                Text("Subscriptions View - SwiftData not available")
-                            #endif
-                        case .budgets:
-                            Features.Budgets.BudgetsView()
-                        case let .accountDetail(accountId):
-                            Text("Account Detail: \(accountId)")
-                        }
-                    }
+                }
             }
         }
 
@@ -225,11 +225,11 @@ extension Features.Dashboard {
         }
 
         private var totalBalance: String {
-            let total = self.accounts.reduce(0) { $0 + $1.balance }
+            let total = self.accounts.reduce(Decimal(0)) { $0 + $1.balance }
             let formatter = NumberFormatter()
             formatter.numberStyle = .currency
             formatter.currencySymbol = "$"
-            return formatter.string(from: NSNumber(value: total)) ?? "$0.00"
+            return formatter.string(from: total as NSDecimalNumber) ?? "$0.00"
         }
 
         private var monthlyIncome: String {
@@ -243,7 +243,7 @@ extension Features.Dashboard {
         }
 
         private var totalBalanceDouble: Double {
-            self.accounts.reduce(0) { $0 + $1.balance }
+            (self.accounts.reduce(Decimal(0)) { $0 + $1.balance } as NSDecimalNumber).doubleValue
         }
 
         private var monthlyIncomeDouble: Double {

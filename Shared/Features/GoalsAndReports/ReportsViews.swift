@@ -121,11 +121,11 @@ public struct FinancialSummaryCard: View {
     }
 
     private var totalIncome: Double {
-        self.transactions.filter { $0.transactionType == .income }.reduce(0) { $0 + $1.amount }
+        (self.transactions.filter { $0.transactionType == .income }.reduce(Decimal(0)) { $0 + $1.amount } as NSDecimalNumber).doubleValue
     }
 
     private var totalExpenses: Double {
-        self.transactions.filter { $0.transactionType == .expense }.reduce(0) { $0 + $1.amount }
+        (self.transactions.filter { $0.transactionType == .expense }.reduce(Decimal(0)) { $0 + $1.amount } as NSDecimalNumber).doubleValue
     }
 
     private var netIncome: Double {
@@ -200,18 +200,18 @@ public struct SpendingByCategoryCard: View {
         self.transactions.filter { $0.transactionType == .expense }
     }
 
-    private var categorySpending: [(String, Double)] {
+    private var categorySpending: [(String, Decimal)] {
         let spending = Dictionary(grouping: expenseTransactions) { transaction in
             transaction.category ?? "Uncategorized"
         }.mapValues { transactions in
-            transactions.reduce(0) { $0 + $1.amount }
+            transactions.reduce(Decimal(0)) { $0 + $1.amount }
         }
 
         return spending.sorted { $0.value > $1.value }
     }
 
     private var totalSpending: Double {
-        self.categorySpending.reduce(0) { $0 + $1.1 }
+        (self.categorySpending.reduce(Decimal(0)) { $0 + $1.1 } as NSDecimalNumber).doubleValue
     }
 
     public var body: some View {
@@ -236,12 +236,12 @@ public struct SpendingByCategoryCard: View {
                             Spacer()
 
                             VStack(alignment: .trailing, spacing: 2) {
-                                Text(amount.formatted(.currency(code: "USD")))
+                                Text((amount as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))
                                     .font(.body)
                                     .fontWeight(.medium)
 
                                 if self.totalSpending > 0 {
-                                    Text("\(Int((amount / self.totalSpending) * 100))%")
+                                    Text("\(Int(((amount / Decimal(self.totalSpending)) * 100) as NSDecimalNumber))%")
                                         .font(.caption)
                                         .foregroundColor(.secondary)
                                 }
@@ -325,7 +325,7 @@ public struct BudgetPerformanceCard: View {
                                         .font(.caption)
                                     Spacer()
                                     let overAmount = budget.spentAmount - budget.limitAmount
-                                    Text("Over by \(overAmount.formatted(.currency(code: "USD")))")
+                                    Text("Over by \((overAmount as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))")
                                         .font(.caption)
                                         .foregroundColor(.red)
                                 }

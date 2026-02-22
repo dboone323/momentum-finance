@@ -9,30 +9,31 @@ func fi_detectCategoryOutliers(_ transactions: [FinancialTransaction]) -> [Finan
 
     var transactionsByCategory: [String: [FinancialTransaction]] = [:]
     for transaction in transactions where transaction.amount < 0 {
-        guard let category = transaction.category else { continue }
-        transactionsByCategory[category, default: []].append(transaction)
+        guard let categoryName = transaction.category else { continue }
+        transactionsByCategory[categoryName, default: []].append(transaction)
     }
 
     for (_, categoryTransactions) in transactionsByCategory {
         guard categoryTransactions.count >= 5 else { continue }
 
         let amounts = categoryTransactions.map { abs($0.amount) }
-        let mean = amounts.reduce(0, +) / Double(amounts.count)
-        let variance = amounts.map { pow($0 - mean, 2) }.reduce(0, +) / Double(amounts.count)
-        let stdDev = sqrt(variance)
+        let mean = amounts.reduce(Decimal(0), +) / Decimal(max(1, amounts.count))
+        let doubleMean = (mean as NSDecimalNumber).doubleValue
+        let doubleVariance = amounts.map { pow(($0 as NSDecimalNumber).doubleValue - doubleMean, 2) }.reduce(0, +) / Double(max(1, amounts.count))
+        let stdDev = sqrt(doubleVariance)
 
-        let outlierThreshold = mean + (2 * stdDev)
+        let outlierThreshold = mean + Decimal(2 * stdDev)
         let outliers = categoryTransactions.filter { abs($0.amount) > outlierThreshold }
             .sorted { abs($0.amount) > abs($1.amount) }
 
-        if let topOutlier = outliers.first, let category = topOutlier.category {
+        if let topOutlier = outliers.first, let categoryName = topOutlier.category {
             let transactionAmount = abs(topOutlier.amount)
-            let percentageHigher = mean > 0 ? Int((transactionAmount / mean - 1) * 100) : 0
+            let percentageHigher = mean > 0 ? Int(((transactionAmount / mean - 1) * 100) as NSDecimalNumber) : 0
             let formattedAmount = fi_formatCurrency(transactionAmount, code: "USD")
             let formattedDate = topOutlier.date.formatted(date: .abbreviated, time: .omitted)
-            let categoryName = category
             let titlePart = "\(topOutlier.title) (\(formattedAmount))"
-            let restPart = " on \(formattedDate) is \(percentageHigher)% higher than your average \(categoryName) transaction."
+            let restPart =
+                " on \(formattedDate) is \(percentageHigher)% higher than your average \(categoryName) transaction."
             let descriptionText = titlePart + restPart
 
             let insight = FinancialInsight(
@@ -43,9 +44,9 @@ func fi_detectCategoryOutliers(_ transactions: [FinancialTransaction]) -> [Finan
                 relatedTransactionId: topOutlier.id.hashValue.description,
                 visualizationType: .boxPlot,
                 chartData: [
-                    ChartDataPoint(label: "Average", value: mean),
-                    ChartDataPoint(label: "This Transaction", value: transactionAmount),
-                    ChartDataPoint(label: "Typical Range", value: mean + stdDev),
+                    ChartDataPoint(label: "Average", value: (mean as NSDecimalNumber).doubleValue),
+                    ChartDataPoint(label: "This Transaction", value: (transactionAmount as NSDecimalNumber).doubleValue),
+                    ChartDataPoint(label: "Typical Range", value: (mean as NSDecimalNumber).doubleValue + stdDev),
                 ]
             )
             insights.append(insight)
@@ -55,7 +56,9 @@ func fi_detectCategoryOutliers(_ transactions: [FinancialTransaction]) -> [Finan
 }
 
 /// Detect unusual transaction frequency patterns
-func fi_detectRecentFrequencyAnomalies(_ transactions: [FinancialTransaction], days: Int = 30) -> [FinancialInsight] {
+func fi_detectRecentFrequencyAnomalies(_ transactions: [FinancialTransaction], days: Int = 30)
+    -> [FinancialInsight]
+{
     var insights: [FinancialInsight] = []
     let calendar = Calendar.current
     let recentTransactions = transactions.filter {
@@ -74,7 +77,7 @@ func fi_detectRecentFrequencyAnomalies(_ transactions: [FinancialTransaction], d
     let averageCount = Double(transactionCounts.reduce(0, +)) / Double(transactionCounts.count)
 
     if let highestDay = last7Days.max(by: { $0.value.count < $1.value.count }),
-       Double(highestDay.value.count) > averageCount * 2
+        Double(highestDay.value.count) > averageCount * 2
     {
         let transactionCount = highestDay.value.count
         let percentageMore = Int((Double(transactionCount) / averageCount - 1) * 100)
@@ -100,7 +103,8 @@ func fi_detectRecentFrequencyAnomalies(_ transactions: [FinancialTransaction], d
 }
 
 /// Generate insights for potential duplicate payments
-func fi_suggestDuplicatePaymentInsights(transactions: [FinancialTransaction]) -> [FinancialInsight] {
+func fi_suggestDuplicatePaymentInsights(transactions: [FinancialTransaction]) -> [FinancialInsight]
+{
     var insights: [FinancialInsight] = []
 
     let calendar = Calendar.current
@@ -111,8 +115,9 @@ func fi_suggestDuplicatePaymentInsights(transactions: [FinancialTransaction]) ->
     let duplicateSuspects = fi_findPotentialDuplicates(recentTransactions)
     for duplicate in duplicateSuspects {
         let dupTitle = duplicate.first?.title ?? ""
-        let dupAmount = duplicate.first?.amount ?? 0
-        let dupDescription = "You may have duplicate payments: \(dupTitle) for "
+        let dupAmount = duplicate.first?.amount ?? Decimal(0)
+        let dupDescription =
+            "You may have duplicate payments: \(dupTitle) for "
             + fi_formatCurrency(abs(dupAmount), code: "USD") + " on multiple dates."
 
         let dupData = duplicate.map { txn in
@@ -128,7 +133,7 @@ func fi_suggestDuplicatePaymentInsights(transactions: [FinancialTransaction]) ->
             priority: .high,
             type: .anomaly,
             relatedTransactionId: duplicate.first?.id.hashValue.description,
-            chartData: dupData.map { ChartDataPoint(label: $0.0, value: $0.1) }
+            chartData: dupData.map { ChartDataPoint(label: $0.0, value: ($0.1 as NSDecimalNumber).doubleValue) }
         )
         insights.append(insight)
     }

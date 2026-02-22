@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MomentumFinanceCore
 
 // MARK: - Animation Component Types
 

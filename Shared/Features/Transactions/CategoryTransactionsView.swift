@@ -57,9 +57,8 @@ extension Features.Transactions {
 
                         Spacer()
 
-                        // Total amount for this category
                         VStack(alignment: .trailing) {
-                            Text(self.totalAmount.formatted(.currency(code: "USD")))
+                            Text((self.totalAmount as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))
                                 .font(.headline)
                                 .foregroundColor(self.totalAmount < 0 ? .red : .primary)
                         }
@@ -112,9 +111,8 @@ extension Features.Transactions {
             try? self.modelContext.save()
         }
 
-        /// Calculate the total amount for this category
-        private var totalAmount: Double {
-            self.filteredTransactions.reduce(0) { result, transaction in
+        private var totalAmount: Decimal {
+            self.filteredTransactions.reduce(Decimal(0)) { result, transaction in
                 if transaction.transactionType == .expense {
                     result - transaction.amount
                 } else {

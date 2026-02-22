@@ -1,4 +1,5 @@
 import Foundation
+
 #if canImport(SwiftData)
     import SwiftData
 #endif
@@ -9,7 +10,7 @@ import Foundation
 public final class Subscription: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, name, provider, amount, currencyCode, billingCycle, startDate, nextDueDate, notes,
-             paymentMethod, isActive, autoRenews
+            paymentMethod, isActive, autoRenews
     }
 
     public var id: UUID
@@ -98,6 +99,10 @@ public final class Subscription: Encodable {
         try container.encode(paymentMethod, forKey: .paymentMethod)
         try container.encode(isActive, forKey: .isActive)
         try container.encode(autoRenews, forKey: .autoRenews)
+    }
+
+    public var nextBillingDate: Date {
+        nextDueDate
     }
 
     public var monthlyEquivalent: Decimal {

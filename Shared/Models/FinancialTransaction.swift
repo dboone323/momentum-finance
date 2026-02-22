@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 @Model
 public final class FinancialTransaction {
     public var id: UUID
     public var title: String
-    public var amount: Double
+    public var amount: Decimal
     public var date: Date
     public var transactionType: TransactionType
     public var category: String?
@@ -35,7 +36,7 @@ public final class FinancialTransaction {
     public init(
         id: UUID = UUID(),
         title: String,
-        amount: Double,
+        amount: Decimal,
         date: Date = Date(),
         transactionType: TransactionType,
         category: String? = nil,
@@ -65,14 +66,14 @@ public final class FinancialTransaction {
     }
 
     /// Signed amount (negative for expenses, positive for income)
-    public var signedAmount: Double {
+    public var signedAmount: Decimal {
         switch transactionType {
         case .income:
             amount
         case .expense:
             -amount
         case .transfer:
-            amount // Transfers can be positive or negative based on context
+            amount  // Transfers can be positive or negative based on context
         }
     }
 
@@ -81,7 +82,8 @@ public final class FinancialTransaction {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.currencyCode = currency
-        return formatter.string(from: NSNumber(value: abs(amount))) ?? "$\(abs(amount))"
+        let doubleAmount = NSDecimalNumber(decimal: amount).doubleValue
+        return formatter.string(from: NSNumber(value: abs(doubleAmount))) ?? "$\(abs(doubleAmount))"
     }
 
     /// Month and year string for grouping
@@ -120,16 +122,16 @@ public final class FinancialTransaction {
     /// Check if transaction matches a search query
     public func matchesSearch(_ query: String) -> Bool {
         let searchTerm = query.lowercased()
-        return title.lowercased().contains(searchTerm) ||
-            (notes?.lowercased().contains(searchTerm) ?? false) ||
-            (category?.lowercased().contains(searchTerm) ?? false) ||
-            tags.contains { $0.lowercased().contains(searchTerm) }
+        return title.lowercased().contains(searchTerm)
+            || (notes?.lowercased().contains(searchTerm) ?? false)
+            || (category?.lowercased().contains(searchTerm) ?? false)
+            || tags.contains { $0.lowercased().contains(searchTerm) }
     }
 
     /// Create a copy with modified properties
     public func copy(
         title: String? = nil,
-        amount: Double? = nil,
+        amount: Decimal? = nil,
         date: Date? = nil,
         transactionType: TransactionType? = nil,
         category: String? = nil,
@@ -155,32 +157,7 @@ public final class FinancialTransaction {
     }
 }
 
-/// Transaction types
-public enum TransactionType: String, Codable, CaseIterable {
-    case income = "Income"
-    case expense = "Expense"
-    case transfer = "Transfer"
-
-    public var displayName: String {
-        rawValue
-    }
-
-    public var colorHex: String {
-        switch self {
-        case .income: "#34C759" // Green
-        case .expense: "#FF3B30" // Red
-        case .transfer: "#007AFF" // Blue
-        }
-    }
-
-    public var iconName: String {
-        switch self {
-        case .income: "arrow.down.circle.fill"
-        case .expense: "arrow.up.circle.fill"
-        case .transfer: "arrow.left.arrow.right.circle.fill"
-        }
-    }
-}
+// Redundant local TransactionType removed to use core definition.
 
 /// Recurring transaction frequencies
 public enum RecurringFrequency: String, Codable, CaseIterable {
@@ -209,9 +186,9 @@ public enum RecurringFrequency: String, Codable, CaseIterable {
     }
 }
 
-public extension FinancialTransaction {
+extension FinancialTransaction {
     /// Sample data for previews and testing
-    static var sampleIncome: FinancialTransaction {
+    public static var sampleIncome: FinancialTransaction {
         FinancialTransaction(
             title: "Salary Deposit",
             amount: 3500,
@@ -223,7 +200,7 @@ public extension FinancialTransaction {
         )
     }
 
-    static var sampleExpense: FinancialTransaction {
+    public static var sampleExpense: FinancialTransaction {
         FinancialTransaction(
             title: "Grocery Shopping",
             amount: 85.50,
@@ -235,7 +212,7 @@ public extension FinancialTransaction {
         )
     }
 
-    static var sampleTransfer: FinancialTransaction {
+    public static var sampleTransfer: FinancialTransaction {
         FinancialTransaction(
             title: "Transfer to Savings",
             amount: 500,

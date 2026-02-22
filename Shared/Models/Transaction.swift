@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 
 /// Simplified transaction model for basic operations
 /// This is a lightweight version of FinancialTransaction for specific use cases
 public struct Transaction: Identifiable, Codable, Hashable {
     public let id: UUID
     public var title: String
-    public var amount: Double
+    public var amount: Decimal
     public var date: Date
     public var type: TransactionType
     public var category: String?
@@ -21,7 +22,7 @@ public struct Transaction: Identifiable, Codable, Hashable {
     public init(
         id: UUID = UUID(),
         title: String,
-        amount: Double,
+        amount: Decimal,
         date: Date = Date(),
         type: TransactionType,
         category: String? = nil,
@@ -37,7 +38,7 @@ public struct Transaction: Identifiable, Codable, Hashable {
     }
 
     /// Signed amount (negative for expenses, positive for income)
-    public var signedAmount: Double {
+    public var signedAmount: Decimal {
         switch type {
         case .income:
             amount
@@ -53,7 +54,8 @@ public struct Transaction: Identifiable, Codable, Hashable {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.currencyCode = "USD"
-        return formatter.string(from: NSNumber(value: abs(amount))) ?? "$\(abs(amount))"
+        let doubleAmount = NSDecimalNumber(decimal: amount).doubleValue
+        return formatter.string(from: NSNumber(value: abs(doubleAmount))) ?? "$\(abs(doubleAmount))"
     }
 
     /// Create a Transaction from a FinancialTransaction

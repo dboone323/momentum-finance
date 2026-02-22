@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MomentumFinanceCore
 import OSLog
 
 /// Centralized logging system for the Momentum Finance application

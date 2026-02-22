@@ -1,4 +1,5 @@
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 /// Budgets data generator
@@ -23,13 +24,13 @@ final class BudgetsGenerator: DataGenerator {
 
         // Current month budgets
         let currentMonthBudgets = [
-            (category: "Housing", limit: 1300.0),
-            (category: "Food & Dining", limit: 500.0),
-            (category: "Transportation", limit: 200.0),
-            (category: "Utilities", limit: 250.0),
-            (category: "Entertainment", limit: 150.0),
-            (category: "Shopping", limit: 300.0),
-            (category: "Health & Fitness", limit: 100.0),
+            (category: "Housing", limit: "1300.0"),
+            (category: "Food & Dining", limit: "500.0"),
+            (category: "Transportation", limit: "200.0"),
+            (category: "Utilities", limit: "250.0"),
+            (category: "Entertainment", limit: "150.0"),
+            (category: "Shopping", limit: "300.0"),
+            (category: "Health & Fitness", limit: "100.0"),
         ]
 
         // Get first day of current month
@@ -45,17 +46,16 @@ final class BudgetsGenerator: DataGenerator {
         for budgetInfo in currentMonthBudgets {
             if let category = categoryDict[budgetInfo.category] {
                 let startDate = firstDayOfMonth
-                let endDate = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startDate) ?? startDate
+                let endDate =
+                    calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startDate)
+                    ?? startDate
 
                 let budget = Budget(
                     name: "\(category.name) Budget",
-                    budgetDescription: "Monthly budget for \(category.name)",
-                    totalAmount: Double(budgetInfo.limit),
-                    period: .monthly,
-                    startDate: startDate,
-                    endDate: endDate,
-                    category: category.name
+                    limitAmount: Decimal(string: budgetInfo.limit) ?? 0,
+                    month: startDate
                 )
+                budget.category = category.name
                 self.modelContext.insert(budget)
             }
         }
@@ -65,17 +65,16 @@ final class BudgetsGenerator: DataGenerator {
             for budgetInfo in currentMonthBudgets {
                 if let category = categoryDict[budgetInfo.category] {
                     let startDate = previousMonth
-                    let endDate = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startDate) ?? startDate
+                    let endDate =
+                        calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startDate)
+                        ?? startDate
 
                     let budget = Budget(
                         name: "\(category.name) Budget",
-                        budgetDescription: "Monthly budget for \(category.name)",
-                        totalAmount: Double(budgetInfo.limit),
-                        period: .monthly,
-                        startDate: startDate,
-                        endDate: endDate,
-                        category: category.name
+                        limitAmount: Decimal(string: budgetInfo.limit) ?? 0,
+                        month: startDate
                     )
+                    budget.category = category.name
                     self.modelContext.insert(budget)
                 }
             }

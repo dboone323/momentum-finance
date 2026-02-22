@@ -1,3 +1,4 @@
+import MomentumFinanceCore
 #if os(macOS)
     import XCTest
     @testable import MomentumFinance

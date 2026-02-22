@@ -155,7 +155,7 @@ extension Features.Transactions {
         }
 
         private func saveTransaction() {
-            guard let amountValue = Double(amount),
+            guard let amountValue = Decimal(string: amount),
                   let account = selectedAccount
             else { return }
 
