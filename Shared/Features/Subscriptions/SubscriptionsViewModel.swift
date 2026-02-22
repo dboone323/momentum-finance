@@ -77,7 +77,7 @@ final class SubscriptionsViewModel {
                     case .yearly, .annually:
                         subscriptionAmount / Decimal(12)
                     case .custom:
-                        // Default to monthly if custom days not specified in model, 
+                        // Default to monthly if custom days not specified in model,
                         // or handle appropriately if Subscription model stores custom days.
                         subscriptionAmount
                     }

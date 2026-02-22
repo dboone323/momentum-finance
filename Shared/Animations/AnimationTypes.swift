@@ -5,8 +5,8 @@
 //  Created for build compatibility
 //
 
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 // MARK: - Animation Component Types
 

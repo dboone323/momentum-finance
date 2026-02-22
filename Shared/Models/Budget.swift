@@ -148,52 +148,52 @@ private enum BudgetCompatibilityStore {
     nonisolated(unsafe) static var rolledOverAmount: [UUID: Double] = [:]
 }
 
-extension Budget {
+public extension Budget {
     // Legacy aliases used by older UI code paths
-    public var month: Date {
+    var month: Date {
         get { startDate }
         set {
             let newStart = newValue.startOfMonth
             startDate = newStart
             endDate =
                 Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: newStart)
-                ?? newStart
+                    ?? newStart
             lastModifiedDate = Date()
         }
     }
 
-    public var limitAmount: Decimal {
+    var limitAmount: Decimal {
         get { totalAmount }
         set { updateAmount(newValue) }
     }
 
-    public var rolloverEnabled: Bool {
+    var rolloverEnabled: Bool {
         get { BudgetCompatibilityStore.rolloverEnabled[id] ?? false }
         set { BudgetCompatibilityStore.rolloverEnabled[id] = newValue }
     }
 
-    public var maxRolloverPercentage: Double {
+    var maxRolloverPercentage: Double {
         get { BudgetCompatibilityStore.maxRolloverPercentage[id] ?? 1.0 }
         set { BudgetCompatibilityStore.maxRolloverPercentage[id] = newValue }
     }
 
-    public var rolledOverAmount: Decimal {
+    var rolledOverAmount: Decimal {
         get { Decimal(BudgetCompatibilityStore.rolledOverAmount[id] ?? 0) }
         set { BudgetCompatibilityStore.rolledOverAmount[id] = NSDecimalNumber(decimal: newValue).doubleValue }
     }
 
-    public var effectiveLimit: Decimal {
+    var effectiveLimit: Decimal {
         limitAmount + rolledOverAmount
     }
 
-    public func calculateRolloverAmount() -> Decimal {
+    func calculateRolloverAmount() -> Decimal {
         guard rolloverEnabled else { return 0 }
         let unusedAmount = max(limitAmount - spentAmount, 0)
         let maxAllowed = limitAmount * Decimal(maxRolloverPercentage)
         return min(unusedAmount, maxAllowed)
     }
 
-    public func createNextPeriodBudget(for month: Date? = nil) -> Budget {
+    func createNextPeriodBudget(for month: Date? = nil) -> Budget {
         let startSourceDate =
             month ?? Calendar.current.date(byAdding: .day, value: 1, to: endDate) ?? Date()
         let nextPeriod = period.nextPeriod(from: startSourceDate)
@@ -228,7 +228,9 @@ extension Date {
         Calendar.current
             .date(
                 from: Calendar.current.dateComponents(
-                    [.yearForWeekOfYear, .weekOfYear], from: self)) ?? self
+                    [.yearForWeekOfYear, .weekOfYear], from: self
+                )
+            ) ?? self
     }
 
     var startOfMonth: Date {
@@ -244,7 +246,8 @@ extension Date {
                 year: Calendar.current.component(.year, from: self),
                 month: quarterStartMonth,
                 day: 1
-            )) ?? self
+            )
+        ) ?? self
     }
 
     var startOfSemester: Date {
@@ -255,7 +258,8 @@ extension Date {
                 year: Calendar.current.component(.year, from: self),
                 month: semesterStartMonth,
                 day: 1
-            )) ?? self
+            )
+        ) ?? self
     }
 
     var startOfYear: Date {
@@ -263,9 +267,9 @@ extension Date {
     }
 }
 
-extension Budget {
+public extension Budget {
     /// Sample data for previews and testing
-    public static var sample: Budget {
+    static var sample: Budget {
         let startDate = Date()
         let endDate = Calendar.current.date(byAdding: .month, value: 1, to: startDate) ?? startDate
 
@@ -282,7 +286,7 @@ extension Budget {
         )
     }
 
-    public static var sampleOverBudget: Budget {
+    static var sampleOverBudget: Budget {
         let startDate = Date()
         let endDate = Calendar.current.date(byAdding: .month, value: 1, to: startDate) ?? startDate
 

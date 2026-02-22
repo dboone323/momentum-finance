@@ -45,7 +45,10 @@ func fi_suggestIdleCashInsights(
                 relatedAccountId: String(account.id.hashValue),
                 chartData: [
                     ChartDataPoint(label: "Current Balance", value: (account.balance as NSDecimalNumber).doubleValue),
-                    ChartDataPoint(label: "Recommended Buffer", value: (recommendedBuffer as NSDecimalNumber).doubleValue),
+                    ChartDataPoint(
+                        label: "Recommended Buffer",
+                        value: (recommendedBuffer as NSDecimalNumber).doubleValue
+                    ),
                     ChartDataPoint(label: "Excess Cash", value: (excessCash as NSDecimalNumber).doubleValue),
                 ]
             )

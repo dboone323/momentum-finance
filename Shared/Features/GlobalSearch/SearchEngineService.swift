@@ -1,6 +1,6 @@
 import Combine
-import MomentumFinanceCore
 import Foundation
+import MomentumFinanceCore
 import SwiftData
 
 @MainActor
@@ -82,7 +82,8 @@ public final class SearchEngineService: ObservableObject {
                     id: String(describing: transaction.id),
                     title: transaction.title,
                     subtitle: String(
-                        format: "$%.2f • %@", (transaction.amount as NSDecimalNumber).doubleValue, transaction.date.formatted()
+                        format: "$%.2f • %@", (transaction.amount as NSDecimalNumber).doubleValue,
+                        transaction.date.formatted()
                     ),
                     type: .transactions,
                     iconName: "arrow.left.arrow.right",

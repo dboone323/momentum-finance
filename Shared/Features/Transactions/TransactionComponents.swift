@@ -311,9 +311,10 @@ private struct StatItem: View {
         VStack(alignment: .center, spacing: 4) {
             Image(systemName: self.icon).foregroundColor(self.color).font(.system(size: 20))
             Text(self.title).font(.caption).foregroundColor(.secondary)
-            Text((self.amount as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD"))).font(.subheadline).fontWeight(
-                .semibold
-            ).foregroundColor(self.color)
+            Text((self.amount as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD"))).font(.subheadline)
+                .fontWeight(
+                    .semibold
+                ).foregroundColor(self.color)
         }.frame(maxWidth: .infinity)
     }
 }

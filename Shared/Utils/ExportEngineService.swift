@@ -2,7 +2,6 @@ import Foundation
 import PDFKit
 import SwiftData
 import SwiftUI
-
 @testable import MomentumFinanceCore
 
 public actor ExportEngineService: ModelActor {
@@ -204,7 +203,7 @@ public actor ExportEngineService: ModelActor {
             let pdfData = NSMutableData()
             let pdfInfo = [kCGPDFContextCreator: "Momentum Finance"] as CFDictionary
             guard let dataConsumer = CGDataConsumer(data: pdfData as CFMutableData),
-                let pdfContext = CGContext(consumer: dataConsumer, mediaBox: nil, pdfInfo)
+                  let pdfContext = CGContext(consumer: dataConsumer, mediaBox: nil, pdfInfo)
             else { throw ExportError.pdfGenerationFailed }
 
             let pageRect = CGRect(x: 0, y: 0, width: 612, height: 792)
@@ -336,7 +335,8 @@ public actor ExportEngineService: ModelActor {
             ]
 
             "Accounts Summary".draw(
-                at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes)
+                at: CGPoint(x: 50, y: yPosition), withAttributes: headerAttributes
+            )
 
             var currentY = yPosition + 30
 

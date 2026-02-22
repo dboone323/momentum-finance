@@ -74,7 +74,10 @@ final class TransactionPatternAnalyzer {
                 ChartDataPoint(label: "Highest Spending Day", value: Double(maxWeekday)),
                 ChartDataPoint(
                     label: "Average Daily Spending",
-                    value: (spendingByWeekday.values.reduce(Decimal(0), +) / Decimal(max(1, spendingByWeekday.count)) as NSDecimalNumber).doubleValue
+                    value: (spendingByWeekday.values.reduce(Decimal(0), +) / Decimal(max(
+                        1,
+                        spendingByWeekday.count
+                    )) as NSDecimalNumber).doubleValue
                 ),
             ]
         )
@@ -120,7 +123,10 @@ final class TransactionPatternAnalyzer {
 
         let amounts = expenses.map { abs($0.amount) }
         let average = amounts.reduce(Decimal(0), +) / Decimal(max(1, amounts.count))
-        let standardDeviation = self.calculateStandardDeviation(amounts.map { ($0 as NSDecimalNumber).doubleValue }, mean: (average as NSDecimalNumber).doubleValue)
+        let standardDeviation = self.calculateStandardDeviation(
+            amounts.map { ($0 as NSDecimalNumber).doubleValue },
+            mean: (average as NSDecimalNumber).doubleValue
+        )
 
         // Find transactions that are more than 2 standard deviations above the mean
         let threshold = average + Decimal(2 * standardDeviation)

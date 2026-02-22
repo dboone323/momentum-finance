@@ -353,7 +353,8 @@ public struct GoalNotificationScheduler {
         // Calculate progress percentage
         let progressPercentage =
             goal.targetAmount > 0
-            ? Double(truncating: (goal.currentAmount / goal.targetAmount) as NSDecimalNumber) : 0
+                ? Double(truncating: (goal.currentAmount / goal.targetAmount) as NSDecimalNumber)
+                : 0
         let progressPercent = Int(progressPercentage * 100)
 
         // Only schedule if goal is active and has meaningful progress

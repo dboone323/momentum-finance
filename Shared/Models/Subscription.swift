@@ -83,19 +83,19 @@ public final class Subscription {
     public var monthlyCost: Decimal {
         switch billingCycle {
         case .daily:
-            return amount * 30.44
+            amount * 30.44
         case .weekly:
-            return amount * 4.33  // Average weeks per month
+            amount * 4.33 // Average weeks per month
         case .monthly:
-            return amount
+            amount
         case .quarterly:
-            return amount / 3
+            amount / 3
         case .semiAnnually:
-            return amount / 6
+            amount / 6
         case .yearly, .annually:
-            return amount / 12
+            amount / 12
         case .custom:
-            return amount
+            amount
         }
     }
 
@@ -103,19 +103,19 @@ public final class Subscription {
     public var yearlyCost: Decimal {
         switch billingCycle {
         case .daily:
-            return amount * 365
+            amount * 365
         case .weekly:
-            return amount * 52
+            amount * 52
         case .monthly:
-            return amount * 12
+            amount * 12
         case .quarterly:
-            return amount * 4
+            amount * 4
         case .semiAnnually:
-            return amount * 2
+            amount * 2
         case .yearly, .annually:
-            return amount
+            amount
         case .custom:
-            return amount * 12
+            amount * 12
         }
     }
 
@@ -124,7 +124,7 @@ public final class Subscription {
         guard isActive else { return false }
         let reminderDate =
             Calendar.current
-            .date(byAdding: .day, value: -reminderDays, to: nextBillingDate) ?? nextBillingDate
+                .date(byAdding: .day, value: -reminderDays, to: nextBillingDate) ?? nextBillingDate
         return Date() >= reminderDate && Date() < nextBillingDate
     }
 
@@ -160,23 +160,23 @@ private enum SubscriptionCompatibilityStore {
     nonisolated(unsafe) static var accounts: [UUID: FinancialAccount] = [:]
 }
 
-extension Subscription {
-    public var nextDueDate: Date {
+public extension Subscription {
+    var nextDueDate: Date {
         get { nextBillingDate }
         set { nextBillingDate = newValue }
     }
 
-    public var provider: String {
+    var provider: String {
         get { subscriptionDescription ?? "" }
         set { subscriptionDescription = newValue }
     }
 
-    public var notes: String? {
+    var notes: String? {
         get { subscriptionDescription }
         set { subscriptionDescription = newValue }
     }
 
-    public var account: FinancialAccount? {
+    var account: FinancialAccount? {
         get { SubscriptionCompatibilityStore.accounts[id] }
         set {
             if let newValue {
@@ -187,7 +187,7 @@ extension Subscription {
         }
     }
 
-    public func processPayment(modelContext: ModelContext) {
+    func processPayment(modelContext: ModelContext) {
         guard isActive else { return }
 
         let paymentTransaction = FinancialTransaction(
@@ -211,9 +211,9 @@ extension Subscription {
     }
 }
 
-extension Subscription {
+public extension Subscription {
     /// Sample data for previews and testing
-    public static var sample: Subscription {
+    static var sample: Subscription {
         Subscription(
             name: "Netflix Premium",
             subscriptionDescription: "Streaming service subscription",
@@ -226,7 +226,7 @@ extension Subscription {
         )
     }
 
-    public static var sampleAnnual: Subscription {
+    static var sampleAnnual: Subscription {
         Subscription(
             name: "Adobe Creative Cloud",
             subscriptionDescription: "Design software suite",

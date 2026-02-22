@@ -233,7 +233,10 @@ func fi_checkBudgetUnderutilized(
         chartData: [
             ChartDataPoint(label: "Budget", value: (budget.totalAmount as NSDecimalNumber).doubleValue),
             ChartDataPoint(label: "Spent", value: (totalSpent as NSDecimalNumber).doubleValue),
-            ChartDataPoint(label: "Remaining", value: ((budget.totalAmount - totalSpent) as NSDecimalNumber).doubleValue),
+            ChartDataPoint(
+                label: "Remaining",
+                value: ((budget.totalAmount - totalSpent) as NSDecimalNumber).doubleValue
+            ),
         ]
     )
 }
@@ -307,7 +310,8 @@ extension FinancialIntelligenceService {
         let recurringTransactions = fi_findRecurringTransactions(transactions)
         guard !recurringTransactions.isEmpty else { return [] }
 
-        let topFive = recurringTransactions.prefix(5).map { ($0.title, (abs($0.amount) as NSDecimalNumber).doubleValue) }
+        let topFive = recurringTransactions.prefix(5)
+            .map { ($0.title, (abs($0.amount) as NSDecimalNumber).doubleValue) }
 
         let insight = FinancialInsight(
             title: "Potential Recurring Expenses",

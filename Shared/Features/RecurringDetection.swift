@@ -31,7 +31,10 @@ public final class RecurringTransactionDetector {
                 if let frequency = detectFrequency(intervals) {
                     patterns.append(RecurringPattern(
                         title: title,
-                        amount: (group.map(\.amount).reduce(Decimal(0), +) / Decimal(max(1, group.count)) as NSDecimalNumber).doubleValue,
+                        amount: (group.map(\.amount).reduce(Decimal(0), +) / Decimal(max(
+                            1,
+                            group.count
+                        )) as NSDecimalNumber).doubleValue,
                         frequency: frequency,
                         occurrences: group.count,
                         lastDate: sortedDates.last ?? Date(),

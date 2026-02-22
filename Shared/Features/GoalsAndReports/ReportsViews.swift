@@ -121,11 +121,13 @@ public struct FinancialSummaryCard: View {
     }
 
     private var totalIncome: Double {
-        (self.transactions.filter { $0.transactionType == .income }.reduce(Decimal(0)) { $0 + $1.amount } as NSDecimalNumber).doubleValue
+        (self.transactions.filter { $0.transactionType == .income }
+            .reduce(Decimal(0)) { $0 + $1.amount } as NSDecimalNumber).doubleValue
     }
 
     private var totalExpenses: Double {
-        (self.transactions.filter { $0.transactionType == .expense }.reduce(Decimal(0)) { $0 + $1.amount } as NSDecimalNumber).doubleValue
+        (self.transactions.filter { $0.transactionType == .expense }
+            .reduce(Decimal(0)) { $0 + $1.amount } as NSDecimalNumber).doubleValue
     }
 
     private var netIncome: Double {
@@ -325,9 +327,11 @@ public struct BudgetPerformanceCard: View {
                                         .font(.caption)
                                     Spacer()
                                     let overAmount = budget.spentAmount - budget.limitAmount
-                                    Text("Over by \((overAmount as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))")
-                                        .font(.caption)
-                                        .foregroundColor(.red)
+                                    Text(
+                                        "Over by \((overAmount as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))"
+                                    )
+                                    .font(.caption)
+                                    .foregroundColor(.red)
                                 }
                             }
                         }

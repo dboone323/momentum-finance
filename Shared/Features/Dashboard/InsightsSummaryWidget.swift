@@ -182,7 +182,7 @@ public struct InsightsSummaryWidget: View {
     private func calculateRecentSpending() -> Decimal {
         // Sum of expenses in the last 7 days
         let lastWeek = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
-        
+
         return self.transactions
             .filter { $0.date > lastWeek && $0.transactionType == .expense }
             .reduce(Decimal(0)) { $0 + $1.amount }

@@ -325,14 +325,18 @@ extension Features.Budgets {
                             }
                         }
 
-                        Text("Budget: $\((self.budget.effectiveLimit as NSDecimalNumber).doubleValue, specifier: "%.2f")")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
+                        Text(
+                            "Budget: $\((self.budget.effectiveLimit as NSDecimalNumber).doubleValue, specifier: "%.2f")"
+                        )
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
 
                         if self.budget.rolledOverAmount > 0 {
-                            Text("Rolled over: $\((self.budget.rolledOverAmount as NSDecimalNumber).doubleValue, specifier: "%.2f")")
-                                .font(.caption)
-                                .foregroundColor(.green)
+                            Text(
+                                "Rolled over: $\((self.budget.rolledOverAmount as NSDecimalNumber).doubleValue, specifier: "%.2f")"
+                            )
+                            .font(.caption)
+                            .foregroundColor(.green)
                         }
                     }
 

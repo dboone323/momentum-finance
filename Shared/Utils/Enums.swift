@@ -21,13 +21,13 @@ public enum AccountType: String, Codable, Sendable, CaseIterable {
 
     public var defaultColorHex: String {
         switch self {
-        case .checking: "#007AFF"  // Blue
-        case .savings: "#34C759"  // Green
-        case .credit: "#FF3B30"  // Red
-        case .investment: "#AF52DE"  // Purple
-        case .loan: "#FF9500"  // Orange
-        case .cash: "#FFCC00"  // Yellow
-        case .other: "#8E8E93"  // Gray
+        case .checking: "#007AFF" // Blue
+        case .savings: "#34C759" // Green
+        case .credit: "#FF3B30" // Red
+        case .investment: "#AF52DE" // Purple
+        case .loan: "#FF9500" // Orange
+        case .cash: "#FFCC00" // Yellow
+        case .other: "#8E8E93" // Gray
         }
     }
 

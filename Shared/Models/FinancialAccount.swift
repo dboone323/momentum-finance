@@ -123,9 +123,9 @@ public final class FinancialAccount {
 
 // Redundant local AccountType removed to use core definition.
 
-extension FinancialAccount {
+public extension FinancialAccount {
     /// Sample data for previews and testing
-    public static var sampleChecking: FinancialAccount {
+    static var sampleChecking: FinancialAccount {
         FinancialAccount(
             name: "Main Checking",
             accountType: .checking,
@@ -138,7 +138,7 @@ extension FinancialAccount {
         )
     }
 
-    public static var sampleSavings: FinancialAccount {
+    static var sampleSavings: FinancialAccount {
         FinancialAccount(
             name: "Emergency Fund",
             accountType: .savings,
@@ -151,7 +151,7 @@ extension FinancialAccount {
         )
     }
 
-    public static var sampleCreditCard: FinancialAccount {
+    static var sampleCreditCard: FinancialAccount {
         FinancialAccount(
             name: "Chase Freedom",
             accountType: .credit,

@@ -21,14 +21,14 @@ func fi_generateFinancialForecasts(
 
     let recentMonthlyIncomes =
         monthlyIncome
-        .filter {
-            guard let key = $0.key,
-                let interval = calendar.dateInterval(of: .month, for: key),
-                let sixMonthsAgo = calendar.date(byAdding: .month, value: -6, to: now)
-            else { return false }
-            return interval.end > sixMonthsAgo
-        }
-        .map { $0.value.reduce(Decimal(0)) { $0 + $1.amount } }
+            .filter {
+                guard let key = $0.key,
+                      let interval = calendar.dateInterval(of: .month, for: key),
+                      let sixMonthsAgo = calendar.date(byAdding: .month, value: -6, to: now)
+                else { return false }
+                return interval.end > sixMonthsAgo
+            }
+            .map { $0.value.reduce(Decimal(0)) { $0 + $1.amount } }
 
     if recentMonthlyIncomes.count >= 3 {
         let avgMonthlyIncome =
@@ -47,7 +47,8 @@ func fi_generateFinancialForecasts(
             chartData: [
                 ChartDataPoint(
                     label: "Estimated Monthly Income",
-                    value: Double(truncating: avgMonthlyIncome as NSDecimalNumber)),
+                    value: Double(truncating: avgMonthlyIncome as NSDecimalNumber)
+                ),
                 ChartDataPoint(label: "Data Points", value: Double(recentMonthlyIncomes.count)),
             ]
         )
@@ -62,14 +63,14 @@ func fi_generateFinancialForecasts(
 
     let recentMonthlyExpenses =
         monthlyExpenses
-        .filter {
-            guard let key = $0.key,
-                let interval = calendar.dateInterval(of: .month, for: key),
-                let sixMonthsAgo = calendar.date(byAdding: .month, value: -6, to: now)
-            else { return false }
-            return interval.end > sixMonthsAgo
-        }
-        .map { $0.value.reduce(Decimal(0)) { $0 + abs($1.amount) } }
+            .filter {
+                guard let key = $0.key,
+                      let interval = calendar.dateInterval(of: .month, for: key),
+                      let sixMonthsAgo = calendar.date(byAdding: .month, value: -6, to: now)
+                else { return false }
+                return interval.end > sixMonthsAgo
+            }
+            .map { $0.value.reduce(Decimal(0)) { $0 + abs($1.amount) } }
 
     if recentMonthlyExpenses.count >= 3 {
         let avgMonthlyExpenses =
@@ -88,7 +89,8 @@ func fi_generateFinancialForecasts(
             chartData: [
                 ChartDataPoint(
                     label: "Estimated Monthly Expenses",
-                    value: Double(truncating: avgMonthlyExpenses as NSDecimalNumber)),
+                    value: Double(truncating: avgMonthlyExpenses as NSDecimalNumber)
+                ),
                 ChartDataPoint(label: "Data Points", value: Double(recentMonthlyExpenses.count)),
             ]
         )
@@ -127,13 +129,16 @@ func fi_generateFinancialForecasts(
             chartData: [
                 ChartDataPoint(
                     label: "Projected Income",
-                    value: Double(truncating: avgIncome as NSDecimalNumber)),
+                    value: Double(truncating: avgIncome as NSDecimalNumber)
+                ),
                 ChartDataPoint(
                     label: "Projected Expenses",
-                    value: Double(truncating: avgExpenses as NSDecimalNumber)),
+                    value: Double(truncating: avgExpenses as NSDecimalNumber)
+                ),
                 ChartDataPoint(
                     label: "Net Cash Flow",
-                    value: Double(truncating: netCashFlow as NSDecimalNumber)),
+                    value: Double(truncating: netCashFlow as NSDecimalNumber)
+                ),
             ]
         )
         insights.append(insight)
@@ -157,7 +162,8 @@ func fi_projectedBalances(
     var projectedBalance = startingBalance
     guard
         let currentMonth = calendar.date(
-            from: calendar.dateComponents([.year, .month], from: Date()))
+            from: calendar.dateComponents([.year, .month], from: Date())
+        )
     else { return [] }
     for monthIndex in 0..<months {
         guard
@@ -181,7 +187,8 @@ func fi_monthlyNetCashFlow(_ transactions: [FinancialTransaction], monthsAgo: In
     for transaction in transactions where transaction.date >= since {
         guard
             let month = calendar.date(
-                from: calendar.dateComponents([.year, .month], from: transaction.date))
+                from: calendar.dateComponents([.year, .month], from: transaction.date)
+            )
         else { continue }
         monthlyNetCashFlow[month] = (monthlyNetCashFlow[month] ?? Decimal(0)) + transaction.amount
     }
@@ -213,5 +220,6 @@ func fi_trendAndForecast(values: [Decimal]) -> TrendForecast {
     let next = (values.last ?? Decimal(0)) + avgDelta
 
     return TrendForecast(
-        trendDirection: trendDirection, trendPercentage: trendPercentage, nextForecast: next)
+        trendDirection: trendDirection, trendPercentage: trendPercentage, nextForecast: next
+    )
 }

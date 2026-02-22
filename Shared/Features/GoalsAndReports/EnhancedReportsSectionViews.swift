@@ -377,7 +377,9 @@ extension Features.GoalsAndReports {
                                             .fill(data.spent > data.budgeted ? Color.red : Color.green)
                                             .frame(
                                                 width: min(
-                                                    geometry.size.width * ((data.spent / data.budgeted) as NSDecimalNumber).doubleValue,
+                                                    geometry.size
+                                                        .width * ((data.spent / data.budgeted) as NSDecimalNumber)
+                                                        .doubleValue,
                                                     geometry.size.width
                                                 ), height: 8
                                             )
@@ -387,13 +389,17 @@ extension Features.GoalsAndReports {
                                 .frame(height: 8)
 
                                 HStack {
-                                    Text("Spent: \((data.spent as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
+                                    Text(
+                                        "Spent: \((data.spent as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))"
+                                    )
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
                                     Spacer()
-                                    Text("Budget: \((data.budgeted as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
+                                    Text(
+                                        "Budget: \((data.budgeted as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))"
+                                    )
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
                                 }
                             }
                         }

@@ -3,8 +3,8 @@
 // MomentumFinance
 //
 
-import SharedKit
 import MomentumFinanceCore
+import SharedKit
 import XCTest
 @testable import MomentumFinance
 

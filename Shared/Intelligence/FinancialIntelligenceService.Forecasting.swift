@@ -47,7 +47,10 @@ extension FinancialIntelligenceService {
                 }
 
                 let lastValues = values.suffix(3)
-                var chartData: [(String, Double)] = Array(zip(lastMonths, lastValues.map { ($0 as NSDecimalNumber).doubleValue }))
+                var chartData: [(String, Double)] = Array(zip(
+                    lastMonths,
+                    lastValues.map { ($0 as NSDecimalNumber).doubleValue }
+                ))
                 chartData.append((forecastLabels.last ?? "Next", (nextMonthForecast as NSDecimalNumber).doubleValue))
 
                 let trendDirection =

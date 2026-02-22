@@ -13,7 +13,7 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
     // Map categories to a non-optional key (use category name or "Uncategorized")
     let categorySpending = Dictionary(
         grouping:
-            transactions
+        transactions
             .filter { $0.amount < 0 }
     ) { (tx: FinancialTransaction) -> String in
         tx.category ?? "Uncategorized"
@@ -28,7 +28,8 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
     for (category, categoryTransactions) in categorySpending {
         let monthlySpends = (0..<monthsBack).compactMap { monthOffset -> Decimal? in
             let targetMonth = calendar.date(
-                byAdding: .month, value: -monthOffset, to: currentMonth)!
+                byAdding: .month, value: -monthOffset, to: currentMonth
+            )!
             let monthTransactions = categoryTransactions.filter {
                 calendar.date(from: calendar.dateComponents([.year, .month], from: $0.date))
                     == calendar
@@ -36,7 +37,8 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
                         from: calendar.dateComponents(
                             [.year, .month],
                             from: targetMonth
-                        ))
+                        )
+                    )
             }
             guard !monthTransactions.isEmpty else { return nil }
             return monthTransactions.reduce(0) { $0 + abs($1.amount) }
@@ -58,13 +60,13 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
 
     for (categoryName, averageSpend) in monthlyAverages.sorted(by: { $0.value > $1.value }) {
         let currentBudgetAmount = currentBudget[categoryName] ?? 0
-        let recommendedBudget = averageSpend * 1.1  // 10% buffer
+        let recommendedBudget = averageSpend * 1.1 // 10% buffer
 
         if currentBudgetAmount == 0 {
             // No budget set
             let budgetDescription =
                 "Based on your average spending of \(fi_formatCurrency(averageSpend)), "
-                + "consider setting a budget of \(fi_formatCurrency(recommendedBudget)) for \(categoryName)."
+                    + "consider setting a budget of \(fi_formatCurrency(recommendedBudget)) for \(categoryName)."
 
             let insight = FinancialInsight(
                 title: "Budget Recommendation: \(categoryName)",
@@ -79,10 +81,12 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
                 chartData: [
                     ChartDataPoint(
                         label: "Average Spending",
-                        value: Double(truncating: averageSpend as NSDecimalNumber)),
+                        value: Double(truncating: averageSpend as NSDecimalNumber)
+                    ),
                     ChartDataPoint(
                         label: "Recommended Budget",
-                        value: Double(truncating: recommendedBudget as NSDecimalNumber)),
+                        value: Double(truncating: recommendedBudget as NSDecimalNumber)
+                    ),
                 ]
             )
             insights.append(insight)
@@ -90,7 +94,7 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
             // Budget too low
             let budgetDescription =
                 "Your current budget of \(fi_formatCurrency(currentBudgetAmount)) for \(categoryName) "
-                + "may be too low. Consider increasing it to \(fi_formatCurrency(recommendedBudget))."
+                    + "may be too low. Consider increasing it to \(fi_formatCurrency(recommendedBudget))."
 
             let insight = FinancialInsight(
                 title: "Budget Adjustment: \(categoryName)",
@@ -105,13 +109,16 @@ func fi_findBudgetRecommendations(transactions: [FinancialTransaction], budgets:
                 chartData: [
                     ChartDataPoint(
                         label: "Current Budget",
-                        value: Double(truncating: currentBudgetAmount as NSDecimalNumber)),
+                        value: Double(truncating: currentBudgetAmount as NSDecimalNumber)
+                    ),
                     ChartDataPoint(
                         label: "Average Spending",
-                        value: Double(truncating: averageSpend as NSDecimalNumber)),
+                        value: Double(truncating: averageSpend as NSDecimalNumber)
+                    ),
                     ChartDataPoint(
                         label: "Recommended Budget",
-                        value: Double(truncating: recommendedBudget as NSDecimalNumber)),
+                        value: Double(truncating: recommendedBudget as NSDecimalNumber)
+                    ),
                 ]
             )
             insights.append(insight)

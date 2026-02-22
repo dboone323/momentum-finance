@@ -1,7 +1,6 @@
 import MomentumFinanceCore
 import SwiftData
 import XCTest
-
 @testable import MomentumFinance
 
 final class ExportEngineServiceTests: XCTestCase {
@@ -41,9 +40,10 @@ final class ExportEngineServiceTests: XCTestCase {
         // Given: Some test data
         let account = FinancialAccount(
             name: "Test Account", balance: Decimal(1000), iconName: "banknote",
-            accountType: .checking)
+            accountType: .checking
+        )
         modelContext.insert(account)
-        try! modelContext.save()
+        try modelContext.save()
 
         let settings = ExportSettings(
             format: .csv,
@@ -71,9 +71,10 @@ final class ExportEngineServiceTests: XCTestCase {
         // Given: Data with commas
         let account = FinancialAccount(
             name: "Test, Account", balance: Decimal(1000), iconName: "banknote",
-            accountType: .checking)
+            accountType: .checking
+        )
         modelContext.insert(account)
-        try! modelContext.save()
+        try modelContext.save()
 
         let settings = ExportSettings(
             format: .csv,
@@ -104,9 +105,10 @@ final class ExportEngineServiceTests: XCTestCase {
         // Given: Test account
         let account = FinancialAccount(
             name: "Checking", balance: Decimal(5000), iconName: "building.columns",
-            accountType: .checking)
+            accountType: .checking
+        )
         modelContext.insert(account)
-        try! modelContext.save()
+        try modelContext.save()
 
         let settings = ExportSettings(
             format: .json,
@@ -168,28 +170,29 @@ final class ExportEngineServiceTests: XCTestCase {
     func testExport_FiltersTransactionsByDateRange() async throws {
         // Given: Transactions on different dates
         let account = FinancialAccount(
-            name: "Test", balance: Decimal(0), iconName: "banknote", accountType: .checking)
+            name: "Test", balance: Decimal(0), iconName: "banknote", accountType: .checking
+        )
         modelContext.insert(account)
-        try! modelContext.save()
+        try modelContext.save()
 
-        let oldDate = Calendar.current.date(byAdding: .day, value: -60, to: Date())!
-        let recentDate = Calendar.current.date(byAdding: .day, value: -10, to: Date())!
+        let oldDate = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -60, to: Date()))
+        let recentDate = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -10, to: Date()))
 
         let oldTx = FinancialTransaction(
             title: "Old", amount: Decimal(-50), date: oldDate, transactionType: .expense
         )
         oldTx.account = account
         modelContext.insert(oldTx)
-        try! modelContext.save()
+        try modelContext.save()
 
         let recentTx = FinancialTransaction(
             title: "Recent", amount: Decimal(-30), date: recentDate, transactionType: .expense
         )
         recentTx.account = account
         modelContext.insert(recentTx)
-        try! modelContext.save()
+        try modelContext.save()
 
-        let startDate = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
+        let startDate = try XCTUnwrap(Calendar.current.date(byAdding: .day, value: -30, to: Date()))
         let endDate = Date()
 
         let settings = ExportSettings(

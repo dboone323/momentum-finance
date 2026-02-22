@@ -10,7 +10,7 @@ import Foundation
 public final class Budget: Encodable {
     enum CodingKeys: String, CodingKey {
         case id, name, limitAmount, month, createdDate, rolloverEnabled, rolledOverAmount,
-            maxRolloverPercentage, currencyCode
+             maxRolloverPercentage, currencyCode
     }
 
     public var id: UUID
@@ -39,6 +39,7 @@ public final class Budget: Encodable {
         self.createdDate = Date()
         self.currencyCode = currencyCode
     }
+
     public var totalAmount: Decimal {
         limitAmount
     }

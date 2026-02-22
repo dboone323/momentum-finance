@@ -346,7 +346,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 category: "Personal Care",
                 account: checkingAccount,
                 isActive: true
-            )
+            ),
         ]
     }
 
@@ -374,7 +374,7 @@ public class SubscriptionsDataGenerator: DataGenerator {
                 category: "Transportation",
                 account: checkingAccount,
                 isActive: true
-            )
+            ),
         ]
     }
 }

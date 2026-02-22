@@ -1,8 +1,8 @@
 // Momentum Finance - Personal Finance App
 // Copyright © 2025 Momentum Finance. All rights reserved.
 
-import SwiftUI
 import MomentumFinanceCore
+import SwiftUI
 
 // MARK: - Animation Components Coordinator
 

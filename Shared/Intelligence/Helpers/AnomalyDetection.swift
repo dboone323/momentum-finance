@@ -19,7 +19,11 @@ func fi_detectCategoryOutliers(_ transactions: [FinancialTransaction]) -> [Finan
         let amounts = categoryTransactions.map { abs($0.amount) }
         let mean = amounts.reduce(Decimal(0), +) / Decimal(max(1, amounts.count))
         let doubleMean = (mean as NSDecimalNumber).doubleValue
-        let doubleVariance = amounts.map { pow(($0 as NSDecimalNumber).doubleValue - doubleMean, 2) }.reduce(0, +) / Double(max(1, amounts.count))
+        let doubleVariance = amounts.map { pow(($0 as NSDecimalNumber).doubleValue - doubleMean, 2) }
+            .reduce(0, +) / Double(max(
+                1,
+                amounts.count
+            ))
         let stdDev = sqrt(doubleVariance)
 
         let outlierThreshold = mean + Decimal(2 * stdDev)
@@ -45,7 +49,10 @@ func fi_detectCategoryOutliers(_ transactions: [FinancialTransaction]) -> [Finan
                 visualizationType: .boxPlot,
                 chartData: [
                     ChartDataPoint(label: "Average", value: (mean as NSDecimalNumber).doubleValue),
-                    ChartDataPoint(label: "This Transaction", value: (transactionAmount as NSDecimalNumber).doubleValue),
+                    ChartDataPoint(
+                        label: "This Transaction",
+                        value: (transactionAmount as NSDecimalNumber).doubleValue
+                    ),
                     ChartDataPoint(label: "Typical Range", value: (mean as NSDecimalNumber).doubleValue + stdDev),
                 ]
             )
@@ -77,7 +84,7 @@ func fi_detectRecentFrequencyAnomalies(_ transactions: [FinancialTransaction], d
     let averageCount = Double(transactionCounts.reduce(0, +)) / Double(transactionCounts.count)
 
     if let highestDay = last7Days.max(by: { $0.value.count < $1.value.count }),
-        Double(highestDay.value.count) > averageCount * 2
+       Double(highestDay.value.count) > averageCount * 2
     {
         let transactionCount = highestDay.value.count
         let percentageMore = Int((Double(transactionCount) / averageCount - 1) * 100)
@@ -103,8 +110,7 @@ func fi_detectRecentFrequencyAnomalies(_ transactions: [FinancialTransaction], d
 }
 
 /// Generate insights for potential duplicate payments
-func fi_suggestDuplicatePaymentInsights(transactions: [FinancialTransaction]) -> [FinancialInsight]
-{
+func fi_suggestDuplicatePaymentInsights(transactions: [FinancialTransaction]) -> [FinancialInsight] {
     var insights: [FinancialInsight] = []
 
     let calendar = Calendar.current
@@ -118,7 +124,7 @@ func fi_suggestDuplicatePaymentInsights(transactions: [FinancialTransaction]) ->
         let dupAmount = duplicate.first?.amount ?? Decimal(0)
         let dupDescription =
             "You may have duplicate payments: \(dupTitle) for "
-            + fi_formatCurrency(abs(dupAmount), code: "USD") + " on multiple dates."
+                + fi_formatCurrency(abs(dupAmount), code: "USD") + " on multiple dates."
 
         let dupData = duplicate.map { txn in
             (

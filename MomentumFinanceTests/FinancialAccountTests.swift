@@ -1,5 +1,5 @@
-import XCTest
 import MomentumFinanceCore
+import XCTest
 @testable import MomentumFinance
 
 final class FinancialAccountTests: XCTestCase {

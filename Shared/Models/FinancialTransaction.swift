@@ -73,7 +73,7 @@ public final class FinancialTransaction {
         case .expense:
             -amount
         case .transfer:
-            amount  // Transfers can be positive or negative based on context
+            amount // Transfers can be positive or negative based on context
         }
     }
 
@@ -186,9 +186,9 @@ public enum RecurringFrequency: String, Codable, CaseIterable {
     }
 }
 
-extension FinancialTransaction {
+public extension FinancialTransaction {
     /// Sample data for previews and testing
-    public static var sampleIncome: FinancialTransaction {
+    static var sampleIncome: FinancialTransaction {
         FinancialTransaction(
             title: "Salary Deposit",
             amount: 3500,
@@ -200,7 +200,7 @@ extension FinancialTransaction {
         )
     }
 
-    public static var sampleExpense: FinancialTransaction {
+    static var sampleExpense: FinancialTransaction {
         FinancialTransaction(
             title: "Grocery Shopping",
             amount: 85.50,
@@ -212,7 +212,7 @@ extension FinancialTransaction {
         )
     }
 
-    public static var sampleTransfer: FinancialTransaction {
+    static var sampleTransfer: FinancialTransaction {
         FinancialTransaction(
             title: "Transfer to Savings",
             amount: 500,

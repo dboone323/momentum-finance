@@ -5,8 +5,8 @@
 //  Created by Quantum Workspace Automation on 2026-02-09.
 //
 
-import XCTest
 import MomentumFinanceCore
+import XCTest
 @testable import MomentumFinance
 
 final class PerformanceTests: XCTestCase {

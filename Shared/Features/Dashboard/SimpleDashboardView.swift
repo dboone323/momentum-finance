@@ -112,8 +112,11 @@ public struct SimpleDashboardView: View {
                                     .fontWeight(.semibold)
                                 }
 
-                                ProgressView(value: (budget.spentAmount as NSDecimalNumber).doubleValue, total: (budget.limitAmount as NSDecimalNumber).doubleValue)
-                                    .progressViewStyle(LinearProgressViewStyle())
+                                ProgressView(
+                                    value: (budget.spentAmount as NSDecimalNumber).doubleValue,
+                                    total: (budget.limitAmount as NSDecimalNumber).doubleValue
+                                )
+                                .progressViewStyle(LinearProgressViewStyle())
                             }
                             .padding()
                             .background(.regularMaterial)
