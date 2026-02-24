@@ -37,6 +37,10 @@ let package = Package(
         .library(
             name: "MomentumFinance",
             targets: ["MomentumFinanceCore", "Shared"]
+        ),
+        .executable(
+            name: "BudgetAudit",
+            targets: ["BudgetAudit"]
         )
     ],
     dependencies: [
@@ -76,6 +80,12 @@ let package = Package(
             swiftSettings: [
                 .enableUpcomingFeature("StrictConcurrency")
             ]
+        ),
+        .executableTarget(
+            name: "BudgetAudit",
+            dependencies: ["MomentumFinanceCore"],
+            path: "Tools",
+            sources: ["BudgetAudit.swift"]
         ),
     ]
 )

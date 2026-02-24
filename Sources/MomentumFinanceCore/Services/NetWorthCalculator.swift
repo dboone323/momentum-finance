@@ -110,12 +110,7 @@ public final class NetWorthCalculator {
     }
 
     private func isAsset(_ account: FinancialAccount) -> Bool {
-        switch account.accountType {
-        case .checking, .savings, .investment, .cash:
-            true
-        case .credit:
-            false
-        }
+        account.accountType.isAsset
     }
 
     private func isLiability(_ account: FinancialAccount) -> Bool {
