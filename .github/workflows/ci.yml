@@ -242,6 +242,8 @@ jobs:
           ln -sfn "${RUNNER_TEMP}/shared-kit" "${GITHUB_WORKSPACE}/../shared-kit"
           ln -sfn "${RUNNER_TEMP}/shared-kit" "${GITHUB_WORKSPACE}/../Shared-Kit"
 
+          ln -sfn "${RUNNER_TEMP}/shared-kit" "${GITHUB_WORKSPACE}/../Shared-Kit"
+
           ln -sfn "$RUNNER_TEMP/shared-kit" "$GITHUB_WORKSPACE/../shared-kit"
 
       - name: Cache DerivedData
@@ -397,6 +399,8 @@ jobs:
           fi
           echo "Using shared-kit branch: ${selected}"
           ln -sfn "${RUNNER_TEMP}/shared-kit" "${GITHUB_WORKSPACE}/../shared-kit"
+          ln -sfn "${RUNNER_TEMP}/shared-kit" "${GITHUB_WORKSPACE}/../Shared-Kit"
+
           ln -sfn "${RUNNER_TEMP}/shared-kit" "${GITHUB_WORKSPACE}/../Shared-Kit"
 
           ln -sfn "$RUNNER_TEMP/shared-kit" "$GITHUB_WORKSPACE/../shared-kit"
