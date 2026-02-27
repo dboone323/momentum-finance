@@ -1420,6 +1420,7 @@
 				A0TEST022F0ABCDE00000001 /* DataExporterDateRangeTests.swift in Sources */,
 				A0TEST042F0ABCDE00000001 /* DataImporterErrorTests.swift in Sources */,
 				A0TEST082F0ABCDE00000001 /* DataExporterContentTests.swift in Sources */,
+				049DED402EEC448F9F89B27A /* ExportEngineService.swift in Sources */,
 			);
 		};
 /* End PBXSourcesBuildPhase section */

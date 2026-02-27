@@ -47,6 +47,7 @@ final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
             )
             self.modelContext.insert(transaction)
         }
+        try self.modelContext.save()
 
         let start = try XCTUnwrap(
             Calendar.current.date(byAdding: .day, value: -2, to: now)

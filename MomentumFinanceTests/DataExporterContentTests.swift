@@ -9,12 +9,13 @@ final class DataExporterContentTests: ExportEngineServiceTestCase {
         for i in 0..<3 {
             let transaction = MomentumFinanceCore.FinancialTransaction(
                 title: "SeedTx\(i)",
-                amount: Double(100 + i),
+                amount: Decimal(100 + i),
                 date: Date().addingTimeInterval(Double(i) * 60),
                 transactionType: i == 2 ? .expense : .income
             )
             self.modelContext.insert(transaction)
         }
+        try self.modelContext.save()
 
         let content = try await self.exportCSVContent()
         XCTAssertTrue(content.contains("SeedTx0"))

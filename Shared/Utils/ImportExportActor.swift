@@ -4,10 +4,10 @@ import SwiftData
 
 /// Import/export service bound to the main actor to safely access ModelContext.
 @MainActor
-final class ImportExportService {
+public final class ImportExportService {
     private let modelContext: ModelContext
 
-    init(modelContext: ModelContext) {
+    public init(modelContext: ModelContext) {
         self.modelContext = modelContext
     }
 
@@ -64,9 +64,9 @@ final class ImportExportService {
     }
 
     private func createTransactionsAsync(from rows: [[String]]) async throws
-        -> [FinancialTransaction]
+        -> [MomentumFinanceCore.FinancialTransaction]
     {
-        var transactions: [FinancialTransaction] = []
+        var transactions: [MomentumFinanceCore.FinancialTransaction] = []
 
         // Skip header row
         for row in rows.dropFirst() {
@@ -81,7 +81,7 @@ final class ImportExportService {
             guard let amount = Decimal(string: row[2]) else { continue }
             guard let type = TransactionType(rawValue: row[3]) else { continue }
 
-            let transaction = FinancialTransaction(
+            let transaction = MomentumFinanceCore.FinancialTransaction(
                 title: title,
                 amount: amount,
                 date: date,
@@ -96,7 +96,7 @@ final class ImportExportService {
 
     // MARK: - CSV Export (Background)
 
-    func exportCSVAsync(_ transactions: [FinancialTransaction]) async throws -> URL {
+    func exportCSVAsync(_ transactions: [MomentumFinanceCore.FinancialTransaction]) async throws -> URL {
         // Generate CSV on background
         let csvContent = await generateCSVAsync(transactions)
 
@@ -109,7 +109,7 @@ final class ImportExportService {
         return url
     }
 
-    private func generateCSVAsync(_ transactions: [FinancialTransaction]) async -> String {
+    private func generateCSVAsync(_ transactions: [MomentumFinanceCore.FinancialTransaction]) async -> String {
         var lines = ["Date,Title,Amount,Type,Category,Account,Notes"]
 
         let dateFormatter = DateFormatter()
@@ -139,7 +139,7 @@ final class ImportExportService {
 
     // MARK: - JSON Export (Background)
 
-    func exportJSONAsync(_ transactions: [FinancialTransaction]) async throws -> URL {
+    func exportJSONAsync(_ transactions: [MomentumFinanceCore.FinancialTransaction]) async throws -> URL {
         let isoFormatter = ISO8601DateFormatter()
         let payload = transactions.map { transaction in
             [
@@ -200,13 +200,13 @@ final class ImportExportService {
 
 // MARK: - Supporting Types
 
-struct InternalImportResult {
-    let successCount: Int
-    let failureCount: Int
-    let errors: [RowImportError]
+public struct InternalImportResult {
+    public let successCount: Int
+    public let failureCount: Int
+    public let errors: [RowImportError]
 }
 
-struct RowImportError {
-    let row: Int
-    let error: Error
+public struct RowImportError {
+    public let row: Int
+    public let error: Error
 }

@@ -1,8 +1,8 @@
 import Foundation
+import MomentumFinanceCore
 import PDFKit
 import SwiftData
 import SwiftUI
-@testable import MomentumFinanceCore
 
 public actor ExportEngineService: ModelActor {
     public nonisolated let modelExecutor: any SwiftData.ModelExecutor
@@ -389,10 +389,10 @@ public actor ExportEngineService: ModelActor {
 
     // MARK: - Fetching
 
-    private func fetchTransactions(from startDate: Date, to endDate: Date) throws
-        -> [FinancialTransaction]
+    public func fetchTransactions(from startDate: Date, to endDate: Date) throws
+        -> [MomentumFinanceCore.FinancialTransaction]
     {
-        let descriptor = FetchDescriptor<FinancialTransaction>(
+        let descriptor = FetchDescriptor<MomentumFinanceCore.FinancialTransaction>(
             predicate: #Predicate { transaction in
                 transaction.date >= startDate && transaction.date <= endDate
             },
@@ -401,28 +401,28 @@ public actor ExportEngineService: ModelActor {
         return try self.modelContext.fetch(descriptor)
     }
 
-    private func fetchAccounts() throws -> [FinancialAccount] {
-        let descriptor = FetchDescriptor<FinancialAccount>(
+    public func fetchAccounts() throws -> [MomentumFinanceCore.FinancialAccount] {
+        let descriptor = FetchDescriptor<MomentumFinanceCore.FinancialAccount>(
             sortBy: [SortDescriptor(\.name)]
         )
         return try self.modelContext.fetch(descriptor)
     }
 
-    private func fetchBudgets() throws -> [Budget] {
+    public func fetchBudgets() throws -> [Budget] {
         let descriptor = FetchDescriptor<Budget>(
             sortBy: [SortDescriptor(\.name)]
         )
         return try self.modelContext.fetch(descriptor)
     }
 
-    private func fetchSubscriptions() throws -> [Subscription] {
+    public func fetchSubscriptions() throws -> [Subscription] {
         let descriptor = FetchDescriptor<Subscription>(
             sortBy: [SortDescriptor(\.name)]
         )
         return try self.modelContext.fetch(descriptor)
     }
 
-    private func fetchGoals() throws -> [SavingsGoal] {
+    public func fetchGoals() throws -> [SavingsGoal] {
         let descriptor = FetchDescriptor<SavingsGoal>(
             sortBy: [SortDescriptor(\.title)]
         )
@@ -521,26 +521,28 @@ public actor ExportEngineService: ModelActor {
 
     // MARK: - Helpers
 
-    private func escapeCSVField(_ field: String) -> String {
+    public func escapeCSVField(_ field: String) -> String {
         if field.contains(",") || field.contains("\"") || field.contains("\n") {
             return "\"" + field.replacingOccurrences(of: "\"", with: "\"\"") + "\""
         }
         return field
     }
 
-    private func saveToFile(content: String, filename: String) throws -> URL {
+    public func saveToFile(content: String, filename: String) throws -> URL {
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[
             0
         ]
+        try FileManager.default.createDirectory(at: documentsPath, withIntermediateDirectories: true, attributes: nil)
         let fileURL = documentsPath.appendingPathComponent(filename)
         try content.write(to: fileURL, atomically: true, encoding: .utf8)
         return fileURL
     }
 
-    private func saveToFile(data: Data, filename: String) throws -> URL {
+    public func saveToFile(data: Data, filename: String) throws -> URL {
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[
             0
         ]
+        try FileManager.default.createDirectory(at: documentsPath, withIntermediateDirectories: true, attributes: nil)
         let fileURL = documentsPath.appendingPathComponent(filename)
         try data.write(to: fileURL)
         return fileURL

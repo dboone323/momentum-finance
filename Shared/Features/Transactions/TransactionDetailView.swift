@@ -22,7 +22,7 @@ extension Features.Transactions {
                     VStack(spacing: 8) {
                         Text(
                             self.transaction.formattedAmount(
-                                currency: self.transaction.account?.currency ?? "USD"
+                                currency: self.transaction.account?.currencyCode ?? "USD"
                             )
                         )
                         .font(.largeTitle)
