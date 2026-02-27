@@ -1,44 +1,33 @@
 # syntax=docker/dockerfile:1.5
+# momentum-finance - Linux source image for split-platform CI
 
 FROM swift:6.2 AS builder
-LABEL maintainer="tools-automation"
-LABEL description="MomentumFinance build stage"
 
 WORKDIR /src
 
-# Install build-only dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libssl-dev \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy manifest files first to leverage build cache
+# Resolve dependencies for Linux-side validation; app compilation remains on macOS CI.
 COPY Package.* ./
-RUN --mount=type=cache,target=/root/.swiftpm swift package resolve
+RUN --mount=type=cache,target=/root/.swiftpm,id=swiftpm \
+    swift package resolve
 
-# Copy sources and build using SwiftPM cache
 COPY . .
-RUN --mount=type=cache,target=/root/.swiftpm swift build -c release --target MomentumFinanceCore
 
-########## Runtime stage ##########
-FROM swift:6.2-slim AS runtime
+FROM swift:6.2-slim
+
 LABEL maintainer="tools-automation"
-LABEL description="MomentumFinanceCore build artifacts"
+LABEL description="Momentum Finance source workspace (Linux tooling image)"
+LABEL org.opencontainers.image.source="https://github.com/tools-automation/momentum-finance"
+LABEL org.opencontainers.image.documentation="https://github.com/tools-automation/momentum-finance/wiki"
 
-WORKDIR /app
+WORKDIR /workspace
 
-# Create a non-root user
-RUN groupadd -r swiftuser && useradd -r -g swiftuser -d /home/swiftuser -m swiftuser
+RUN groupadd -r financeuser && useradd -r -g financeuser -u 1001 financeuser
 
-# Copy build artifacts from the Linux-compatible target
-COPY --from=builder --chown=swiftuser:swiftuser /src/.build/release /app/.build/release
+COPY --from=builder --chown=financeuser:financeuser /src /workspace
 
-USER swiftuser
+USER financeuser
 
-# Health check verifies build artifacts are present
 HEALTHCHECK --interval=60s --timeout=10s --start-period=30s --retries=3 \
-  CMD ["/bin/sh", "-c", "test -d /app/.build/release || exit 1"]
+    CMD test -f /workspace/Package.swift || exit 1
 
-CMD ["/bin/sh", "-lc", "ls -1 /app/.build/release | head -n 20"]
-
-# NOTE: For production, consider using a smaller runtime (distroless) and pin base image digests for reproducibility.
+CMD ["/bin/sh", "-lc", "echo 'momentum-finance source container ready (macOS builds app binaries)'; sleep infinity"]
