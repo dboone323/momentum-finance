@@ -532,6 +532,7 @@ public actor ExportEngineService: ModelActor {
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[
             0
         ]
+        try FileManager.default.createDirectory(at: documentsPath, withIntermediateDirectories: true, attributes: nil)
         let fileURL = documentsPath.appendingPathComponent(filename)
         try content.write(to: fileURL, atomically: true, encoding: .utf8)
         return fileURL
@@ -541,6 +542,7 @@ public actor ExportEngineService: ModelActor {
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[
             0
         ]
+        try FileManager.default.createDirectory(at: documentsPath, withIntermediateDirectories: true, attributes: nil)
         let fileURL = documentsPath.appendingPathComponent(filename)
         try data.write(to: fileURL)
         return fileURL
