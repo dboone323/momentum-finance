@@ -552,7 +552,6 @@ import SwiftUI
         var billingCycle: String
         var startDate: Date?
         var nextDueDate: Date?
-
         var notes: String
         var currencyCode: String
         var category: String?

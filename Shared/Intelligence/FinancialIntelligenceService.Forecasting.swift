@@ -3,7 +3,10 @@ import MomentumFinanceCore
 
 @MainActor
 extension FinancialIntelligenceService {
-    func generateForecasts(transactions: [FinancialTransaction], accounts: [FinancialAccount])
+    func generateForecasts(
+        transactions: [MomentumFinanceCore.FinancialTransaction],
+        accounts: [MomentumFinanceCore.FinancialAccount]
+    )
         -> [FinancialInsight]
     {
         var insights: [FinancialInsight] = []
@@ -86,7 +89,8 @@ extension FinancialIntelligenceService {
     }
 
     private func generateAccountForecastInsight(
-        account: FinancialAccount, transactions: [FinancialTransaction], calendar: Calendar
+        account: MomentumFinanceCore.FinancialAccount, transactions: [MomentumFinanceCore.FinancialTransaction],
+        calendar: Calendar
     ) -> FinancialInsight? {
         let accountTransactions = transactions.filter { $0.account?.id == account.id }
         let monthlyTransactions = Dictionary(grouping: accountTransactions) { transaction in
@@ -167,7 +171,7 @@ extension FinancialIntelligenceService {
 
     /// Main forecasting function for helpers
     func fi_generateForecasts(
-        transactions: [FinancialTransaction], accounts: [FinancialAccount]
+        transactions: [MomentumFinanceCore.FinancialTransaction], accounts: [MomentumFinanceCore.FinancialAccount]
     ) -> [FinancialInsight] {
         self.generateForecasts(transactions: transactions, accounts: accounts)
     }

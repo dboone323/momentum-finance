@@ -48,9 +48,3 @@ func fi_formatMonthAbbrev(_ date: Date) -> String {
     formatter.dateFormat = "MMM"
     return formatter.string(from: date)
 }
-
-extension FinancialAccount {
-    var currencyCode: String {
-        currency
-    }
-}

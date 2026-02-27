@@ -17,7 +17,7 @@ public final class FinancialAccount {
     public var institutionName: String?
     public var accountNumber: String?
     public var balance: Decimal
-    public var currency: String
+    public var currencyCode: String
     public var isActive: Bool
     public var colorHex: String?
     public var iconName: String?
@@ -35,7 +35,7 @@ public final class FinancialAccount {
         institutionName: String? = nil,
         accountNumber: String? = nil,
         balance: Decimal = 0,
-        currency: String = "USD",
+        currencyCode: String = "USD",
         isActive: Bool = true,
         colorHex: String? = nil,
         iconName: String? = nil,
@@ -48,7 +48,7 @@ public final class FinancialAccount {
         self.institutionName = institutionName
         self.accountNumber = accountNumber
         self.balance = balance
-        self.currency = currency
+        self.currencyCode = currencyCode
         self.isActive = isActive
         self.colorHex = colorHex
         self.iconName = iconName
@@ -56,11 +56,11 @@ public final class FinancialAccount {
         self.lastModifiedDate = lastModifiedDate
     }
 
-    /// Formatted balance string with currency
+    /// Formatted balance string with currencyCode
     public var formattedBalance: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.currencyCode = currency
+        formatter.currencyCode = currencyCode
         let doubleBalance = NSDecimalNumber(decimal: balance).doubleValue
         return formatter.string(from: NSNumber(value: doubleBalance)) ?? "$\(doubleBalance)"
     }
@@ -132,7 +132,7 @@ public extension FinancialAccount {
             institutionName: "Chase Bank",
             accountNumber: "1234567890",
             balance: 5420.50,
-            currency: "USD",
+            currencyCode: "USD",
             colorHex: "#007AFF",
             iconName: "building.columns.fill"
         )
@@ -145,7 +145,7 @@ public extension FinancialAccount {
             institutionName: "Chase Bank",
             accountNumber: "0987654321",
             balance: 15000.00,
-            currency: "USD",
+            currencyCode: "USD",
             colorHex: "#34C759",
             iconName: "banknote.fill"
         )
@@ -158,7 +158,7 @@ public extension FinancialAccount {
             institutionName: "Chase Bank",
             accountNumber: "1111222233334444",
             balance: -1250.75,
-            currency: "USD",
+            currencyCode: "USD",
             colorHex: "#FF3B30",
             iconName: "creditcard.fill"
         )
