@@ -27,6 +27,15 @@ build_log_*.txt
 Packages/
 Package.resolved
 .swiftpm/
+**/*.d
+**/*.dia
+**/*.swiftdeps
+**/*.swiftmodule
+**/*.pcm
+**/*.o
+**/*.swiftdoc
+**/*.dSYM
+**/SDKStatCaches.noindex/
 
 # IDEs
 .vscode/settings.json
