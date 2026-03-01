@@ -131,5 +131,10 @@ let package = Package(
             ],
             sources: ["BudgetAudit.swift"]
         ),
+        .testTarget(
+            name: "MomentumFinanceCoreTests",
+            dependencies: ["MomentumFinanceCore"],
+            path: "Tests/MomentumFinanceCoreTests"
+        ),
     ]
 )
