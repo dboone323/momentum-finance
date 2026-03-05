@@ -18,3 +18,10 @@ MomentumFinance is an AI-powered personal finance engine that provides autonomou
 
 - Must use `SharedKit` for agent result standardization.
 - Gated approval (`requiresApproval`) is required for any suggested portfolio allocations.
+
+## March 2026 Code Standards
+
+- **No Stubs/Mocks**: Do not use placeholders, mocks, or stubs in implementation or testing.
+- **Production Ready**: Every new line of code must be real, working, and production-ready.
+- **End-to-End Testing**: Use real working and tested code to verify behavior natively to avoid down-the-line problems.
+- **Modern Standards**: Adhere strictly to the latest ecosystem standards (Swift 6.2 concurrency, Python 3.13).
