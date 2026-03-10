@@ -7,10 +7,10 @@ import MomentumFinanceCore
 struct BudgetAudit {
     static func main() async {
         print(">>> [MomentumFinance Agent] Starting Budget Analysis task...")
-        
+
         // Initialize agent
         let agent = BudgetAgent()
-        
+
         // Mock transaction context
         let context: [String: Sendable] = [
             "transactions": [
@@ -18,7 +18,7 @@ struct BudgetAudit {
                 CoreTransaction(id: UUID(), amount: 45.0, date: Date().addingTimeInterval(-86400), note: "Grocery", categoryId: UUID(), accountId: UUID())
             ]
         ]
-        
+
         print(">>> [Task] Running autonomous budget audit on 2 transactions...")
         do {
             let result = try await agent.execute(context: context)
@@ -31,7 +31,7 @@ struct BudgetAudit {
         } catch {
             print("Error executing agent: \(error)")
         }
-        
+
         print("\n>>> [MomentumFinance Agent] Task completed.")
     }
 }

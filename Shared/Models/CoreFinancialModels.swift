@@ -26,7 +26,6 @@ public struct SimpleFinancialAccount: Identifiable, Codable, Sendable {
         self.balance = balance
         self.currency = currency
     }
-
 }
 
 /// Represents an expense category
@@ -79,7 +78,6 @@ public struct SimpleFinancialTransaction: Identifiable, Codable, Sendable {
         self.type = type
         self.notes = notes
     }
-
 }
 
 /// Represents a budget

@@ -26,11 +26,8 @@ class SpendingAnalyzer {
         return grouped.map { categoryId, txs in
             let categoryTotal = txs.reduce(0) { $0 + $1.amount }
             let percentage =
-                (Double(truncating: categoryTotal as NSNumber)
-                        / Double(truncating: totalSpending as NSNumber)) * 100
-            return CategorySpending(
-                categoryId: categoryId, totalAmount: categoryTotal, percentage: percentage
-            )
+                (Double(truncating: categoryTotal as NSNumber) / Double(truncating: totalSpending as NSNumber)) * 100
+            return CategorySpending(categoryId: categoryId, totalAmount: categoryTotal, percentage: percentage)
         }.sorted { $0.totalAmount > $1.totalAmount }
     }
 

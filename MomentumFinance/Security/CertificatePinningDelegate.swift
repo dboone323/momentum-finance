@@ -19,7 +19,7 @@ class CertificatePinningDelegateTests: XCTestCase {
         var disposition: URLSession.AuthChallengeDisposition?
         var credential: URLCredential?
 
-        delegate.urlSession(URLSession.shared, didReceive: challenge) { (disp, cred) in
+        delegate.urlSession(URLSession.shared, didReceive: challenge) { disp, cred in
             disposition = disp
             credential = cred
         }
@@ -39,7 +39,7 @@ class CertificatePinningDelegateTests: XCTestCase {
         var disposition: URLSession.AuthChallengeDisposition?
         var credential: URLCredential?
 
-        delegate.urlSession(URLSession.shared, didReceive: challenge) { (disp, cred) in
+        delegate.urlSession(URLSession.shared, didReceive: challenge) { disp, cred in
             disposition = disp
             credential = cred
         }
@@ -58,7 +58,7 @@ class CertificatePinningDelegateTests: XCTestCase {
         var disposition: URLSession.AuthChallengeDisposition?
         var credential: URLCredential?
 
-        delegate.urlSession(URLSession.shared, didReceive: challenge) { (disp, cred) in
+        delegate.urlSession(URLSession.shared, didReceive: challenge) { disp, cred in
             disposition = disp
             credential = cred
         }
@@ -70,7 +70,8 @@ class CertificatePinningDelegateTests: XCTestCase {
 
     private func loadCertificateData(_ filename: String) -> Data {
         guard let certURL = Bundle.main.url(forResource: filename, withExtension: "cer"),
-              let data = try? Data(contentsOf: certURL) else {
+              let data = try? Data(contentsOf: certURL)
+        else {
             fatalError("Failed to load certificate data")
         }
         return data
@@ -78,7 +79,18 @@ class CertificatePinningDelegateTests: XCTestCase {
 
     private func createAuthenticationChallenge(with serverCertData: Data) -> URLAuthenticationChallenge {
         let serverTrust = SecTrustCreateWithData(nil, serverCertData as CFData)!
-        let protectionSpace = URLProtectionSpace(host: "example.com", port: 443, protocol: "https", realm: nil, authenticationMethod: NSURLAuthenticationMethodServerTrust)
-        return URLAuthenticationChallenge(protectionSpace: protectionSpace, challenge: nil, previousFailureCount: 0, error: nil)
+        let protectionSpace = URLProtectionSpace(
+            host: "example.com",
+            port: 443,
+            protocol: "https",
+            realm: nil,
+            authenticationMethod: NSURLAuthenticationMethodServerTrust
+        )
+        return URLAuthenticationChallenge(
+            protectionSpace: protectionSpace,
+            challenge: nil,
+            previousFailureCount: 0,
+            error: nil
+        )
     }
 }

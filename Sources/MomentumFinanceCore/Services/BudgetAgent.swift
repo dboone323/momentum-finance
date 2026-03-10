@@ -9,7 +9,7 @@ public final class BudgetAgent: BaseAgent {
 
     public init() {}
 
-    public func execute(context: [String: Sendable]) async throws -> AgentResult {
+    public func execute(context: [String: any Sendable]) async throws -> AgentResult {
         // Log start
         NSLog("[\(name)] Starting autonomous budget analysis...")
 

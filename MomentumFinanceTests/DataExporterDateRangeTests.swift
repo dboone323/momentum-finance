@@ -31,7 +31,6 @@ class ExportEngineServiceTestCase: XCTestCase {
 }
 
 final class DataExporterDateRangeTests: ExportEngineServiceTestCase {
-
     @MainActor
     func testExportFiltersByDateRange() async throws {
         let now = Date()

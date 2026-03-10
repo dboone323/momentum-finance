@@ -65,20 +65,12 @@ class PortfolioManager {
     /// - Parameter symbol: Stock/fund symbol
     /// - Returns: Asset type category (Stocks, Bonds, Cash, etc.)
     private func inferAssetType(from symbol: String) -> String {
-        // Simple heuristic - in production, this would use a lookup table or API
         let upperSymbol = symbol.uppercased()
-
-        if upperSymbol.hasSuffix("BD") || upperSymbol.contains("BOND") {
-            return "Bonds"
-        } else if upperSymbol == "CASH" || upperSymbol.contains("MMF") {
-            return "Cash"
-        } else if upperSymbol.contains("RE") || upperSymbol.contains("REIT") {
-            return "Real Estate"
-        } else if upperSymbol.contains("COMM") || upperSymbol.contains("GLD") {
-            return "Commodities"
-        } else {
-            return "Stocks"
-        }
+        if upperSymbol.hasSuffix("BD") || upperSymbol.contains("BOND") { return "Bonds" }
+        if upperSymbol == "CASH" || upperSymbol.contains("MMF") { return "Cash" }
+        if upperSymbol.contains("RE") || upperSymbol.contains("REIT") { return "Real Estate" }
+        if upperSymbol.contains("COMM") || upperSymbol.contains("GLD") { return "Commodities" }
+        return "Stocks"
     }
 
     /// Fetches historical performance data using a deterministic generator
@@ -97,17 +89,11 @@ class PortfolioManager {
         var points: [HistoricalDataPoint] = []
 
         while current <= range.upperBound {
-            // Deterministic price based on date and seed
-            let dayOffset =
-                calendar.dateComponents([.day], from: range.lowerBound, to: current).day ?? 0
+            let dayOffset = calendar.dateComponents([.day], from: range.lowerBound, to: current).day ?? 0
             let fluctuation = sin(Double(dayOffset + seed) * 0.5) * 10.0
             let deterministicPrice = Decimal(150.0 + fluctuation)
 
-            points.append(
-                HistoricalDataPoint(
-                    date: current, price: deterministicPrice, volume: 1000 + (seed % 4000)
-                )
-            )
+            points.append(HistoricalDataPoint(date: current, price: deterministicPrice, volume: 1000 + (seed % 4000)))
             guard let next = calendar.date(byAdding: .day, value: 7, to: current) else { break }
             current = next
         }
