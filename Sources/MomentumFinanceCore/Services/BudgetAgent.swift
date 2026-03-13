@@ -6,23 +6,24 @@ import SwiftData
 public final class BudgetAgent: BaseAgent {
     public let id = "budget_agent_001"
     public let name = "Finance Strategy Agent"
+    private let ollamaClient: OllamaClient
 
-    public init() {}
+    public init(ollamaClient: OllamaClient = OllamaClient()) {
+        self.ollamaClient = ollamaClient
+    }
 
     public func execute(context: [String: any Sendable]) async throws -> AgentResult {
         // Log start
         NSLog("[\(name)] Starting autonomous budget analysis...")
 
         // 1. Analyze spending patterns
-        // Ideally, we'd pull from SwiftData context, but for now we look for transactions in the context dictionary
         let transactions = context["transactions"] as? [CoreTransaction] ?? []
 
         guard !transactions.isEmpty else {
             return AgentResult(
                 agentId: id,
                 success: true,
-                summary:
-                "No recent transactions found for analysis. Settle more data for insights.",
+                summary: "No recent transactions found for analysis. Settle more data for insights.",
                 detail: ["status": "idle"],
                 requiresApproval: false
             )
@@ -36,28 +37,76 @@ public final class BudgetAgent: BaseAgent {
             transactions: transactions
         )
 
-        let summary: String
-        var detail: [String: String] = [:]
+        // 3. Perform Autonomous Reasoning
+        let reasoningResult = await performAutonomousReasoning(
+            transactions: transactions,
+            burnRate: burnRate,
+            anomalies: anomalies
+        )
 
-        if anomalies.isEmpty {
-            summary =
-                "Spending profile is stable. Average monthly burn rate is \(burnRate.description)."
-            detail["burn_rate"] = burnRate.description
-        } else {
-            summary =
-                "Detected \(anomalies.count) spending anomalies! Average burn rate: \(burnRate.description)."
-            detail["anomaly_count"] = "\(anomalies.count)"
-            detail["burn_rate"] = burnRate.description
-            detail["recommendation"] =
-                "Review large unusual transactions to maintain budget health."
-        }
+        var detail: [String: String] = [:]
+        detail["burn_rate"] = burnRate.description
+        detail["anomaly_count"] = "\(anomalies.count)"
+        detail["tactical_advice"] = reasoningResult.advice
 
         return AgentResult(
             agentId: id,
             success: true,
-            summary: summary,
+            summary: reasoningResult.summary,
             detail: detail,
-            requiresApproval: false
+            requiresApproval: reasoningResult.requiresAction
         )
+    }
+
+    private func performAutonomousReasoning(
+        transactions: [CoreTransaction],
+        burnRate: Double,
+        anomalies: [CoreTransaction]
+    ) async -> (summary: String, advice: String, requiresAction: Bool) {
+        let transactionSummary = transactions.prefix(5).map { "\($0.merchant): \($0.amount)" }.joined(separator: ", ")
+        let anomalySummary = anomalies.map { "\($0.merchant): \($0.amount)" }.joined(separator: ", ")
+
+        let prompt = """
+        Strategic Financial Analysis Request:
+        Burn Rate: \(burnRate)
+        Detected Anomalies: \(anomalySummary.isEmpty ? "None" : anomalySummary)
+        Recent Sample: \(transactionSummary)
+
+        Provide a concise strategic summary and tactical advice for the user.
+        Return EXCLUSIVELY a JSON object with:
+        - "summary": String
+        - "advice": String
+        - "requiresAction": Boolean (true if anomalies are severe)
+        """
+
+        do {
+            let response = try await ollamaClient.generate(
+                model: nil,
+                prompt: prompt,
+                temperature: 0.4,
+                maxTokens: 500,
+                useCache: true
+            )
+
+            guard let data = response.data(using: .utf8),
+                  let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                  let summary = json["summary"] as? String,
+                  let advice = json["advice"] as? String,
+                  let requiresAction = json["requiresAction"] as? Bool
+            else {
+                return (
+                    summary: "Spending is \(anomalies.isEmpty ? "stable" : "anomalous"). Burn rate: \(burnRate).",
+                    advice: "Review recent transactions to ensure alignment with budget goals.",
+                    requiresAction: !anomalies.isEmpty
+                )
+            }
+            return (summary, advice, requiresAction)
+        } catch {
+            return (
+                summary: "Standard analysis complete.",
+                advice: "Manual review recommended. Burn rate is \(burnRate).",
+                requiresAction: !anomalies.isEmpty
+            )
+        }
     }
 }
