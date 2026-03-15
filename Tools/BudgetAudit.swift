@@ -14,8 +14,14 @@ struct BudgetAudit {
         // Mock transaction context
         let context: [String: Sendable] = [
             "transactions": [
-                CoreTransaction(id: UUID(), amount: 150.0, date: Date(), note: "Unusual subscription payment", categoryId: UUID(), accountId: UUID()),
-                CoreTransaction(id: UUID(), amount: 45.0, date: Date().addingTimeInterval(-86400), note: "Grocery", categoryId: UUID(), accountId: UUID())
+                CoreTransaction(
+                    id: UUID(), amount: 150.0, date: Date(),
+                    note: "Unusual subscription payment", categoryId: UUID(), accountId: UUID()
+                ),
+                CoreTransaction(
+                    id: UUID(), amount: 45.0, date: Date().addingTimeInterval(-86400),
+                    note: "Grocery", categoryId: UUID(), accountId: UUID()
+                )
             ]
         ]
 
