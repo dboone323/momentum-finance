@@ -8,6 +8,7 @@ public final class BudgetAgent: BaseAgent {
     public let name = "Finance Strategy Agent"
     private let ollamaClient: OllamaClient
 
+    @MainActor
     public init(ollamaClient: OllamaClient = OllamaClient()) {
         self.ollamaClient = ollamaClient
     }
@@ -72,7 +73,7 @@ public final class BudgetAgent: BaseAgent {
         Detected Anomalies: \(anomalySummary.isEmpty ? "None" : anomalySummary)
         Recent Sample: \(transactionSummary)
 
-        Provide a concise strategic summary and tactical advice for the user.
+        Provide a concise strategic summary and tactical advice for the user. Focus on real-world financial implications.
         Return EXCLUSIVELY a JSON object with:
         - "summary": String
         - "advice": String
@@ -88,23 +89,30 @@ public final class BudgetAgent: BaseAgent {
                 useCache: true
             )
 
-            guard let data = response.data(using: .utf8),
+            // Robust JSON extraction
+            let cleanedResponse = if let range = response.range(of: "\\{.*\\}", options: .regularExpression) {
+                String(response[range])
+            } else {
+                response
+            }
+
+            guard let data = cleanedResponse.data(using: .utf8),
                   let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                   let summary = json["summary"] as? String,
                   let advice = json["advice"] as? String,
                   let requiresAction = json["requiresAction"] as? Bool
             else {
                 return (
-                    summary: "Spending is \(anomalies.isEmpty ? "stable" : "anomalous"). Burn rate: \(burnRate).",
-                    advice: "Review recent transactions to ensure alignment with budget goals.",
+                    summary: "Financial analysis inconclusive due to processing errors.",
+                    advice: "Please review your transactions manually in the app while we recalibrate the AI engine.",
                     requiresAction: !anomalies.isEmpty
                 )
             }
             return (summary, advice, requiresAction)
         } catch {
             return (
-                summary: "Standard analysis complete.",
-                advice: "Manual review recommended. Burn rate is \(burnRate).",
+                summary: "AI Financial Analysis Engine offline.",
+                advice: "Standard burn rate analysis is \(burnRate). Check for anomalies manually: \(anomalies.count) detected.",
                 requiresAction: !anomalies.isEmpty
             )
         }
