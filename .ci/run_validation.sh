@@ -10,6 +10,12 @@ export OLLAMA_ENDPOINT="${OLLAMA_CLOUD_URL:-http://127.0.0.1:11434}"
 export CR_USE_AI=1
 # shellcheck disable=SC2034
 export CR_USE_OLLAMA=1
+DERIVED_DATA_PATH="${REPO_ROOT}/.build/DerivedData"
+mkdir -p "${DERIVED_DATA_PATH}"
+
+xcodebuild() {
+	command xcodebuild -derivedDataPath "${DERIVED_DATA_PATH}" "$@"
+}
 
 if [[ -z "${OLLAMA_CLOUD_URL}" ]]; then
 	if command -v ollama >/dev/null 2>&1; then
@@ -41,16 +47,14 @@ else
 		proj=$(ls -1d *.xcodeproj 2>/dev/null | head -n1)
 		if [ -n "$proj" ]; then
 			scheme=${proj%.xcodeproj}
-            DD_PATH=$(mktemp -d /tmp/dd.XXXXXX)
 			if [ "$scheme" == "MomentumFinance" ]; then
-				xcodebuild -scheme MomentumFinanceCore -destination 'platform=macOS' -derivedDataPath "$DD_PATH" build || true
+				xcodebuild -scheme MomentumFinanceCore -destination 'platform=macOS' build || true
 			fi
 			if command -v xcpretty >/dev/null 2>&1; then
-				xcodebuild -scheme "$scheme" -destination 'platform=macOS' -derivedDataPath "$DD_PATH" test | xcpretty || xcodebuild -scheme "$scheme" -destination 'platform=macOS' -derivedDataPath "$DD_PATH" test || true
+				xcodebuild -scheme "$scheme" -destination 'platform=macOS' test | xcpretty || xcodebuild -scheme "$scheme" -destination 'platform=macOS' test || true
 			else
-				xcodebuild -scheme "$scheme" -destination 'platform=macOS' -derivedDataPath "$DD_PATH" test || true
+				xcodebuild -scheme "$scheme" -destination 'platform=macOS' test || true
 			fi
-            rm -rf "$DD_PATH"
 		else
 			echo "No Package.swift or .xcodeproj found"
 		fi

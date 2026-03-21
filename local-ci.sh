@@ -1,4 +1,10 @@
 #!/bin/bash
+
+if [[ "${FLEET_INTERNAL}" != "1" ]]; then
+  echo "❌ Error: Independent execution disabled. Please use 'python3 control/run_all.py' from the workspace root."
+  exit 1
+fi
+
 # Local CI/CD Script for MomentumFinance
 # Runs on macOS 26 with Xcode 26.3
 # Tests on iPhone 17 simulator and physical iPhone 15 Pro Max
@@ -11,6 +17,11 @@ echo "💻 Xcode: 26.3 on macOS 26"
 
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$PROJECT_DIR"
+WORKSPACE_ROOT="$(cd "${PROJECT_DIR}/.." && pwd)"
+BUILD_ROOT="${PROJECT_DIR}/.build"
+DERIVED_DATA_PATH="${BUILD_ROOT}/DerivedData"
+OUTPUT_ROOT="${WORKSPACE_ROOT}/outputs/MomentumFinance"
+mkdir -p "${DERIVED_DATA_PATH}" "${OUTPUT_ROOT}"
 
 # Colors for output
 RED='\033[0;31m'
@@ -71,6 +82,7 @@ for SCHEME in "MomentumFinance" "MomentumFinanceCore"; do
     BUILD_OUTPUT=$(xcodebuild build \
         -scheme "$SCHEME" \
         -destination "$IPHONE_17_DESTINATION" \
+        -derivedDataPath "${DERIVED_DATA_PATH}" \
         -configuration Debug \
         CODE_SIGN_IDENTITY="" \
         CODE_SIGNING_REQUIRED=NO \
@@ -88,19 +100,20 @@ for SCHEME in "MomentumFinance" "MomentumFinanceCore"; do
     xcodebuild test \
         -scheme "$SCHEME" \
         -destination "$IPHONE_17_DESTINATION" \
+        -derivedDataPath "${DERIVED_DATA_PATH}" \
         -configuration Debug \
         -enableCodeCoverage YES \
         CODE_SIGN_IDENTITY="" \
         CODE_SIGNING_REQUIRED=NO \
-        -resultBundlePath "TestResults_${SCHEME}.xcresult" || true
+        -resultBundlePath "${OUTPUT_ROOT}/TestResults_${SCHEME}.xcresult" || true
 done
 
 # 3. Generate Coverage Report (from main scheme)
 print_status "Generating coverage report"
-xcrun xccov view --report --json TestResults_MomentumFinance.xcresult > coverage.json 2>/dev/null || true
+xcrun xccov view --report --json "${OUTPUT_ROOT}/TestResults_MomentumFinance.xcresult" >"${OUTPUT_ROOT}/coverage.json" 2>/dev/null || true
 
-if [ -f coverage.json ] && [ -s coverage.json ]; then
-    COVERAGE=$(jq '.lineCoverage * 100' coverage.json 2>/dev/null || echo "0")
+if [ -f "${OUTPUT_ROOT}/coverage.json" ] && [ -s "${OUTPUT_ROOT}/coverage.json" ]; then
+    COVERAGE=$(jq '.lineCoverage * 100' "${OUTPUT_ROOT}/coverage.json" 2>/dev/null || echo "0")
     print_status "Code coverage: ${COVERAGE}%"
 else
     print_warning "Coverage report not generated"
@@ -133,8 +146,8 @@ fi
 
 print_status "Local CI/CD completed successfully! 🎉"
 echo ""
-echo "📊 Test Results: TestResults_MomentumFinance.xcresult, TestResults_MomentumFinanceCore.xcresult"
-echo "📈 Coverage: coverage.json"
+echo "📊 Test Results: ${OUTPUT_ROOT}/TestResults_MomentumFinance.xcresult, ${OUTPUT_ROOT}/TestResults_MomentumFinanceCore.xcresult"
+echo "📈 Coverage: ${OUTPUT_ROOT}/coverage.json"
 echo ""
 echo "To view test results in Xcode:"
-echo "open TestResults_MomentumFinance.xcresult"
+echo "open ${OUTPUT_ROOT}/TestResults_MomentumFinance.xcresult"
