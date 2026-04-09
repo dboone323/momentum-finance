@@ -1,0 +1,84 @@
+import Foundation
+import XCTest
+
+class CertificatePinningDelegateTests: XCTestCase {
+    var delegate: CertificatePinningDelegate!
+
+    override func setUp() {
+        super.setUp()
+        delegate = CertificatePinningDelegate()
+    }
+
+    func testCertificatePinningWithValidCertificate() {
+        // Arrange
+        let validCertData = loadCertificateData("server.cer")
+        delegate.pinnedCertificateData = validCertData
+
+        // Act
+        let challenge = createAuthenticationChallenge(with: validCertData)
+        var disposition: URLSession.AuthChallengeDisposition?
+        var credential: URLCredential?
+
+        delegate.urlSession(URLSession.shared, didReceive: challenge) { (disp, cred) in
+            disposition = disp
+            credential = cred
+        }
+
+        // Assert
+        XCTAssertEqual(disposition, .useCredential)
+        XCTAssertNotNil(credential)
+    }
+
+    func testCertificatePinningWithInvalidCertificate() {
+        // Arrange
+        let invalidCertData = loadCertificateData("invalid_server.cer")
+        delegate.pinnedCertificateData = invalidCertData
+
+        // Act
+        let challenge = createAuthenticationChallenge(with: invalidCertData)
+        var disposition: URLSession.AuthChallengeDisposition?
+        var credential: URLCredential?
+
+        delegate.urlSession(URLSession.shared, didReceive: challenge) { (disp, cred) in
+            disposition = disp
+            credential = cred
+        }
+
+        // Assert
+        XCTAssertEqual(disposition, .cancelAuthenticationChallenge)
+        XCTAssertNil(credential)
+    }
+
+    func testCertificatePinningWithEmptyCertificate() {
+        // Arrange
+        delegate.pinnedCertificateData = Data()
+
+        // Act
+        let challenge = createAuthenticationChallenge(with: loadCertificateData("server.cer"))
+        var disposition: URLSession.AuthChallengeDisposition?
+        var credential: URLCredential?
+
+        delegate.urlSession(URLSession.shared, didReceive: challenge) { (disp, cred) in
+            disposition = disp
+            credential = cred
+        }
+
+        // Assert
+        XCTAssertEqual(disposition, .cancelAuthenticationChallenge)
+        XCTAssertNil(credential)
+    }
+
+    private func loadCertificateData(_ filename: String) -> Data {
+        guard let certURL = Bundle.main.url(forResource: filename, withExtension: "cer"),
+              let data = try? Data(contentsOf: certURL) else {
+            fatalError("Failed to load certificate data")
+        }
+        return data
+    }
+
+    private func createAuthenticationChallenge(with serverCertData: Data) -> URLAuthenticationChallenge {
+        let serverTrust = SecTrustCreateWithData(nil, serverCertData as CFData)!
+        let protectionSpace = URLProtectionSpace(host: "example.com", port: 443, protocol: "https", realm: nil, authenticationMethod: NSURLAuthenticationMethodServerTrust)
+        return URLAuthenticationChallenge(protectionSpace: protectionSpace, challenge: nil, previousFailureCount: 0, error: nil)
+    }
+}
