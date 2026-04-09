@@ -1,0 +1,48 @@
+import MomentumFinanceCore
+import SwiftData
+import XCTest
+@testable import MomentumFinance
+
+class CategoryTransactionsViewTests: XCTestCase {
+    var viewModel: Features.Transactions.CategoryTransactionsViewModel!
+    var mockModelContext: MockModelContext!
+
+    /// Test that the view displays a category header with icon and stats
+    func testCategoryHeaderDisplay() {
+        let expectedIconName = "account.circle"
+        let expectedName = "Expenses"
+        let expectedTotalAmount = 100.0
+
+        // Mock data for transactions and categories
+        let expenseTransaction = FinancialTransaction(
+            id: UUID(uuidString: "12345678-90ab-cdef-1234-567890abcdef"),
+            account: Account(
+                id: UUID(uuidString: "12345678-90ab-cdef-1234-567890abcdef"),
+                name: "Checking",
+                balance: 0.0
+            ),
+            category: ExpenseCategory(
+                id: UUID(uuidString: "12345678-90ab-cdef-1234-567890abcdef"),
+                name: expectedName,
+                iconName: expectedIconName
+            ),
+            transactionType: .expense,
+            amount: 100.0,
+            date: Date()
+        )
+
+        let expenseCategory = ExpenseCategory(
+            id: UUID(uuidString: "12345678-90ab-cdef-1234-567890abcdef"),
+            name: expectedName,
+            iconName: expectedIconName
+        )
+
+        mockModelContext.transactions.append(expenseTransaction)
+        mockModelContext.categories.append(expenseCategory)
+
+        // Assert the category header display
+        XCTAssertEqual(viewModel.category?.iconName, expectedIconName)
+        XCTAssertEqual(viewModel.category?.name, expectedName)
+        XCTAssertEqual(viewModel.totalAmount, expectedTotalAmount)
+    }
+}

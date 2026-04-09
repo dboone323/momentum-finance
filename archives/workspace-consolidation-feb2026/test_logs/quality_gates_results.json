@@ -1,0 +1,62 @@
+{
+  "timestamp": "2025-12-11T10:29:08.192663",
+  "gates": {
+    "Code Coverage": {
+      "name": "Code Coverage",
+      "threshold": "80.0%",
+      "status": "FAIL",
+      "score": 0,
+      "details": {
+        "message": "Tests failed, coverage invalid"
+      }
+    },
+    "Quality Score": {
+      "name": "Quality Score",
+      "threshold": "80.0/100",
+      "status": "FAIL",
+      "score": 0,
+      "details": {
+        "errors": 1,
+        "warnings": 38,
+        "calculated_score": 57.0,
+        "meets_threshold": false
+      }
+    },
+    "Security Scan": {
+      "name": "Security Scan",
+      "threshold": "No high confidence secrets",
+      "status": "WARNING",
+      "score": 15,
+      "details": {
+        "issues_count": 17,
+        "issues": [
+          "Found 'api_key' in quality_gates_validator.py",
+          "Found 'password =' in dist.py",
+          "Found 'password =' in util.py",
+          "Found 'password =' in auth.py",
+          "Found 'password =' in sessions.py"
+        ]
+      }
+    },
+    "Dependency Check": {
+      "name": "Dependency Check",
+      "status": "PASS",
+      "score": 10,
+      "details": {}
+    },
+    "Performance Metrics": {
+      "name": "Performance Metrics",
+      "threshold": "Build Succeeds, App size < 100MB",
+      "status": "FAIL",
+      "score": 0,
+      "details": {
+        "build_succeeded": false,
+        "app_size_mb": 0.0
+      }
+    }
+  },
+  "overall_status": "FAIL",
+  "score": 25,
+  "max_score": 65,
+  "percentage": 38.46153846153847
+}

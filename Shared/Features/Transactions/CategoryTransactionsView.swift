@@ -1,0 +1,135 @@
+// Momentum Finance - Personal Finance App
+// Copyright © 2025 Momentum Finance. All rights reserved.
+
+import MomentumFinanceCore
+import SwiftData
+import SwiftUI
+
+/// A view that shows transactions filtered by a specific category
+extension Features.Transactions {
+    struct CategoryTransactionsView: View {
+        @Environment(\.modelContext)
+        private var modelContext
+        @Environment(\.dismiss)
+        private var dismiss
+
+        let categoryName: String
+
+        // Query transactions but we'll filter in computed property
+        #if canImport(SwiftData)
+            #if canImport(SwiftData)
+                private var transactions: [FinancialTransaction] = []
+            #else
+                private var transactions: [FinancialTransaction] = []
+            #endif
+        #else
+            private var transactions: [FinancialTransaction] = []
+        #endif
+
+        /// Filter transactions by category
+        private var filteredTransactions: [FinancialTransaction] {
+            self.transactions.filter {
+                $0.category?.name == self.categoryName
+            }
+            .sorted { $0.date > $1.date }
+        }
+
+        var body: some View {
+            VStack {
+                // Category header with icon and stats
+                VStack(spacing: 16) {
+                    HStack {
+                        // Category icon
+                        Image(systemName: "tag.fill")
+                            .font(.title)
+                            .foregroundColor(.white)
+                            .frame(width: 50, height: 50)
+                            .background(Circle().fill(Color.blue))
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(self.categoryName)
+                                .font(.headline)
+
+                            Text("\(self.filteredTransactions.count) transactions")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+
+                        Spacer()
+
+                        VStack(alignment: .trailing) {
+                            Text((self.totalAmount as NSDecimalNumber).doubleValue.formatted(.currency(code: "USD")))
+                                .font(.headline)
+                                .foregroundColor(self.totalAmount < 0 ? .red : .primary)
+                        }
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(self.platformBackgroundColor)
+                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+                    )
+                    .padding(.horizontal)
+                }
+
+                // Transactions list
+                List {
+                    ForEach(self.filteredTransactions) { transaction in
+                        TransactionRowView(transaction: transaction, onTapped: {})
+
+                            .swipeActions {
+                                Button(role: .destructive) {
+                                    self.deleteTransaction(transaction)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                                .accessibilityLabel("Delete")
+                            }
+                    }
+                }
+                .listStyle(.plain)
+            }
+            .navigationTitle(self.categoryName)
+        }
+
+        /// Delete a transaction
+        private func deleteTransaction(_ transaction: FinancialTransaction) {
+            // Update account balance first
+            if let account = transaction.account {
+                // If it's an expense, add the amount back; if income, subtract it
+                if transaction.transactionType == .expense {
+                    account.balance += transaction.amount
+                } else {
+                    account.balance -= transaction.amount
+                }
+            }
+
+            // Delete the transaction
+            self.modelContext.delete(transaction)
+
+            // Save changes
+            try? self.modelContext.save()
+        }
+
+        private var totalAmount: Decimal {
+            self.filteredTransactions.reduce(Decimal(0)) { result, transaction in
+                if transaction.transactionType == .expense {
+                    result - transaction.amount
+                } else {
+                    result + transaction.amount
+                }
+            }
+        }
+
+        /// Cross-platform background color
+        private var platformBackgroundColor: Color {
+            #if canImport(UIKit)
+                return Color(uiColor: .systemBackground)
+            #elseif canImport(AppKit)
+                return Color(nsColor: .windowBackgroundColor)
+            #else
+                return Color.white
+            #endif
+        }
+    }
+}
