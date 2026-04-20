@@ -195,7 +195,7 @@ public struct BudgetNotificationScheduler {
         )
 
         // Extract category name before the closure to avoid capturing budget
-        let categoryName = budget.category ?? "Unknown"
+        let categoryName = budget.category?.name ?? "Unknown"
 
         self.center.add(request) { [logger] error in
             if let error {
@@ -211,7 +211,7 @@ public struct BudgetNotificationScheduler {
 
     /// Creates a contextual warning message based on budget status
     private func createBudgetWarningMessage(budget: Budget, percentage: Int) -> String {
-        let categoryName = budget.category ?? "Unknown Category"
+        let categoryName = budget.category?.name ?? "Unknown Category"
         let spent = budget.spentAmount
         let limit = budget.totalAmount
         let remaining = max(0, limit - spent)

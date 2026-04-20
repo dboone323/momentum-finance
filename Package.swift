@@ -6,9 +6,7 @@ import Foundation
 import PackageDescription
 
 private let localSharedKitPath = "../shared-kit"
-private let sharedKitDependency: Package.Dependency = FileManager.default.fileExists(atPath: localSharedKitPath)
-    ? .package(path: localSharedKitPath)
-    : .package(url: "https://github.com/dboone323/shared-kit.git", branch: "main")
+private let sharedKitDependency: Package.Dependency = .package(path: localSharedKitPath)
 
 private let coreExcludedSources: [String] = {
     #if os(Linux)
