@@ -18,7 +18,7 @@ pytest-cov==4.1.0
 
 # Code quality and formatting
 flake8==7.0.0
-black==24.3.0
+black==26.3.1
 
 # Documentation
 sphinx==7.2.6
